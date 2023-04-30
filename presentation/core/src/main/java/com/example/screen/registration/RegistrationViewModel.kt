@@ -48,12 +48,10 @@ class RegistrationViewModel(
         password: String,
         userName: String,
         repeatedPassword: String
-    ): Boolean {
-        if (nickName.isEmpty()) return false
-        if (password.isEmpty()) return false
-        if (userName.isEmpty()) return false
-        if (password != repeatedPassword) return false
-        return true
-    }
+    ): Boolean =
+        nickName.isNotEmpty()
+                && password.isNotEmpty()
+                && userName.isNotEmpty()
+                && password == repeatedPassword
 
 }
