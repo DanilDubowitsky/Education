@@ -1,0 +1,59 @@
+package com.example.ui.screen.auth.registration
+
+import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
+import com.example.screen.registration.RegistrationSideEffect
+import com.example.screen.registration.RegistrationState
+import com.example.screen.registration.RegistrationViewModel
+import com.example.ui.R
+import com.example.ui.base.fragment.ViewModelHostFragment
+import com.example.ui.databinding.FragmentRegistrationBinding
+import com.example.ui.utils.FragmentUtils.observe
+import com.example.ui.utils.FragmentUtils.showMessage
+import com.example.ui.utils.ViewUtils.setClickListener
+import com.example.ui.utils.ViewUtils.trimmedTextOrEmpty
+
+class RegistrationFragment :
+    ViewModelHostFragment<RegistrationViewModel, FragmentRegistrationBinding>(
+        RegistrationViewModel::class,
+        FragmentRegistrationBinding::inflate
+    ) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeData()
+        setupListeners()
+    }
+
+    private fun observeData() {
+        viewModel.observe(this, ::render, ::onSideEffect)
+    }
+
+    private fun setupListeners() = with(binding) {
+        btnRegister.setClickListener {
+            viewModel.register(
+                txtNickName.trimmedTextOrEmpty,
+                txtPassword.trimmedTextOrEmpty,
+                txtLogin.trimmedTextOrEmpty,
+                txtRepeatPassword.trimmedTextOrEmpty
+            )
+        }
+    }
+
+    private fun render(state: RegistrationState) = with(binding) {
+        globalProgress.isVisible = state.isLoading
+        rootContent.isVisible = !state.isLoading
+    }
+
+    private fun onSideEffect(sideEffect: RegistrationSideEffect) {
+        when (sideEffect) {
+            is RegistrationSideEffect.ShowMessage -> showMessage(sideEffect.message)
+            is RegistrationSideEffect.ShowSuccessRegistration -> showMessage(
+                getString(R.string.registration_success_message)
+            )
+        }
+    }
+
+}

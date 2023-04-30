@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="registration_title">Регистрация</string>
+    <string name="registration_btn_title">Зарегистрироваться</string>
+    <string name="registration_login_fld_hint">Логин</string>
+    <string name="registration_nickname_fld_hint">Никнейм</string>
+    <string name="registration_password_fld_hint">Пароль</string>
+    <string name="registration_password_repeat_fld_hint">Повторите пароль</string>
+    <string name="registration_success_message">Вы успешно зарегистрировались</string>
+
+</resources>
