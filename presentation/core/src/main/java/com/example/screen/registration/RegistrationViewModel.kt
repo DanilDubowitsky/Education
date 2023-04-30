@@ -43,6 +43,7 @@ class RegistrationViewModel(
         )
     }
 
+    //todo Переписать валидацию
     private fun validate(
         nickName: String,
         password: String,
