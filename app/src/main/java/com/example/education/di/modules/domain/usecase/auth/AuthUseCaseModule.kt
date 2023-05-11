@@ -1,5 +1,6 @@
 package com.example.education.di.modules.domain.usecase.auth
 
+import com.example.domain.cases.auth.ConfirmEmail
 import com.example.domain.cases.auth.SignUp
 import com.example.domain.service.auth.IAuthService
 import dagger.Module
@@ -14,5 +15,11 @@ object AuthUseCaseModule {
     fun provideSignUp(
         service: IAuthService
     ): SignUp = SignUp(service)
+
+    @Provides
+    @Reusable
+    fun provideConfirmEmail(
+        service: IAuthService
+    ): ConfirmEmail = ConfirmEmail(service)
 
 }

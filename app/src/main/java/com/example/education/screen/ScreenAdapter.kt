@@ -3,6 +3,7 @@ package com.example.education.screen
 import com.example.navigation.core.IScreenAdapter
 import com.example.navigation.core.Screen
 import com.example.navigation.screen.NavigationScreen
+import com.example.ui.screen.auth.confirmation.EmailConfirmationFragment
 import com.example.ui.screen.auth.login.LoginFragment
 import com.example.ui.screen.auth.registration.RegistrationFragment
 
@@ -15,12 +16,17 @@ class ScreenAdapter : IScreenAdapter {
 
     private fun createPlatformScreen(screen: NavigationScreen.Auth): Screen =
         when (screen) {
+
             NavigationScreen.Auth.Login -> Screen.FragmentScreen {
                 LoginFragment()
             }
+
             NavigationScreen.Auth.Registration -> Screen.FragmentScreen {
                 RegistrationFragment()
             }
 
+            NavigationScreen.Auth.EmailConfirmation -> Screen.FragmentScreen {
+                EmailConfirmationFragment()
+            }
         }
 }

@@ -2,6 +2,7 @@ package com.example.navigation.core
 
 import android.content.Context
 import android.content.Intent
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 
@@ -16,6 +17,20 @@ sealed interface Screen {
             operator fun invoke(
                 fragmentCreator: ScreenCreator<FragmentFactory, Fragment>
             ): FragmentScreen =
+                object : FragmentScreen {
+                    override fun createFragment(fragmentFactory: FragmentFactory): Fragment =
+                        fragmentCreator.create(fragmentFactory)
+                }
+        }
+    }
+
+    interface DialogScreen : Screen {
+        fun createDialog(
+            fragmentFactory: FragmentFactory
+        ): DialogFragment
+
+        companion object {
+            operator fun invoke(fragmentCreator: ScreenCreator<FragmentFactory, DialogFragment>) =
                 object : FragmentScreen {
                     override fun createFragment(fragmentFactory: FragmentFactory): Fragment =
                         fragmentCreator.create(fragmentFactory)

@@ -4,10 +4,11 @@ import androidx.lifecycle.ViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignUp
 import com.example.education.di.viewmodel.ViewModelKey
-import com.example.screen.registration.RegistrationModelState
-import com.example.screen.registration.RegistrationReducer
-import com.example.screen.registration.RegistrationState
-import com.example.screen.registration.RegistrationViewModel
+import com.example.navigation.core.NavigationRouter
+import com.example.screen.auth.registration.RegistrationModelState
+import com.example.screen.auth.registration.RegistrationReducer
+import com.example.screen.auth.registration.RegistrationState
+import com.example.screen.auth.registration.RegistrationViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -28,9 +29,11 @@ interface RegistrationModule {
 
         @Provides
         fun provideViewModel(
+            router: NavigationRouter,
             signUp: SignUp,
             reducer: IReducer<RegistrationModelState, RegistrationState>
         ): RegistrationViewModel = RegistrationViewModel(
+            router,
             signUp,
             reducer
         )

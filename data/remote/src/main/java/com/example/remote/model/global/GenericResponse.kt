@@ -1,4 +1,4 @@
-package com.example.remote.model
+package com.example.remote.model.global
 
 import com.example.remote.model.auth.Status
 import com.google.gson.annotations.SerializedName

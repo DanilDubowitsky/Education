@@ -8,6 +8,8 @@ sealed interface NavigationScreen {
 
         object Registration : Auth
 
+        object EmailConfirmation : Auth
+
     }
 
 }

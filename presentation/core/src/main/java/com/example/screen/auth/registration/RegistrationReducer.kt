@@ -1,4 +1,4 @@
-package com.example.screen.registration
+package com.example.screen.auth.registration
 
 import com.example.core.IReducer
 

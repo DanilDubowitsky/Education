@@ -26,7 +26,13 @@ class Navigator(
                 // TODO: add activity support
             }
             is Screen.FragmentScreen -> moveFragment(screen)
+            is Screen.DialogScreen -> moveDialog(screen)
         }
+    }
+
+    private fun moveDialog(screen: Screen.DialogScreen) {
+        val dialog = screen.createDialog(fragmentFactory)
+        dialog.showNow(fragmentManager, screen.javaClass.name)
     }
 
     private fun executeReplaceCommand(command: Command.Replace) {
@@ -35,6 +41,7 @@ class Navigator(
                 // TODO: add activity support
             }
             is Screen.FragmentScreen -> replaceFragment(screen)
+            is Screen.DialogScreen -> moveDialog(screen)
         }
     }
 

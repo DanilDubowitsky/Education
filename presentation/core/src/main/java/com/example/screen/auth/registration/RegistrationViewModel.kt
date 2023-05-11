@@ -1,12 +1,16 @@
-package com.example.screen.registration
+package com.example.screen.auth.registration
 
 import com.example.core.BaseViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignUp
+import com.example.domain.exception.ServerException
+import com.example.navigation.core.NavigationRouter
+import com.example.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class RegistrationViewModel(
+    private val router: NavigationRouter,
     private val signUp: SignUp,
     reducer: IReducer<RegistrationModelState, RegistrationState>
 ) : BaseViewModel<RegistrationModelState, RegistrationState, RegistrationSideEffect>(
@@ -27,6 +31,10 @@ class RegistrationViewModel(
             copy(loadingState = RegistrationModelState.LoadingState.LOADING)
         }
         signUp(nickName, email, password, repeatedPassword)
+
+        val screen = NavigationScreen.Auth.EmailConfirmation
+        router.navigateTo(screen)
+
         updateModelState {
             copy(loadingState = RegistrationModelState.LoadingState.IDLE)
         }
@@ -36,11 +44,17 @@ class RegistrationViewModel(
         updateModelState {
             copy(loadingState = RegistrationModelState.LoadingState.IDLE)
         }
-        postSideEffect(
-            RegistrationSideEffect.ShowMessage(
-                throwable.message.orEmpty()
+        if (throwable is ServerException) {
+            if (throwable.displayMessage == REGISTRATION_CODE_ALREADY_SEND_ERROR) {
+                router.navigateTo(NavigationScreen.Auth.EmailConfirmation)
+                return@intent
+            }
+            postSideEffect(
+                RegistrationSideEffect.ShowMessage(
+                    throwable.displayMessage
+                )
             )
-        )
+        }
     }
 
     //todo Переписать валидацию
@@ -54,5 +68,9 @@ class RegistrationViewModel(
                 && password.isNotEmpty()
                 && userName.isNotEmpty()
                 && password == repeatedPassword
+
+    private companion object {
+        const val REGISTRATION_CODE_ALREADY_SEND_ERROR = "Registration code has already been sent"
+    }
 
 }

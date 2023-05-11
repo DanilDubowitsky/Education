@@ -3,10 +3,15 @@
 
     <string name="registration_title">Регистрация</string>
     <string name="registration_btn_title">Зарегистрироваться</string>
-    <string name="registration_login_fld_hint">Логин</string>
+    <string name="registration_login_fld_hint">E-mail</string>
     <string name="registration_nickname_fld_hint">Никнейм</string>
     <string name="registration_password_fld_hint">Пароль</string>
     <string name="registration_password_repeat_fld_hint">Повторите пароль</string>
     <string name="registration_success_message">Вы успешно зарегистрировались</string>
+
+    <string name="login_title">Авторизация</string>
+    <string name="login_registration_button_text">Регистрация</string>
+    <string name="email_confirmation_btn_text">Подтвердить e-mail</string>
+    <string name="email_confirmation_title">Подтверждение e-mail</string>
 
 </resources>

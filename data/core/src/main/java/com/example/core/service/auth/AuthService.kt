@@ -19,4 +19,7 @@ class AuthService(
         confirmPassword
     )
 
+    override suspend fun confirmEmail(code: String) =
+        authRemoteClient.confirmEmail(code)
+
 }

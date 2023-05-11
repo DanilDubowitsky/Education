@@ -1,4 +1,4 @@
-package com.example.screen.registration
+package com.example.screen.auth.registration
 
 data class RegistrationModelState(
     val loadingState: LoadingState = LoadingState.IDLE
