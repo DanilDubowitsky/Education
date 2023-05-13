@@ -31,9 +31,10 @@ sealed interface Screen {
 
         companion object {
             operator fun invoke(fragmentCreator: ScreenCreator<FragmentFactory, DialogFragment>) =
-                object : FragmentScreen {
-                    override fun createFragment(fragmentFactory: FragmentFactory): Fragment =
-                        fragmentCreator.create(fragmentFactory)
+                object : DialogScreen {
+                    override fun createDialog(fragmentFactory: FragmentFactory): DialogFragment {
+                        return fragmentCreator.create(fragmentFactory)
+                    }
                 }
         }
     }

@@ -1,9 +1,10 @@
-package com.example.education.di.modules.fragment.registration
+package com.example.education.di.modules.fragment.auth
 
 import androidx.lifecycle.ViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.ConfirmEmail
 import com.example.education.di.viewmodel.ViewModelKey
+import com.example.helper.resource.IResourceHelper
 import com.example.navigation.core.NavigationRouter
 import com.example.screen.auth.confirmation.EmailConfirmationModelState
 import com.example.screen.auth.confirmation.EmailConfirmationReducer
@@ -28,10 +29,12 @@ interface EmailConfirmationModule {
 
         @Provides
         fun provideViewModel(
+            resourceHelper: IResourceHelper,
             router: NavigationRouter,
             confirmEmail: ConfirmEmail,
             reducer: IReducer<EmailConfirmationModelState, EmailConfirmationState>
         ): EmailConfirmationViewModel = EmailConfirmationViewModel(
+            resourceHelper,
             router,
             confirmEmail,
             reducer

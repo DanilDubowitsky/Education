@@ -1,13 +1,13 @@
 package com.example.remote.client.remote.auth
 
-import com.example.core.client.remote.IAuthRemoteClient
-import com.example.remote.client.retrofit.AuthRetrofitClient
-import com.example.domain.exception.ServerException
-import com.example.remote.model.global.GenericResponse
+import com.example.core.client.remote.auth.IAuthRemoteClient
+import com.example.remote.client.retrofit.auth.AuthRetrofitClient
+import com.example.domain.model.auth.Token
+import com.example.remote.converter.auth.toModel
 import com.example.remote.request.auth.ConfirmEmailRequest
+import com.example.remote.request.auth.SignInRequest
 import com.example.remote.request.auth.SignUpRequest
-import com.example.remote.utils.JSONUtils.toJsonObject
-import retrofit2.HttpException
+import com.example.remote.utils.ResponseUtils.getResult
 
 class AuthRemoteClient(
     private val authRetrofitClient: AuthRetrofitClient
@@ -21,21 +21,19 @@ class AuthRemoteClient(
     ) {
         val request = SignUpRequest(username, email, password, confirmPassword)
         val response = authRetrofitClient.signUp(request)
-        if (!response.isSuccessful) {
-            val errorBodyString = response.errorBody()?.string().orEmpty()
-            val errorJson = toJsonObject<GenericResponse<Unit>>(errorBodyString)
-            throw ServerException(errorJson.status?.message.orEmpty())
-        }
+        return response.getResult()
     }
 
     override suspend fun confirmEmail(code: String) {
         val request = ConfirmEmailRequest(code)
         val response = authRetrofitClient.confirmEmail(request)
-        if (!response.isSuccessful) {
-            val errorBodyString = response.errorBody()?.string().orEmpty()
-            val errorJson = toJsonObject<GenericResponse<Unit>>(errorBodyString)
-            throw ServerException(errorJson.status?.message.orEmpty())
-        }
+        return response.getResult()
+    }
+
+    override suspend fun signIn(email: String, password: String): Token {
+        val request = SignInRequest(email, password)
+        val response = authRetrofitClient.signIn(request)
+        return response.getResult().data.toModel()
     }
 
 }

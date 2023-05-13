@@ -4,12 +4,16 @@ import android.content.Context
 import com.example.education.app.App
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import javax.inject.Singleton
 
 @Module
 interface AppModule {
 
-    @Binds
-    @Singleton
-    fun bindApplicationContext(app: App): Context
+    companion object {
+        @Provides
+        @Singleton
+        fun provideApplicationContext(app: App): Context = app.applicationContext
+    }
+
 }

@@ -12,5 +12,6 @@ interface IConfigSource {
 
     interface Provider {
         fun provideConfigSourceInstance(name: String?): IConfigSource
+        fun provideEncryptedConfigSourceInstance(name: String): IConfigSource
     }
 }

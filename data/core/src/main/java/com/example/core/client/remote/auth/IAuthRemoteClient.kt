@@ -1,4 +1,6 @@
-package com.example.core.client.remote
+package com.example.core.client.remote.auth
+
+import com.example.domain.model.auth.Token
 
 interface IAuthRemoteClient {
 
@@ -12,4 +14,9 @@ interface IAuthRemoteClient {
     suspend fun confirmEmail(
         code: String
     )
+
+    suspend fun signIn(
+        email: String,
+        password: String
+    ): Token
 }

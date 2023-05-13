@@ -6,12 +6,15 @@ import com.example.navigation.screen.NavigationScreen
 import com.example.ui.screen.auth.confirmation.EmailConfirmationFragment
 import com.example.ui.screen.auth.login.LoginFragment
 import com.example.ui.screen.auth.registration.RegistrationFragment
+import com.example.ui.screen.common.ConfirmationDialog
+import com.example.ui.utils.FragmentUtils.withScreen
 
 class ScreenAdapter : IScreenAdapter {
 
     override fun createPlatformScreen(screen: NavigationScreen): Screen =
         when (screen) {
             is NavigationScreen.Auth -> createPlatformScreen(screen)
+            is NavigationScreen.Common -> createPlatformScreen(screen)
         }
 
     private fun createPlatformScreen(screen: NavigationScreen.Auth): Screen =
@@ -27,6 +30,14 @@ class ScreenAdapter : IScreenAdapter {
 
             NavigationScreen.Auth.EmailConfirmation -> Screen.FragmentScreen {
                 EmailConfirmationFragment()
+            }
+        }
+
+    private fun createPlatformScreen(screen: NavigationScreen.Common): Screen =
+        when (screen) {
+
+            is NavigationScreen.Common.Confirmation -> Screen.DialogScreen {
+                ConfirmationDialog().withScreen(screen)
             }
         }
 }

@@ -10,8 +10,15 @@
     <string name="registration_success_message">Вы успешно зарегистрировались</string>
 
     <string name="login_title">Авторизация</string>
-    <string name="login_registration_button_text">Регистрация</string>
+    <string name="login_button_login_text">Войти</string>
+
     <string name="email_confirmation_btn_text">Подтвердить e-mail</string>
     <string name="email_confirmation_title">Подтверждение e-mail</string>
+    <string name="email_confirmation_exit_confirmation_text">Вы действительно хотите выйти?</string>
+
+    <string name="confirmation_title">Подтверждение</string>
+
+    <string name="common_yes">Да</string>
+    <string name="common_no">Нет</string>
 
 </resources>

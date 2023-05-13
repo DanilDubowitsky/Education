@@ -2,7 +2,7 @@ package com.example.remote.request.auth
 
 import com.google.gson.annotations.SerializedName
 
-data class SignUpRequest(
+class SignUpRequest(
     @SerializedName("username")
     val userName: String,
     @SerializedName("email")

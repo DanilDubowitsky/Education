@@ -14,8 +14,8 @@ class MainActivityViewModel(
 
     override val initialModelState: MainActivityModelState = MainActivityModelState()
 
-    fun navigateToRegistration() {
-        router.replace(NavigationScreen.Auth.Registration)
+    fun navigateToLogin() {
+        router.replace(NavigationScreen.Auth.Login)
     }
 
 }

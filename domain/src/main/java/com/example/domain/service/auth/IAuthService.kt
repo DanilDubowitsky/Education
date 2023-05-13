@@ -1,5 +1,7 @@
 package com.example.domain.service.auth
 
+import com.example.domain.model.auth.Token
+
 interface IAuthService {
 
     suspend fun signUp(
@@ -12,5 +14,10 @@ interface IAuthService {
     suspend fun confirmEmail(
         code: String
     )
+
+    suspend fun signIn(
+        email: String,
+        password: String
+    ): Token
 
 }

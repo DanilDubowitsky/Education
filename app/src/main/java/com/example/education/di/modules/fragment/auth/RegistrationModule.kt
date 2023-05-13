@@ -1,4 +1,4 @@
-package com.example.education.di.modules.fragment.registration
+package com.example.education.di.modules.fragment.auth
 
 import androidx.lifecycle.ViewModel
 import com.example.core.IReducer

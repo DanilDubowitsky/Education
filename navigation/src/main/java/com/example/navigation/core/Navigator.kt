@@ -12,7 +12,11 @@ class Navigator(
     private val fragmentFactory: FragmentFactory = fragmentManager.fragmentFactory,
 ) : INavigator {
 
+    // TODO: add screen history
+    private var currentVisibleScreen: Screen? = null
+
     override fun executeCommand(command: Command) {
+        // TODO: add support for dialog back press
         when (command) {
             is Command.Back -> fragmentManager.popBackStack()
             is Command.Forward -> executeForwardCommand(command)
@@ -25,14 +29,15 @@ class Navigator(
             is Screen.ActivityScreen -> {
                 // TODO: add activity support
             }
-            is Screen.FragmentScreen -> moveFragment(screen)
             is Screen.DialogScreen -> moveDialog(screen)
+            is Screen.FragmentScreen -> moveFragment(screen)
         }
     }
 
     private fun moveDialog(screen: Screen.DialogScreen) {
         val dialog = screen.createDialog(fragmentFactory)
         dialog.showNow(fragmentManager, screen.javaClass.name)
+        currentVisibleScreen = screen
     }
 
     private fun executeReplaceCommand(command: Command.Replace) {
@@ -40,8 +45,8 @@ class Navigator(
             is Screen.ActivityScreen -> {
                 // TODO: add activity support
             }
-            is Screen.FragmentScreen -> replaceFragment(screen)
             is Screen.DialogScreen -> moveDialog(screen)
+            is Screen.FragmentScreen -> replaceFragment(screen)
         }
     }
 
@@ -50,12 +55,14 @@ class Navigator(
         fragmentManager.beginTransaction().replace(containerId, fragment, screen.javaClass.name)
             .addToBackStack(null)
             .commit()
+        currentVisibleScreen = screen
     }
 
     private fun replaceFragment(screen: Screen.FragmentScreen) {
         val fragment = screen.createFragment(fragmentFactory)
         fragmentManager.beginTransaction().replace(containerId, fragment, screen.javaClass.name)
             .commit()
+        currentVisibleScreen = screen
     }
 
 }

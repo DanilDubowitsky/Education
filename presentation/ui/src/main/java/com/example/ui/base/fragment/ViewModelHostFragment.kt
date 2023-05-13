@@ -15,7 +15,7 @@ abstract class ViewModelHostFragment<VM : ViewModel, VB : ViewBinding>(
 ) : BaseFragment<VB>(onBind) {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    protected lateinit var viewModelFactory: ViewModelProvider.Factory
 
     protected lateinit var viewModel: VM
 
