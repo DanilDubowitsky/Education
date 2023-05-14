@@ -29,6 +29,7 @@ class LoginViewModel(
         updateModelState {
             copy(loadingState = LoginModelState.LoadingState.IDLE)
         }
+        router.replace(NavigationScreen.Main.Home)
     }
 
     fun onPasswordChanged(password: String) = intent {
