@@ -1,12 +1,12 @@
 package com.example.ui.utils
 
-import android.content.Context
-import android.widget.Toast
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.core.BaseViewModel
+import com.example.navigation.screen.NavigationScreen
 import com.example.ui.utils.ContextUtils.showMessage
 import kotlinx.coroutines.launch
 
@@ -34,6 +34,17 @@ object FragmentUtils {
 
     fun Fragment.showMessage(message: String, isLong: Boolean = true) {
         requireContext().showMessage(message, isLong)
+    }
+
+    fun <T : Fragment> Fragment.withScreen(screen: NavigationScreen): T {
+        arguments = Bundle().apply {
+            putSerializable(screen::class.simpleName, screen)
+        }
+        return this as T
+    }
+
+    inline fun <reified T : NavigationScreen> Fragment.getScreen(): T {
+        return arguments?.getSerializable(T::class.simpleName) as T
     }
 
 }

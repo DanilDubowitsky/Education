@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
-import com.example.screen.registration.RegistrationSideEffect
-import com.example.screen.registration.RegistrationState
-import com.example.screen.registration.RegistrationViewModel
+import com.example.screen.auth.registration.RegistrationSideEffect
+import com.example.screen.auth.registration.RegistrationState
+import com.example.screen.auth.registration.RegistrationViewModel
 import com.example.ui.R
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentRegistrationBinding

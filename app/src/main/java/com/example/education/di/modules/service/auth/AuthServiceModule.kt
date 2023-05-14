@@ -1,6 +1,6 @@
 package com.example.education.di.modules.service.auth
 
-import com.example.core.client.remote.IAuthRemoteClient
+import com.example.core.client.remote.auth.IAuthRemoteClient
 import com.example.core.service.auth.AuthService
 import com.example.domain.service.auth.IAuthService
 import dagger.Module

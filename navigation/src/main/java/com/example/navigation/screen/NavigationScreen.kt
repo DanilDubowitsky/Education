@@ -1,6 +1,9 @@
 package com.example.navigation.screen
 
-sealed interface NavigationScreen {
+import com.example.navigation.core.ResultKey
+import java.io.Serializable
+
+sealed interface NavigationScreen : Serializable {
 
     sealed interface Auth : NavigationScreen {
 
@@ -8,6 +11,32 @@ sealed interface NavigationScreen {
 
         object Registration : Auth
 
+        object EmailConfirmation : Auth
+
+    }
+
+    sealed interface Common : NavigationScreen {
+
+        data class Confirmation(
+            val confirmationText: String,
+            val titleText: String? = null,
+            val positiveBtnText: String? = null,
+            val negativeBtnText: String? = null
+        ) : Common {
+
+            object OnConfirm : ResultKey<Unit>
+        }
+
+        data class Information(
+            val description: String,
+            val titleText: String? = null,
+            val btnText: String? = null
+        ) : Common
+    }
+
+    sealed interface Main : NavigationScreen {
+
+        object Home : Main
     }
 
 }

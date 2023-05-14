@@ -31,9 +31,7 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
-            viewModel.navigateToRegistration()
-        }
+        if (savedInstanceState == null) viewModel.prepare()
     }
 
     private fun setNavigator() {

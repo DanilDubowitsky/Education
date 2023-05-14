@@ -1,29 +1,45 @@
 package com.example.core.config
 
 import com.example.domain.config.IUserConfig
+import com.example.domain.utils.WEEK_IN_MILLIS
 
 class UserConfig(
     private val configSource: IConfigSource
 ) : IUserConfig {
 
-    override suspend fun setToken(token: String) {
+    override fun setToken(token: String) {
         configSource.setString(TOKEN_KEY, token)
     }
 
-    override suspend fun getToken(): String =
+    override fun getToken(): String =
         configSource.getString(TOKEN_KEY)
 
-    override suspend fun setRefreshToken(token: String) {
+    override fun setRefreshToken(token: String) {
         configSource.setString(REFRESH_TOKEN_KEY, token)
     }
 
-    override suspend fun getRefreshToken(): String =
+    override fun getRefreshToken(): String =
         configSource.getString(REFRESH_TOKEN_KEY)
 
+    override fun isRefreshTokenExpired(): Boolean {
+        val currentTime = System.currentTimeMillis()
+        val lastUpdateTime = getLastRefreshTokenUpdateTime()
+        return currentTime - lastUpdateTime > WEEK_IN_MILLIS
+    }
+
+    override fun setLastRefreshTokenUpdateTime(time: Long) {
+        configSource.setLong(REFRESH_TOKEN_UPDATE_TIME, time)
+    }
+
+    override fun getLastRefreshTokenUpdateTime(): Long = configSource.getLong(
+        REFRESH_TOKEN_UPDATE_TIME
+    )
+
     companion object {
-        const val CONFIG_NAME = "USER_CONFIG_NAME"
+        const val CONFIG_NAME = "EDUCATION_CONFIG_NAME"
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val REFRESH_TOKEN_KEY = "REFRESH_TOKEN_KEY"
+        private const val REFRESH_TOKEN_UPDATE_TIME = "REFRESH_TOKEN_UPDATE_TIME"
     }
 
 }

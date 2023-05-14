@@ -72,6 +72,9 @@ dependencies {
     implementation("com.google.dagger:dagger-android-support:2.44")
     kapt("com.google.dagger:dagger-android-processor:2.44")
 
+    // Encryption
+    implementation("androidx.security:security-crypto:1.0.0")
+
     implementation(project(":data"))
     implementation(project(":data:local"))
     implementation(project(":data:remote"))

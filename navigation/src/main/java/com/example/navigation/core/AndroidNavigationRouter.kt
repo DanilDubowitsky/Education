@@ -3,7 +3,8 @@ package com.example.navigation.core
 import com.example.navigation.screen.NavigationScreen
 
 class AndroidNavigationRouter(
-    private val navigationHost: NavigationHost
+    private val navigationHost: NavigationHost,
+    private val resultWire: IResultWire
 ) : NavigationRouter {
 
     override fun navigateTo(screen: NavigationScreen, key: String?) {
@@ -16,5 +17,13 @@ class AndroidNavigationRouter(
 
     override fun replace(screen: NavigationScreen, key: String?) {
         navigationHost.executeCommand(Command.Replace(screen), key)
+    }
+
+    override fun <T> setResultListener(key: ResultKey<T>, listener: ResultListener<T>): Disposable {
+        return resultWire.setResultListener(key, listener)
+    }
+
+    override fun <T> sendResult(key: ResultKey<T>, data: T) {
+        resultWire.sendResult(key, data)
     }
 }

@@ -9,8 +9,11 @@ interface IConfigSource {
     fun setBoolean(key: String, value: Boolean)
     fun getFloat(key: String, defaultValue: Float = Float.MAX_VALUE): Float
     fun setFloat(key: String, value: Float)
+    fun setLong(key: String, value: Long)
+    fun getLong(key: String): Long
 
     interface Provider {
         fun provideConfigSourceInstance(name: String?): IConfigSource
+        fun provideEncryptedConfigSourceInstance(name: String): IConfigSource
     }
 }
