@@ -1,10 +1,10 @@
 package com.example.education.di.components
 
-import android.app.Application
 import com.example.education.app.App
 import com.example.education.di.modules.base.ActivityModule
 import com.example.education.di.modules.base.AppModule
 import com.example.education.di.modules.config.ConfigModule
+import com.example.education.di.modules.domain.interaction.UserInteractorModule
 import com.example.education.di.modules.domain.usecase.auth.AuthUseCaseModule
 import com.example.education.di.modules.helper.ResourceHelperModule
 import com.example.education.di.modules.navigation.NavigationModule
@@ -32,7 +32,8 @@ import javax.inject.Singleton
         ConfigModule::class,
         RefreshRetrofitModule::class,
         RefreshClientModule::class,
-        ResourceHelperModule::class
+        ResourceHelperModule::class,
+        UserInteractorModule::class
     ]
 )
 @Singleton

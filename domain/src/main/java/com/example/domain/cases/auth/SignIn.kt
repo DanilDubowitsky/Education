@@ -15,5 +15,6 @@ class SignIn(
         val token = authService.signIn(email, password)
         userConfig.setRefreshToken(token.refreshToken)
         userConfig.setToken(token.accessToken)
+        userConfig.setLastRefreshTokenUpdateTime(System.currentTimeMillis())
     }
 }

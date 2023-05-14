@@ -3,10 +3,11 @@ package com.example.education.di.modules.base
 import com.example.education.di.modules.fragment.auth.EmailConfirmationModule
 import com.example.education.di.modules.fragment.auth.LoginModule
 import com.example.education.di.modules.fragment.auth.RegistrationModule
+import com.example.education.di.modules.fragment.home.HomeModule
 import com.example.ui.screen.auth.confirmation.EmailConfirmationFragment
 import com.example.ui.screen.auth.login.LoginFragment
 import com.example.ui.screen.auth.registration.RegistrationFragment
-import com.example.ui.screen.common.ConfirmationDialog
+import com.example.ui.screen.home.FragmentHome
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -22,7 +23,7 @@ interface FragmentModule {
     @ContributesAndroidInjector(modules = [LoginModule::class])
     fun loginFragment(): LoginFragment
 
-    @ContributesAndroidInjector
-    fun confirmationDialog(): ConfirmationDialog
+    @ContributesAndroidInjector(modules = [HomeModule::class])
+    fun homeFragment(): FragmentHome
 
 }

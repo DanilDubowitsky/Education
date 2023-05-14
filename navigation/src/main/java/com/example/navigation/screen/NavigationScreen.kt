@@ -26,6 +26,17 @@ sealed interface NavigationScreen : Serializable {
 
             object OnConfirm : ResultKey<Unit>
         }
+
+        data class Information(
+            val description: String,
+            val titleText: String? = null,
+            val btnText: String? = null
+        ) : Common
+    }
+
+    sealed interface Main : NavigationScreen {
+
+        object Home : Main
     }
 
 }

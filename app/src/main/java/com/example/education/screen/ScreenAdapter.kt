@@ -7,6 +7,8 @@ import com.example.ui.screen.auth.confirmation.EmailConfirmationFragment
 import com.example.ui.screen.auth.login.LoginFragment
 import com.example.ui.screen.auth.registration.RegistrationFragment
 import com.example.ui.screen.common.ConfirmationDialog
+import com.example.ui.screen.common.InformationDialog
+import com.example.ui.screen.home.FragmentHome
 import com.example.ui.utils.FragmentUtils.withScreen
 
 class ScreenAdapter : IScreenAdapter {
@@ -15,6 +17,7 @@ class ScreenAdapter : IScreenAdapter {
         when (screen) {
             is NavigationScreen.Auth -> createPlatformScreen(screen)
             is NavigationScreen.Common -> createPlatformScreen(screen)
+            is NavigationScreen.Main -> createPlatformScreen(screen)
         }
 
     private fun createPlatformScreen(screen: NavigationScreen.Auth): Screen =
@@ -39,5 +42,15 @@ class ScreenAdapter : IScreenAdapter {
             is NavigationScreen.Common.Confirmation -> Screen.DialogScreen {
                 ConfirmationDialog().withScreen(screen)
             }
+
+            is NavigationScreen.Common.Information -> Screen.DialogScreen {
+                InformationDialog().withScreen(screen)
+            }
         }
+
+    private fun createPlatformScreen(screen: NavigationScreen.Main): Screen = when (screen) {
+        NavigationScreen.Main.Home -> Screen.FragmentScreen {
+            FragmentHome()
+        }
+    }
 }

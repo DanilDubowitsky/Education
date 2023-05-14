@@ -3,6 +3,7 @@ package com.example.screen.auth.confirmation
 import com.example.core.BaseViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.ConfirmEmail
+import com.example.helper.error.IErrorHandler
 import com.example.helper.resource.IResourceHelper
 import com.example.helper.resource.StringResource
 import com.example.navigation.core.NavigationRouter
@@ -14,9 +15,10 @@ class EmailConfirmationViewModel(
     private val resourceHelper: IResourceHelper,
     private val router: NavigationRouter,
     private val confirmEmail: ConfirmEmail,
-    reducer: IReducer<EmailConfirmationModelState, EmailConfirmationState>
+    reducer: IReducer<EmailConfirmationModelState, EmailConfirmationState>,
+    errorHandler: IErrorHandler
 ) : BaseViewModel<EmailConfirmationModelState,
-        EmailConfirmationState, EmailConfirmationSideEffect>(reducer) {
+        EmailConfirmationState, EmailConfirmationSideEffect>(reducer, errorHandler) {
 
     override val initialModelState: EmailConfirmationModelState = EmailConfirmationModelState()
 
@@ -33,6 +35,7 @@ class EmailConfirmationViewModel(
         updateModelState {
             copy(loadingState = EmailConfirmationModelState.LoadingState.IDLE)
         }
+        router.replace(NavigationScreen.Auth.Login)
     }
 
     fun onCodeTextChanged(text: String) = intent {
@@ -49,11 +52,6 @@ class EmailConfirmationViewModel(
             router.exit()
         }
         router.navigateTo(screen)
-    }
-
-    override fun handleThrowable(throwable: Throwable) {
-        super.handleThrowable(throwable)
-
     }
 
 }

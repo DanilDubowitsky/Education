@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignIn
 import com.example.education.di.viewmodel.ViewModelKey
+import com.example.helper.error.IErrorHandler
 import com.example.navigation.core.NavigationRouter
 import com.example.screen.auth.login.LoginModelState
 import com.example.screen.auth.login.LoginReducer
@@ -30,11 +31,13 @@ interface LoginModule {
         fun provideViewModel(
             router: NavigationRouter,
             signIn: SignIn,
-            reducer: IReducer<LoginModelState, LoginState>
+            reducer: IReducer<LoginModelState, LoginState>,
+            errorHandler: IErrorHandler
         ): LoginViewModel = LoginViewModel(
             router,
             signIn,
-            reducer
+            reducer,
+            errorHandler
         )
     }
 }

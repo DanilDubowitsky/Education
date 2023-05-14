@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignUp
 import com.example.education.di.viewmodel.ViewModelKey
+import com.example.helper.error.IErrorHandler
 import com.example.navigation.core.NavigationRouter
 import com.example.screen.auth.registration.RegistrationModelState
 import com.example.screen.auth.registration.RegistrationReducer
@@ -31,11 +32,13 @@ interface RegistrationModule {
         fun provideViewModel(
             router: NavigationRouter,
             signUp: SignUp,
-            reducer: IReducer<RegistrationModelState, RegistrationState>
+            reducer: IReducer<RegistrationModelState, RegistrationState>,
+            errorHandler: IErrorHandler
         ): RegistrationViewModel = RegistrationViewModel(
             router,
             signUp,
-            reducer
+            reducer,
+            errorHandler
         )
     }
 }

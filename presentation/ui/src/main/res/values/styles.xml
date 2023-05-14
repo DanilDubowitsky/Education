@@ -49,4 +49,14 @@
         <item name="android:background">@drawable/background_blue_border_oval</item>
     </style>
 
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/background_dialog_drawable</item>
+    </style>
+
 </resources>

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.ConfirmEmail
 import com.example.education.di.viewmodel.ViewModelKey
+import com.example.helper.error.IErrorHandler
 import com.example.helper.resource.IResourceHelper
 import com.example.navigation.core.NavigationRouter
 import com.example.screen.auth.confirmation.EmailConfirmationModelState
@@ -32,12 +33,14 @@ interface EmailConfirmationModule {
             resourceHelper: IResourceHelper,
             router: NavigationRouter,
             confirmEmail: ConfirmEmail,
-            reducer: IReducer<EmailConfirmationModelState, EmailConfirmationState>
+            reducer: IReducer<EmailConfirmationModelState, EmailConfirmationState>,
+            errorHandler: IErrorHandler
         ): EmailConfirmationViewModel = EmailConfirmationViewModel(
             resourceHelper,
             router,
             confirmEmail,
-            reducer
+            reducer,
+            errorHandler
         )
     }
 }

@@ -13,7 +13,8 @@ interface ActivityModule {
         modules = [
             MainActivityModule::class,
             ViewModelFactoryModule::class,
-            FragmentModule::class
+            FragmentModule::class,
+            DialogsModule::class
         ]
     )
     fun mainActivity(): MainActivity

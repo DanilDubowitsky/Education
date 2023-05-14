@@ -82,4 +82,15 @@ class ConfigSource(
         }
     }
 
+    override fun getLong(key: String): Long = lock.readSafety {
+        sharedPreferences.getLong(key, 0)
+    }
+
+    override fun setLong(key: String, value: Long) {
+        lock.writeSafety {
+            sharedPreferences.edit {
+                putLong(key, value)
+            }
+        }
+    }
 }

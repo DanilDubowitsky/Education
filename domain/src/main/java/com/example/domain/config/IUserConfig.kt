@@ -5,4 +5,7 @@ interface IUserConfig {
     fun getToken(): String
     fun setRefreshToken(token: String)
     fun getRefreshToken(): String
+    fun isRefreshTokenExpired(): Boolean
+    fun setLastRefreshTokenUpdateTime(time: Long)
+    fun getLastRefreshTokenUpdateTime(): Long
 }

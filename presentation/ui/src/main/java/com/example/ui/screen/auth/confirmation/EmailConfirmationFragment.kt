@@ -36,8 +36,10 @@ class EmailConfirmationFragment :
         viewModel.observe(this, ::render, ::onSideEffect)
     }
 
-    private fun onSideEffect(sideEffect: EmailConfirmationSideEffect) {
-
+    private fun onSideEffect(sideEffect: EmailConfirmationSideEffect) = with(binding) {
+        when (sideEffect) {
+            EmailConfirmationSideEffect.CodeValidationError -> {}
+        }
     }
 
     private fun setupListeners() = with(binding) {

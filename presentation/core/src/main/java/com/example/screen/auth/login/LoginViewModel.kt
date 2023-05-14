@@ -3,6 +3,7 @@ package com.example.screen.auth.login
 import com.example.core.BaseViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignIn
+import com.example.helper.error.IErrorHandler
 import com.example.navigation.core.NavigationRouter
 import com.example.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -10,8 +11,9 @@ import org.orbitmvi.orbit.syntax.simple.intent
 class LoginViewModel(
     private val router: NavigationRouter,
     private val signIn: SignIn,
-    reducer: IReducer<LoginModelState, LoginState>
-) : BaseViewModel<LoginModelState, LoginState, LoginSideEffect>(reducer) {
+    reducer: IReducer<LoginModelState, LoginState>,
+    errorHandler: IErrorHandler
+) : BaseViewModel<LoginModelState, LoginState, LoginSideEffect>(reducer, errorHandler) {
 
     override val initialModelState: LoginModelState = LoginModelState()
 
@@ -38,6 +40,13 @@ class LoginViewModel(
     fun onEmailChanged(email: String) = intent {
         updateModelState {
             copy(email = email)
+        }
+    }
+
+    override fun handleThrowable(throwable: Throwable) = intent {
+        super.handleThrowable(throwable)
+        updateModelState {
+            copy(loadingState = LoginModelState.LoadingState.IDLE)
         }
     }
 

@@ -6,7 +6,9 @@ import com.example.activity.main.MainActivityReducer
 import com.example.activity.main.MainActivityState
 import com.example.activity.main.MainActivityViewModel
 import com.example.core.IReducer
+import com.example.domain.interaction.user.UserConfigInteractor
 import com.example.education.di.viewmodel.ViewModelKey
+import com.example.helper.error.IErrorHandler
 import com.example.navigation.core.NavigationRouter
 import dagger.Binds
 import dagger.Module
@@ -29,7 +31,14 @@ interface MainActivityModule {
         @Provides
         fun provideViewModel(
             router: NavigationRouter,
-            reducer: IReducer<MainActivityModelState, MainActivityState>
-        ): MainActivityViewModel = MainActivityViewModel(router, reducer)
+            userConfigInteractor: UserConfigInteractor,
+            reducer: IReducer<MainActivityModelState, MainActivityState>,
+            errorHandler: IErrorHandler
+        ): MainActivityViewModel = MainActivityViewModel(
+            router,
+            userConfigInteractor,
+            reducer,
+            errorHandler
+        )
     }
 }

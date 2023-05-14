@@ -4,6 +4,7 @@ import com.example.core.BaseViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignUp
 import com.example.domain.exception.ServerException
+import com.example.helper.error.IErrorHandler
 import com.example.navigation.core.NavigationRouter
 import com.example.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -12,9 +13,11 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 class RegistrationViewModel(
     private val router: NavigationRouter,
     private val signUp: SignUp,
-    reducer: IReducer<RegistrationModelState, RegistrationState>
+    reducer: IReducer<RegistrationModelState, RegistrationState>,
+    errorHandler: IErrorHandler
 ) : BaseViewModel<RegistrationModelState, RegistrationState, RegistrationSideEffect>(
-    reducer
+    reducer,
+    errorHandler
 ) {
 
     override val initialModelState: RegistrationModelState = RegistrationModelState()
@@ -48,12 +51,7 @@ class RegistrationViewModel(
             if (throwable.displayMessage == REGISTRATION_CODE_ALREADY_SEND_ERROR) {
                 router.navigateTo(NavigationScreen.Auth.EmailConfirmation)
                 return@intent
-            }
-            postSideEffect(
-                RegistrationSideEffect.ShowMessage(
-                    throwable.displayMessage
-                )
-            )
+            } else super.handleThrowable(throwable)
         }
     }
 

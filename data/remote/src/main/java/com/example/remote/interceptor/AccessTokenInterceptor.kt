@@ -33,6 +33,7 @@ class AccessTokenInterceptor(
                 val newToken = authRemoteClient.refresh(refreshToken)
                 userConfig.setToken(newToken.accessToken)
                 userConfig.setRefreshToken(newToken.refreshToken)
+                userConfig.setLastRefreshTokenUpdateTime(System.currentTimeMillis())
                 newToken.accessToken
             }
         }
@@ -42,6 +43,5 @@ class AccessTokenInterceptor(
         request.newBuilder()
             .header("Authorization", "Bearer $accessToken")
             .build()
-
 
 }

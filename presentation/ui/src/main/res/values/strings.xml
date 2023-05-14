@@ -20,5 +20,7 @@
 
     <string name="common_yes">Да</string>
     <string name="common_no">Нет</string>
+    <string name="common_close">Закрыть</string>
+    <string name="common_error_handle">Ошибка в приложении</string>
 
 </resources>
