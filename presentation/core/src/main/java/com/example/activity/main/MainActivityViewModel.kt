@@ -24,7 +24,7 @@ class MainActivityViewModel(
         val isExpired = userConfigInteractor.isRefreshTokenExpired()
         val screen = if (isExpired) NavigationScreen.Auth.Login
         else NavigationScreen.Main.Home
-        router.navigateTo(screen)
+        router.replace(screen)
     }
 
 }
