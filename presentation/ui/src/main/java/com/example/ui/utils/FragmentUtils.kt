@@ -1,6 +1,7 @@
 package com.example.ui.utils
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -49,6 +50,10 @@ object FragmentUtils {
     }
 
     inline operator fun <T : ViewBinding> T.invoke(binding: T.() -> Unit) {
+        binding.invoke(this)
+    }
+
+    inline operator fun <T : View> T.invoke(binding: T.() -> Unit) {
         binding.invoke(this)
     }
 
