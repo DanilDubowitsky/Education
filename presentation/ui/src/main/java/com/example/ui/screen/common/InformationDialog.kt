@@ -6,6 +6,7 @@ import com.example.navigation.screen.NavigationScreen
 import com.example.ui.base.dialog.bottom.BaseBottomSheetDialog
 import com.example.ui.databinding.DialogInformationBinding
 import com.example.ui.utils.FragmentUtils.getScreen
+import com.example.ui.utils.FragmentUtils.invoke
 import com.example.ui.utils.ViewUtils.setClickListener
 
 class InformationDialog : BaseBottomSheetDialog<DialogInformationBinding>(
@@ -19,13 +20,13 @@ class InformationDialog : BaseBottomSheetDialog<DialogInformationBinding>(
         setupListeners()
     }
 
-    private fun render(screen: NavigationScreen.Common.Information) = with(binding) {
+    private fun render(screen: NavigationScreen.Common.Information) = binding {
         informationText.text = screen.description
         screen.btnText?.let { btnClose.text = it }
         screen.titleText?.let { informationTitle.text = it }
     }
 
-    private fun setupListeners() = with(binding) {
+    private fun setupListeners() = binding {
         btnClose.setClickListener(::dismiss)
     }
 

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewbinding.ViewBinding
 import com.example.core.BaseViewModel
 import com.example.navigation.screen.NavigationScreen
 import com.example.ui.utils.ContextUtils.showMessage
@@ -45,6 +46,10 @@ object FragmentUtils {
 
     inline fun <reified T : NavigationScreen> Fragment.getScreen(): T {
         return arguments?.getSerializable(T::class.simpleName) as T
+    }
+
+    inline operator fun <T : ViewBinding> T.invoke(binding: T.() -> Unit) {
+        binding.invoke(this)
     }
 
 }

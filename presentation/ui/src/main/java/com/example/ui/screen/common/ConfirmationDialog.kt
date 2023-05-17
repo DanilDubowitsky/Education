@@ -7,6 +7,7 @@ import com.example.navigation.screen.NavigationScreen
 import com.example.ui.base.dialog.alert.BaseAlertDialog
 import com.example.ui.databinding.DialogConfirmationBinding
 import com.example.ui.utils.FragmentUtils.getScreen
+import com.example.ui.utils.FragmentUtils.invoke
 import com.example.ui.utils.ViewUtils.setClickListener
 import javax.inject.Inject
 
@@ -24,14 +25,14 @@ class ConfirmationDialog : BaseAlertDialog<DialogConfirmationBinding>(
         render(screen)
     }
 
-    private fun render(screen: NavigationScreen.Common.Confirmation) = with(binding) {
+    private fun render(screen: NavigationScreen.Common.Confirmation) = binding {
         confirmationText.text = screen.confirmationText
         screen.negativeBtnText?.let { btnCancel.text = it }
         screen.positiveBtnText?.let { btnConfirm.text = it }
         screen.titleText?.let { alertTitle.text = it }
     }
 
-    private fun setupListeners() = with(binding) {
+    private fun setupListeners() = binding {
         btnConfirm.setClickListener {
             // TODO: refactor with router
             dismiss()

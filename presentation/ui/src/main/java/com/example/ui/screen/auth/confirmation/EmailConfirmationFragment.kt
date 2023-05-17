@@ -10,6 +10,7 @@ import com.example.screen.auth.confirmation.EmailConfirmationState
 import com.example.screen.auth.confirmation.EmailConfirmationViewModel
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentEmailConfirmationBinding
+import com.example.ui.utils.FragmentUtils.invoke
 import com.example.ui.utils.FragmentUtils.observe
 import com.example.ui.utils.ViewUtils.setClickListener
 import com.example.ui.utils.ViewUtils.trimmedTextOrEmpty
@@ -36,13 +37,13 @@ class EmailConfirmationFragment :
         viewModel.observe(this, ::render, ::onSideEffect)
     }
 
-    private fun onSideEffect(sideEffect: EmailConfirmationSideEffect) = with(binding) {
+    private fun onSideEffect(sideEffect: EmailConfirmationSideEffect) = binding {
         when (sideEffect) {
             EmailConfirmationSideEffect.CodeValidationError -> {}
         }
     }
 
-    private fun setupListeners() = with(binding) {
+    private fun setupListeners() = binding {
         btnConfirmEmail.setClickListener(viewModel::confirmEmail)
         txtConfirmationCode.addTextChangedListener {
             viewModel.onCodeTextChanged(txtConfirmationCode.trimmedTextOrEmpty)

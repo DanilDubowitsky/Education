@@ -10,6 +10,7 @@ import com.example.screen.auth.registration.RegistrationViewModel
 import com.example.ui.R
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentRegistrationBinding
+import com.example.ui.utils.FragmentUtils.invoke
 import com.example.ui.utils.FragmentUtils.observe
 import com.example.ui.utils.FragmentUtils.showMessage
 import com.example.ui.utils.ViewUtils.setClickListener
@@ -31,7 +32,7 @@ class RegistrationFragment :
         viewModel.observe(this, ::render, ::onSideEffect)
     }
 
-    private fun setupListeners() = with(binding) {
+    private fun setupListeners() = binding {
         btnRegister.setClickListener {
             viewModel.register(
                 txtNickName.trimmedTextOrEmpty,
@@ -42,7 +43,7 @@ class RegistrationFragment :
         }
     }
 
-    private fun render(state: RegistrationState) = with(binding) {
+    private fun render(state: RegistrationState) = binding {
         globalProgress.isVisible = state.isLoading
         rootContent.isVisible = !state.isLoading
     }

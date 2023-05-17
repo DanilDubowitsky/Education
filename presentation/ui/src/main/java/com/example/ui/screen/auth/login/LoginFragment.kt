@@ -9,6 +9,7 @@ import com.example.screen.auth.login.LoginState
 import com.example.screen.auth.login.LoginViewModel
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentLoginBinding
+import com.example.ui.utils.FragmentUtils.invoke
 import com.example.ui.utils.FragmentUtils.observe
 import com.example.ui.utils.ViewUtils.setClickListener
 import com.example.ui.utils.ViewUtils.trimmedTextOrEmpty
@@ -28,7 +29,7 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
         viewModel.observe(this, ::render)
     }
 
-    private fun render(state: LoginState) = with(binding) {
+    private fun render(state: LoginState) = binding {
         rootGroup.isGone = state.isLoading
         globalProgress.isGone = !state.isLoading
     }
