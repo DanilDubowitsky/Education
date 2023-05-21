@@ -4,6 +4,7 @@ import com.example.core.BaseViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignIn
 import com.example.helper.error.IErrorHandler
+import com.example.models.InputState
 import com.example.navigation.core.NavigationRouter
 import com.example.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -16,6 +17,14 @@ class LoginViewModel(
 ) : BaseViewModel<LoginModelState, LoginState, LoginSideEffect>(reducer, errorHandler) {
 
     override val initialModelState: LoginModelState = LoginModelState()
+
+    init {
+        intent {
+            updateModelState {
+                copy(emailInputState = InputState.Default)
+            }
+        }
+    }
 
     fun login() = intent {
         val modelState = getModelState()
