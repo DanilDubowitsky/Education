@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardBackgroundColor="@color/colorBlue"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/themeText"
+            style="@style/Text.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/background_white_rounded_small"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="История" />
+
+        <TextView
+            android:id="@+id/titleText"
+            style="@style/Text.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="2"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/themeText"
+            tools:text="Итоговый тест “Решение уравнений”" />
+
+        <TextView
+            android:id="@+id/questionsCountText"
+            style="@style/Text.Montserrat.Normal.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/titleText"
+            app:layout_constraintTop_toBottomOf="@+id/titleText"
+            tools:text="60 вопросов" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/likesIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_navigation_favorites"
+            android:tint="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/likesCountText"
+            app:layout_constraintEnd_toStartOf="@+id/likesCountText"
+            app:layout_constraintTop_toTopOf="@+id/likesCountText" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/passesCountIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_navigation_profile"
+            android:tint="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/passesCountText"
+            app:layout_constraintEnd_toStartOf="@+id/passesCountText"
+            app:layout_constraintTop_toTopOf="@+id/passesCountText" />
+
+        <TextView
+            android:id="@+id/passesCountText"
+            style="@style/Text.Montserrat.Normal.White"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/questionsCountText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/questionsCountText"
+            tools:text="10" />
+
+        <TextView
+            android:id="@+id/likesCountText"
+            style="@style/Text.Montserrat.Normal.White"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/passesCountIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/questionsCountText"
+            app:layout_constraintTop_toTopOf="@+id/questionsCountText"
+            tools:text="14504" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

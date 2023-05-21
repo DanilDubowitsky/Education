@@ -10,10 +10,10 @@ import com.example.screen.auth.confirmation.EmailConfirmationState
 import com.example.screen.auth.confirmation.EmailConfirmationViewModel
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentEmailConfirmationBinding
-import com.example.ui.utils.FragmentUtils.invoke
-import com.example.ui.utils.FragmentUtils.observe
-import com.example.ui.utils.ViewUtils.setClickListener
-import com.example.ui.utils.ViewUtils.trimmedTextOrEmpty
+import com.example.ui.utils.invoke
+import com.example.ui.utils.observe
+import com.example.ui.utils.setClickListener
+import com.example.ui.utils.trimmedTextOrEmpty
 
 class EmailConfirmationFragment :
     ViewModelHostFragment<EmailConfirmationViewModel, FragmentEmailConfirmationBinding>(

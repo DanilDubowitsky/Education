@@ -31,10 +31,10 @@ interface HomeModule {
         @Provides
         fun provideViewModel(
             router: NavigationRouter,
-            signUp: SignUp,
             reducer: IReducer<HomeModelState, HomeState>,
             errorHandler: IErrorHandler
         ): HomeViewModel = HomeViewModel(
+            router,
             reducer,
             errorHandler
         )

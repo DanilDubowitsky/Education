@@ -5,9 +5,9 @@ import android.view.View
 import com.example.navigation.screen.NavigationScreen
 import com.example.ui.base.dialog.bottom.BaseBottomSheetDialog
 import com.example.ui.databinding.DialogInformationBinding
-import com.example.ui.utils.FragmentUtils.getScreen
-import com.example.ui.utils.FragmentUtils.invoke
-import com.example.ui.utils.ViewUtils.setClickListener
+import com.example.ui.utils.getScreen
+import com.example.ui.utils.invoke
+import com.example.ui.utils.setClickListener
 
 class InformationDialog : BaseBottomSheetDialog<DialogInformationBinding>(
     DialogInformationBinding::inflate

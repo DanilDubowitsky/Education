@@ -2,9 +2,6 @@ package com.example.ui.screen.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.AppCompatImageButton
-import androidx.core.view.forEach
-import androidx.core.view.forEachIndexed
 import com.example.navigation.core.IScreenAdapter
 import com.example.navigation.core.NavigationHost
 import com.example.navigation.core.Navigator
@@ -14,9 +11,10 @@ import com.example.screen.home.HomeViewModel.Companion.HOME_NAVIGATOR_KEY
 import com.example.ui.R
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentHomeBinding
-import com.example.ui.utils.FragmentUtils.invoke
-import com.example.ui.utils.FragmentUtils.observe
-import com.example.ui.utils.ViewUtils.setClickListener
+import com.example.ui.utils.invoke
+import com.example.ui.utils.observe
+import com.example.ui.utils.setClickListener
+import com.example.ui.utils.switchEnabledState
 import javax.inject.Inject
 
 class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
@@ -60,13 +58,33 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
     }
 
     private fun render(state: HomeState) = binding {
+        btnHome.switchEnabledState(true, R.drawable.ic_navigation_home)
+        btnFavorites.switchEnabledState(true, R.drawable.ic_navigation_favorites)
+        btnProfile.switchEnabledState(true, R.drawable.ic_navigation_profile)
+        btnSettings.switchEnabledState(true, R.drawable.ic_navigation_settings)
         when (state.selectedNavigationItem) {
-            HomeState.NavigationItem.MAIN -> TODO()
-            HomeState.NavigationItem.FAVORITES -> TODO()
-            HomeState.NavigationItem.SETTINGS -> TODO()
-            HomeState.NavigationItem.PROFILE -> TODO()
+            HomeState.NavigationItem.MAIN -> btnHome.switchEnabledState(
+                false,
+                disableIcon = R.drawable.ic_navigation_home_filled
+            )
+
+            HomeState.NavigationItem.FAVORITES -> btnFavorites.switchEnabledState(
+                false,
+                disableIcon = R.drawable.ic_navigation_favorites_filled
+            )
+
+            HomeState.NavigationItem.SETTINGS -> btnSettings.switchEnabledState(
+                false,
+                disableIcon = R.drawable.ic_navigation_settings_filled
+            )
+
+            HomeState.NavigationItem.PROFILE -> btnProfile.switchEnabledState(
+                false,
+                disableIcon = R.drawable.ic_navigation_profile_filled
+            )
         }
     }
+
 
     override fun onResume() {
         navigationHost.setNavigator(navigator, HOME_NAVIGATOR_KEY)

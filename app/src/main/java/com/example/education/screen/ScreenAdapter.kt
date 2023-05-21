@@ -9,7 +9,7 @@ import com.example.ui.screen.auth.registration.RegistrationFragment
 import com.example.ui.screen.common.ConfirmationDialog
 import com.example.ui.screen.common.InformationDialog
 import com.example.ui.screen.home.FragmentHome
-import com.example.ui.utils.FragmentUtils.withScreen
+import com.example.ui.utils.withScreen
 
 class ScreenAdapter : IScreenAdapter {
 
