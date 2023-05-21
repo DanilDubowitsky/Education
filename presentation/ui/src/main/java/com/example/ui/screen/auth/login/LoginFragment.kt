@@ -41,9 +41,9 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
     /*    txtEmail.addTextChangedListener {
             viewModel.onEmailChanged(txtEmail.trimmedTextOrEmpty)
         }*/
-        txtPassword.addTextChangedListener {
+     /*   txtPassword.addTextChangedListener {
             viewModel.onPasswordChanged(txtPassword.trimmedTextOrEmpty)
-        }
+        }*/
     }
 
 }

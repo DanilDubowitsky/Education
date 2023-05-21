@@ -8,5 +8,7 @@
     <color name="colorBlue">#4B9FFF</color>
     <color name="colorGrayBlue">#DCDCE8</color>
     <color name="colorGrayBlueSelected">#BDBDDF</color>
-    <color name="colorGrayBlueDisabled">#F0F3F5</color>
+    <color name="colorGrayBlueDisabled">#BCBCBC</color>
+    <color name="colorGrayBlueTextDisabled">#9F9F9F</color>
+    <color name="gray_70">#6F6F6F</color>
 </resources>

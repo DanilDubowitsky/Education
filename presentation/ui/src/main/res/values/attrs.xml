@@ -3,6 +3,7 @@
 
     <declare-styleable name="InputText">
         <attr name="hint" format="string"/>
+        <attr name="label" format="string"/>
     </declare-styleable>
 
 </resources>

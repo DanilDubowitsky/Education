@@ -1,4 +1,4 @@
-package com.example.ui.utils
+package com.example.utils
 
 import android.content.res.Resources
 

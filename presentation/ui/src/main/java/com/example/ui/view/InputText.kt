@@ -2,22 +2,30 @@ package com.example.ui.view
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.animation.AlphaAnimation
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.animation.addListener
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.models.InputState
 import com.example.ui.R
 import com.example.ui.databinding.WidgetInputTextBinding
 import com.example.ui.utils.FragmentUtils.invoke
-import com.example.ui.utils.IntUtils.dp
+import com.example.utils.IntUtils.dp
+import com.example.ui.view.InputText.AnimState.Companion.isDown
+import com.example.utils.StringUtils.isNotValid
+import com.example.utils.StringUtils.isValid
 
 class InputText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+
+    companion object {
+        private const val VALUE_DURATION_DEFAULT = 100L
+    }
 
     private val binding = WidgetInputTextBinding.inflate(LayoutInflater.from(context), this, true)
 
@@ -25,27 +33,34 @@ class InputText @JvmOverloads constructor(
     val currentState: InputState = _currentState
 
     private val textDefault = ContextCompat.getColor(context, R.color.colorTextPrimary)
-    private val textDisabled = ContextCompat.getColor(context, R.color.colorGrayBlueDisabled)
+    private val textDisabled = ContextCompat.getColor(context, R.color.colorGrayBlueTextDisabled)
 
     private var _hint: String = ""
         set(value) {
             field = value
-            binding.tvLabel.text = value
+
             binding.etInput.hint = value
         }
-    val hint: String = _hint
+    val hint: String get() = _hint
+
+    private var _label: String = ""
+        set(value) {
+            field = value
+            binding.tvLabel.text = value
+        }
+    val label: String get() = _label
+
+    private val text: String get() = binding.etInput.text.toString()
+
+    private var animState: AnimState = AnimState.UP
 
 
     private val editTextUpValueAnimator by lazy {
-
-    }
-
-    private val editTextDownValueAnimation by lazy {
         ValueAnimator.ofInt(
-            binding.etInput.paddingTop,
-            26.dp
+            binding.etInput.paddingTop.pxToDp().toInt(),
+            19.dp
         ).apply {
-            duration = 100
+            duration = VALUE_DURATION_DEFAULT
             addUpdateListener { valueAnimator ->
                 binding {
                     etInput.setPadding(
@@ -56,12 +71,55 @@ class InputText @JvmOverloads constructor(
                     )
                 }
             }
+            addListener(onEnd = {
+                animState = AnimState.UP
+            })
+        }
+    }
+
+    fun Int.pxToDp(): Float {
+        Log.e("TAG1",(this.toFloat() / resources.displayMetrics.density).toInt().toString())
+        return this.toFloat() / resources.displayMetrics.density
+    }
+
+    private val editTextDownValueAnimation by lazy {
+        ValueAnimator.ofInt(
+            binding.etInput.paddingTop,
+            26.dp
+        ).apply {
+            duration = VALUE_DURATION_DEFAULT
+            addUpdateListener { valueAnimator ->
+                binding {
+                    etInput.setPadding(
+                        etInput.paddingStart,
+                        valueAnimator.animatedValue.toString().toInt(),
+                        etInput.paddingEnd,
+                        etInput.paddingBottom
+                    )
+                }
+            }
+            addListener(onEnd = {
+                animState = AnimState.DOWN
+            })
+        }
+    }
+
+    private val alphaVisibleAnimation by lazy {
+        AlphaAnimation(0f, 1f).apply {
+            duration = VALUE_DURATION_DEFAULT
+        }
+    }
+
+    private val alphaInvisibleAnimation by lazy {
+        AlphaAnimation(1f, 0f).apply {
+            duration = VALUE_DURATION_DEFAULT
         }
     }
 
     init {
         context.obtainStyledAttributes(attrs, R.styleable.InputText).apply {
             _hint = getString(R.styleable.InputText_hint).orEmpty()
+            _label = getString(R.styleable.InputText_label).orEmpty().let(::getLabelOrHintIfNotValid)
             recycle()
         }
         processFocusedChange()
@@ -76,16 +134,19 @@ class InputText @JvmOverloads constructor(
             when (state) {
                 is InputState.Default -> {
                     etInput.setTextColor(textDefault)
-                    etInput.isEnabled = true
+                    isEnabled = true
+                    isFocusableInTouchMode = isEnabled
                 }
 
                 is InputState.Disabled -> {
                     etInput.setTextColor(textDisabled)
-                    etInput.isEnabled = false
+                    isEnabled = false
+                    isFocusableInTouchMode = isEnabled
                 }
 
                 is InputState.Error -> {
                     etInput.isEnabled = true
+                    isFocusableInTouchMode = isEnabled
                 }
             }
         }
@@ -103,17 +164,37 @@ class InputText @JvmOverloads constructor(
     private fun changeFaceTextInput(hasFocus: Boolean) {
         binding {
             etInput.hint = if (hasFocus) "" else hint
-            tvLabel.isVisible = hasFocus
+            tvLabel.isVisible = hasFocus || text.isNotEmpty()
         }
     }
 
     private fun startAnimation(hasFocus: Boolean) {
+        val animIsDownAndFocused = animState.isDown() && hasFocus
+        val animIsDownAndNoFocusedAndTextIsNotEmpty = animState.isDown()
+                && !hasFocus && text.isNotEmpty()
+        if (animIsDownAndFocused || animIsDownAndNoFocusedAndTextIsNotEmpty) {
+            return
+        }
         if (hasFocus) {
-            val alphaAnimationVisible = AlphaAnimation(0f, 1f).apply {
-                duration = 100
-            }
-            alphaAnimationVisible.start()
+            binding.tvLabel.startAnimation(alphaVisibleAnimation)
             editTextDownValueAnimation.start()
+        } else {
+            binding.tvLabel.startAnimation(alphaInvisibleAnimation)
+            editTextUpValueAnimator.start()
+        }
+    }
+
+    private fun getLabelOrHintIfNotValid(labelStyle: String) = if (labelStyle.isNotValid()) {
+        _hint
+    } else labelStyle
+
+
+    enum class AnimState {
+        UP, DOWN;
+
+        companion object {
+            fun AnimState.isUp() = this == UP
+            fun AnimState.isDown() = this == DOWN
         }
     }
 
