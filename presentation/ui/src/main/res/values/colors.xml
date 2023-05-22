@@ -11,4 +11,5 @@
     <color name="colorGrayBlueDisabled">#BCBCBC</color>
     <color name="colorGrayBlueTextDisabled">#9F9F9F</color>
     <color name="gray_70">#6F6F6F</color>
+    <color name="colorError_1">#FA7565</color>
 </resources>

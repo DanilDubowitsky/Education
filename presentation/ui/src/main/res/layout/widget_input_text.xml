@@ -17,7 +17,6 @@
         android:minHeight="56dp"
         android:paddingStart="12dp"
         android:paddingTop="19dp"
-        tools:hint="Text"
         android:paddingEnd="12dp"
         android:paddingBottom="12dp"
         android:textColor="@color/colorTextPrimary"
@@ -26,6 +25,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:hint="Text"
         tools:ignore="LabelFor" />
 
     <TextView
@@ -43,5 +44,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Label" />
+
+    <TextView
+        android:id="@+id/tvErrorText"
+        android:layout_width="0dp"
+        style="@style/Text.BadgeMini"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        android:textColor="@color/colorError_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etInput"
+        tools:text="Error" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

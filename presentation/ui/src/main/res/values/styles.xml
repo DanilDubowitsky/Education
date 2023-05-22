@@ -48,6 +48,13 @@
         <item name="android:lineSpacingExtra">2sp</item>
     </style>
 
+    <style name="Text.BadgeMini" parent="Text">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
     <style name="Button.Normal.Green" parent="Widget.AppCompat.Button">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorWhite</item>

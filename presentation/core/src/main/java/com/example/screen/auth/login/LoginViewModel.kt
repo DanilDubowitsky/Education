@@ -18,17 +18,14 @@ class LoginViewModel(
 
     override val initialModelState: LoginModelState = LoginModelState()
 
-    init {
-        intent {
-            updateModelState {
-                copy(emailInputState = InputState.Default)
-            }
-        }
-    }
-
     fun login() = intent {
         val modelState = getModelState()
         if (modelState.email.isNullOrEmpty() || modelState.password.isNullOrEmpty()) {
+            intent {
+                updateModelState {
+                    copy(emailInputState = InputState.Error("Поле Email не может быть пустым"))
+                }
+            }
             return@intent
         }
         updateModelState {

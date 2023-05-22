@@ -2,6 +2,7 @@ package com.example.ui.view
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -39,6 +40,8 @@ class InputText @JvmOverloads constructor(
 
     private val textDefault = ContextCompat.getColor(context, R.color.colorTextPrimary)
     private val textDisabled = ContextCompat.getColor(context, R.color.colorGrayBlueTextDisabled)
+    private val errorColor = ContextCompat.getColor(context, R.color.colorError_1)
+    private val colorDefaultState = ContextCompat.getColor(context, R.color.colorGrayBlue)
 
     private var _hint: String = ""
         set(value) {
@@ -119,7 +122,8 @@ class InputText @JvmOverloads constructor(
     init {
         context.obtainStyledAttributes(attrs, R.styleable.InputText).apply {
             _hint = getString(R.styleable.InputText_hint).orEmpty()
-            _label = getString(R.styleable.InputText_label).orEmpty().let(::getLabelOrHintIfNotValid)
+            _label =
+                getString(R.styleable.InputText_label).orEmpty().let(::getLabelOrHintIfNotValid)
             recycle()
         }
         processFocusedChange()
@@ -134,22 +138,30 @@ class InputText @JvmOverloads constructor(
             when (state) {
                 is InputState.Default -> {
                     etInput.setTextColor(textDefault)
-                    isEnabled = true
-                    isFocusableInTouchMode = isEnabled
+                    setSettingsByEnabled(isEnabled = true)
+                    etInput.backgroundTintList = ColorStateList.valueOf(colorDefaultState)
+                    tvErrorText.isVisible = false
                 }
 
                 is InputState.Disabled -> {
                     etInput.setTextColor(textDisabled)
-                    isEnabled = false
-                    isFocusableInTouchMode = isEnabled
+                    setSettingsByEnabled(isEnabled = false)
+                    tvErrorText.isVisible = false
                 }
 
                 is InputState.Error -> {
-                    etInput.isEnabled = true
-                    isFocusableInTouchMode = isEnabled
+                    setSettingsByEnabled(isEnabled = true)
+                    etInput.background = ContextCompat.getDrawable(context, R.drawable.selector_input_text_error)
+                    tvErrorText.text = state.errorText
+                    tvErrorText.isVisible = true
                 }
             }
         }
+    }
+
+    private fun setSettingsByEnabled(isEnabled: Boolean) {
+        binding.etInput.isEnabled = isEnabled
+        isFocusableInTouchMode = isEnabled
     }
 
     private fun processFocusedChange() {
