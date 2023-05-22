@@ -3,8 +3,7 @@ package com.example.screen.auth.login
 import com.example.core.BaseViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignIn
-import com.example.helper.error.IErrorHandler
-import com.example.models.InputState
+import com.example.logic.model.common.InputState
 import com.example.helper.error.IExceptionHandler
 import com.example.logic.screen.auth.login.LoginSideEffect
 import com.example.logic.screen.auth.login.LoginState

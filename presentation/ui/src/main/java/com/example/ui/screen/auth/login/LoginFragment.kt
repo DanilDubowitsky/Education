@@ -31,18 +31,13 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
     private fun render(state: LoginState) = binding {
         rootGroup.isGone = state.isLoading
         globalProgress.isGone = !state.isLoading
-        txtEmail.setInputState(state.emailInputState)
     }
 
     private fun setupListeners() = with(binding) {
         btnLogin.setClickListener(viewModel::login)
         txtRegister.setClickListener(viewModel::registration)
-    /*    txtEmail.addTextChangedListener {
-            viewModel.onEmailChanged(txtEmail.trimmedTextOrEmpty)
-        }*/
-     /*   txtPassword.addTextChangedListener {
-            viewModel.onPasswordChanged(txtPassword.trimmedTextOrEmpty)
-        }*/
+        txtEmail.addTextChangedListener(viewModel::onEmailChanged)
+        txtPassword.addTextChangedListener(viewModel::onPasswordChanged)
     }
 
 }

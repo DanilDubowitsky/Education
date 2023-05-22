@@ -1,6 +1,6 @@
 package com.example.screen.auth.login
 
-import com.example.models.InputState
+import com.example.logic.model.common.InputState
 
 data class LoginModelState(
     val email: String? = null,

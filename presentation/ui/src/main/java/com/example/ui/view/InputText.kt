@@ -3,22 +3,29 @@ package com.example.ui.view
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Canvas
+import android.os.Bundle
+import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.animation.AlphaAnimation
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.addListener
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import com.example.models.InputState
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
+import com.example.logic.model.common.InputState
 import com.example.ui.R
 import com.example.ui.databinding.WidgetInputTextBinding
-import com.example.ui.utils.FragmentUtils.invoke
-import com.example.utils.IntUtils.dp
+import com.example.ui.utils.dp
+import com.example.ui.utils.invoke
+import com.example.ui.utils.trimmedTextOrEmpty
 import com.example.ui.view.InputText.AnimState.Companion.isDown
+import com.example.ui.view.InputText.AnimState.Companion.isUp
 import com.example.utils.StringUtils.isNotValid
-import com.example.utils.StringUtils.isValid
 
 class InputText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -58,7 +65,16 @@ class InputText @JvmOverloads constructor(
         }
     val label: String get() = _label
 
-    private val text: String get() = binding.etInput.text.toString()
+    private var _text: String = ""
+        set(value) {
+            binding.etInput.setText(value)
+            field = value
+        }
+    val text: String get() = binding.etInput.text.toString()
+
+    private var _focused: Boolean = false
+    val focused: Boolean get() = _focused
+
 
     private var animState: AnimState = AnimState.UP
 
@@ -126,10 +142,73 @@ class InputText @JvmOverloads constructor(
                 getString(R.styleable.InputText_label).orEmpty().let(::getLabelOrHintIfNotValid)
             recycle()
         }
+        binding.etInput.id = View.generateViewId()
         processFocusedChange()
     }
 
-    fun setInputState(state: InputState) {
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        isSaveEnabled = true
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        val bundle = bundleOf(
+            "state" to super.onSaveInstanceState(),
+            "text" to text,
+            "current_state" to currentState,
+            "focused" to focused,
+            "animState" to animState
+        )
+        return bundle
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        var viewStateNew = state
+        state?.let { lastState ->
+            if (lastState is Bundle) {
+                _text = lastState.getString("text").orEmpty()
+                setInputState(lastState.getParcelable("current_state") ?: InputState.Default)
+                viewStateNew = lastState.getParcelable("state")
+                _focused = lastState.getBoolean("focused")
+                animState = lastState.getParcelable("animState") ?: AnimState.UP
+            }
+        }
+        changeFaceTextInput(focused)
+        restoreAnimation()
+        super.onRestoreInstanceState(viewStateNew)
+    }
+
+    private fun restoreAnimation() {
+        if (animState.isUp()) {
+            editTextUpValueAnimator.apply {
+                duration = 0
+                start()
+            }
+        } else {
+            editTextDownValueAnimation.apply {
+                duration = 0
+                start()
+            }
+        }
+    }
+
+    fun addTextChangedListener(onTextChange: (String) -> Unit) {
+        binding.etInput.doOnTextChanged { text, _, _, _ ->
+            onTextChange(text.toString().trim())
+        }
+    }
+
+    /**
+     * Метод вынуждает сменеить View свое состояние на Error и показать ошибку
+     *  */
+    fun setErrorMsg(errorMsg: String) {
+        setInputState(InputState.Error(errorMsg))
+    }
+
+    /**
+     * Метод меняет состояние View
+     *  */
+    private fun setInputState(state: InputState) {
         if (currentState == state) return
 
         _currentState = state
@@ -151,7 +230,8 @@ class InputText @JvmOverloads constructor(
 
                 is InputState.Error -> {
                     setSettingsByEnabled(isEnabled = true)
-                    etInput.background = ContextCompat.getDrawable(context, R.drawable.selector_input_text_error)
+                    etInput.background =
+                        ContextCompat.getDrawable(context, R.drawable.selector_input_text_error)
                     tvErrorText.text = state.errorText
                     tvErrorText.isVisible = true
                 }
@@ -167,10 +247,15 @@ class InputText @JvmOverloads constructor(
     private fun processFocusedChange() {
         binding {
             etInput.setOnFocusChangeListener { _, hasFocus ->
-                changeFaceTextInput(hasFocus = hasFocus)
-                startAnimation(hasFocus = hasFocus)
+                _focused = hasFocus
+                reactToFocus(hasFocus = hasFocus)
             }
         }
+    }
+
+    private fun reactToFocus(hasFocus: Boolean) {
+        changeFaceTextInput(hasFocus = hasFocus)
+        startAnimation(hasFocus = hasFocus)
     }
 
     private fun changeFaceTextInput(hasFocus: Boolean) {
