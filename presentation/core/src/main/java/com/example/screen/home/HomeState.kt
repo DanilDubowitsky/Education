@@ -1,4 +1,13 @@
 package com.example.screen.home
 
-class HomeState {
+data class HomeState(
+    val selectedNavigationItem: NavigationItem
+) {
+
+    enum class NavigationItem {
+        MAIN,
+        FAVORITES,
+        SETTINGS,
+        PROFILE
+    }
 }

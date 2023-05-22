@@ -3,9 +3,11 @@ package com.example.screen.auth.confirmation
 import com.example.core.BaseViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.ConfirmEmail
-import com.example.helper.error.IErrorHandler
+import com.example.helper.error.IExceptionHandler
 import com.example.helper.resource.IResourceHelper
 import com.example.helper.resource.StringResource
+import com.example.logic.screen.auth.confirmation.EmailConfirmationSideEffect
+import com.example.logic.screen.auth.confirmation.EmailConfirmationState
 import com.example.navigation.core.NavigationRouter
 import com.example.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -16,7 +18,7 @@ class EmailConfirmationViewModel(
     private val router: NavigationRouter,
     private val confirmEmail: ConfirmEmail,
     reducer: IReducer<EmailConfirmationModelState, EmailConfirmationState>,
-    errorHandler: IErrorHandler
+    errorHandler: IExceptionHandler
 ) : BaseViewModel<EmailConfirmationModelState,
         EmailConfirmationState, EmailConfirmationSideEffect>(reducer, errorHandler) {
 

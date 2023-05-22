@@ -4,17 +4,18 @@ import com.example.core.BaseViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignUp
 import com.example.domain.exception.ServerException
-import com.example.helper.error.IErrorHandler
+import com.example.helper.error.IExceptionHandler
+import com.example.logic.screen.auth.registration.RegistrationSideEffect
+import com.example.logic.screen.auth.registration.RegistrationState
 import com.example.navigation.core.NavigationRouter
 import com.example.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
-import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class RegistrationViewModel(
     private val router: NavigationRouter,
     private val signUp: SignUp,
     reducer: IReducer<RegistrationModelState, RegistrationState>,
-    errorHandler: IErrorHandler
+    errorHandler: IExceptionHandler
 ) : BaseViewModel<RegistrationModelState, RegistrationState, RegistrationSideEffect>(
     reducer,
     errorHandler

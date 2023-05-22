@@ -2,19 +2,18 @@ package com.example.ui.screen.auth.registration
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
-import com.example.screen.auth.registration.RegistrationSideEffect
-import com.example.screen.auth.registration.RegistrationState
+import com.example.logic.screen.auth.registration.RegistrationSideEffect
+import com.example.logic.screen.auth.registration.RegistrationState
 import com.example.screen.auth.registration.RegistrationViewModel
 import com.example.ui.R
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentRegistrationBinding
-import com.example.ui.utils.FragmentUtils.invoke
-import com.example.ui.utils.FragmentUtils.observe
-import com.example.ui.utils.FragmentUtils.showMessage
-import com.example.ui.utils.ViewUtils.setClickListener
-import com.example.ui.utils.ViewUtils.trimmedTextOrEmpty
+import com.example.ui.utils.invoke
+import com.example.ui.utils.observe
+import com.example.ui.utils.setClickListener
+import com.example.ui.utils.showMessage
+import com.example.ui.utils.trimmedTextOrEmpty
 
 class RegistrationFragment :
     ViewModelHostFragment<RegistrationViewModel, FragmentRegistrationBinding>(

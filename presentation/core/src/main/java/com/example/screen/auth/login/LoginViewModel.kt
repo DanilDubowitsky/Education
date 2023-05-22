@@ -5,6 +5,9 @@ import com.example.core.IReducer
 import com.example.domain.cases.auth.SignIn
 import com.example.helper.error.IErrorHandler
 import com.example.models.InputState
+import com.example.helper.error.IExceptionHandler
+import com.example.logic.screen.auth.login.LoginSideEffect
+import com.example.logic.screen.auth.login.LoginState
 import com.example.navigation.core.NavigationRouter
 import com.example.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -13,7 +16,7 @@ class LoginViewModel(
     private val router: NavigationRouter,
     private val signIn: SignIn,
     reducer: IReducer<LoginModelState, LoginState>,
-    errorHandler: IErrorHandler
+    errorHandler: IExceptionHandler
 ) : BaseViewModel<LoginModelState, LoginState, LoginSideEffect>(reducer, errorHandler) {
 
     override val initialModelState: LoginModelState = LoginModelState()

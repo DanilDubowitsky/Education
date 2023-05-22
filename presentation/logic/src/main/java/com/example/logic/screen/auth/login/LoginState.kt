@@ -1,4 +1,4 @@
-package com.example.screen.auth.login
+package com.example.logic.screen.auth.login
 
 import com.example.models.InputState
 

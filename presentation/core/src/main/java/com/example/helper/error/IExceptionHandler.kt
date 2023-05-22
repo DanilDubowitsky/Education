@@ -1,5 +1,5 @@
 package com.example.helper.error
 
-interface IErrorHandler {
+interface IExceptionHandler {
     fun handleError(throwable: Throwable)
 }

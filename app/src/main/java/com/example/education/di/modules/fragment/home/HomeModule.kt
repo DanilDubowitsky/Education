@@ -2,9 +2,8 @@ package com.example.education.di.modules.fragment.home
 
 import androidx.lifecycle.ViewModel
 import com.example.core.IReducer
-import com.example.domain.cases.auth.SignUp
 import com.example.education.di.viewmodel.ViewModelKey
-import com.example.helper.error.IErrorHandler
+import com.example.helper.error.IExceptionHandler
 import com.example.navigation.core.NavigationRouter
 import com.example.screen.home.HomeModelState
 import com.example.screen.home.HomeReducer
@@ -31,10 +30,10 @@ interface HomeModule {
         @Provides
         fun provideViewModel(
             router: NavigationRouter,
-            signUp: SignUp,
             reducer: IReducer<HomeModelState, HomeState>,
-            errorHandler: IErrorHandler
+            errorHandler: IExceptionHandler
         ): HomeViewModel = HomeViewModel(
+            router,
             reducer,
             errorHandler
         )
