@@ -4,11 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.SignUp
 import com.example.education.di.viewmodel.ViewModelKey
-import com.example.helper.error.IErrorHandler
+import com.example.helper.error.IExceptionHandler
 import com.example.navigation.core.NavigationRouter
 import com.example.screen.auth.registration.RegistrationModelState
 import com.example.screen.auth.registration.RegistrationReducer
-import com.example.screen.auth.registration.RegistrationState
 import com.example.screen.auth.registration.RegistrationViewModel
 import dagger.Binds
 import dagger.Module
@@ -25,15 +24,15 @@ interface RegistrationModule {
 
     companion object {
         @Provides
-        fun provideReducer(): IReducer<RegistrationModelState, RegistrationState> =
+        fun provideReducer(): IReducer<RegistrationModelState, com.example.logic.screen.auth.registration.RegistrationState> =
             RegistrationReducer()
 
         @Provides
         fun provideViewModel(
             router: NavigationRouter,
             signUp: SignUp,
-            reducer: IReducer<RegistrationModelState, RegistrationState>,
-            errorHandler: IErrorHandler
+            reducer: IReducer<RegistrationModelState, com.example.logic.screen.auth.registration.RegistrationState>,
+            errorHandler: IExceptionHandler
         ): RegistrationViewModel = RegistrationViewModel(
             router,
             signUp,

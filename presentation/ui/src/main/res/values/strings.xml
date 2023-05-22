@@ -23,4 +23,6 @@
     <string name="common_close">Закрыть</string>
     <string name="common_error_handle">Ошибка в приложении</string>
 
+    <string name="tests_filters_label">Фильтры</string>
+
 </resources>

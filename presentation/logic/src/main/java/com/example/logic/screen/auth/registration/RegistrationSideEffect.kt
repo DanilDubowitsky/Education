@@ -1,4 +1,4 @@
-package com.example.screen.auth.registration
+package com.example.logic.screen.auth.registration
 
 sealed interface RegistrationSideEffect {
 

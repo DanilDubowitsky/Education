@@ -1,4 +1,13 @@
 package com.example.screen.home
 
-class HomeModelState {
+data class HomeModelState(
+    val navigationItems: BottomNavigationItems = BottomNavigationItems.TESTS
+) {
+
+    enum class BottomNavigationItems {
+        TESTS,
+        FAVORITES,
+        SETTINGS,
+        PROFILE
+    }
 }

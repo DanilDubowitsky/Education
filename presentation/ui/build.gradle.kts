@@ -65,11 +65,15 @@ dependencies {
     implementation("com.google.dagger:dagger-android-support:2.44")
     kapt("com.google.dagger:dagger-android-processor:2.44")
 
+    // Adapter Delegates
+    implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2")
+
     // MVI
     implementation("org.orbit-mvi:orbit-core:4.6.1")
     implementation("org.orbit-mvi:orbit-viewmodel:4.6.1")
     implementation("org.orbit-mvi:orbit-compose:4.6.1")
 
     implementation(project(":presentation:core"))
+    implementation(project(":presentation:logic"))
     implementation(project(":navigation"))
 }

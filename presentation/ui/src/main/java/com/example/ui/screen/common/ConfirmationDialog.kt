@@ -6,9 +6,9 @@ import com.example.navigation.core.NavigationRouter
 import com.example.navigation.screen.NavigationScreen
 import com.example.ui.base.dialog.alert.BaseAlertDialog
 import com.example.ui.databinding.DialogConfirmationBinding
-import com.example.ui.utils.FragmentUtils.getScreen
-import com.example.ui.utils.FragmentUtils.invoke
-import com.example.ui.utils.ViewUtils.setClickListener
+import com.example.ui.utils.getScreen
+import com.example.ui.utils.invoke
+import com.example.ui.utils.setClickListener
 import javax.inject.Inject
 
 class ConfirmationDialog : BaseAlertDialog<DialogConfirmationBinding>(

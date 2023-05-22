@@ -9,22 +9,20 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.example.core.BaseViewModel
 import com.example.navigation.screen.NavigationScreen
-import com.example.ui.utils.ContextUtils.showMessage
 import kotlinx.coroutines.launch
 
-object FragmentUtils {
 
-    fun <MODEL_STATE : Any, UI_STATE : Any, SIDE_EFFECT : Any> BaseViewModel<MODEL_STATE,
-            UI_STATE, SIDE_EFFECT>.observe(
-        fragment: Fragment,
-        renderState: (UI_STATE) -> Unit,
-        onSideEffect: ((SIDE_EFFECT) -> Unit)? = null
-    ) = with(fragment) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                this@observe.stateFlow.collect(renderState)
-            }
+fun <MODEL_STATE : Any, UI_STATE : Any, SIDE_EFFECT : Any> BaseViewModel<MODEL_STATE,
+        UI_STATE, SIDE_EFFECT>.observe(
+    fragment: Fragment,
+    renderState: (UI_STATE) -> Unit,
+    onSideEffect: ((SIDE_EFFECT) -> Unit)? = null
+) = with(fragment) {
+    viewLifecycleOwner.lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            this@observe.stateFlow.collect(renderState)
         }
+    }
         if (onSideEffect != null) {
             viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -34,27 +32,25 @@ object FragmentUtils {
         }
     }
 
-    fun Fragment.showMessage(message: String, isLong: Boolean = true) {
-        requireContext().showMessage(message, isLong)
-    }
+fun Fragment.showMessage(message: String, isLong: Boolean = true) {
+    requireContext().showMessage(message, isLong)
+}
 
-    fun <T : Fragment> Fragment.withScreen(screen: NavigationScreen): T {
-        arguments = Bundle().apply {
-            putSerializable(screen::class.simpleName, screen)
-        }
-        return this as T
+fun <T : Fragment> Fragment.withScreen(screen: NavigationScreen): T {
+    arguments = Bundle().apply {
+        putSerializable(screen::class.simpleName, screen)
     }
+    return this as T
+}
 
-    inline fun <reified T : NavigationScreen> Fragment.getScreen(): T {
-        return arguments?.getSerializable(T::class.simpleName) as T
-    }
+inline fun <reified T : NavigationScreen> Fragment.getScreen(): T {
+    return arguments?.getSerializable(T::class.simpleName) as T
+}
 
-    inline operator fun <T : ViewBinding> T.invoke(binding: T.() -> Unit) {
-        binding.invoke(this)
-    }
+inline operator fun <T : ViewBinding> T.invoke(binding: T.() -> Unit) {
+    binding.invoke(this)
+}
 
-    inline operator fun <T : View> T.invoke(binding: T.() -> Unit) {
-        binding.invoke(this)
-    }
-
+inline operator fun <T : View> T.invoke(binding: T.() -> Unit) {
+    binding.invoke(this)
 }

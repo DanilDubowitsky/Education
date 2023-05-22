@@ -37,6 +37,8 @@ sealed interface NavigationScreen : Serializable {
     sealed interface Main : NavigationScreen {
 
         object Home : Main
+
+        object Tests : Main
     }
 
 }

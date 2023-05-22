@@ -84,5 +84,6 @@ dependencies {
     implementation(project(":presentation"))
     implementation(project(":presentation:core"))
     implementation(project(":presentation:ui"))
+    implementation(project(":presentation:logic"))
 
 }
