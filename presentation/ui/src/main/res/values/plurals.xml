@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="questions_count_plurals" >
+        <item quantity="one">%1$s вопрос</item>
+        <item quantity="two">%1$s вопроса</item>
+        <item quantity="few">%1$s вопроса</item>
+        <item quantity="many">%1$s вопросов</item>
+    </plurals>
+</resources>

@@ -74,5 +74,6 @@ dependencies {
     implementation("org.orbit-mvi:orbit-compose:4.6.1")
 
     implementation(project(":presentation:core"))
+    implementation(project(":presentation:logic"))
     implementation(project(":navigation"))
 }

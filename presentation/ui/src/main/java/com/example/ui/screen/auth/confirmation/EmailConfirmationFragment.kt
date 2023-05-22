@@ -5,8 +5,8 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import com.example.screen.auth.confirmation.EmailConfirmationSideEffect
-import com.example.screen.auth.confirmation.EmailConfirmationState
+import com.example.logic.screen.auth.confirmation.EmailConfirmationSideEffect
+import com.example.logic.screen.auth.confirmation.EmailConfirmationState
 import com.example.screen.auth.confirmation.EmailConfirmationViewModel
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentEmailConfirmationBinding

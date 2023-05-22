@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.widget.addTextChangedListener
-import com.example.screen.auth.login.LoginState
+import com.example.logic.screen.auth.login.LoginState
 import com.example.screen.auth.login.LoginViewModel
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentLoginBinding

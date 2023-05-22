@@ -1,7 +1,7 @@
 package com.example.core
 
 import androidx.lifecycle.ViewModel
-import com.example.helper.error.IErrorHandler
+import com.example.helper.error.IExceptionHandler
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -13,7 +13,7 @@ import org.orbitmvi.orbit.viewmodel.container
 
 abstract class BaseViewModel<MODEL_STATE : Any, UI_STATE : Any, SIDE_EFFECT : Any>(
     protected val reducer: IReducer<MODEL_STATE, UI_STATE>,
-    protected val errorHandler: IErrorHandler
+    protected val errorHandler: IExceptionHandler
 ) : ViewModel(), ContainerHost<UI_STATE, SIDE_EFFECT> {
 
     val stateFlow

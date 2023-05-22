@@ -1,6 +1,7 @@
 package com.example.screen.auth.registration
 
 import com.example.core.IReducer
+import com.example.logic.screen.auth.registration.RegistrationState
 
 class RegistrationReducer : IReducer<RegistrationModelState, RegistrationState> {
 

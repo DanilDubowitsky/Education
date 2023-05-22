@@ -4,12 +4,11 @@ import androidx.lifecycle.ViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.auth.ConfirmEmail
 import com.example.education.di.viewmodel.ViewModelKey
-import com.example.helper.error.IErrorHandler
+import com.example.helper.error.IExceptionHandler
 import com.example.helper.resource.IResourceHelper
 import com.example.navigation.core.NavigationRouter
 import com.example.screen.auth.confirmation.EmailConfirmationModelState
 import com.example.screen.auth.confirmation.EmailConfirmationReducer
-import com.example.screen.auth.confirmation.EmailConfirmationState
 import com.example.screen.auth.confirmation.EmailConfirmationViewModel
 import dagger.Binds
 import dagger.Module
@@ -25,7 +24,7 @@ interface EmailConfirmationModule {
 
     companion object {
         @Provides
-        fun provideReducer(): IReducer<EmailConfirmationModelState, EmailConfirmationState> =
+        fun provideReducer(): IReducer<EmailConfirmationModelState, com.example.logic.screen.auth.confirmation.EmailConfirmationState> =
             EmailConfirmationReducer()
 
         @Provides
@@ -33,8 +32,8 @@ interface EmailConfirmationModule {
             resourceHelper: IResourceHelper,
             router: NavigationRouter,
             confirmEmail: ConfirmEmail,
-            reducer: IReducer<EmailConfirmationModelState, EmailConfirmationState>,
-            errorHandler: IErrorHandler
+            reducer: IReducer<EmailConfirmationModelState, com.example.logic.screen.auth.confirmation.EmailConfirmationState>,
+            errorHandler: IExceptionHandler
         ): EmailConfirmationViewModel = EmailConfirmationViewModel(
             resourceHelper,
             router,

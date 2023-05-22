@@ -4,9 +4,9 @@ import com.example.domain.exception.ServerException
 import com.example.navigation.core.NavigationRouter
 import com.example.navigation.screen.NavigationScreen
 
-class ErrorHandler(
+class ExceptionHandler(
     private val router: NavigationRouter
-) : IErrorHandler {
+) : IExceptionHandler {
 
     override fun handleError(throwable: Throwable) {
         val message = if (throwable is ServerException) {

@@ -11,7 +11,7 @@ class HomeReducer : IReducer<HomeModelState, HomeState> {
     }
 
     private fun HomeModelState.BottomNavigationItems.toUI() = when(this) {
-        HomeModelState.BottomNavigationItems.MAIN -> HomeState.NavigationItem.MAIN
+        HomeModelState.BottomNavigationItems.TESTS -> HomeState.NavigationItem.MAIN
         HomeModelState.BottomNavigationItems.FAVORITES -> HomeState.NavigationItem.FAVORITES
         HomeModelState.BottomNavigationItems.SETTINGS -> HomeState.NavigationItem.SETTINGS
         HomeModelState.BottomNavigationItems.PROFILE -> HomeState.NavigationItem.PROFILE

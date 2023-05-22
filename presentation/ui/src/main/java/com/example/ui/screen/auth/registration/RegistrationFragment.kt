@@ -3,8 +3,8 @@ package com.example.ui.screen.auth.registration
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import com.example.screen.auth.registration.RegistrationSideEffect
-import com.example.screen.auth.registration.RegistrationState
+import com.example.logic.screen.auth.registration.RegistrationSideEffect
+import com.example.logic.screen.auth.registration.RegistrationState
 import com.example.screen.auth.registration.RegistrationViewModel
 import com.example.ui.R
 import com.example.ui.base.fragment.ViewModelHostFragment
