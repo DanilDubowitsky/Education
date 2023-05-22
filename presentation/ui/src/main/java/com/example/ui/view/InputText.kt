@@ -25,6 +25,11 @@ class InputText @JvmOverloads constructor(
 
     companion object {
         private const val VALUE_DURATION_DEFAULT = 100L
+        private const val VALUE_VISIBLE = 1f
+        private const val VALUE_INVISIBLE = 0f
+        private val LABEL_MARGIN_TOP_DEFAULT = 6.dp
+        private val EDIT_TEXT_MARGIN_TOP_UP = 19.dp
+        private val EDIT_TEXT_MARGIN_TOP_DOWN = 26.dp
     }
 
     private val binding = WidgetInputTextBinding.inflate(LayoutInflater.from(context), this, true)
@@ -57,8 +62,8 @@ class InputText @JvmOverloads constructor(
 
     private val editTextUpValueAnimator by lazy {
         ValueAnimator.ofInt(
-            binding.etInput.paddingTop.pxToDp().toInt(),
-            19.dp
+            LABEL_MARGIN_TOP_DEFAULT,
+            EDIT_TEXT_MARGIN_TOP_UP
         ).apply {
             duration = VALUE_DURATION_DEFAULT
             addUpdateListener { valueAnimator ->
@@ -77,15 +82,10 @@ class InputText @JvmOverloads constructor(
         }
     }
 
-    fun Int.pxToDp(): Float {
-        Log.e("TAG1",(this.toFloat() / resources.displayMetrics.density).toInt().toString())
-        return this.toFloat() / resources.displayMetrics.density
-    }
-
     private val editTextDownValueAnimation by lazy {
         ValueAnimator.ofInt(
             binding.etInput.paddingTop,
-            26.dp
+            EDIT_TEXT_MARGIN_TOP_DOWN
         ).apply {
             duration = VALUE_DURATION_DEFAULT
             addUpdateListener { valueAnimator ->
@@ -105,13 +105,13 @@ class InputText @JvmOverloads constructor(
     }
 
     private val alphaVisibleAnimation by lazy {
-        AlphaAnimation(0f, 1f).apply {
+        AlphaAnimation(VALUE_INVISIBLE, VALUE_VISIBLE).apply {
             duration = VALUE_DURATION_DEFAULT
         }
     }
 
     private val alphaInvisibleAnimation by lazy {
-        AlphaAnimation(1f, 0f).apply {
+        AlphaAnimation(VALUE_VISIBLE, VALUE_INVISIBLE).apply {
             duration = VALUE_DURATION_DEFAULT
         }
     }
