@@ -154,7 +154,7 @@ class InputText @JvmOverloads constructor(
 
     private fun processFocusedChange() {
         binding {
-            etInput.setOnFocusChangeListener { v, hasFocus ->
+            etInput.setOnFocusChangeListener { _, hasFocus ->
                 changeFaceTextInput(hasFocus = hasFocus)
                 startAnimation(hasFocus = hasFocus)
             }
