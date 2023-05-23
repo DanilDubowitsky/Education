@@ -1,9 +1,9 @@
 package com.example.ui.view
 
 import android.animation.ValueAnimator
+import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Canvas
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
@@ -15,14 +15,13 @@ import androidx.core.animation.addListener
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import com.example.logic.model.common.InputState
 import com.example.ui.R
 import com.example.ui.databinding.WidgetInputTextBinding
 import com.example.ui.utils.dp
 import com.example.ui.utils.invoke
-import com.example.ui.utils.trimmedTextOrEmpty
+import com.example.ui.view.InputText.AnimState.Companion.getState
 import com.example.ui.view.InputText.AnimState.Companion.isDown
 import com.example.ui.view.InputText.AnimState.Companion.isUp
 import com.example.utils.StringUtils.isNotValid
@@ -38,6 +37,12 @@ class InputText @JvmOverloads constructor(
         private val LABEL_MARGIN_TOP_DEFAULT = 6.dp
         private val EDIT_TEXT_MARGIN_TOP_UP = 19.dp
         private val EDIT_TEXT_MARGIN_TOP_DOWN = 26.dp
+
+        private const val KEY_INSTANCE_STATE_STATE = "state"
+        private const val KEY_INSTANCE_STATE_TEXT = "text"
+        private const val KEY_INSTANCE_STATE_CURRENT_STATE = "current_state"
+        private const val KEY_INSTANCE_STATE_FOCUSED = "focused"
+        private const val KEY_INSTANCE_STATE_ANIM_STATE_ORDER = "anim_state_order"
     }
 
     private val binding = WidgetInputTextBinding.inflate(LayoutInflater.from(context), this, true)
@@ -47,7 +52,6 @@ class InputText @JvmOverloads constructor(
 
     private val textDefault = ContextCompat.getColor(context, R.color.colorTextPrimary)
     private val textDisabled = ContextCompat.getColor(context, R.color.colorGrayBlueTextDisabled)
-    private val errorColor = ContextCompat.getColor(context, R.color.colorError_1)
     private val colorDefaultState = ContextCompat.getColor(context, R.color.colorGrayBlue)
 
     private var _hint: String = ""
@@ -84,20 +88,7 @@ class InputText @JvmOverloads constructor(
             LABEL_MARGIN_TOP_DEFAULT,
             EDIT_TEXT_MARGIN_TOP_UP
         ).apply {
-            duration = VALUE_DURATION_DEFAULT
-            addUpdateListener { valueAnimator ->
-                binding {
-                    etInput.setPadding(
-                        etInput.paddingStart,
-                        valueAnimator.animatedValue.toString().toInt(),
-                        etInput.paddingEnd,
-                        etInput.paddingBottom
-                    )
-                }
-            }
-            addListener(onEnd = {
-                animState = AnimState.UP
-            })
+            valueAnimatorUpdateListener(AnimState.UP)
         }
     }
 
@@ -106,20 +97,7 @@ class InputText @JvmOverloads constructor(
             binding.etInput.paddingTop,
             EDIT_TEXT_MARGIN_TOP_DOWN
         ).apply {
-            duration = VALUE_DURATION_DEFAULT
-            addUpdateListener { valueAnimator ->
-                binding {
-                    etInput.setPadding(
-                        etInput.paddingStart,
-                        valueAnimator.animatedValue.toString().toInt(),
-                        etInput.paddingEnd,
-                        etInput.paddingBottom
-                    )
-                }
-            }
-            addListener(onEnd = {
-                animState = AnimState.DOWN
-            })
+            valueAnimatorUpdateListener(AnimState.DOWN)
         }
     }
 
@@ -151,26 +129,27 @@ class InputText @JvmOverloads constructor(
         isSaveEnabled = true
     }
 
-    override fun onSaveInstanceState(): Parcelable {
-        val bundle = bundleOf(
-            "state" to super.onSaveInstanceState(),
-            "text" to text,
-            "current_state" to currentState,
-            "focused" to focused,
-            "animState" to animState
-        )
-        return bundle
-    }
+    override fun onSaveInstanceState(): Parcelable = bundleOf(
+        KEY_INSTANCE_STATE_STATE to super.onSaveInstanceState(),
+        KEY_INSTANCE_STATE_TEXT to text,
+        KEY_INSTANCE_STATE_CURRENT_STATE to currentState,
+        KEY_INSTANCE_STATE_FOCUSED to focused,
+        KEY_INSTANCE_STATE_ANIM_STATE_ORDER to animState.ordinal
+    )
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         var viewStateNew = state
         state?.let { lastState ->
             if (lastState is Bundle) {
-                _text = lastState.getString("text").orEmpty()
-                setInputState(lastState.getParcelable("current_state") ?: InputState.Default)
-                viewStateNew = lastState.getParcelable("state")
-                _focused = lastState.getBoolean("focused")
-                animState = lastState.getParcelable("animState") ?: AnimState.UP
+                val stateInput =
+                    lastState.getParcelable(KEY_INSTANCE_STATE_CURRENT_STATE) ?: InputState.Default
+                setInputState(state = stateInput)
+
+                _text = lastState.getString(KEY_INSTANCE_STATE_TEXT).orEmpty()
+                viewStateNew = lastState.getParcelable(KEY_INSTANCE_STATE_STATE)
+                _focused = lastState.getBoolean(KEY_INSTANCE_STATE_FOCUSED)
+                animState =
+                    AnimState.getState(lastState.getInt(KEY_INSTANCE_STATE_ANIM_STATE_ORDER))
             }
         }
         changeFaceTextInput(focused)
@@ -285,6 +264,26 @@ class InputText @JvmOverloads constructor(
         _hint
     } else labelStyle
 
+    private fun ValueAnimator.valueAnimatorUpdateListener(animStateNew: AnimState) {
+        duration = VALUE_DURATION_DEFAULT
+        addUpdateListener { valueAnimator ->
+            actionUpdateListener(valueAnimator)
+        }
+        addListener(onEnd = {
+            animState = animStateNew
+        })
+    }
+
+    private fun actionUpdateListener(valueAnimator: ValueAnimator) {
+        binding {
+            etInput.setPadding(
+                etInput.paddingStart,
+                valueAnimator.animatedValue.toString().toInt(),
+                etInput.paddingEnd,
+                etInput.paddingBottom
+            )
+        }
+    }
 
     enum class AnimState {
         UP, DOWN;
@@ -292,6 +291,10 @@ class InputText @JvmOverloads constructor(
         companion object {
             fun AnimState.isUp() = this == UP
             fun AnimState.isDown() = this == DOWN
+
+            fun getState(order: Int) = if (order == 0) {
+                UP
+            } else DOWN
         }
     }
 
