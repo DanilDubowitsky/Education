@@ -171,20 +171,6 @@ class InputText @JvmOverloads constructor(
         super.onRestoreInstanceState(viewStateNew)
     }
 
-    private fun restoreAnimation() {
-        if (animState.isUp()) {
-            editTextUpValueAnimator.apply {
-                duration = 0
-                start()
-            }
-        } else {
-            editTextDownValueAnimation.apply {
-                duration = 0
-                start()
-            }
-        }
-    }
-
     fun addTextChangedListener(onTextChange: (String) -> Unit) {
         binding.etInput.doOnTextChanged { text, _, _, _ ->
             onTextChange(text.toString().trim())
@@ -318,6 +304,20 @@ class InputText @JvmOverloads constructor(
                 etInput.paddingEnd,
                 etInput.paddingBottom
             )
+        }
+    }
+
+    private fun restoreAnimation() {
+        if (animState.isUp()) {
+            editTextUpValueAnimator.apply {
+                duration = 0
+                start()
+            }
+        } else {
+            editTextDownValueAnimation.apply {
+                duration = 0
+                start()
+            }
         }
     }
 
