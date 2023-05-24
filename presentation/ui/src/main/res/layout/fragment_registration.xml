@@ -5,52 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        style="@style/Text.Title"
+    <com.example.ui.view.InputText
         android:id="@+id/titleText"
-        android:layout_width="wrap_content"
+        style="@style/Text.Title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:text="@string/registration_title"
+        android:layout_marginEnd="16dp"
+        app:hint="@string/registration_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <com.example.ui.view.InputText
         android:id="@+id/txtLogin"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/registration_login_fld_hint"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        app:hint="@string/registration_login_fld_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
-    <EditText
+    <com.example.ui.view.InputText
         android:id="@+id/txtNickName"
-        android:hint="@string/registration_nickname_fld_hint"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        app:hint="@string/registration_nickname_fld_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtLogin" />
 
-    <EditText
+    <com.example.ui.view.InputText
         android:id="@+id/txtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/registration_password_fld_hint"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtNickName"
-        tools:layout_editor_absoluteX="0dp" />
+        app:hint="@string/registration_password_fld_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNickName" />
 
-    <EditText
+    <com.example.ui.view.InputText
         android:id="@+id/txtRepeatPassword"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:hint="@string/registration_password_repeat_fld_hint"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword"
-        tools:layout_editor_absoluteX="0dp" />
+        android:layout_marginEnd="16dp"
+        android:inputType="textPassword"
+        app:hint="@string/registration_password_repeat_fld_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
     <androidx.appcompat.widget.AppCompatButton
         style="@style/Button.Normal.Green"

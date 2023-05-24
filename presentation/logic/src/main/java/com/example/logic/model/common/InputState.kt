@@ -8,4 +8,6 @@ sealed class InputState : Parcelable {
     object Default : InputState()
     class Error(val errorText: String) : InputState()
     object Disabled: InputState()
+
+    fun isError() = this is Error
 }
