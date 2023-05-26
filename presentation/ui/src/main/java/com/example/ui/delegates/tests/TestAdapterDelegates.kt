@@ -17,12 +17,12 @@ fun createTestShortAdapterDelegate() = simpleDelegateAdapter<TestShortUI,
             likesCountText.text = item.likes.toString()
             passesCountText.text = item.passesCount.toString()
             titleText.text = item.title
-            questionsCountText.text =
-                context.resources.getQuantityString(
-                    R.plurals.questions_count_plurals,
-                    item.questionsCount,
-                    item.questionsCount
-                )
+//            questionsCountText.text =
+//                context.resources.getQuantityString(
+//                    R.plurals.questions_count_plurals,
+//                    item.questionsCount,
+//                    item.questionsCount
+//                )
         }
     }
 }

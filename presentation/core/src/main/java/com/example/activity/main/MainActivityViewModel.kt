@@ -1,9 +1,11 @@
 package com.example.activity.main
 
+import com.example.logic.activity.MainActivityState
 import com.example.core.BaseViewModel
 import com.example.core.IReducer
 import com.example.domain.interaction.user.UserConfigInteractor
 import com.example.helper.error.IExceptionHandler
+import com.example.logic.activity.MainActivitySideEffect
 import com.example.navigation.core.NavigationRouter
 import com.example.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent

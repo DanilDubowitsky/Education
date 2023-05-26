@@ -3,7 +3,7 @@ package com.example.education.di.modules.activity
 import androidx.lifecycle.ViewModel
 import com.example.activity.main.MainActivityModelState
 import com.example.activity.main.MainActivityReducer
-import com.example.activity.main.MainActivityState
+import com.example.logic.activity.MainActivityState
 import com.example.activity.main.MainActivityViewModel
 import com.example.core.IReducer
 import com.example.domain.interaction.user.UserConfigInteractor

@@ -1,3 +1,3 @@
-package com.example.activity.main
+package com.example.logic.activity
 
 sealed interface MainActivitySideEffect

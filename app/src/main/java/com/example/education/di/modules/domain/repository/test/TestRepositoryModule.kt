@@ -1,7 +1,7 @@
 package com.example.education.di.modules.domain.repository.test
 
 import com.example.core.repository.test.TestRepository
-import com.example.core.source.remote.ITestRemoteSource
+import com.example.core.source.remote.test.ITestRemoteSource
 import com.example.domain.repository.test.ITestRepository
 import dagger.Module
 import dagger.Provides

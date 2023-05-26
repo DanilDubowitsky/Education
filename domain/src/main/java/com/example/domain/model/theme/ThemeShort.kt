@@ -1,4 +1,4 @@
-package com.example.domain.model.test
+package com.example.domain.model.theme
 
 data class ThemeShort(
     val id: String,

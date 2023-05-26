@@ -57,6 +57,9 @@ dependencies {
     implementation("org.orbit-mvi:orbit-viewmodel:4.6.1")
     implementation("org.orbit-mvi:orbit-compose:4.6.1")
 
+    // Ktx
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
     implementation(project(":domain"))
     implementation(project(":presentation:logic"))
     implementation(project(":navigation"))
