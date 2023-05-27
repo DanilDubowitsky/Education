@@ -1,4 +1,4 @@
-package com.example.core.source.remote
+package com.example.core.source.remote.test
 
 import com.example.domain.model.test.TestShort
 

@@ -2,6 +2,7 @@ package com.example.remote.interceptor
 
 import com.example.core.client.remote.refresh.IRefreshRemoteClient
 import com.example.domain.config.IUserConfig
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -26,16 +27,18 @@ class AccessTokenInterceptor(
         return response
     }
 
+    @Synchronized
     private fun getNewToken(): String {
-        return synchronized(this) {
-            runBlocking {
-                val refreshToken = userConfig.getRefreshToken()
-                val newToken = authRemoteClient.refresh(refreshToken)
-                userConfig.setToken(newToken.accessToken)
-                userConfig.setRefreshToken(newToken.refreshToken)
-                userConfig.setLastRefreshTokenUpdateTime(System.currentTimeMillis())
-                newToken.accessToken
-            }
+        return runBlocking(
+            context = CoroutineExceptionHandler { coroutineContext, throwable ->
+
+            }) {
+            val refreshToken = userConfig.getRefreshToken()
+            val newToken = authRemoteClient.refresh(refreshToken)
+            userConfig.setToken(newToken.accessToken)
+            userConfig.setRefreshToken(newToken.refreshToken)
+            userConfig.setLastRefreshTokenUpdateTime(System.currentTimeMillis())
+            newToken.accessToken
         }
     }
 

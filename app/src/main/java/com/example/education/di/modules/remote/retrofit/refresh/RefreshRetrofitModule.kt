@@ -1,4 +1,4 @@
-package com.example.education.di.modules.remote.retrofit
+package com.example.education.di.modules.remote.retrofit.refresh
 
 import com.example.core.client.remote.refresh.IRefreshRemoteClient
 import com.example.domain.config.IUserConfig

@@ -6,16 +6,24 @@ import com.example.education.di.modules.base.AppModule
 import com.example.education.di.modules.config.ConfigModule
 import com.example.education.di.modules.domain.interaction.UserInteractorModule
 import com.example.education.di.modules.domain.repository.test.TestRepositoryModule
+import com.example.education.di.modules.domain.repository.theme.ThemeRepositoryModule
+import com.example.education.di.modules.domain.repository.user.UserRepositoryModule
 import com.example.education.di.modules.domain.usecase.auth.AuthUseCaseModule
 import com.example.education.di.modules.domain.usecase.test.TestUseCaseModule
+import com.example.education.di.modules.domain.usecase.theme.ThemeUseCaseModule
+import com.example.education.di.modules.domain.usecase.user.UserUseCaseModule
 import com.example.education.di.modules.helper.ResourceHelperModule
 import com.example.education.di.modules.navigation.NavigationModule
 import com.example.education.di.modules.remote.client.auth.AuthClientModule
 import com.example.education.di.modules.remote.client.refresh.RefreshClientModule
-import com.example.education.di.modules.remote.retrofit.RefreshRetrofitModule
-import com.example.education.di.modules.remote.retrofit.RetrofitModule
+import com.example.education.di.modules.remote.retrofit.category.ThemeRetrofitModule
+import com.example.education.di.modules.remote.retrofit.refresh.RefreshRetrofitModule
+import com.example.education.di.modules.remote.retrofit.global.RetrofitModule
 import com.example.education.di.modules.remote.retrofit.test.TestRetrofitClientModule
+import com.example.education.di.modules.remote.retrofit.user.UserRetrofitClientModule
 import com.example.education.di.modules.remote.source.test.TestRemoteSourceModule
+import com.example.education.di.modules.remote.source.theme.ThemeRemoteSourceModule
+import com.example.education.di.modules.remote.source.user.UserRemoteSourceModule
 import com.example.education.di.modules.service.auth.AuthServiceModule
 import dagger.BindsInstance
 import dagger.Component
@@ -28,6 +36,7 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ActivityModule::class,
         RetrofitModule::class,
+        // Auth
         AuthClientModule::class,
         AuthServiceModule::class,
         AuthUseCaseModule::class,
@@ -38,10 +47,21 @@ import javax.inject.Singleton
         RefreshClientModule::class,
         ResourceHelperModule::class,
         UserInteractorModule::class,
+        // Test
         TestRepositoryModule::class,
         TestUseCaseModule::class,
         TestRetrofitClientModule::class,
-        TestRemoteSourceModule::class
+        TestRemoteSourceModule::class,
+        //User
+        UserRepositoryModule::class,
+        UserRemoteSourceModule::class,
+        UserUseCaseModule::class,
+        UserRetrofitClientModule::class,
+        //Theme
+        ThemeRemoteSourceModule::class,
+        ThemeRepositoryModule::class,
+        ThemeRetrofitModule::class,
+        ThemeUseCaseModule::class
     ]
 )
 @Singleton

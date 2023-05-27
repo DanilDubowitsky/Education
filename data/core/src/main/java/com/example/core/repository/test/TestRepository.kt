@@ -1,6 +1,6 @@
 package com.example.core.repository.test
 
-import com.example.core.source.remote.ITestRemoteSource
+import com.example.core.source.remote.test.ITestRemoteSource
 import com.example.domain.model.test.TestShort
 import com.example.domain.repository.test.ITestRepository
 

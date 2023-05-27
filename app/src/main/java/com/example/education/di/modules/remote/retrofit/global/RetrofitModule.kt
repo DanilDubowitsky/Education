@@ -1,6 +1,6 @@
-package com.example.education.di.modules.remote.retrofit
+package com.example.education.di.modules.remote.retrofit.global
 
-import com.example.education.di.modules.remote.retrofit.RefreshRetrofitModule.REFRESH_HTTP_CLIENT
+import com.example.education.di.modules.remote.retrofit.refresh.RefreshRetrofitModule.REFRESH_HTTP_CLIENT
 import com.example.remote.BuildConfig
 import com.example.remote.client.retrofit.auth.AuthRetrofitClient
 import com.example.remote.interceptor.AccessTokenInterceptor

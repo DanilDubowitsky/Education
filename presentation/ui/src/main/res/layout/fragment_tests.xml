@@ -1,20 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@color/colorDarkBlue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+    <TextView
+        android:id="@+id/txtUserName"
+        style="@style/Text.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imgAvatar"
+        android:layout_alignBottom="@+id/imgAvatar"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+        app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/imgAvatar"
+        android:textSize="16sp"
+        tools:text="Yolomeister" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
-            android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -23,83 +55,79 @@
                 android:layout_height="wrap_content"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    app:layout_collapseMode="parallax"
+                    android:layout_height="match_parent">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/imgAvatar"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="24dp"
-                        android:background="@color/colorDarkGreen"
-                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/categoriesRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/view_holder_theme" />
 
-                    <TextView
-                        android:id="@+id/txtUserName"
-                        style="@style/Text.Title"
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btnFilter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/imgAvatar"
-                        android:layout_alignBottom="@+id/imgAvatar"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_toEndOf="@+id/imgAvatar"
-                        android:textSize="16sp"
-                        tools:text="Yolomeister" />
+                        android:layout_marginStart="24dp"
+                        app:layout_constraintTop_toBottomOf="@+id/categoriesRecycler"
+                        android:layout_marginTop="18dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_filter"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                </RelativeLayout>
+                    <TextView
+                        style="@style/Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/tests_filters_label"
+                        app:layout_constraintBottom_toBottomOf="@+id/btnFilter"
+                        app:layout_constraintStart_toEndOf="@+id/btnFilter"
+                        app:layout_constraintTop_toTopOf="@+id/btnFilter" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categoriesRecycler"
+            android:id="@+id/testsRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="16dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/appBar"
-            tools:listitem="@layout/view_holder_theme" />
+            tools:listitem="@layout/view_holder_test_short" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="18dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_filter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categoriesRecycler" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <TextView
-            style="@style/Text.Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="@string/tests_filters_label"
-            app:layout_constraintBottom_toBottomOf="@+id/btnFilter"
-            app:layout_constraintStart_toEndOf="@+id/btnFilter"
-            app:layout_constraintTop_toTopOf="@+id/btnFilter" />
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/rootGroup"
+        app:constraint_referenced_ids="coordinator, imgAvatar, txtUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/testsRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    <ProgressBar
+        android:id="@+id/globalProgress"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:indeterminateTint="@color/colorBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFilter"
-        tools:listitem="@layout/view_holder_test_short" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
