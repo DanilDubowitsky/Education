@@ -63,4 +63,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":presentation:logic"))
     implementation(project(":navigation"))
+
+    //serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 }

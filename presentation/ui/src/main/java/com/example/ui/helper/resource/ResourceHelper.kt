@@ -11,6 +11,7 @@ class ResourceHelper(
 
     override fun extractStringResource(resource: StringResource): String = when (resource) {
         is StringResource.Common -> extractResource(resource)
+        is StringResource.Error -> extractErrorStringResource(resource)
     }
 
     private fun extractResource(resource: StringResource.Common): String = when (resource) {
@@ -18,5 +19,10 @@ class ResourceHelper(
         StringResource.Common.CommonConfirmation -> context.getString(R.string.common_yes)
         StringResource.Common.ConfirmExitString ->
             context.getString(R.string.email_confirmation_exit_confirmation_text)
+    }
+
+    private fun extractErrorStringResource(resource: StringResource.Error): String = when(resource) {
+        StringResource.Error.EmailIsEmptyString -> context.getString(R.string.error_email_empty)
+        StringResource.Error.PasswordIsEmptyString -> context.getString(R.string.error_password_empty)
     }
 }
