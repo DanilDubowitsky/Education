@@ -31,10 +31,9 @@ class TestsViewModel(
         launchJob {
             val testsDeferred = async { getTests() }
             val userDeferred = async { getCurrentUser() }
-            val themesDeferred = async { getThemes() }
             val tests = testsDeferred.await()
             val user = userDeferred.await()
-            val themes = themesDeferred.await()
+            val themes = getThemes()
             updateModelState {
                 copy(
                     tests = tests,

@@ -3,6 +3,7 @@ package com.example.education.di.modules.fragment.home.tests
 import androidx.lifecycle.ViewModel
 import com.example.core.IReducer
 import com.example.domain.cases.test.GetTests
+import com.example.domain.cases.theme.GetThemes
 import com.example.domain.cases.user.GetCurrentUser
 import com.example.education.di.viewmodel.ViewModelKey
 import com.example.helper.error.IExceptionHandler
@@ -18,6 +19,7 @@ import dagger.multibindings.IntoMap
 
 @Module
 interface TestsModule {
+
     @Binds
     @IntoMap
     @ViewModelKey(TestsViewModel::class)
@@ -33,11 +35,13 @@ interface TestsModule {
             getTests: GetTests,
             router: NavigationRouter,
             getCurrentUser: GetCurrentUser,
+            getThemes: GetThemes,
             reducer: IReducer<TestsModelState, TestsState>,
             exceptionHandler: IExceptionHandler
         ): TestsViewModel = TestsViewModel(
             router,
             getTests,
+            getThemes,
             getCurrentUser,
             reducer,
             exceptionHandler

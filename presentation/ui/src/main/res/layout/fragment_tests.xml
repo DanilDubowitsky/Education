@@ -64,11 +64,12 @@
                         android:id="@+id/categoriesRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginTop="10dp"
-                        android:layout_marginStart="24dp"
+                        android:layout_marginHorizontal="20dp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:listitem="@layout/view_holder_theme" />
 
                     <androidx.appcompat.widget.AppCompatImageButton
