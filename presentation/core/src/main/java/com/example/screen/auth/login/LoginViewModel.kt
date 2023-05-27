@@ -21,7 +21,7 @@ class LoginViewModel(
     private val resourceHelper: IResourceHelper,
     reducer: IReducer<LoginModelState, LoginState>,
     errorHandler: IExceptionHandler
-) : BaseViewModel<LoginModelState, LoginState, LoginSideтEffect>(reducer, errorHandler) {
+) : BaseViewModel<LoginModelState, LoginState, LoginSideEffect>(reducer, errorHandler) {
 
     override val initialModelState: LoginModelState = LoginModelState()
 

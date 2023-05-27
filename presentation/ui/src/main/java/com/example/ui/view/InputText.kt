@@ -145,7 +145,7 @@ class InputText @JvmOverloads constructor(
         var viewStateNew = state
         state?.let { lastState ->
             if (lastState is Bundle) {
-                val stateInput =
+                val stateInput : InputState =
                     lastState.getParcelable(KEY_INSTANCE_STATE_CURRENT_STATE) ?: InputState.Default
                 setInputState(state = stateInput)
 
