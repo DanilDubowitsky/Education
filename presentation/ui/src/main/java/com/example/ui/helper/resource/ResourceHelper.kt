@@ -19,12 +19,10 @@ class ResourceHelper(
         StringResource.Common.CommonConfirmation -> context.getString(R.string.common_yes)
         StringResource.Common.ConfirmExitString ->
             context.getString(R.string.email_confirmation_exit_confirmation_text)
-        else -> { "" }
     }
 
     private fun extractErrorStringResource(resource: StringResource.Error): String = when(resource) {
         StringResource.Error.EmailIsEmptyString -> context.getString(R.string.error_email_empty)
         StringResource.Error.PasswordIsEmptyString -> context.getString(R.string.error_password_empty)
-        else -> { "" }
     }
 }

@@ -1,12 +1,7 @@
 package com.example.logic.screen.auth.login
 
 sealed interface LoginSideEffect {
+    data class EmailInputError(val error: String) : LoginSideEffect
 
-    object InvalidPasswordError : LoginSideEffect
-
-    object LoginInvalidError : LoginSideEffect
-
-    data class ErrorTextInput(val mapError: Map<String, String>) : LoginSideEffect
-
-    data class DisableTextInput(val mapDisabled: Map<String, Boolean>) : LoginSideEffect
+    data class PasswordInputError(val error: String) : LoginSideEffect
 }

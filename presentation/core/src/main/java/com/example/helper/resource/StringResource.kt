@@ -18,7 +18,4 @@ sealed interface StringResource {
         object PasswordIsEmptyString : Error
 
     }
-
-    fun StringResource.getString(resourceHelper: IResourceHelper) =
-        resourceHelper.extractStringResource(this)
 }

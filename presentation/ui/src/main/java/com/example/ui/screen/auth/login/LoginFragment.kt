@@ -1,24 +1,17 @@
 package com.example.ui.screen.auth.login
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
+import android.view.View.inflate
 import androidx.core.view.isGone
-import androidx.core.widget.addTextChangedListener
 import com.example.logic.screen.auth.login.LoginSideEffect
 import com.example.logic.screen.auth.login.LoginState
-import com.example.logic.screen.auth.registration.RegistrationSideEffect
-import com.example.navigation.screen.NavigationScreen
 import com.example.screen.auth.login.LoginViewModel
-import com.example.ui.R
 import com.example.ui.base.fragment.ViewModelHostFragment
 import com.example.ui.databinding.FragmentLoginBinding
 import com.example.ui.utils.invoke
 import com.example.ui.utils.observe
 import com.example.ui.utils.setClickListener
-import com.example.ui.utils.showMessage
-import com.example.ui.utils.trimmedTextOrEmpty
 
 class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding>(
     LoginViewModel::class,
@@ -41,15 +34,13 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
     }
 
     private fun onSideEffect(sideEffect: LoginSideEffect) {
-        if (sideEffect is LoginSideEffect.ErrorTextInput) {
-            sideEffect.mapError.forEach {
-                binding.txtEmail.setErrorMsgByTag(it.key, it.value)
-                binding.txtPassword.setErrorMsgByTag(it.key, it.value)
+        when (sideEffect) {
+            is LoginSideEffect.EmailInputError -> {
+                binding.txtEmail.setErrorMsg(sideEffect.error)
             }
-        }
-        if (sideEffect is LoginSideEffect.DisableTextInput) {
-            sideEffect.mapDisabled.forEach {
-                binding.txtEmail.setEnabledByTag(it.key, it.value)
+
+            is LoginSideEffect.PasswordInputError -> {
+                binding.txtPassword.setErrorMsg(sideEffect.error)
             }
         }
     }

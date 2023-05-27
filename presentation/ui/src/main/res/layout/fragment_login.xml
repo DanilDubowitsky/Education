@@ -23,7 +23,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:hint="Email"
-        app:tagName="email"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +39,7 @@
         app:hint="@string/registration_password_fld_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
-        app:tagName="password" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
     <ProgressBar
         android:id="@+id/globalProgress"

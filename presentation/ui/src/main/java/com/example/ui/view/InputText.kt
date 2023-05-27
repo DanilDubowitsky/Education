@@ -1,9 +1,7 @@
 package com.example.ui.view
 
 import android.animation.ValueAnimator
-import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.content.Context
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
@@ -17,17 +15,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import com.example.logic.model.common.InputState
 import com.example.ui.R
 import com.example.ui.databinding.WidgetInputTextBinding
 import com.example.ui.utils.dp
 import com.example.ui.utils.invoke
-import com.example.ui.view.InputText.AnimState.Companion.getState
 import com.example.ui.view.InputText.AnimState.Companion.isDown
 import com.example.ui.view.InputText.AnimState.Companion.isUp
-import com.example.utils.StringUtils.isNotValid
-import com.example.utils.StringUtils.isValid
-import com.example.utils.StringUtils.orDefault
+import com.example.utils.StringUtils.isEmptyBlank
+import com.example.utils.StringUtils.isNotEmptyBlank
+import kotlinx.parcelize.Parcelize
 
 class InputText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -46,8 +42,6 @@ class InputText @JvmOverloads constructor(
         private const val KEY_INSTANCE_STATE_CURRENT_STATE = "current_state"
         private const val KEY_INSTANCE_STATE_FOCUSED = "focused"
         private const val KEY_INSTANCE_STATE_ANIM_STATE_ORDER = "anim_state_order"
-
-        private const val DEFAULT_TAG_NAME = "input"
     }
 
     private val binding = WidgetInputTextBinding.inflate(LayoutInflater.from(context), this, true)
@@ -57,7 +51,6 @@ class InputText @JvmOverloads constructor(
 
     private val textDefault = ContextCompat.getColor(context, R.color.colorTextPrimary)
     private val textDisabled = ContextCompat.getColor(context, R.color.colorGrayBlueTextDisabled)
-    private val colorDefaultState = ContextCompat.getColor(context, R.color.colorGrayBlue)
 
     private var _hint: String = ""
         set(value) {
@@ -84,9 +77,7 @@ class InputText @JvmOverloads constructor(
     private var _focused: Boolean = false
     val focused: Boolean get() = _focused
 
-
     private var animState: AnimState = AnimState.UP
-    private var tagName: String = DEFAULT_TAG_NAME
 
     var isEnabledInput: Boolean = true
         get() = binding.etInput.isEnabled
@@ -131,7 +122,6 @@ class InputText @JvmOverloads constructor(
             _hint = getString(R.styleable.InputText_hint).orEmpty()
             _label =
                 getString(R.styleable.InputText_label).orEmpty().let(::getLabelOrHintIfNotValid)
-            tagName = getString(R.styleable.InputText_tagName).orDefault(DEFAULT_TAG_NAME)
             recycle()
         }
         binding.etInput.id = View.generateViewId()
@@ -174,27 +164,9 @@ class InputText @JvmOverloads constructor(
     fun addTextChangedListener(onTextChange: (String) -> Unit) {
         binding.etInput.doOnTextChanged { text, _, _, _ ->
             onTextChange(text.toString().trim())
-            if (text.toString().isValid() && currentState.isError()) {
+            if (text.toString().isNotEmptyBlank() && currentState.isError()) {
                 setInputState(InputState.Default)
             }
-        }
-    }
-
-    /**
-     * Метод вынуждает сменеить View свое состояние на [InputState.Disabled] и показать ошибку если tagName совпадает
-     *  */
-    fun setEnabledByTag(tag: String, enabled: Boolean) {
-        if (tag == tagName) {
-            isEnabledInput = enabled
-        }
-    }
-
-    /**
-     * Метод вынуждает сменеить View свое состояние на [InputState.Error] и показать ошибку если tagName совпадает
-     *  */
-    fun setErrorMsgByTag(tag: String, errorMsg: String) {
-        if (tag == tagName) {
-            setErrorMsg(errorMsg = errorMsg)
         }
     }
 
@@ -238,7 +210,8 @@ class InputText @JvmOverloads constructor(
         }
     }
 
-    private fun drawable(@DrawableRes drawableId: Int) = ContextCompat.getDrawable(context, drawableId)
+    private fun drawable(@DrawableRes drawableId: Int) =
+        ContextCompat.getDrawable(context, drawableId)
 
     private fun setSettingsByEnabled(isEnabled: Boolean) {
         binding.etInput.isEnabled = isEnabled
@@ -282,7 +255,7 @@ class InputText @JvmOverloads constructor(
         }
     }
 
-    private fun getLabelOrHintIfNotValid(labelStyle: String) = if (labelStyle.isNotValid()) {
+    private fun getLabelOrHintIfNotValid(labelStyle: String) = if (labelStyle.isEmptyBlank()) {
         _hint
     } else labelStyle
 
@@ -332,6 +305,15 @@ class InputText @JvmOverloads constructor(
                 UP
             } else DOWN
         }
+    }
+
+    @Parcelize
+    sealed class InputState : Parcelable {
+        object Default : InputState()
+        class Error(val errorText: String) : InputState()
+        object Disabled : InputState()
+
+        fun isError() = this is Error
     }
 
 }

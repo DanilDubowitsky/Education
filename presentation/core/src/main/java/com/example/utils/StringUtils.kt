@@ -1,9 +1,9 @@
 package com.example.utils
 
 object StringUtils {
-    fun String.isValid() = this.isNotEmpty() && this.isNotBlank()
+    fun String.isNotEmptyBlank() = this.isNotEmpty() && this.isNotBlank()
 
-    fun String.isNotValid() = !this.isValid()
+    fun String.isEmptyBlank() = !this.isNotEmptyBlank()
 
     fun String?.orDefault(default: String)  = this ?: default
 }

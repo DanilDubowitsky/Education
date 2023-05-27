@@ -7,8 +7,7 @@ class LoginReducer : IReducer<LoginModelState, LoginState> {
 
     override fun reduce(modelState: LoginModelState): LoginState {
         return LoginState(
-            isLoading = modelState.loadingState == LoginModelState.LoadingState.LOADING,
-            emailInputState = modelState.emailInputState
+            isLoading = modelState.loadingState == LoginModelState.LoadingState.LOADING
         )
     }
 
