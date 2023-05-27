@@ -34,10 +34,10 @@ class RegistrationFragment :
     private fun setupListeners() = binding {
         btnRegister.setClickListener {
             viewModel.register(
-                txtNickName.trimmedTextOrEmpty,
-                txtPassword.trimmedTextOrEmpty,
-                txtLogin.trimmedTextOrEmpty,
-                txtRepeatPassword.trimmedTextOrEmpty
+                txtNickName.text,
+                txtPassword.text,
+                txtLogin.text,
+                txtRepeatPassword.text
             )
         }
     }
