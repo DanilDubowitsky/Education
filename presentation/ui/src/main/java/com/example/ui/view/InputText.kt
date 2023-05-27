@@ -44,7 +44,7 @@ class InputText @JvmOverloads constructor(
         private const val KEY_INSTANCE_STATE_ANIM_STATE_ORDER = "anim_state_order"
     }
 
-    private val binding = WidgetInputTextBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding = WidgetInputTextBinding.inflate(LayoutInflater.from(context), this)
 
     private var _currentState: InputState = InputState.Default
     val currentState: InputState get() = _currentState
