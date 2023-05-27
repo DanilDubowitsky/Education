@@ -25,4 +25,7 @@
 
     <string name="tests_filters_label">Фильтры</string>
 
+    <string name="error_email_empty">Поле email не может быть пустым</string>
+    <string name="error_password_empty">Поле password не может быть пустым</string>
+
 </resources>

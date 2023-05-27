@@ -34,6 +34,27 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="Text.Default" parent="Text">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+    </style>
+
+    <style name="Text.Badge" parent="Text">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
+    <style name="Text.BadgeMini" parent="Text">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
     <style name="Text.Montserrat.Normal.White" parent="Text">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:fontFamily">@font/montserrat_medium</item>

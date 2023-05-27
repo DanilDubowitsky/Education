@@ -10,4 +10,12 @@ sealed interface StringResource {
 
         object CommonCancellation : Common
     }
+
+    sealed interface Error : StringResource {
+
+        object EmailIsEmptyString : Error
+
+        object PasswordIsEmptyString : Error
+
+    }
 }

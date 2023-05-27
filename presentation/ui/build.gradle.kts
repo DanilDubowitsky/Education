@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -76,4 +77,7 @@ dependencies {
     implementation(project(":presentation:core"))
     implementation(project(":presentation:logic"))
     implementation(project(":navigation"))
+
+    //serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 }
