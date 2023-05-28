@@ -12,6 +12,7 @@ import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
+import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import java.util.concurrent.ConcurrentHashMap
@@ -67,6 +68,15 @@ abstract class BaseViewModel<MODEL_STATE : Any, UI_STATE : Any, SIDE_EFFECT : An
             reduce {
                 reducer.reduce(modelState)
             }
+        }
+    }
+
+    protected fun singleIntent(
+        key: String,
+        action: suspend SimpleSyntax<UI_STATE, SIDE_EFFECT>.() -> Unit
+    ) = intent {
+        launchSingleJob(key) {
+            action()
         }
     }
 

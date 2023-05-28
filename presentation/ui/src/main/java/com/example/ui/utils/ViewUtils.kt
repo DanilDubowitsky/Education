@@ -3,13 +3,12 @@ package com.example.ui.utils
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.view.isVisible
+import com.facebook.shimmer.ShimmerFrameLayout
 
 
 private const val CLICK_DELAY = 300L
@@ -61,3 +60,15 @@ private fun ImageButton.switchToDisable(
     if (disableIcon != null) setImageDrawable(context.loadDrawable(disableIcon))
     if (disableIconTint != null) setColorFilter(context.loadColor(disableIconTint))
 }
+
+var ShimmerFrameLayout.isShimmerHide: Boolean
+    get() = visibility == View.GONE
+    set(value) {
+        visibility = if (!value) {
+            startShimmer()
+            View.VISIBLE
+        } else {
+            stopShimmer()
+            View.GONE
+        }
+    }

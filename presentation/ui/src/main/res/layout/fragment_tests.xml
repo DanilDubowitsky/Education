@@ -26,21 +26,31 @@
         android:layout_alignTop="@+id/imgAvatar"
         android:layout_alignBottom="@+id/imgAvatar"
         android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@+id/imgAvatar"
-        app:layout_constraintTop_toTopOf="@+id/imgAvatar"
-        app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/imgAvatar"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imgAvatar"
         tools:text="Yolomeister" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/appBarShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/app_bar_placeholder" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
@@ -57,14 +67,40 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    app:layout_collapseMode="parallax"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    app:layout_collapseMode="parallax">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/categoriesRecycler"
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/themesShimmer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/theme_view_holder_placeholder" />
+
+                            <include layout="@layout/theme_view_holder_placeholder" />
+
+                            <include layout="@layout/theme_view_holder_placeholder" />
+
+                            <include layout="@layout/theme_view_holder_placeholder" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/themesRecycler"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -77,11 +113,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        app:layout_constraintTop_toBottomOf="@+id/categoriesRecycler"
-                        android:layout_marginTop="18dp"
+                        android:layout_marginTop="60dp"
                         android:background="?selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_filter"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         style="@style/Text.Label"
@@ -105,8 +141,8 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="24dp"
             android:layout_marginBottom="16dp"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             tools:listitem="@layout/view_holder_test_short" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

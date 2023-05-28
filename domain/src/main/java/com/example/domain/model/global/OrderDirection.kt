@@ -1,6 +1,6 @@
 package com.example.domain.model.global
 
-enum class OrderSide {
+enum class OrderDirection {
     ASCENDING,
     DESCENDING
 }

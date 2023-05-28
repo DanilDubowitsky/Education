@@ -9,9 +9,14 @@ class TestsReducer : IReducer<TestsModelState, TestsState> {
     override fun reduce(modelState: TestsModelState): TestsState {
         return TestsState(
             tests = modelState.tests.toUIModels(),
-            isLoading = modelState.loadingState == TestsModelState.LoadingState.LOADING,
+            isTestsLoading = modelState.testsLoadingState
+                    == TestsModelState.TestsLoadingState.LOADING,
             userName = modelState.user?.userName.orEmpty(),
-            themes = modelState.themes.toUIModels()
+            themes = modelState.themes.toUIModels(),
+            isProfileLoading = modelState.profileLoadingState
+                    == TestsModelState.ProfileLoadingState.LOADING,
+            isThemesLoading = modelState.themesLoadingState
+                    == TestsModelState.ThemesLoadingState.LOADING
         )
     }
 

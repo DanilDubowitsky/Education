@@ -60,11 +60,11 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     // Dagger
-    implementation("com.google.dagger:dagger:2.44.2")
-    kapt("com.google.dagger:dagger-compiler:2.44")
-    implementation("com.google.dagger:dagger-android:2.44")
-    implementation("com.google.dagger:dagger-android-support:2.44")
-    kapt("com.google.dagger:dagger-android-processor:2.44")
+    implementation("com.google.dagger:dagger:2.45")
+    kapt("com.google.dagger:dagger-compiler:2.45")
+    implementation("com.google.dagger:dagger-android:2.45")
+    implementation("com.google.dagger:dagger-android-support:2.45")
+    kapt("com.google.dagger:dagger-android-processor:2.45")
 
     // Adapter Delegates
     implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2")
@@ -80,4 +80,7 @@ dependencies {
 
     //serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+
+    // Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }

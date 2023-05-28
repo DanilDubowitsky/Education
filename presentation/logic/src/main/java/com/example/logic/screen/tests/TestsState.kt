@@ -6,6 +6,8 @@ import com.example.logic.model.theme.ThemeShortUI
 data class TestsState(
     val tests: List<TestShortUI>,
     val themes: List<ThemeShortUI>,
-    val isLoading: Boolean,
-    val userName: String
+    val userName: String,
+    val isProfileLoading: Boolean,
+    val isThemesLoading: Boolean,
+    val isTestsLoading: Boolean,
 )

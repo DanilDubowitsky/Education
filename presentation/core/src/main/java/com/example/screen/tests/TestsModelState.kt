@@ -8,10 +8,23 @@ data class TestsModelState(
     val user: User? = null,
     val tests: List<TestShort> = emptyList(),
     val themes: List<ThemeShort> = emptyList(),
-    val loadingState: LoadingState = LoadingState.LOADING
+    val testsLoadingState: TestsLoadingState = TestsLoadingState.LOADING,
+    val profileLoadingState: ProfileLoadingState = ProfileLoadingState.LOADING,
+    val themesLoadingState: ThemesLoadingState = ThemesLoadingState.LOADING,
+    val selectedThemeId: String? = null
 ) {
 
-    enum class LoadingState {
+    enum class ProfileLoadingState {
+        LOADING,
+        IDLE
+    }
+
+    enum class ThemesLoadingState {
+        LOADING,
+        IDLE
+    }
+
+    enum class TestsLoadingState {
         LOADING,
         IDLE
     }

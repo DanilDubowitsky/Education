@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Text.Title"
-    android:layout_width="wrap_content"
+    android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
-    android:focusable="true"
-    android:clickable="true"
-    android:background="@drawable/background_selectable_theme"
+    android:background="@color/colorShimmerLight"
     android:paddingHorizontal="10dp"
     android:paddingVertical="8dp"
-    android:textSize="14sp"
-    tools:text="История" />
+    android:textSize="14sp" />

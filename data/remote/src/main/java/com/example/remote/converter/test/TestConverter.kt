@@ -1,7 +1,12 @@
 package com.example.remote.converter.test
 
+import com.example.domain.model.test.TestOrderField
 import com.example.domain.model.test.TestShort
 import com.example.remote.model.test.RemoteTestShort
+
+private const val TITLE = "title"
+private const val CREATION = "creation"
+private const val QUESTIONS = "questions"
 
 fun RemoteTestShort.toModel() = TestShort(
     id,
@@ -14,3 +19,9 @@ fun RemoteTestShort.toModel() = TestShort(
 )
 
 fun List<RemoteTestShort>.toModels() = this.map(RemoteTestShort::toModel)
+
+fun TestOrderField.toRemote() = when (this) {
+    TestOrderField.TITLE -> TITLE
+    TestOrderField.CREATION -> CREATION
+    TestOrderField.QUESTIONS -> QUESTIONS
+}
