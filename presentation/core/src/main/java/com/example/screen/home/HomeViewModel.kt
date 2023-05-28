@@ -44,7 +44,8 @@ class HomeViewModel(
     }
 
     fun navigateToCreation() = intent {
-
+        val screen = NavigationScreen.Main.CreationTest
+        router.navigateTo(screen)
     }
 
     companion object {

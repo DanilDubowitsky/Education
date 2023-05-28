@@ -28,6 +28,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="Text.Title1" parent="Text">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="Text.Label" parent="Text">
         <item name="android:textColor">@color/colorTextPrimary</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
@@ -84,6 +90,12 @@
     <style name="AppModalStyle"
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_dialog_drawable</item>
+    </style>
+    
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="rippleColor">@color/colorDarkGreenLight</item>
+        <item name="chipBackgroundColor">@color/selector_color_chip_background</item>
+        <item name="android:textColor">@color/selector_color_chip_text_color</item>
     </style>
 
 </resources>

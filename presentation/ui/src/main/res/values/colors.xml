@@ -5,6 +5,7 @@
     <color name="colorWhite">#FFFF</color>
     <color name="colorLightGrey">#B9C3D3</color>
     <color name="colorDarkGreen">#1CCD9D</color>
+    <color name="colorDarkGreenLight">#21F1B8</color>
     <color name="colorBlue">#4B9FFF</color>
     <color name="colorGrayBlue">#DCDCE8</color>
     <color name="colorGrayBlueSelected">#BDBDDF</color>
@@ -13,4 +14,5 @@
     <color name="gray_70">#6F6F6F</color>
     <color name="colorError_1">#FA7565</color>
     <color name="colorDarkBlue">#4576D1</color>
+    <color name="colorGray_1">#101D30</color>
 </resources>
