@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.navigation"
+    namespace = "com.testeducation.navigation"
     compileSdk = 33
 
     defaultConfig {
