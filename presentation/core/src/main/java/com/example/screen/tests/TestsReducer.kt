@@ -7,17 +7,19 @@ import com.example.logic.screen.tests.TestsState
 class TestsReducer : IReducer<TestsModelState, TestsState> {
 
     override fun reduce(modelState: TestsModelState): TestsState {
-        return TestsState(
-            tests = modelState.tests.toUIModels(),
-            isTestsLoading = modelState.testsLoadingState
-                    == TestsModelState.TestsLoadingState.LOADING,
-            userName = modelState.user?.userName.orEmpty(),
-            themes = modelState.themes.toUIModels(),
-            isProfileLoading = modelState.profileLoadingState
-                    == TestsModelState.ProfileLoadingState.LOADING,
-            isThemesLoading = modelState.themesLoadingState
-                    == TestsModelState.ThemesLoadingState.LOADING
-        )
+        return modelState.run {
+            TestsState(
+                tests = tests.toUIModels(),
+                isTestsLoading = testsLoadingState
+                        == TestsModelState.TestsLoadingState.LOADING,
+                userName = user?.userName.orEmpty(),
+                themes = themes.toUIModels(modelState.selectedThemeId),
+                isProfileLoading = profileLoadingState
+                        == TestsModelState.ProfileLoadingState.LOADING,
+                isThemesLoading = themesLoadingState
+                        == TestsModelState.ThemesLoadingState.LOADING
+            )
+        }
     }
 
 }

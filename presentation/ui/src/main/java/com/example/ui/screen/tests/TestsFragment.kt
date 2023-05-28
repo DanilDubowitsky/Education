@@ -57,9 +57,13 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     private fun render(state: TestsState) = binding {
         bindProfile(state)
         bindThemes(state)
-        //rootGroup.isGone = state.isTestsLoading
+        bindTests(state)
+    }
+
+    private fun FragmentTestsBinding.bindTests(state: TestsState) {
         globalProgress.isGone = !state.isTestsLoading
         testsAdapter.items = state.tests
+        testsRecycler.isInvisible = state.isTestsLoading
     }
 
     private fun FragmentTestsBinding.bindThemes(state: TestsState) {

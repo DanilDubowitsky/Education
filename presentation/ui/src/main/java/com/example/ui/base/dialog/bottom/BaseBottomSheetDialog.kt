@@ -42,8 +42,8 @@ abstract class BaseBottomSheetDialog<VB : ViewBinding>(
     }
 
     protected open fun onDialogShow(dialogInterface: DialogInterface) {
-        dialogInterface as BottomSheetDialog
-        dialogInterface.behavior.peekHeight = Resources.getSystem().displayMetrics.heightPixels
+//        dialogInterface as BottomSheetDialog
+//        dialogInterface.behavior.peekHeight = Resources.getSystem().displayMetrics.heightPixels
     }
 
     override fun onAttach(context: Context) {

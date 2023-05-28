@@ -66,6 +66,7 @@ class TestsViewModel(
         if (modelState.selectedThemeId == id) return@intent
         updateModelState {
             copy(
+                tests = emptyList(),
                 selectedThemeId = id,
                 testsLoadingState = TestsModelState.TestsLoadingState.LOADING
             )
