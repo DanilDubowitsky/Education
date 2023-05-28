@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ui"
+    namespace = "com.testeducation.ui"
     compileSdk = 33
 
     defaultConfig {
