@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.testeducation.logic"
+    namespace = "com.example.logic"
     compileSdk = 33
 
     defaultConfig {

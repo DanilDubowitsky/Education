@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.testeducation.remote"
+    namespace = "com.example.remote"
     compileSdk = 33
 
     defaultConfig {

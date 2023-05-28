@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.testeducation.local"
+    namespace = "com.example.local"
     compileSdk = 33
 
     defaultConfig {
