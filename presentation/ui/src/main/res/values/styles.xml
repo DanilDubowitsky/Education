@@ -72,7 +72,7 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
-        <item name="android:background">@drawable/background_green_oval</item>
+        <item name="android:background">@drawable/background_green_rounded</item>
         <item name="android:elevation">0dp</item>
         <item name="android:stateListAnimator">@null</item>
     </style>

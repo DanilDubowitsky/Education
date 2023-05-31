@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.core"
+    namespace = "com.testeducation.core"
     compileSdk = 33
 
     defaultConfig {
