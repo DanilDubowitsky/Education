@@ -1,30 +1,21 @@
 package com.example.ui.screen.tests.creation
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.logic.model.test.TestShortUI
 import com.example.logic.model.theme.ThemeShortUI
 import com.example.logic.screen.tests.creation.TestCreationState
 import com.example.screen.tests.creation.TestCreationViewModel
 import com.example.ui.R
-import com.example.ui.base.dialog.bottom.BaseBottomSheetDialog
 import com.example.ui.base.dialog.bottom.ViewModelHostBottomSheetDialog
 import com.example.ui.databinding.DialogCreationTestBinding
-import com.example.ui.databinding.DialogInformationBinding
-import com.example.ui.delegates.tests.createTestShortAdapterDelegate
-import com.example.ui.delegates.tests.createThemeShortAdapterDelegate
 import com.example.ui.utils.dp
 import com.example.ui.utils.observe
-import com.example.ui.utils.simpleDiffUtil
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 class CreationTestDialogFragment :
     ViewModelHostBottomSheetDialog<DialogCreationTestBinding, TestCreationViewModel>(
@@ -35,6 +26,9 @@ class CreationTestDialogFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.observe(this, ::render)
+        val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        binding.root.layoutParams.height = Resources.getSystem().displayMetrics.heightPixels
     }
 
     private fun render(testCreationState: TestCreationState) {
