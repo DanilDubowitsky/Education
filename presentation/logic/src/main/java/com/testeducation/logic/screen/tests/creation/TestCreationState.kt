@@ -1,6 +1,6 @@
 package com.testeducation.logic.screen.tests.creation
 
-import com.example.logic.model.theme.ThemeShortUI
+import com.testeducation.logic.model.theme.ThemeShortUI
 
 data class TestCreationState(
     val themes: List<ThemeShortUI>,

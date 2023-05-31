@@ -1,6 +1,6 @@
 package com.testeducation.screen.tests.creation
 
-import com.example.domain.model.theme.ThemeShort
+import com.testeducation.domain.model.theme.ThemeShort
 
 data class TestCreationModelState(
     val themes: List<ThemeShort> = emptyList(),

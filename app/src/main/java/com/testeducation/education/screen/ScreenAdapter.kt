@@ -10,6 +10,7 @@ import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.tests.TestsFragment
+import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.utils.withScreen
 
 class ScreenAdapter : IScreenAdapter {

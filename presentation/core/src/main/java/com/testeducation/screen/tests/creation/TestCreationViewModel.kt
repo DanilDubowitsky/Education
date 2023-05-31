@@ -1,16 +1,14 @@
 package com.testeducation.screen.tests.creation
 
-import com.example.core.BaseViewModel
-import com.example.core.IReducer
-import com.example.domain.cases.theme.GetThemes
-import com.example.helper.error.IExceptionHandler
-import com.example.logic.screen.tests.TestsSideEffect
-import com.example.logic.screen.tests.TestsState
-import com.example.logic.screen.tests.creation.TestCreationSideEffect
-import com.example.logic.screen.tests.creation.TestCreationState
-import com.example.screen.tests.TestsModelState
+import com.testeducation.core.BaseViewModel
+import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.theme.GetThemes
+import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
+import com.testeducation.logic.screen.tests.creation.TestCreationState
 import kotlinx.coroutines.Dispatchers
 import org.orbitmvi.orbit.syntax.simple.intent
+
 
 class TestCreationViewModel(
     reducer: IReducer<TestCreationModelState, TestCreationState>,

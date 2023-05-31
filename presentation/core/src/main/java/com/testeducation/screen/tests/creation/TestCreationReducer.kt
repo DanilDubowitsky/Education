@@ -1,10 +1,8 @@
 package com.testeducation.screen.tests.creation
 
-import com.example.converter.test.toUIModels
-import com.example.core.IReducer
-import com.example.logic.screen.tests.TestsState
-import com.example.logic.screen.tests.creation.TestCreationState
-import com.example.screen.tests.TestsModelState
+import com.testeducation.converter.test.toUIModels
+import com.testeducation.core.IReducer
+import com.testeducation.logic.screen.tests.creation.TestCreationState
 
 class TestCreationReducer: IReducer<TestCreationModelState, TestCreationState> {
 

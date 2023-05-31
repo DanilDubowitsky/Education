@@ -4,18 +4,18 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
-import com.example.logic.model.theme.ThemeShortUI
-import com.example.logic.screen.tests.creation.TestCreationState
-import com.example.screen.tests.creation.TestCreationViewModel
-import com.example.ui.R
-import com.example.ui.base.dialog.bottom.ViewModelHostBottomSheetDialog
-import com.example.ui.databinding.DialogCreationTestBinding
-import com.example.ui.utils.dp
-import com.example.ui.utils.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import com.testeducation.logic.model.theme.ThemeShortUI
+import com.testeducation.logic.screen.tests.creation.TestCreationState
+import com.testeducation.screen.tests.creation.TestCreationViewModel
+import com.testeducation.ui.R
+import com.testeducation.ui.base.dialog.bottom.ViewModelHostBottomSheetDialog
+import com.testeducation.ui.databinding.DialogCreationTestBinding
+import com.testeducation.ui.utils.dp
+import com.testeducation.ui.utils.observe
 
 class CreationTestDialogFragment :
     ViewModelHostBottomSheetDialog<DialogCreationTestBinding, TestCreationViewModel>(

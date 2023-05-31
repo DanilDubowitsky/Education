@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.ui.view.InputText
+        <com.testeducation.ui.view.InputText
             android:id="@+id/inputText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
