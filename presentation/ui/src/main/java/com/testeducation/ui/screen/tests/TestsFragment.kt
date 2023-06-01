@@ -17,6 +17,8 @@ import com.testeducation.ui.utils.isShimmerHide
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.simpleDiffUtil
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import com.testeducation.logic.model.test.TestOrderFieldUI
+import com.testeducation.ui.R
 
 class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding>(
     TestsViewModel::class,
@@ -55,6 +57,14 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private fun render(state: TestsState) = binding {
+        val orderFieldText = when (state.selectedSortField) {
+            TestOrderFieldUI.TITLE -> getString(R.string.tests_list_sort_field_title)
+            TestOrderFieldUI.CREATION -> getString(R.string.tests_list_sort_field_creation_date)
+            TestOrderFieldUI.QUESTIONS -> getString(R.string.tests_list_sort_field_questions)
+        }
+
+        sortLabel.text = orderFieldText
+
         bindProfile(state)
         bindThemes(state)
         bindTests(state)

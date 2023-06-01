@@ -1,5 +1,6 @@
 package com.testeducation.screen.tests
 
+import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.domain.model.user.User
@@ -11,7 +12,8 @@ data class TestsModelState(
     val testsLoadingState: TestsLoadingState = TestsLoadingState.LOADING,
     val profileLoadingState: ProfileLoadingState = ProfileLoadingState.LOADING,
     val themesLoadingState: ThemesLoadingState = ThemesLoadingState.LOADING,
-    val selectedThemeId: String? = null
+    val selectedThemeId: String? = null,
+    val selectedOrderField: TestOrderField = TestOrderField.CREATION
 ) {
 
     enum class ProfileLoadingState {

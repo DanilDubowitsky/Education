@@ -9,5 +9,15 @@ data class TestShortUI(
     val isPublic: Boolean,
     val likes: Int,
     val passesCount: Int,
-    val theme: ThemeShortUI
-)
+    val theme: ThemeShortUI,
+    val color: String,
+    val style: Style
+) {
+
+    enum class Style {
+        X,
+        O,
+        DOTTED,
+        ELLIPSE
+    }
+}

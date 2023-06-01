@@ -31,7 +31,8 @@ class TestsViewModel(
     private fun loadTests() = singleIntent(getThemes.javaClass.name) {
         val modelState = getModelState()
         val tests = getTests(
-            themeId = modelState.selectedThemeId
+            themeId = modelState.selectedThemeId,
+            orderField = modelState.selectedOrderField
         )
         updateModelState {
             copy(

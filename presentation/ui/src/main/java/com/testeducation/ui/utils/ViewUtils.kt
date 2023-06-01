@@ -72,3 +72,11 @@ var ShimmerFrameLayout.isShimmerHide: Boolean
             View.GONE
         }
     }
+
+fun View.hideView() {
+    visibility = View.GONE
+}
+
+fun View.showView() {
+    visibility = View.VISIBLE
+}

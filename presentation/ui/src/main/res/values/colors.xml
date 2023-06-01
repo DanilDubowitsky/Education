@@ -14,4 +14,6 @@
     <color name="colorError_1">#FA7565</color>
     <color name="colorDarkBlue">#4576D1</color>
     <color name="colorShimmerLight">#DDDDDD</color>
+    <color name="colorOrange">#FCAF2A</color>
+    <color name="colorRed">#FF6951</color>
 </resources>
