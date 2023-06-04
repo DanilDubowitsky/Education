@@ -3,11 +3,11 @@ package com.testeducation.ui.utils
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.animation.Animation
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.core.view.isVisible
 import com.facebook.shimmer.ShimmerFrameLayout
 
 
@@ -79,4 +79,26 @@ fun View.hideView() {
 
 fun View.showView() {
     visibility = View.VISIBLE
+}
+
+fun View.startAnimation(
+    animation: Animation,
+    onAnimationStart: (() -> Unit)? = null,
+    onAnimationRepeat: (() -> Unit)? = null,
+    onAnimationEnd: (() -> Unit)? = null
+) {
+    animation.setAnimationListener(object : Animation.AnimationListener {
+        override fun onAnimationStart(animation: Animation?) {
+            onAnimationStart?.invoke()
+        }
+
+        override fun onAnimationEnd(animation: Animation?) {
+            onAnimationEnd?.invoke()
+        }
+
+        override fun onAnimationRepeat(animation: Animation?) {
+            onAnimationRepeat?.invoke()
+        }
+    })
+    this.startAnimation(animation)
 }

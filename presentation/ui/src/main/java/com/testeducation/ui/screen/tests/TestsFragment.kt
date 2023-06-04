@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
+import androidx.recyclerview.widget.RecyclerView
+import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.TestsState
 import com.testeducation.screen.tests.TestsViewModel
+import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestsBinding
 import com.testeducation.ui.delegates.tests.createTestShortAdapterDelegate
@@ -16,9 +20,6 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.isShimmerHide
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.simpleDiffUtil
-import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import com.testeducation.logic.model.test.TestOrderFieldUI
-import com.testeducation.ui.R
 
 class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding>(
     TestsViewModel::class,
@@ -45,6 +46,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
         observeData()
+        setupListeners()
     }
 
     private fun observeData() {
@@ -70,6 +72,20 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         bindTests(state)
     }
 
+    private fun setupListeners() = with(binding) {
+        testsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > SCROLL_OFFSET) viewModel.onScrollToTop()
+
+                if (dy < -SCROLL_OFFSET) viewModel.onScrollToBottom()
+
+                if (!recyclerView.canScrollVertically(-1)) {
+                    viewModel.onScrollToBottom()
+                }
+            }
+        })
+    }
+
     private fun FragmentTestsBinding.bindTests(state: TestsState) {
         globalProgress.isGone = !state.isTestsLoading
         testsAdapter.items = state.tests
@@ -87,6 +103,10 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         txtUserName.isGone = state.isProfileLoading
         appBarShimmer.isShimmerHide = !state.isProfileLoading
         txtUserName.text = state.userName
+    }
+
+    private companion object {
+        const val SCROLL_OFFSET = 20
     }
 
 }
