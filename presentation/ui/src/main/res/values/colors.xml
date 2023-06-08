@@ -16,4 +16,5 @@
     <color name="colorShimmerLight">#DDDDDD</color>
     <color name="colorOrange">#FCAF2A</color>
     <color name="colorRed">#FF6951</color>
+    <color name="colorTextSecondary">#101D30</color>
 </resources>

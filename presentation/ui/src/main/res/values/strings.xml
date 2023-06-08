@@ -32,4 +32,11 @@
     <string name="tests_list_sort_field_creation_date">Дата создания</string>
     <string name="tests_list_sort_field_questions">Кол-во вопросов</string>
 
+    <string name="tests_filters_title_label">Фильтры</string>
+    <string name="tests_filters_question_type_label">Тип вопросов</string>
+    <string name="tests_filters_questions_count_label">Количество вопросов</string>
+    <string name="tests_filters_answer_time_label">Время ответа</string>
+    <string name="tests_filters_theme_label">Тема</string>
+    <string name="tests_filters_refresh_label">Сбросить</string>
+
 </resources>

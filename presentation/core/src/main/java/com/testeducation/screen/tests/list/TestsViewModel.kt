@@ -1,4 +1,4 @@
-package com.testeducation.screen.tests
+package com.testeducation.screen.tests.list
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
@@ -8,8 +8,8 @@ import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
-import com.testeducation.logic.screen.tests.TestsSideEffect
-import com.testeducation.logic.screen.tests.TestsState
+import com.testeducation.logic.screen.tests.list.TestsSideEffect
+import com.testeducation.logic.screen.tests.list.TestsState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax

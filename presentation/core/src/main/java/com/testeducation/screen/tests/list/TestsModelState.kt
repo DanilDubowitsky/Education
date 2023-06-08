@@ -1,4 +1,4 @@
-package com.testeducation.screen.tests
+package com.testeducation.screen.tests.list
 
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort

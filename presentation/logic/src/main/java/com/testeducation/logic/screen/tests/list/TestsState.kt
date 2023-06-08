@@ -1,4 +1,4 @@
-package com.testeducation.logic.screen.tests
+package com.testeducation.logic.screen.tests.list
 
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI

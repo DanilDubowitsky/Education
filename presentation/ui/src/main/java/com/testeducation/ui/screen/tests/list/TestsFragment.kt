@@ -1,4 +1,4 @@
-package com.testeducation.ui.screen.tests
+package com.testeducation.ui.screen.tests.list
 
 import android.os.Bundle
 import android.view.View
@@ -9,8 +9,8 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.logic.model.theme.ThemeShortUI
-import com.testeducation.logic.screen.tests.TestsState
-import com.testeducation.screen.tests.TestsViewModel
+import com.testeducation.logic.screen.tests.list.TestsState
+import com.testeducation.screen.tests.list.TestsViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestsBinding
