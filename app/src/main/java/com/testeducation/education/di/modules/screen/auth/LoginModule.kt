@@ -1,4 +1,4 @@
-package com.testeducation.education.di.modules.fragment.auth
+package com.testeducation.education.di.modules.screen.auth
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer

@@ -1,4 +1,4 @@
-package com.testeducation.education.di.modules.fragment.home
+package com.testeducation.education.di.modules.screen.home
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer

@@ -1,5 +1,6 @@
 package com.testeducation.screen.tests.list
 
+import android.util.Log
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
@@ -27,14 +28,13 @@ class TestsViewModel(
     override val initialModelState: TestsModelState = TestsModelState()
 
     init {
-        intent {
-            loadTests()
-            loadThemes()
-            loadUserData()
-        }
+        Log.e("INIT", this.toString())
+        loadTests()
+        loadThemes()
+        loadUserData()
     }
 
-    private suspend fun SimpleSyntax<TestsState, TestsSideEffect>.loadTests()  {
+    private fun loadTests() = intent {
         val modelState = getModelState()
         val tests = getTests(
             themeId = modelState.selectedThemeId,
@@ -43,7 +43,8 @@ class TestsViewModel(
         updateModelState {
             copy(
                 tests = tests + listOf(
-                    TestShort("ddf",
+                    TestShort(
+                        "ddf",
                         "Test1",
                         2,
                         true,
@@ -51,7 +52,8 @@ class TestsViewModel(
                         1000,
                         ThemeShort("2", "Theme1")
                     ),
-                    TestShort("asda",
+                    TestShort(
+                        "asda",
                         "Test2",
                         2,
                         true,
@@ -59,7 +61,8 @@ class TestsViewModel(
                         1000,
                         ThemeShort("2", "Theme2")
                     ),
-                    TestShort("ddsf",
+                    TestShort(
+                        "ddsf",
                         "Test1",
                         2,
                         true,
@@ -67,7 +70,8 @@ class TestsViewModel(
                         1000,
                         ThemeShort("2", "Theme3")
                     ),
-                    TestShort("ddgdfgf",
+                    TestShort(
+                        "ddgdfgf",
                         "Test4",
                         2,
                         true,
@@ -81,7 +85,7 @@ class TestsViewModel(
         }
     }
 
-    private suspend fun SimpleSyntax<TestsState, TestsSideEffect>.loadThemes() {
+    private fun loadThemes() = intent {
         val themes = getThemes()
         updateModelState {
             copy(
@@ -91,7 +95,7 @@ class TestsViewModel(
         }
     }
 
-    private suspend fun SimpleSyntax<TestsState, TestsSideEffect>.loadUserData() {
+    private fun loadUserData() = intent {
         val user = getCurrentUser()
         updateModelState {
             copy(
@@ -120,6 +124,11 @@ class TestsViewModel(
 
     fun onScrollToTop() = intent {
         router.sendResult(NavigationScreen.Main.Tests.OnScrollToTop, Unit, false)
+    }
+
+    fun openFiltersScreen() = intent {
+        val screen = NavigationScreen.Tests.Filters
+        router.navigateTo(screen)
     }
 
 }

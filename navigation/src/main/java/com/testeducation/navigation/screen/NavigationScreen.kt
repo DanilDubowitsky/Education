@@ -46,4 +46,9 @@ sealed interface NavigationScreen : Serializable {
         }
     }
 
+    sealed interface Tests : NavigationScreen {
+
+        object Filters : Tests
+    }
+
 }

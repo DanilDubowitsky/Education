@@ -3,16 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tvTitle"
         style="@style/Text.Title.Secondary"
-        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/tests_filters_title_label"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/btnClose"
         app:layout_constraintStart_toEndOf="@+id/btnClose"
         app:layout_constraintTop_toTopOf="@+id/btnClose" />
@@ -21,23 +22,58 @@
         android:id="@+id/btnClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_close"
         android:layout_marginStart="24dp"
         android:layout_marginTop="19dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvRefresh"
         style="@style/Text.Label.Medium"
-        android:textSize="14sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:text="@string/tests_filters_refresh_label"
         android:textColor="@color/colorDarkGreen"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvTitle" />
+
+    <TextView
+        android:id="@+id/tvQuestionType"
+        style="@style/Text.Label.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/tests_filters_question_type_label"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/btnClose"
+        app:layout_constraintTop_toBottomOf="@+id/btnClose" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTheme"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvQuestionType"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestionType"
+        tools:listitem="@layout/view_holder_theme" />
+
+    <TextView
+        android:id="@+id/tvQuestionsCount"
+        style="@style/Text.Label.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/tests_filters_questions_count_label"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/btnClose"
+        app:layout_constraintTop_toBottomOf="@+id/rvTheme" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

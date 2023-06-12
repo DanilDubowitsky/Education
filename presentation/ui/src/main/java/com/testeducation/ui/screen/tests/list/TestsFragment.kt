@@ -19,6 +19,7 @@ import com.testeducation.ui.delegates.tests.createThemeShortAdapterDelegate
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.isShimmerHide
 import com.testeducation.ui.utils.observe
+import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
 
 class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding>(
@@ -84,6 +85,8 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
                 }
             }
         })
+        filtersLabel.setClickListener(viewModel::openFiltersScreen)
+        btnFilter.setClickListener(viewModel::openFiltersScreen)
     }
 
     private fun FragmentTestsBinding.bindTests(state: TestsState) {
