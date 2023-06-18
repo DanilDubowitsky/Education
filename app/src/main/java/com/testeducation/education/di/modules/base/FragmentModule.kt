@@ -1,15 +1,17 @@
 package com.testeducation.education.di.modules.base
 
-import com.testeducation.education.di.modules.fragment.auth.EmailConfirmationModule
-import com.testeducation.education.di.modules.fragment.auth.LoginModule
-import com.testeducation.education.di.modules.fragment.auth.RegistrationModule
-import com.testeducation.education.di.modules.fragment.home.HomeModule
-import com.testeducation.education.di.modules.fragment.home.tests.TestsModule
+import com.testeducation.education.di.modules.screen.auth.EmailConfirmationModule
+import com.testeducation.education.di.modules.screen.auth.LoginModule
+import com.testeducation.education.di.modules.screen.auth.RegistrationModule
+import com.testeducation.education.di.modules.screen.home.HomeModule
+import com.testeducation.education.di.modules.screen.tests.filters.TestsFiltersModule
+import com.testeducation.education.di.modules.screen.tests.list.TestsModule
 import com.testeducation.ui.screen.auth.confirmation.EmailConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
 import com.testeducation.ui.screen.home.FragmentHome
-import com.testeducation.ui.screen.tests.TestsFragment
+import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
+import com.testeducation.ui.screen.tests.list.TestsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -30,5 +32,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [TestsModule::class])
     fun testsFragment(): TestsFragment
+
+    @ContributesAndroidInjector(modules = [TestsFiltersModule::class])
+    fun testsFiltersFragment(): TestsFiltersFragment
 
 }

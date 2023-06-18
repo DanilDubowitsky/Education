@@ -8,13 +8,14 @@
         android:id="@+id/homeFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="72dp"
+        android:visibility="gone"
         android:layout_marginBottom="24dp"
         android:layout_marginHorizontal="24dp"
         android:background="@drawable/background_navigation_rounded"

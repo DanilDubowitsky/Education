@@ -10,6 +10,7 @@ class Navigator(
     private val screenAdapter: IScreenAdapter,
     private val fragmentManager: FragmentManager = activity.supportFragmentManager,
     private val fragmentFactory: FragmentFactory = fragmentManager.fragmentFactory,
+    private val animationSet: AnimationSet? = null
 ) : INavigator {
 
     // TODO: add screen history
@@ -52,9 +53,18 @@ class Navigator(
 
     private fun moveFragment(screen: Screen.FragmentScreen) {
         val fragment = screen.createFragment(fragmentFactory)
-        fragmentManager.beginTransaction().replace(containerId, fragment, screen.javaClass.name)
+        val transaction = fragmentManager.beginTransaction()
             .addToBackStack(null)
-            .commit()
+        if (animationSet != null) {
+            transaction.setCustomAnimations(
+                animationSet.enterAnim,
+                animationSet.exitAnim,
+                animationSet.popEnterAnim,
+                animationSet.popExitAnim
+            )
+        }
+        transaction.replace(containerId, fragment, screen.javaClass.name)
+        transaction.commit()
         currentVisibleScreen = screen
     }
 
