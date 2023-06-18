@@ -1,8 +1,8 @@
-package com.testeducation.core.config
+package com.testeducation.core.config.user
 
-import com.testeducation.domain.config.IUserConfig
+import com.testeducation.core.config.IConfigSource
+import com.testeducation.domain.config.user.IUserConfig
 import com.testeducation.domain.utils.MINUTE_IN_MILLIS
-import com.testeducation.domain.utils.WEEK_IN_MILLIS
 
 class UserConfig(
     private val configSource: IConfigSource
@@ -33,7 +33,7 @@ class UserConfig(
     }
 
     override fun getLastRefreshTokenUpdateTime(): Long = configSource.getLong(
-        REFRESH_TOKEN_UPDATE_TIME
+        REFRESH_TOKEN_UPDATE_TIME,
     )
 
     companion object {

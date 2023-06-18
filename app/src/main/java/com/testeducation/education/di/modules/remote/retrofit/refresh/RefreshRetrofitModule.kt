@@ -1,7 +1,7 @@
 package com.testeducation.education.di.modules.remote.retrofit.refresh
 
 import com.testeducation.core.client.remote.refresh.IRefreshRemoteClient
-import com.testeducation.domain.config.IUserConfig
+import com.testeducation.domain.config.user.IUserConfig
 import com.testeducation.remote.BuildConfig
 import com.testeducation.remote.client.retrofit.refresh.RefreshRetrofitClient
 import com.testeducation.remote.interceptor.AccessTokenInterceptor

@@ -18,4 +18,9 @@ sealed interface StringResource {
         object PasswordIsEmptyString : Error
 
     }
+
+    sealed interface Update : StringResource {
+
+        object UpdateRequiredError : Update
+    }
 }

@@ -12,6 +12,7 @@ class ResourceHelper(
     override fun extractStringResource(resource: StringResource): String = when (resource) {
         is StringResource.Common -> extractResource(resource)
         is StringResource.Error -> extractErrorStringResource(resource)
+        is StringResource.Update -> extractUpdateResource(resource)
     }
 
     private fun extractResource(resource: StringResource.Common): String = when (resource) {
@@ -24,5 +25,9 @@ class ResourceHelper(
     private fun extractErrorStringResource(resource: StringResource.Error): String = when(resource) {
         StringResource.Error.EmailIsEmptyString -> context.getString(R.string.error_email_empty)
         StringResource.Error.PasswordIsEmptyString -> context.getString(R.string.error_password_empty)
+    }
+
+    private fun extractUpdateResource(resource: StringResource.Update) = when(resource) {
+        StringResource.Update.UpdateRequiredError -> context.getString(R.string.app_update_required)
     }
 }
