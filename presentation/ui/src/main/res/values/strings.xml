@@ -32,6 +32,8 @@
 
     <string name="test_creation_step_1">Шаг 1. Придумайте название</string>
     <string name="test_creation_step_2">Шаг 2. Выберите тему</string>
+    <string name="test_creation_step_3">Шаг 3. Выберите цвет</string>
+    <string name="test_creation_step_4">Выберите дизайн</string>
     <string name="test_creation_hint_input_name">Назовите этот тест</string>
 
 </resources>

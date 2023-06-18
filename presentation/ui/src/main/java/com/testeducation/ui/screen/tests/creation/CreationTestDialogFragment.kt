@@ -1,11 +1,10 @@
 package com.testeducation.ui.screen.tests.creation
 
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import androidx.core.view.isVisible
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -15,6 +14,7 @@ import com.testeducation.ui.R
 import com.testeducation.ui.base.dialog.bottom.ViewModelHostBottomSheetDialog
 import com.testeducation.ui.databinding.DialogCreationTestBinding
 import com.testeducation.ui.utils.dp
+import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
 
 class CreationTestDialogFragment :
@@ -29,6 +29,7 @@ class CreationTestDialogFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.observe(this, ::render)
+        onClickListenerProcess()
     }
 
     private fun render(testCreationState: TestCreationState) {
@@ -45,6 +46,22 @@ class CreationTestDialogFragment :
             }.run {
                 binding.chGroupTheme.addView(this)
             }
+        }
+        changeStepVisible(isFirstVisible = testCreationState.isFirstScreenVisible)
+    }
+
+    private fun onClickListenerProcess() {
+        binding {
+            btnNext.setOnClickListener {
+                viewModel.changeStateStep()
+            }
+        }
+    }
+
+    private fun changeStepVisible(isFirstVisible: Boolean) {
+        binding {
+            containerFirst.isVisible = isFirstVisible
+            containerSecond.isVisible = !isFirstVisible
         }
     }
 

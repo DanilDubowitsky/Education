@@ -4,12 +4,13 @@ import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.IReducer
 import com.testeducation.logic.screen.tests.creation.TestCreationState
 
-class TestCreationReducer: IReducer<TestCreationModelState, TestCreationState> {
+class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> {
 
     override fun reduce(modelState: TestCreationModelState): TestCreationState {
         return TestCreationState(
             isLoading = modelState.loadingState == TestCreationModelState.LoadingState.LOADING,
-            themes = modelState.themes.toUIModels()
+            themes = modelState.themes.toUIModels(),
+            isFirstScreenVisible = modelState.stepState == TestCreationModelState.StepState.FIRST
         )
     }
 

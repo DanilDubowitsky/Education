@@ -4,5 +4,6 @@ import com.testeducation.logic.model.theme.ThemeShortUI
 
 data class TestCreationState(
     val themes: List<ThemeShortUI>,
-    val isLoading: Boolean
+    val isLoading: Boolean,
+    val isFirstScreenVisible: Boolean
 )

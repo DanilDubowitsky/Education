@@ -1,12 +1,15 @@
 package com.testeducation.screen.tests.creation
 
+import androidx.lifecycle.viewModelScope
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.TestCreationState
+import com.testeducation.screen.tests.creation.TestCreationModelState.StepState.Companion.isFirst
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
 
 
@@ -24,6 +27,27 @@ class TestCreationViewModel(
     init {
         updateLoadingState(TestCreationModelState.LoadingState.LOADING)
         loadingTheme()
+    }
+
+    fun changeStateStep() {
+        viewModelScope.launch {
+            val currentStepState = getModelState().stepState
+            if (currentStepState.isFirst()) {
+                TestCreationModelState.StepState.SECOND
+            } else {
+                TestCreationModelState.StepState.FIRST
+            }.also { stepStateNew ->
+                updateStateStep(stepStateNew)
+            }
+        }
+    }
+
+    private fun updateStateStep(stateStepState: TestCreationModelState.StepState) = intent {
+        updateModelState {
+            copy(
+                stepState = stateStepState
+            )
+        }
     }
 
     private fun loadingTheme() = intent {
