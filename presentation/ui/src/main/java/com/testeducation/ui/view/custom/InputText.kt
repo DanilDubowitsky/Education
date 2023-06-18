@@ -1,4 +1,4 @@
-package com.testeducation.ui.view
+package com.testeducation.ui.view.custom
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -19,8 +19,8 @@ import com.testeducation.ui.R
 import com.testeducation.ui.databinding.WidgetInputTextBinding
 import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.invoke
-import com.testeducation.ui.view.InputText.AnimState.Companion.isDown
-import com.testeducation.ui.view.InputText.AnimState.Companion.isUp
+import com.testeducation.ui.view.custom.InputText.AnimState.Companion.isDown
+import com.testeducation.ui.view.custom.InputText.AnimState.Companion.isUp
 import com.testeducation.utils.StringUtils.isEmptyBlank
 import com.testeducation.utils.StringUtils.isNotEmptyBlank
 import kotlinx.parcelize.Parcelize

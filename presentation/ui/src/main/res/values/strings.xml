@@ -30,6 +30,17 @@
     <string name="error_email_empty">Поле email не может быть пустым</string>
     <string name="error_password_empty">Поле password не может быть пустым</string>
 
+    <string name="tests_list_sort_field_title">Название</string>
+    <string name="tests_list_sort_field_creation_date">Дата создания</string>
+    <string name="tests_list_sort_field_questions">Кол-во вопросов</string>
+
+    <string name="tests_filters_title_label">Фильтры</string>
+    <string name="tests_filters_question_type_label">Тип вопросов</string>
+    <string name="tests_filters_questions_count_label">Количество вопросов</string>
+    <string name="tests_filters_answer_time_label">Время ответа</string>
+    <string name="tests_filters_theme_label">Тема</string>
+    <string name="tests_filters_refresh_label">Сбросить</string>
+
     <string name="test_creation_step_1">Шаг 1. Придумайте название</string>
     <string name="test_creation_step_2">Шаг 2. Выберите тему</string>
     <string name="test_creation_step_3">Шаг 3. Выберите цвет</string>

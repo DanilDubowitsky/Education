@@ -1,4 +1,4 @@
-package com.testeducation.screen.home
+package com.testeducation.logic.screen.home
 
 data class HomeState(
     val selectedNavigationItem: NavigationItem

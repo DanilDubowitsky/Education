@@ -1,4 +1,4 @@
-package com.testeducation.education.di.modules.fragment.home
+package com.testeducation.education.di.modules.screen.home
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
@@ -7,7 +7,7 @@ import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.screen.home.HomeModelState
 import com.testeducation.screen.home.HomeReducer
-import com.testeducation.screen.home.HomeState
+import com.testeducation.logic.screen.home.HomeState
 import com.testeducation.screen.home.HomeViewModel
 import dagger.Binds
 import dagger.Module
