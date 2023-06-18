@@ -5,6 +5,7 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.screen.tests.creation.TestCreationModelState
 import com.testeducation.screen.tests.creation.TestCreationReducer
@@ -30,11 +31,13 @@ interface TestCreationModule {
         fun provideViewModel(
             reducer: IReducer<TestCreationModelState, TestCreationState>,
             exceptionHandler: IExceptionHandler,
+            resourceHelper: IResourceHelper,
             getThemes: GetThemes
         ): TestCreationViewModel = TestCreationViewModel(
-            reducer,
-            getThemes,
-            exceptionHandler
+            reducer = reducer,
+            getThemes = getThemes,
+            resourceHelper = resourceHelper,
+            errorHandler = exceptionHandler,
         )
     }
 }

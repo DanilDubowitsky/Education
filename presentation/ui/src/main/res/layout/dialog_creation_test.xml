@@ -217,6 +217,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvTitleDesign" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvIcon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"

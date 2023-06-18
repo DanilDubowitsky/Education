@@ -5,6 +5,7 @@ import com.testeducation.domain.model.test.TestShort
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
+import com.testeducation.utils.MainColor.tempColors
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -38,5 +39,3 @@ private fun getStyle(): CardTestStyle {
     val rand = Random.nextInt(0..3)
     return CardTestStyle.values()[rand]
 }
-
-private val tempColors = arrayOf("#FCAF2A", "#FF6951", "#4B9FFF", "#1CCD9D")

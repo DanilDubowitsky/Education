@@ -10,7 +10,8 @@ class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> 
         return TestCreationState(
             isLoading = modelState.loadingState == TestCreationModelState.LoadingState.LOADING,
             themes = modelState.themes.toUIModels(),
-            isFirstScreenVisible = modelState.stepState == TestCreationModelState.StepState.FIRST
+            isFirstScreenVisible = modelState.stepState == TestCreationModelState.StepState.FIRST,
+            iconDesignList = modelState.iconDesign
         )
     }
 
