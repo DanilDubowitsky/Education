@@ -1,13 +1,11 @@
 package com.testeducation.ui.screen.tests.creation
 
 
-import android.app.Dialog
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -25,19 +23,12 @@ class CreationTestDialogFragment :
         DialogCreationTestBinding::inflate
     ) {
 
+    override val isFullScreen: Boolean
+        get() = true
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.observe(this, ::render)
-        val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        binding.root.layoutParams.height =
-            Resources.getSystem().displayMetrics.heightPixels
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-        dialog.window?.setDimAmount(0f)
-        return dialog
     }
 
     private fun render(testCreationState: TestCreationState) {

@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="60dp"
             style="@style/Text.Title1"
             android:layout_marginEnd="24dp"
             android:gravity="center"
