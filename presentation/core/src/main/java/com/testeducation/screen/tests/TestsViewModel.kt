@@ -6,9 +6,10 @@ import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.helper.error.IExceptionHandler
-import com.testeducation.logic.screen.tests.TestsSideEffect
-import com.testeducation.logic.screen.tests.TestsState
+import com.testeducation.logic.screen.tests.list.TestsSideEffect
+import com.testeducation.logic.screen.tests.list.TestsState
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.screen.tests.list.TestsModelState
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestsViewModel(

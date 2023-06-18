@@ -11,13 +11,5 @@ data class TestShortUI(
     val passesCount: Int,
     val theme: ThemeShortUI,
     val color: String,
-    val style: Style
-) {
-
-    enum class Style {
-        X,
-        O,
-        DOTTED,
-        ELLIPSE
-    }
-}
+    val style: CardTestStyle
+)

@@ -7,7 +7,6 @@ import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestOrderFieldUI
-import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.list.TestsState

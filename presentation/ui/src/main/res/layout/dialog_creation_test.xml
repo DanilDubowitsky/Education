@@ -67,7 +67,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.testeducation.ui.view.InputText
+            <com.testeducation.ui.view.custom.InputText
                 android:id="@+id/inputText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -136,13 +136,13 @@
 
             <ImageView
                 android:id="@+id/fourColor"
-                android:layout_width="0dp"
+                android:layout_width="66dp"
                 android:layout_height="66dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/background_color_template_gray_10"
-                android:backgroundTint="@color/colorDarkGreen"
+                android:backgroundTint="@color/colorOrange"
                 android:maxWidth="66dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -151,13 +151,13 @@
 
             <ImageView
                 android:id="@+id/threeColor"
-                android:layout_width="0dp"
+                android:layout_width="66dp"
                 android:layout_height="66dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:maxWidth="66dp"
                 android:background="@drawable/background_color_template_gray_10"
-                android:backgroundTint="@color/colorDarkGreen"
+                android:backgroundTint="@color/colorError_2"
                 app:layout_constraintEnd_toStartOf="@+id/fourColor"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/secondColor"
@@ -165,13 +165,13 @@
 
             <ImageView
                 android:id="@+id/secondColor"
-                android:layout_width="0dp"
+                android:layout_width="66dp"
                 android:layout_height="66dp"
                 android:layout_marginStart="16dp"
                 android:maxWidth="66dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/background_color_template_gray_10"
-                android:backgroundTint="@color/colorDarkGreen"
+                android:backgroundTint="@color/colorBlue"
                 app:layout_constraintEnd_toStartOf="@+id/threeColor"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/firstColor"
@@ -179,7 +179,7 @@
 
             <ImageView
                 android:id="@+id/firstColor"
-                android:layout_width="0dp"
+                android:layout_width="66dp"
                 android:layout_height="66dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
@@ -205,7 +205,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/secondColor" />
 
+            <com.testeducation.ui.view.custom.CardTest
+                android:id="@+id/cardTest2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleDesign" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardTest2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
