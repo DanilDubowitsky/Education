@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
+import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.TestsState
@@ -16,7 +17,6 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.isShimmerHide
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.simpleDiffUtil
-import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding>(
     TestsViewModel::class,

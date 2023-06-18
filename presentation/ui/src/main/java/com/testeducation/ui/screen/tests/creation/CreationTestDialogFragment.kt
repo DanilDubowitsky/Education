@@ -1,14 +1,16 @@
 package com.testeducation.ui.screen.tests.creation
 
+
+import android.app.Dialog
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.screen.tests.creation.TestCreationViewModel
 import com.testeducation.ui.R
@@ -28,22 +30,18 @@ class CreationTestDialogFragment :
         viewModel.observe(this, ::render)
         val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        binding.root.layoutParams.height = Resources.getSystem().displayMetrics.heightPixels
+        binding.root.layoutParams.height =
+            Resources.getSystem().displayMetrics.heightPixels
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        dialog.window?.setDimAmount(0f)
+        return dialog
     }
 
     private fun render(testCreationState: TestCreationState) {
-        val x = testCreationState.themes.toMutableList()
-        x.addAll(
-            listOf(
-                ThemeShortUI("1", "ЙЦЦфвы"),
-                ThemeShortUI("2", "ЙЦЦфвыfdsfds"),
-                ThemeShortUI("3", "ЙЦЦфвыczxcz"),
-                ThemeShortUI("4", "ЙЦЦфвы czxesc"),
-                ThemeShortUI("5", "ЙЦЦфвыds"),
-                ThemeShortUI("6", "ЙЦЦфвыsss")
-            )
-        )
-        x.forEach {
+        testCreationState.themes.forEach {
             val chipDrawableS =
                 ChipDrawable.createFromAttributes(requireContext(), null, 0, R.style.ChipStyle)
             Chip(
@@ -57,7 +55,6 @@ class CreationTestDialogFragment :
                 binding.chGroupTheme.addView(this)
             }
         }
-
     }
 
 }

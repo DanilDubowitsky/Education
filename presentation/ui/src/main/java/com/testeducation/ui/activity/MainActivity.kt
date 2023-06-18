@@ -1,6 +1,7 @@
 package com.testeducation.ui.activity
 
 import android.os.Bundle
+import androidx.core.view.WindowCompat
 import com.testeducation.activity.main.MainActivityViewModel
 import com.testeducation.navigation.core.IScreenAdapter
 import com.testeducation.navigation.core.NavigationHost

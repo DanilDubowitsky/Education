@@ -22,10 +22,16 @@
     <string name="common_no">Нет</string>
     <string name="common_close">Закрыть</string>
     <string name="common_error_handle">Ошибка в приложении</string>
+    <string name="common_cancel">Отменить</string>
+    <string name="common_create">Создать</string>
 
     <string name="tests_filters_label">Фильтры</string>
 
     <string name="error_email_empty">Поле email не может быть пустым</string>
     <string name="error_password_empty">Поле password не может быть пустым</string>
+
+    <string name="test_creation_step_1">Шаг 1. Придумайте название</string>
+    <string name="test_creation_step_2">Шаг 2. Выберите тему</string>
+    <string name="test_creation_hint_input_name">Назовите этот тест</string>
 
 </resources>

@@ -16,4 +16,5 @@
     <color name="colorDarkBlue">#4576D1</color>
     <color name="colorShimmerLight">#DDDDDD</color>
     <color name="colorGray_1">#101D30</color>
+    <color name="colorError_2">#FF6951</color>
 </resources>

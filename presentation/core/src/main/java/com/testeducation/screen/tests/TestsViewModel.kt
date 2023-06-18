@@ -28,6 +28,19 @@ class TestsViewModel(
         loadUserData()
     }
 
+    fun onThemeChanged(id: String?) = intent {
+        val modelState = getModelState()
+        if (modelState.selectedThemeId == id) return@intent
+        updateModelState {
+            copy(
+                tests = emptyList(),
+                selectedThemeId = id,
+                testsLoadingState = TestsModelState.TestsLoadingState.LOADING
+            )
+        }
+        loadTests()
+    }
+
     private fun loadTests() = singleIntent(getThemes.javaClass.name) {
         val modelState = getModelState()
         val tests = getTests(
@@ -59,19 +72,6 @@ class TestsViewModel(
                 profileLoadingState = TestsModelState.ProfileLoadingState.IDLE
             )
         }
-    }
-
-    fun onThemeChanged(id: String?) = intent {
-        val modelState = getModelState()
-        if (modelState.selectedThemeId == id) return@intent
-        updateModelState {
-            copy(
-                tests = emptyList(),
-                selectedThemeId = id,
-                testsLoadingState = TestsModelState.TestsLoadingState.LOADING
-            )
-        }
-        loadTests()
     }
 
 }

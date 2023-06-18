@@ -1,5 +1,6 @@
 package com.testeducation.screen.home
 
+import android.util.Log
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.helper.error.IExceptionHandler
