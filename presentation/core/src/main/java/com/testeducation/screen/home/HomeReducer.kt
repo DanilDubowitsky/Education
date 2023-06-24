@@ -1,6 +1,7 @@
 package com.testeducation.screen.home
 
 import com.testeducation.core.IReducer
+import com.testeducation.logic.screen.home.HomeState
 
 class HomeReducer : IReducer<HomeModelState, HomeState> {
 

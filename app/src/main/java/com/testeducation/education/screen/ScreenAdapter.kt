@@ -10,7 +10,8 @@ import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
-import com.testeducation.ui.screen.tests.TestsFragment
+import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
+import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.utils.withScreen
 
 class ScreenAdapter : IScreenAdapter {
@@ -20,6 +21,7 @@ class ScreenAdapter : IScreenAdapter {
             is NavigationScreen.Auth -> createPlatformScreen(screen)
             is NavigationScreen.Common -> createPlatformScreen(screen)
             is NavigationScreen.Main -> createPlatformScreen(screen)
+            is NavigationScreen.Tests -> createPlatformScreen(screen)
         }
 
     private fun createPlatformScreen(screen: NavigationScreen.Auth): Screen =
@@ -62,6 +64,13 @@ class ScreenAdapter : IScreenAdapter {
 
         NavigationScreen.Main.Tests -> Screen.FragmentScreen {
             TestsFragment()
+        }
+    }
+
+    private fun createPlatformScreen(screen: NavigationScreen.Tests) = when (screen) {
+
+        is NavigationScreen.Tests.Filters -> Screen.FragmentScreen {
+            TestsFiltersFragment()
         }
     }
 }

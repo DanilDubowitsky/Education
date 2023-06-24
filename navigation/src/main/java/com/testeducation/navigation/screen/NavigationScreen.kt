@@ -45,7 +45,17 @@ sealed interface NavigationScreen : Serializable {
 
         object Home : Main
 
-        object Tests : Main
+        object Tests : Main {
+
+            object OnScrollToBottom : ResultKey<Unit>
+
+            object OnScrollToTop : ResultKey<Unit>
+        }
+    }
+
+    sealed interface Tests : NavigationScreen {
+
+        object Filters : Tests
     }
 
 }

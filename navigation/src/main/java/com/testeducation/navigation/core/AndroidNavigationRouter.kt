@@ -19,11 +19,14 @@ class AndroidNavigationRouter(
         navigationHost.executeCommand(Command.Replace(screen), key)
     }
 
-    override fun <T> setResultListener(key: ResultKey<T>, listener: ResultListener<T>): Disposable {
+    override fun <T> setResultListener(
+        key: ResultKey<T>,
+        listener: ResultListener<T>
+    ): Disposable {
         return resultWire.setResultListener(key, listener)
     }
 
-    override fun <T> sendResult(key: ResultKey<T>, data: T) {
-        resultWire.sendResult(key, data)
+    override fun <T> sendResult(key: ResultKey<T>, data: T, needRemoveListener: Boolean) {
+        resultWire.sendResult(key, data, needRemoveListener)
     }
 }
