@@ -1,6 +1,6 @@
 package com.testeducation.domain.cases.auth
 
-import com.testeducation.domain.config.IUserConfig
+import com.testeducation.domain.config.user.IUserConfig
 import com.testeducation.domain.service.auth.IAuthService
 
 class SignIn(

@@ -7,6 +7,7 @@ import com.testeducation.ui.screen.auth.confirmation.EmailConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
 import com.testeducation.ui.screen.common.ConfirmationDialog
+import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
@@ -48,6 +49,10 @@ class ScreenAdapter : IScreenAdapter {
 
             is NavigationScreen.Common.Information -> Screen.DialogScreen {
                 InformationDialog().withScreen(screen)
+            }
+
+            is NavigationScreen.Common.PopUpInformation -> Screen.DialogScreen {
+                InformationAlertDialog().withScreen(screen)
             }
         }
 

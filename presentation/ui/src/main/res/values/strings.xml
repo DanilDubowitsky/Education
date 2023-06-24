@@ -28,6 +28,8 @@
     <string name="error_email_empty">Поле email не может быть пустым</string>
     <string name="error_password_empty">Поле password не может быть пустым</string>
 
+    <string name="app_update_required">Для продолжения работы необходимо обновить приложение до последней версии</string>
+
     <string name="tests_list_sort_field_title">Название</string>
     <string name="tests_list_sort_field_creation_date">Дата создания</string>
     <string name="tests_list_sort_field_questions">Кол-во вопросов</string>
