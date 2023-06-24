@@ -9,7 +9,7 @@ import retrofit2.http.POST
 
 interface RefreshRetrofitClient {
 
-    @POST("/auth/refresh")
+    @POST("/api/auth/refresh")
     suspend fun refresh(
         @Body refreshRequest: RefreshRequest
     ): Response<GenericResponse<RemoteToken>>
