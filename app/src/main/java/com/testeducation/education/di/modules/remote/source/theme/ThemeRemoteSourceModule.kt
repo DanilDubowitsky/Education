@@ -1,7 +1,7 @@
 package com.testeducation.education.di.modules.remote.source.theme
 
 import com.testeducation.core.source.remote.theme.IThemeRemoteSource
-import com.testeducation.remote.client.retrofit.category.ThemeRetrofitClient
+import com.testeducation.remote.client.retrofit.theme.ThemeRetrofitClient
 import com.testeducation.remote.source.theme.ThemeRemoteSource
 import dagger.Module
 import dagger.Provides

@@ -29,10 +29,7 @@ class AccessTokenInterceptor(
 
     @Synchronized
     private fun getNewToken(): String {
-        return runBlocking(
-            context = CoroutineExceptionHandler { coroutineContext, throwable ->
-
-            }) {
+        return runBlocking {
             val refreshToken = userConfig.getRefreshToken()
             val newToken = authRemoteClient.refresh(refreshToken)
             userConfig.setToken(newToken.accessToken)

@@ -4,7 +4,7 @@ import com.testeducation.core.source.remote.theme.IThemeRemoteSource
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.theme.ThemeOrderField
 import com.testeducation.domain.model.theme.ThemeShort
-import com.testeducation.remote.client.retrofit.category.ThemeRetrofitClient
+import com.testeducation.remote.client.retrofit.theme.ThemeRetrofitClient
 import com.testeducation.remote.converter.global.toRemote
 import com.testeducation.remote.converter.test.toModels
 import com.testeducation.remote.converter.test.toRemote

@@ -12,15 +12,15 @@ import retrofit2.http.POST
 
 interface AuthRetrofitClient {
 
-    @POST("/auth/sign-up")
+    @POST("/api/auth/sign-up")
     suspend fun signUp(@Body signUpRequest: SignUpRequest): Response<GenericResponse<Unit>>
 
-    @POST("/auth/confirm-sign-up")
+    @POST("/api/auth/confirm-sign-up")
     suspend fun confirmEmail(
         @Body confirmEmailRequest: ConfirmEmailRequest
     ): Response<GenericResponse<Unit>>
 
-    @POST("/auth/sign-in-password")
+    @POST("/api/auth/sign-in-password")
     suspend fun signIn(@Body signInRequest: SignInRequest): Response<GenericResponse<RemoteToken>>
 
 }
