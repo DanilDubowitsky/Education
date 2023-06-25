@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface UserRetrofitClient {
 
-    @GET("/account")
+    @GET("/api/app/account")
     suspend fun getCurrentUser(): Response<GenericResponse<RemoteUser>>
 
 }
