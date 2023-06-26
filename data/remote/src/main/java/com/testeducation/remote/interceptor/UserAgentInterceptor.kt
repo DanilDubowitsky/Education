@@ -14,7 +14,7 @@ class UserAgentInterceptor : Interceptor {
     @Synchronized
     private fun setUserAgentHeader(request: Request): Request {
         return request.newBuilder()
-            .addHeader("User-Agent", "application")
+            .addHeader("User-Agent", "Application")
             .build()
     }
 

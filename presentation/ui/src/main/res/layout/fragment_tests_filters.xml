@@ -76,4 +76,46 @@
         app:layout_constraintStart_toStartOf="@+id/btnClose"
         app:layout_constraintTop_toBottomOf="@+id/rvTheme" />
 
+    <com.testeducation.ui.view.custom.InputText
+        android:id="@+id/etFromQuestionsCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/etToQuestionsCount"
+        app:layout_constraintStart_toStartOf="@+id/tvQuestionsCount"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount" />
+
+    <com.testeducation.ui.view.custom.InputText
+        android:id="@+id/etToQuestionsCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etFromQuestionsCount"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount" />
+
+    <TextView
+        android:id="@+id/tvAnswerTime"
+        style="@style/Text.Label.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/tests_filters_questions_count_label"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/btnClose"
+        app:layout_constraintTop_toBottomOf="@+id/etFromQuestionsCount" />
+
+    <TextView
+        android:id="@+id/tvRefreshQuestionsCount"
+        style="@style/Text.Label.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tests_filters_refresh_label"
+        android:textColor="@color/colorDarkGreen"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/tvAnswerTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvAnswerTime" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

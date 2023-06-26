@@ -1,7 +1,9 @@
 package com.testeducation.remote.converter.test
 
+import com.testeducation.domain.model.test.Page
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
+import com.testeducation.remote.model.test.RemotePage
 import com.testeducation.remote.model.test.RemoteTestShort
 
 private const val TITLE = "title"
@@ -25,3 +27,11 @@ fun TestOrderField.toRemote() = when (this) {
     TestOrderField.CREATION -> CREATION
     TestOrderField.QUESTIONS -> QUESTIONS
 }
+
+fun RemotePage<RemoteTestShort>.toModel() = Page(
+    pageIndex,
+    pageSize,
+    pageTotal,
+    itemsTotal,
+    tests.toModels()
+)
