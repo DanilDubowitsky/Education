@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorWhite"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -42,80 +42,179 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvTitle" />
 
-    <TextView
-        android:id="@+id/tvQuestionType"
-        style="@style/Text.Label.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/tests_filters_question_type_label"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/btnClose"
-        app:layout_constraintTop_toBottomOf="@+id/btnClose" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnClose">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTheme"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvQuestionType"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestionType"
-        tools:listitem="@layout/view_holder_theme" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvQuestionsCount"
-        style="@style/Text.Label.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/tests_filters_questions_count_label"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/btnClose"
-        app:layout_constraintTop_toBottomOf="@+id/rvTheme" />
+            <TextView
+                android:id="@+id/tvQuestionType"
+                style="@style/Text.Label.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/tests_filters_question_type_label"
+                android:textSize="18sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <com.testeducation.ui.view.custom.InputText
-        android:id="@+id/etFromQuestionsCount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/etToQuestionsCount"
-        app:layout_constraintStart_toStartOf="@+id/tvQuestionsCount"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvQuestionType"
+                app:layout_constraintTop_toBottomOf="@+id/tvQuestionType"
+                tools:listitem="@layout/view_holder_theme" />
 
-    <com.testeducation.ui.view.custom.InputText
-        android:id="@+id/etToQuestionsCount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etFromQuestionsCount"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount" />
+            <TextView
+                android:id="@+id/tvQuestionsCount"
+                style="@style/Text.Label.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/tests_filters_questions_count_label"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvTheme" />
 
-    <TextView
-        android:id="@+id/tvAnswerTime"
-        style="@style/Text.Label.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/tests_filters_questions_count_label"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/btnClose"
-        app:layout_constraintTop_toBottomOf="@+id/etFromQuestionsCount" />
+            <com.testeducation.ui.view.custom.InputText
+                android:id="@+id/etFromQuestionsCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:hint="@string/common_from"
+                app:layout_constraintEnd_toStartOf="@+id/etToQuestionsCount"
+                app:layout_constraintStart_toStartOf="@+id/tvQuestionsCount"
+                app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount" />
 
-    <TextView
-        android:id="@+id/tvRefreshQuestionsCount"
-        style="@style/Text.Label.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tests_filters_refresh_label"
-        android:textColor="@color/colorDarkGreen"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/tvAnswerTime"
-        app:layout_constraintTop_toBottomOf="@+id/tvAnswerTime" />
+            <com.testeducation.ui.view.custom.InputText
+                android:id="@+id/etToQuestionsCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:hint="@string/common_to"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/etFromQuestionsCount"
+                app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount" />
+
+            <TextView
+                android:id="@+id/tvAnswerTime"
+                style="@style/Text.Label.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/tests_filters_questions_count_label"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etFromQuestionsCount" />
+
+            <TextView
+                android:id="@+id/tvRefreshQuestionsCount"
+                style="@style/Text.Label.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/tests_filters_refresh_label"
+                android:textColor="@color/colorDarkGreen"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tvAnswerTime"
+                app:layout_constraintTop_toBottomOf="@+id/tvAnswerTime" />
+
+            <TextView
+                android:id="@+id/tvLimited"
+                style="@style/Text.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_selectable_theme_grey"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="8dp"
+                android:textSize="14sp"
+                android:text="@string/tests_filters_limited"
+                app:layout_constraintStart_toStartOf="@+id/tvRefreshQuestionsCount"
+                app:layout_constraintTop_toBottomOf="@+id/tvRefreshQuestionsCount"
+                />
+
+            <TextView
+                android:id="@+id/tvUnlimited"
+                style="@style/Text.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_selectable_theme_grey"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginStart="16dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="8dp"
+                android:text="@string/tests_filters_unlimited"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/tvLimited"
+                app:layout_constraintTop_toBottomOf="@+id/tvRefreshQuestionsCount" />
+
+            <com.testeducation.ui.view.custom.InputText
+                android:id="@+id/etFromTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:hint="@string/common_from"
+                app:layout_constraintEnd_toStartOf="@+id/etToQuestionsCount"
+                app:layout_constraintStart_toStartOf="@+id/tvQuestionsCount"
+                app:layout_constraintTop_toBottomOf="@+id/tvLimited" />
+
+            <com.testeducation.ui.view.custom.InputText
+                android:id="@+id/etToTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                app:hint="@string/common_to"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/etFromQuestionsCount"
+                app:layout_constraintTop_toBottomOf="@+id/tvLimited" />
+
+            <TextView
+                android:id="@+id/tvTheme"
+                style="@style/Text.Label.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:text="@string/tests_filters_theme_label"
+                android:textSize="18sp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etFromTime" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/themesRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/view_holder_theme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTheme" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -16,6 +16,7 @@ import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestsBinding
 import com.testeducation.ui.delegates.tests.createTestShortAdapterDelegate
 import com.testeducation.ui.delegates.tests.createThemeShortAdapterDelegate
+import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.isShimmerHide
 import com.testeducation.ui.utils.observe
@@ -55,6 +56,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private fun setupRecycler() = with(binding) {
+        themesRecycler.disableChangeAnimation()
         testsRecycler.adapter = testsAdapter
         themesRecycler.adapter = themesAdapter
     }

@@ -26,7 +26,7 @@ class UserConfig(
     override fun isRefreshTokenExpired(): Boolean {
         val currentTime = System.currentTimeMillis()
         val lastUpdateTime = getLastRefreshTokenUpdateTime()
-        return (currentTime - lastUpdateTime) > WEEK_IN_MILLIS
+        return (currentTime - lastUpdateTime) > (60 * MINUTE_IN_MILLIS)
     }
 
     override fun setLastRefreshTokenUpdateTime(time: Long) {
@@ -35,6 +35,7 @@ class UserConfig(
 
     override fun getLastRefreshTokenUpdateTime(): Long = configSource.getLong(
         REFRESH_TOKEN_UPDATE_TIME,
+        DEFAULT_TOKEN_UPDATE_TIME
     )
 
     companion object {
@@ -42,6 +43,7 @@ class UserConfig(
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val REFRESH_TOKEN_KEY = "REFRESH_TOKEN_KEY"
         private const val REFRESH_TOKEN_UPDATE_TIME = "REFRESH_TOKEN_UPDATE_TIME"
+        private const val DEFAULT_TOKEN_UPDATE_TIME = 0L
     }
 
 }

@@ -8,6 +8,8 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 
 
@@ -101,4 +103,8 @@ fun View.startAnimation(
         }
     })
     this.startAnimation(animation)
+}
+
+fun RecyclerView.disableChangeAnimation() {
+    (itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
 }

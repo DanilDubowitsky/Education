@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.screen.tests.filters
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.filters.TestsFiltersState
@@ -29,11 +30,13 @@ interface TestsFiltersModule {
 
         @Provides
         fun provideViewModel(
+            getThemes: GetThemes,
             router: NavigationRouter,
             reducer: IReducer<TestsFiltersModelState, TestsFiltersState>,
             exceptionHandler: IExceptionHandler
         ): TestsFiltersViewModel = TestsFiltersViewModel(
             router,
+            getThemes,
             reducer,
             exceptionHandler
         )
