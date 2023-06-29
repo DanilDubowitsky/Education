@@ -1,8 +1,5 @@
 package com.testeducation.screen.tests.creation
 
-import android.content.res.Resources
-import android.graphics.Color
-import androidx.annotation.ColorRes
 import androidx.lifecycle.viewModelScope
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
@@ -15,7 +12,6 @@ import com.testeducation.logic.model.test.IconDesignItem
 import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.screen.tests.creation.TestCreationModelState.StepState.Companion.isFirst
-import com.testeducation.utils.MainColor
 import com.testeducation.utils.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,8 +49,32 @@ class TestCreationViewModel(
         }
     }
 
-    fun changeColor() {
+    fun onTextChanged(text: String) = intent {
+        updateModelState {
+            copy(title = text)
+        }
+    }
 
+    fun updateThemeSelected(title: String) = intent {
+        initialModelState.themes.find {
+            it.title == title
+        }?.let { themeSelected ->
+            updateModelState {
+                copy(
+                    selectedTheme = themeSelected
+                )
+            }
+        }
+    }
+
+    fun changeColor(colorState: TestCreationModelState.ColorState) = intent {
+        launchJob {
+            updateModelState {
+                copy(
+                    colorState = colorState
+                )
+            }
+        }
     }
 
     private fun initItemIconDesign() {

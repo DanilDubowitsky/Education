@@ -206,7 +206,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/secondColor" />
 
             <com.testeducation.ui.view.custom.CardTest
-                android:id="@+id/cardTest2"
+                android:id="@+id/cardTest"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -223,7 +223,7 @@
                 android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardTest2" />
+                app:layout_constraintTop_toBottomOf="@+id/cardTest" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,7 +7,7 @@ import com.testeducation.ui.databinding.ViewHolderIconDesignItemBinding
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 
-fun testCreationBackgroundIconDelegates() = simpleDelegateAdapter<IconDesignItem,
+fun testCreationBackgroundIconDelegates(onClickSelected: () -> Unit) = simpleDelegateAdapter<IconDesignItem,
         IconDesignItem,
         ViewHolderIconDesignItemBinding>(
     ViewHolderIconDesignItemBinding::inflate

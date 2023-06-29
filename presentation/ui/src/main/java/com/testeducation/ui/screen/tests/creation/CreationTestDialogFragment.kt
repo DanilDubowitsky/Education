@@ -14,6 +14,7 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.IconDesignItem
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.logic.screen.tests.creation.TestCreationState
+import com.testeducation.screen.tests.creation.TestCreationModelState
 import com.testeducation.screen.tests.creation.TestCreationViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.dialog.bottom.ViewModelHostBottomSheetDialog
@@ -37,7 +38,9 @@ class CreationTestDialogFragment :
     private val iconDesignAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(IconDesignItem::style),
-            testCreationBackgroundIconDelegates()
+            testCreationBackgroundIconDelegates {
+
+            }
         )
     }
 
@@ -48,6 +51,7 @@ class CreationTestDialogFragment :
             adapter = iconDesignAdapter
             layoutManager = GridLayoutManager(requireContext(), 3)
         }
+        binding.inputText.addTextChangedListener(viewModel::onTextChanged)
         onClickListenerProcess()
     }
 
@@ -55,10 +59,11 @@ class CreationTestDialogFragment :
         generateChips(testCreationState)
         changeStepVisible(isFirstVisible = testCreationState.isFirstScreenVisible)
         iconDesignAdapter.items = testCreationState.iconDesignList
+        binding.cardTest.setContent(testCreationState.testShortUI)
     }
 
     private fun generateChips(testCreationState: TestCreationState) {
-        testCreationState.themes.forEach {
+        testCreationState.themes.forEach { themeShort ->
             val chipDrawableS =
                 ChipDrawable.createFromAttributes(requireContext(), null, 0, R.style.ChipStyle)
             Chip(
@@ -67,7 +72,10 @@ class CreationTestDialogFragment :
                 id = ViewCompat.generateViewId()
                 setChipDrawable(chipDrawableS)
                 shapeAppearanceModel = ShapeAppearanceModel().withCornerSize(8.dp.toFloat())
-                text = it.title
+                text = themeShort.title
+                setOnClickListener {
+                    viewModel.updateThemeSelected(themeShort.title)
+                }
             }.run {
                 binding.chGroupTheme.addView(this)
             }
@@ -78,6 +86,18 @@ class CreationTestDialogFragment :
         binding {
             btnNext.setOnClickListener {
                 viewModel.changeStateStep()
+            }
+            firstColor.setOnClickListener {
+                viewModel.changeColor(colorState = TestCreationModelState.ColorState.GREEN)
+            }
+            secondColor.setOnClickListener {
+                viewModel.changeColor(colorState = TestCreationModelState.ColorState.BLUE)
+            }
+            threeColor.setOnClickListener {
+                viewModel.changeColor(colorState = TestCreationModelState.ColorState.RED)
+            }
+            fourColor.setOnClickListener {
+                viewModel.changeColor(colorState = TestCreationModelState.ColorState.ORANGE)
             }
         }
     }
