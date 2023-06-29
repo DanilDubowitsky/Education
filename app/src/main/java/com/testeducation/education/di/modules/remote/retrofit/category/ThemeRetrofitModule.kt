@@ -1,6 +1,6 @@
 package com.testeducation.education.di.modules.remote.retrofit.category
 
-import com.testeducation.remote.client.retrofit.category.ThemeRetrofitClient
+import com.testeducation.remote.client.retrofit.theme.ThemeRetrofitClient
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

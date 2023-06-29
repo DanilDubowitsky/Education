@@ -19,6 +19,7 @@
     <string name="confirmation_title">Подтверждение</string>
 
     <string name="common_yes">Да</string>
+    <string name="common_ok">Ок</string>
     <string name="common_no">Нет</string>
     <string name="common_close">Закрыть</string>
     <string name="common_error_handle">Ошибка в приложении</string>
@@ -29,6 +30,8 @@
 
     <string name="error_email_empty">Поле email не может быть пустым</string>
     <string name="error_password_empty">Поле password не может быть пустым</string>
+
+    <string name="app_update_required">Для продолжения работы необходимо обновить приложение до последней версии</string>
 
     <string name="tests_list_sort_field_title">Название</string>
     <string name="tests_list_sort_field_creation_date">Дата создания</string>

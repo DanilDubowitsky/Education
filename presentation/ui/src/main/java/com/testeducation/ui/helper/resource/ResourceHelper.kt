@@ -15,6 +15,7 @@ class ResourceHelper(
     override fun extractStringResource(resource: StringResource): String = when (resource) {
         is StringResource.Common -> extractResource(resource)
         is StringResource.Error -> extractErrorStringResource(resource)
+        is StringResource.Update -> extractUpdateResource(resource)
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {
@@ -39,6 +40,10 @@ class ResourceHelper(
         ColorResource.Main.Red -> color(R.color.colorRed)
         ColorResource.Main.Green -> color(R.color.colorDarkGreen)
         ColorResource.Main.Orange -> color(R.color.colorOrange)
+    }
+
+    private fun extractUpdateResource(resource: StringResource.Update) = when(resource) {
+        StringResource.Update.UpdateRequiredError -> context.getString(R.string.app_update_required)
     }
 
     private fun color(@ColorRes id: Int) = ContextCompat.getColor(context, id)

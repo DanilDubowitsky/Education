@@ -1,7 +1,7 @@
 package com.testeducation.remote.interceptor
 
 import com.testeducation.core.client.remote.refresh.IRefreshRemoteClient
-import com.testeducation.domain.config.IUserConfig
+import com.testeducation.domain.config.user.IUserConfig
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -29,10 +29,7 @@ class AccessTokenInterceptor(
 
     @Synchronized
     private fun getNewToken(): String {
-        return runBlocking(
-            context = CoroutineExceptionHandler { coroutineContext, throwable ->
-
-            }) {
+        return runBlocking {
             val refreshToken = userConfig.getRefreshToken()
             val newToken = authRemoteClient.refresh(refreshToken)
             userConfig.setToken(newToken.accessToken)

@@ -32,6 +32,13 @@ sealed interface NavigationScreen : Serializable {
             val titleText: String? = null,
             val btnText: String? = null
         ) : Common
+
+        data class PopUpInformation(
+            val titleText: String,
+        ) : Common {
+
+            object OnConfirm : ResultKey<Unit>
+        }
     }
 
     sealed interface Main : NavigationScreen {

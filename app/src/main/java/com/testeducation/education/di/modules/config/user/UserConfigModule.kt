@@ -1,9 +1,9 @@
 package com.testeducation.education.di.modules.config.user
 
 import com.testeducation.core.config.IConfigSource
-import com.testeducation.core.config.UserConfig
-import com.testeducation.core.config.UserConfig.Companion.CONFIG_NAME
-import com.testeducation.domain.config.IUserConfig
+import com.testeducation.core.config.user.UserConfig
+import com.testeducation.core.config.user.UserConfig.Companion.CONFIG_NAME
+import com.testeducation.domain.config.user.IUserConfig
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

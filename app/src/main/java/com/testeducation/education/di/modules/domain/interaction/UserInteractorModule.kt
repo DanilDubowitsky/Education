@@ -1,6 +1,6 @@
 package com.testeducation.education.di.modules.domain.interaction
 
-import com.testeducation.domain.config.IUserConfig
+import com.testeducation.domain.config.user.IUserConfig
 import com.testeducation.domain.interaction.user.UserConfigInteractor
 import dagger.Module
 import dagger.Provides

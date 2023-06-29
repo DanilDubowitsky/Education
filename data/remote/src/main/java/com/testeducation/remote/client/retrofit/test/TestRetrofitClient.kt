@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface TestRetrofitClient {
 
-    @GET("content/tests")
+    @GET("/api/app/content/tests")
     suspend fun getTests(
         @Query("title") query: String?,
         @Query("theme") theme: String?,

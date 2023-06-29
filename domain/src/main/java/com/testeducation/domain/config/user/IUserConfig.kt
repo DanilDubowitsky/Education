@@ -1,4 +1,4 @@
-package com.testeducation.domain.config
+package com.testeducation.domain.config.user
 
 interface IUserConfig {
     fun setToken(token: String)

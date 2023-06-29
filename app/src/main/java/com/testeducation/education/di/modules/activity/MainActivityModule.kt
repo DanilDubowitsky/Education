@@ -6,9 +6,11 @@ import com.testeducation.activity.main.MainActivityReducer
 import com.testeducation.logic.activity.MainActivityState
 import com.testeducation.activity.main.MainActivityViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.internal.IsAppVersionUpdateRequired
 import com.testeducation.domain.interaction.user.UserConfigInteractor
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.navigation.core.NavigationRouter
 import dagger.Binds
 import dagger.Module
@@ -32,11 +34,15 @@ interface MainActivityModule {
         fun provideViewModel(
             router: NavigationRouter,
             userConfigInteractor: UserConfigInteractor,
+            resourceHelper: IResourceHelper,
+            isAppVersionUpdateRequired: IsAppVersionUpdateRequired,
             reducer: IReducer<MainActivityModelState, MainActivityState>,
             errorHandler: IExceptionHandler
         ): MainActivityViewModel = MainActivityViewModel(
             router,
             userConfigInteractor,
+            resourceHelper,
+            isAppVersionUpdateRequired,
             reducer,
             errorHandler
         )
