@@ -14,9 +14,6 @@ fun testCreationBackgroundIconDelegates(onClickSelected: () -> Unit) = simpleDel
 ) {
     bind {
         binding.invoke {
-            containerImageIcon.setBackgroundColor(
-                item.backgroundColor
-            )
             containerImageIcon.backgroundTintList = ColorStateList.valueOf(item.backgroundColor)
         }
     }

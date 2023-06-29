@@ -14,6 +14,7 @@ import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.screen.tests.creation.TestCreationModelState.StepState.Companion.isFirst
 import com.testeducation.utils.getColor
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -29,6 +30,9 @@ class TestCreationViewModel(
         errorHandler
     ) {
     override val initialModelState: TestCreationModelState = TestCreationModelState()
+
+    private val modelState
+        get() = run { viewModelScope.async { getModelState() } }
 
     init {
         updateLoadingState(TestCreationModelState.LoadingState.LOADING)
@@ -56,7 +60,7 @@ class TestCreationViewModel(
     }
 
     fun updateThemeSelected(title: String) = intent {
-        initialModelState.themes.find {
+        modelState.await().themes.find {
             it.title == title
         }?.let { themeSelected ->
             updateModelState {
