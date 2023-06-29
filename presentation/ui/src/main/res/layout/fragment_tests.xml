@@ -96,13 +96,13 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <include layout="@layout/theme_view_holder_placeholder" />
+                            <include layout="@layout/view_holder_theme_placeholder" />
 
-                            <include layout="@layout/theme_view_holder_placeholder" />
+                            <include layout="@layout/view_holder_theme_placeholder" />
 
-                            <include layout="@layout/theme_view_holder_placeholder" />
+                            <include layout="@layout/view_holder_theme_placeholder" />
 
-                            <include layout="@layout/theme_view_holder_placeholder" />
+                            <include layout="@layout/view_holder_theme_placeholder" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 

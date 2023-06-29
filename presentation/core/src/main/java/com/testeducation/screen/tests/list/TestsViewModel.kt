@@ -1,6 +1,5 @@
 package com.testeducation.screen.tests.list
 
-import android.util.Log
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
@@ -13,7 +12,6 @@ import com.testeducation.logic.screen.tests.list.TestsSideEffect
 import com.testeducation.logic.screen.tests.list.TestsState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestsViewModel(
@@ -28,7 +26,6 @@ class TestsViewModel(
     override val initialModelState: TestsModelState = TestsModelState()
 
     init {
-        Log.e("INIT", this.toString())
         loadTests()
         loadThemes()
         loadUserData()
@@ -42,7 +39,7 @@ class TestsViewModel(
         )
         updateModelState {
             copy(
-                tests = tests + listOf(
+                tests = tests.tests + listOf(
                     TestShort(
                         "ddf",
                         "Test1",
