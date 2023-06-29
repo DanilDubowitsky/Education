@@ -49,7 +49,7 @@ class TestsViewModel(
         )
         updateModelState {
             copy(
-                tests = tests,
+                tests = tests.tests,
                 testsLoadingState = TestsModelState.TestsLoadingState.IDLE,
             )
         }
