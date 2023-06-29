@@ -36,6 +36,22 @@ class TestsFiltersViewModel(
         }
     }
 
+    fun onMinQuestionsCountChanged(value: Int) = intent {
+
+    }
+
+    fun onMaxQuestionsCountChanged() = intent {
+
+    }
+
+    fun onMinAnswerTimeChanged() = intent {
+
+    }
+
+    fun onMaxAnswerTimeChanged() = intent {
+
+    }
+
     private fun loadThemes() = intent {
         val themes = getThemes()
         updateModelState {

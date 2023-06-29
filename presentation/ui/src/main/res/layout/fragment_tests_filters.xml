@@ -119,56 +119,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="23dp"
                 android:layout_marginTop="32dp"
-                android:text="@string/tests_filters_questions_count_label"
+                android:text="@string/tests_filters_answer_time_label"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etFromQuestionsCount" />
 
-            <TextView
-                android:id="@+id/tvRefreshQuestionsCount"
-                style="@style/Text.Label.Medium"
-                android:layout_width="wrap_content"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/questionsLimitChipGroup"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/tests_filters_refresh_label"
-                android:textColor="@color/colorDarkGreen"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvAnswerTime"
-                app:layout_constraintTop_toBottomOf="@+id/tvAnswerTime" />
+                android:layout_marginHorizontal="23dp"
+                app:chipSpacingHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvAnswerTime"
+                app:singleSelection="true">
 
-            <TextView
-                android:id="@+id/tvLimited"
-                style="@style/Text.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_selectable_theme_grey"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="8dp"
-                android:textSize="14sp"
-                android:text="@string/tests_filters_limited"
-                app:layout_constraintStart_toStartOf="@+id/tvRefreshQuestionsCount"
-                app:layout_constraintTop_toBottomOf="@+id/tvRefreshQuestionsCount"
-                />
+                <com.google.android.material.chip.Chip
+                    style="@style/ChipStyle"
+                    android:id="@+id/limited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tests_filters_limited" />
 
-            <TextView
-                android:id="@+id/tvUnlimited"
-                style="@style/Text.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_selectable_theme_grey"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginStart="16dp"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="8dp"
-                android:text="@string/tests_filters_unlimited"
-                android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/tvLimited"
-                app:layout_constraintTop_toBottomOf="@+id/tvRefreshQuestionsCount" />
+                <com.google.android.material.chip.Chip
+                    style="@style/ChipStyle"
+                    android:id="@+id/unlimited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tests_filters_unlimited" />
+
+            </com.google.android.material.chip.ChipGroup>
 
             <com.testeducation.ui.view.custom.InputText
                 android:id="@+id/etFromTime"
@@ -178,7 +157,7 @@
                 app:hint="@string/common_from"
                 app:layout_constraintEnd_toStartOf="@+id/etToQuestionsCount"
                 app:layout_constraintStart_toStartOf="@+id/tvQuestionsCount"
-                app:layout_constraintTop_toBottomOf="@+id/tvLimited" />
+                app:layout_constraintTop_toBottomOf="@+id/questionsLimitChipGroup" />
 
             <com.testeducation.ui.view.custom.InputText
                 android:id="@+id/etToTime"
@@ -189,7 +168,7 @@
                 app:hint="@string/common_to"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/etFromQuestionsCount"
-                app:layout_constraintTop_toBottomOf="@+id/tvLimited" />
+                app:layout_constraintTop_toBottomOf="@+id/questionsLimitChipGroup" />
 
             <TextView
                 android:id="@+id/tvTheme"
@@ -203,11 +182,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etFromTime" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/themesRecycler"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/themeChips"
+                android:layout_marginHorizontal="23dp"
                 android:layout_width="match_parent"
+                app:chipSpacingHorizontal="16dp"
+                app:chipSpacingVertical="4dp"
+                app:singleSelection="true"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/view_holder_theme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTheme" />
@@ -215,6 +197,15 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Button.Normal.Green"
+        android:text="asdadgdfg"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

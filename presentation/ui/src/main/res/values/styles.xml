@@ -81,10 +81,10 @@
     </style>
 
     <style name="Button.Normal.Green" parent="Widget.AppCompat.Button">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:fontFamily">@font/mulish_semibold</item>
         <item name="android:background">@drawable/background_green_rounded</item>
         <item name="android:elevation">0dp</item>
         <item name="android:stateListAnimator">@null</item>
@@ -103,6 +103,20 @@
     <style name="AppModalStyle"
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_dialog_drawable</item>
+    </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="rippleColor">@color/colorBlueLight</item>
+        <item name="chipCornerRadius">8dp</item>
+        <item name="chipBackgroundColor">@color/selector_color_chip</item>
+        <item name="android:textColor">@color/selector_color_chip_text</item>
+        <item name="android:fontFamily">@font/mulish_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ShapeAppearance.Rounded.Small" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 
 </resources>
