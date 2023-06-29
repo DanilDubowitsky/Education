@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.GridLayout
 import androidx.core.view.ViewCompat
+import androidx.core.view.allViews
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
@@ -13,6 +14,9 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.IconDesignItem
 import com.testeducation.logic.model.test.TestShortUI
+import com.testeducation.logic.model.theme.ThemeShortUI
+import com.testeducation.logic.screen.auth.login.LoginSideEffect
+import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.screen.tests.creation.TestCreationModelState
 import com.testeducation.screen.tests.creation.TestCreationViewModel
@@ -46,7 +50,7 @@ class CreationTestDialogFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.observe(this, ::render)
+        viewModel.observe(this, ::render, ::onSideEffect)
         binding.rvIcon.apply {
             adapter = iconDesignAdapter
             layoutManager = GridLayoutManager(requireContext(), 3)
@@ -56,14 +60,22 @@ class CreationTestDialogFragment :
     }
 
     private fun render(testCreationState: TestCreationState) {
-        generateChips(testCreationState)
         changeStepVisible(isFirstVisible = testCreationState.isFirstScreenVisible)
         iconDesignAdapter.items = testCreationState.iconDesignList
         binding.cardTest.setContent(testCreationState.testShortUI)
     }
 
-    private fun generateChips(testCreationState: TestCreationState) {
-        testCreationState.themes.forEach { themeShort ->
+    private fun onSideEffect(sideEffect: TestCreationSideEffect) {
+        when (sideEffect) {
+            is TestCreationSideEffect.CreateChip -> {
+                generateChips(sideEffect.themes)
+            }
+        }
+    }
+
+    private fun generateChips(themes: List<ThemeShortUI>) {
+        binding.chGroupTheme.removeAllViews()
+        themes.forEach { themeShort ->
             val chipDrawableS =
                 ChipDrawable.createFromAttributes(requireContext(), null, 0, R.style.ChipStyle)
             Chip(

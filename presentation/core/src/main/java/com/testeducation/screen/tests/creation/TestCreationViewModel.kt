@@ -1,22 +1,28 @@
 package com.testeducation.screen.tests.creation
 
 import androidx.lifecycle.viewModelScope
+import com.testeducation.converter.test.toNotSelectedUiList
+import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.IconDesignItem
+import com.testeducation.logic.screen.auth.login.LoginSideEffect
 import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.screen.tests.creation.TestCreationModelState.StepState.Companion.isFirst
 import com.testeducation.utils.getColor
+import com.testeducation.utils.getString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 
 class TestCreationViewModel(
@@ -110,13 +116,18 @@ class TestCreationViewModel(
 
     private fun loadingTheme() = intent {
         launchJob {
-            val themes = with(Dispatchers.IO) { getThemes() }
+            val themes = getThemes()
             updateModelState {
                 copy(
                     themes = themes,
                     loadingState = TestCreationModelState.LoadingState.IDLE
                 )
             }
+            postSideEffect(
+                TestCreationSideEffect.CreateChip(
+                    themes = themes.toNotSelectedUiList()
+                )
+            )
         }
     }
 
