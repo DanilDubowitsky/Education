@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.resource.StringResource
+import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.ui.R
 
 class ResourceHelper(
@@ -20,6 +21,21 @@ class ResourceHelper(
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {
         is ColorResource.Main -> extractMainColorResource(resource)
+    }
+
+    override fun extractDrawableResource(style: CardTestStyle): Int = when (style) {
+        CardTestStyle.X -> {
+            R.drawable.ic_card_x
+        }
+        CardTestStyle.O -> {
+            R.drawable.ic_card_circle
+        }
+        CardTestStyle.DOTTED -> {
+            R.drawable.ic_card_dots
+        }
+        CardTestStyle.ELLIPSE -> {
+            R.drawable.ic_card_ellipse
+        }
     }
 
     private fun extractResource(resource: StringResource.Common): String = when (resource) {
@@ -42,7 +58,7 @@ class ResourceHelper(
         ColorResource.Main.Orange -> color(R.color.colorOrange)
     }
 
-    private fun extractUpdateResource(resource: StringResource.Update) = when(resource) {
+    private fun extractUpdateResource(resource: StringResource.Update) = when (resource) {
         StringResource.Update.UpdateRequiredError -> context.getString(R.string.app_update_required)
     }
 

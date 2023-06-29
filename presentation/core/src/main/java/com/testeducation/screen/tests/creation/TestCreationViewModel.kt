@@ -91,7 +91,13 @@ class TestCreationViewModel(
         val items = mutableListOf<IconDesignItem>()
         val colorDefaultGreen = ColorResource.Main.Green.getColor(resourceHelper)
         for (style in CardTestStyle.values()) {
-            IconDesignItem(style, colorDefaultGreen, false).also { itemCompleted ->
+            val image = resourceHelper.extractDrawableResource(style)
+            IconDesignItem(
+                style = style,
+                image = image,
+                backgroundColor = colorDefaultGreen,
+                isSelected = false
+            ).also { itemCompleted ->
                 items.add(itemCompleted)
             }
         }
