@@ -3,6 +3,7 @@ package com.testeducation.ui.screen.tests.filters
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.chip.ChipDrawable
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.filters.TestsFiltersState
@@ -50,15 +51,19 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
 
     private fun setupListeners() = binding {
         btnClose.setClickListener(viewModel::exit)
+
         etFromQuestionsCount.addTextChangedListener {
 
         }
+
         etToQuestionsCount.addTextChangedListener {
 
         }
+
         etToTime.addTextChangedListener {
 
         }
+
         etFromTime.addTextChangedListener {
 
         }

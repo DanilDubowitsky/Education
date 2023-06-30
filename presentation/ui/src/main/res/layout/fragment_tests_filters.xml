@@ -91,26 +91,44 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvTheme" />
 
-            <com.testeducation.ui.view.custom.InputText
-                android:id="@+id/etFromQuestionsCount"
+            <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                android:id="@+id/etPlaceHolderFromQuestionsCount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:hint="@string/common_from"
-                app:layout_constraintEnd_toStartOf="@+id/etToQuestionsCount"
+                app:layout_constraintEnd_toStartOf="@+id/etPlaceHolderToQuestionsCount"
                 app:layout_constraintStart_toStartOf="@+id/tvQuestionsCount"
-                app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount" />
+                app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount">
 
-            <com.testeducation.ui.view.custom.InputText
-                android:id="@+id/etToQuestionsCount"
+                <EditText
+                    android:id="@+id/etFromQuestionsCount"
+                    style="@style/EditText.Input.Simple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_input_text"
+                    android:hint="@string/common_from" />
+
+            </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+            <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                android:id="@+id/etPlaceHolderToQuestionsCount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:hint="@string/common_to"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/etFromQuestionsCount"
-                app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount" />
+                app:layout_constraintStart_toEndOf="@+id/etPlaceHolderFromQuestionsCount"
+                app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount">
+
+                <EditText
+                    android:id="@+id/etToQuestionsCount"
+                    style="@style/EditText.Input.Simple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_input_text"
+                    android:hint="@string/common_from" />
+
+            </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
             <TextView
                 android:id="@+id/tvAnswerTime"
@@ -122,7 +140,7 @@
                 android:text="@string/tests_filters_answer_time_label"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etFromQuestionsCount" />
+                app:layout_constraintTop_toBottomOf="@+id/etPlaceHolderFromQuestionsCount" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/questionsLimitChipGroup"
@@ -149,26 +167,46 @@
 
             </com.google.android.material.chip.ChipGroup>
 
-            <com.testeducation.ui.view.custom.InputText
-                android:id="@+id/etFromTime"
+            <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                android:id="@+id/etPlaceHolderFromTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:hint="@string/common_from"
-                app:layout_constraintEnd_toStartOf="@+id/etToQuestionsCount"
+                app:layout_constraintEnd_toStartOf="@+id/etPlaceHolderToQuestionsCount"
                 app:layout_constraintStart_toStartOf="@+id/tvQuestionsCount"
-                app:layout_constraintTop_toBottomOf="@+id/questionsLimitChipGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/questionsLimitChipGroup">
 
-            <com.testeducation.ui.view.custom.InputText
-                android:id="@+id/etToTime"
+                <EditText
+                    android:id="@+id/etFromTime"
+                    style="@style/EditText.Input.Simple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_input_text"
+                    android:hint="@string/common_from" />
+
+            </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+            <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                android:id="@+id/etToTimePlaceHolder"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 app:hint="@string/common_to"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/etFromQuestionsCount"
-                app:layout_constraintTop_toBottomOf="@+id/questionsLimitChipGroup" />
+                app:layout_constraintStart_toEndOf="@+id/etPlaceHolderFromTime"
+                app:layout_constraintTop_toBottomOf="@+id/questionsLimitChipGroup">
+
+                <EditText
+                    android:id="@+id/etToTime"
+                    style="@style/EditText.Input.Simple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_input_text"
+                    android:hint="@string/common_from" />
+
+            </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
             <TextView
                 android:id="@+id/tvTheme"
@@ -180,7 +218,7 @@
                 android:textSize="18sp"
                 android:layout_marginTop="32dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etFromTime" />
+                app:layout_constraintTop_toBottomOf="@+id/etPlaceHolderFromTime" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/themeChips"

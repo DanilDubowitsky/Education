@@ -55,7 +55,7 @@
 
     <style name="Text.Default" parent="Text">
         <item name="android:textColor">@color/colorTextPrimary</item>
-        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:fontFamily">@font/mulish_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">3sp</item>
     </style>
@@ -117,6 +117,18 @@
     <style name="ShapeAppearance.Rounded.Small" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="EditText.Input.Simple" parent="Text.Default">
+        <item name="android:background">@drawable/selector_input_text</item>
+        <item name="android:gravity">top</item>
+        <item name="android:inputType">text</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textColorHint">@color/gray_70</item>
     </style>
 
 </resources>
