@@ -21,8 +21,8 @@ import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.view.custom.InputText.AnimState.Companion.isDown
 import com.testeducation.ui.view.custom.InputText.AnimState.Companion.isUp
-import com.testeducation.utils.StringUtils.isEmptyBlank
-import com.testeducation.utils.StringUtils.isNotEmptyBlank
+import com.testeducation.utils.StringUtils.isEmptyOrBlank
+import com.testeducation.utils.StringUtils.isNotEmptyOrBlank
 import kotlinx.parcelize.Parcelize
 
 class InputText @JvmOverloads constructor(
@@ -164,7 +164,7 @@ class InputText @JvmOverloads constructor(
     fun addTextChangedListener(onTextChange: (String) -> Unit) {
         binding.etInput.doOnTextChanged { text, _, _, _ ->
             onTextChange(text.toString().trim())
-            if (text.toString().isNotEmptyBlank() && currentState.isError()) {
+            if (text.toString().isNotEmptyOrBlank() && currentState.isError()) {
                 setInputState(InputState.Default)
             }
         }
@@ -255,7 +255,7 @@ class InputText @JvmOverloads constructor(
         }
     }
 
-    private fun getLabelOrHintIfNotValid(labelStyle: String) = if (labelStyle.isEmptyBlank()) {
+    private fun getLabelOrHintIfNotValid(labelStyle: String) = if (labelStyle.isEmptyOrBlank()) {
         _hint
     } else labelStyle
 

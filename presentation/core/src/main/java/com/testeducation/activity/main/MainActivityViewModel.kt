@@ -1,6 +1,5 @@
 package com.testeducation.activity.main
 
-import com.testeducation.logic.activity.MainActivityState
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.internal.IsAppVersionUpdateRequired
@@ -9,6 +8,7 @@ import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.activity.MainActivitySideEffect
+import com.testeducation.logic.activity.MainActivityState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent

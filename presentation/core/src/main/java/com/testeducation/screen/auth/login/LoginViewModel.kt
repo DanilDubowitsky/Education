@@ -10,7 +10,7 @@ import com.testeducation.logic.screen.auth.login.LoginSideEffect
 import com.testeducation.logic.screen.auth.login.LoginState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import com.testeducation.utils.StringUtils.isEmptyBlank
+import com.testeducation.utils.StringUtils.isEmptyOrBlank
 import com.testeducation.utils.getString
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -61,7 +61,7 @@ class LoginViewModel(
     }
 
     private fun getValidInput(modelState: LoginModelState): Boolean {
-        if (modelState.email.isEmptyBlank()) {
+        if (modelState.email.isEmptyOrBlank()) {
             intent {
                 postSideEffect(
                     LoginSideEffect.EmailInputError(
@@ -71,7 +71,7 @@ class LoginViewModel(
             }
         }
 
-        if (modelState.password.isEmptyBlank()) {
+        if (modelState.password.isEmptyOrBlank()) {
             intent {
                 postSideEffect(
                     LoginSideEffect.PasswordInputError(
@@ -81,7 +81,7 @@ class LoginViewModel(
             }
         }
 
-        return modelState.email.isEmptyBlank() || modelState.password.isEmptyBlank()
+        return modelState.email.isEmptyOrBlank() || modelState.password.isEmptyOrBlank()
     }
 
     fun registration() {

@@ -50,6 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnClose">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -105,6 +106,8 @@
                     style="@style/EditText.Input.Simple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:background="@drawable/selector_input_text"
                     android:hint="@string/common_from" />
 
@@ -125,6 +128,8 @@
                     style="@style/EditText.Input.Simple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:background="@drawable/selector_input_text"
                     android:hint="@string/common_from" />
 
@@ -182,6 +187,8 @@
                     style="@style/EditText.Input.Simple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:background="@drawable/selector_input_text"
                     android:hint="@string/common_from" />
 
@@ -203,6 +210,8 @@
                     style="@style/EditText.Input.Simple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:background="@drawable/selector_input_text"
                     android:hint="@string/common_from" />
 
