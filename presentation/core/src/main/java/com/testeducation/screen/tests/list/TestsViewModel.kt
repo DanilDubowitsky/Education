@@ -1,5 +1,6 @@
 package com.testeducation.screen.tests.list
 
+import com.testeducation.converter.test.toUIModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
@@ -11,6 +12,7 @@ import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.screen.tests.list.TestsSideEffect
 import com.testeducation.logic.screen.tests.list.TestsState
+import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -26,6 +28,9 @@ class TestsViewModel(
 
     override val initialModelState: TestsModelState = TestsModelState()
 
+    @Volatile
+    private var resultDisposable: Disposable? = null
+
     init {
         loadTests()
         loadThemes()
@@ -37,11 +42,11 @@ class TestsViewModel(
         val tests = getTests(
             themeId = modelState.selectedThemeId,
             orderField = modelState.selectedOrderField,
-            minTime = modelState.timeLimitFrom,
-            maxTime = modelState.timeLimitTo,
+            minTime = modelState.timeLimitFrom.toIntOrNull(),
+            maxTime = modelState.timeLimitTo.toIntOrNull(),
             hasLimit = modelState.isTimeLimited,
-            maxQuestions = modelState.questionsLimitTo,
-            minQuestions = modelState.questionsLimitFrom,
+            maxQuestions = modelState.questionsLimitTo.toIntOrNull(),
+            minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
             limit = PAGE_SIZE,
             pageIndex = modelState.pageIndex
         )
@@ -102,14 +107,29 @@ class TestsViewModel(
                 isTimeLimited,
                 questionsLimitFrom,
                 questionsLimitTo,
-                selectedThemeId
+                selectedThemeId,
+                selectedOrderField.toUIModel()
             )
         }
+
+        resultDisposable = router.setResultListener(
+            NavigationScreen.Tests.Filters.OnFiltersChanged,
+            ::handleNewFilters
+        )
 
         val screen = NavigationScreen.Tests.Filters(
             filters
         )
         router.navigateTo(screen)
+    }
+
+    private fun handleNewFilters(newFilters: TestFiltersUI) {
+
+    }
+
+    override fun onCleared() {
+        resultDisposable?.dispose()
+        super.onCleared()
     }
 
     private companion object {

@@ -3,6 +3,9 @@ package com.testeducation.ui.screen.tests.filters
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isEmpty
+import androidx.core.view.isGone
+import androidx.core.view.isNotEmpty
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.chip.ChipDrawable
 import com.testeducation.logic.model.theme.ThemeShortUI
@@ -16,6 +19,7 @@ import com.testeducation.ui.utils.addThemes
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
+import com.testeducation.ui.utils.switchHalfVisibleState
 import com.testeducation.ui.utils.trimmedTextOrEmpty
 import com.testeducation.utils.firstByConditionOrNull
 
@@ -35,14 +39,26 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
 
     private fun render(state: TestsFiltersState) = binding {
         renderThemes(state.themes, state.selectedThemeIndex)
+        etPlaceHolderFromTime.isGone = !state.isTimeLimited
+        etToTimePlaceHolder.isGone = !state.isTimeLimited
+        limited.isChecked = state.isTimeLimited
+        unlimited.isChecked = !state.isTimeLimited
+        loadingProgress.isGone = !state.isLoading
+        btnShowResults.text = if (state.isLoading) "" else resources.getQuantityString(
+            R.plurals.tests_count_plurals,
+            state.filterResultCount ?: 0,
+            state.filterResultCount ?: 0
+        )
+        btnShowResults.switchHalfVisibleState(!state.isLoading)
     }
 
     private fun FragmentTestsFiltersBinding.renderThemes(
         themes: List<ThemeShortUI>,
         selectedThemeIndex: Int?
     ) {
-        themeChips.removeAllViews()
-        themeChips.addThemes(themes, viewModel::selectTheme)
+        if (themeChips.isEmpty()) {
+            themeChips.addThemes(themes, viewModel::selectTheme)
+        }
         selectedThemeIndex?.let(themeChips::check)
     }
 
@@ -73,20 +89,19 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
     }
 
     private fun setupTextListeners() = binding {
+        limited.setClickListener(viewModel::setLimited)
+        unlimited.setClickListener(viewModel::setUnlimited)
         etFromQuestionsCount.addTextChangedListener {
             viewModel.onMinQuestionsCountChanged(etFromQuestionsCount.trimmedTextOrEmpty)
         }
-
         etToQuestionsCount.addTextChangedListener {
             viewModel.onMaxQuestionsCountChanged(etToQuestionsCount.trimmedTextOrEmpty)
         }
-
         etToTime.addTextChangedListener {
-            viewModel.onMinAnswerTimeChanged(etToTime.trimmedTextOrEmpty)
+            viewModel.onMaxAnswerTimeChanged(etToTime.trimmedTextOrEmpty)
         }
-
         etFromTime.addTextChangedListener {
-            viewModel.onMaxAnswerTimeChanged(etFromTime.trimmedTextOrEmpty)
+            viewModel.onMinAnswerTimeChanged(etFromTime.trimmedTextOrEmpty)
         }
     }
 

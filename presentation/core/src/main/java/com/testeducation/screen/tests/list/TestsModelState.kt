@@ -16,10 +16,10 @@ data class TestsModelState(
     val selectedThemeId: String? = null,
     val selectedOrderField: TestOrderField = TestOrderField.CREATION,
     val isTimeLimited: Boolean = false,
-    val timeLimitFrom: Int = DEFAULT_TIME_MIN,
-    val timeLimitTo: Int = DEFAULT_TIME_MAX,
-    val questionsLimitFrom: Int = DEFAULT_QUESTIONS_MIN,
-    val questionsLimitTo: Int = DEFAULT_QUESTIONS_MAX,
+    val timeLimitFrom: String = DEFAULT_TIME_MIN,
+    val timeLimitTo: String = DEFAULT_TIME_MAX,
+    val questionsLimitFrom: String = DEFAULT_QUESTIONS_MIN,
+    val questionsLimitTo: String = DEFAULT_QUESTIONS_MAX,
     val pageIndex: Int = 0
 ) {
 
@@ -39,9 +39,9 @@ data class TestsModelState(
     }
 
     private companion object {
-        const val DEFAULT_QUESTIONS_MIN = 1
-        const val DEFAULT_QUESTIONS_MAX = 50
-        const val DEFAULT_TIME_MIN = 1
-        const val DEFAULT_TIME_MAX = 60
+        const val DEFAULT_QUESTIONS_MIN = "1"
+        const val DEFAULT_QUESTIONS_MAX = "50"
+        const val DEFAULT_TIME_MIN = "1"
+        const val DEFAULT_TIME_MAX = "60"
     }
 }

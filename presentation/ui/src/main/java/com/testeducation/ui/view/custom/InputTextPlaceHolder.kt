@@ -105,6 +105,7 @@ class InputTextPlaceHolder @JvmOverloads constructor(
         binding.tvLabel.text = hint
         setInputState(InputState.Default)
         processFocusedChange()
+        reactToFocus(true)
     }
 
     fun setErrorMsg(errorMsg: String) {

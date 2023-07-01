@@ -56,7 +56,6 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private fun setupRecycler() = with(binding) {
-        themesRecycler.disableChangeAnimation()
         testsRecycler.adapter = testsAdapter
         themesRecycler.adapter = themesAdapter
     }

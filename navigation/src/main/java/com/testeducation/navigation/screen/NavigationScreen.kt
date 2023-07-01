@@ -1,6 +1,7 @@
 package com.testeducation.navigation.screen
 
 import com.testeducation.logic.model.test.TestFiltersUI
+import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.navigation.core.ResultKey
 import java.io.Serializable
 
@@ -58,7 +59,16 @@ sealed interface NavigationScreen : Serializable {
 
         data class Filters(
             val filters: TestFiltersUI
-        ) : Tests
+        ) : Tests {
+
+            object OnFiltersChanged : ResultKey<TestFiltersUI> {
+
+                data class TestFiltersResult(
+                    val filters: TestFiltersUI,
+                    val items: List<TestShortUI>
+                )
+            }
+        }
     }
 
 }

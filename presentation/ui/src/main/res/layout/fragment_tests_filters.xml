@@ -246,13 +246,25 @@
     </ScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnShowResults"
         style="@style/Button.Normal.Green"
-        android:text="asdadgdfg"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="25dp"
+        tools:text="Показать 200 тестов"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        tools:layout_editor_absoluteX="24dp" />
+
+    <ProgressBar
+        android:id="@+id/loadingProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="@+id/btnShowResults"
+        app:layout_constraintEnd_toEndOf="@+id/btnShowResults"
+        app:layout_constraintStart_toStartOf="@+id/btnShowResults"
+        app:layout_constraintTop_toTopOf="@+id/btnShowResults" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

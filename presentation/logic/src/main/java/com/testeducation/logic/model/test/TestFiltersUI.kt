@@ -3,10 +3,11 @@ package com.testeducation.logic.model.test
 import java.io.Serializable
 
 data class TestFiltersUI(
-    val minTime: Int,
-    val maxTime: Int,
+    val minTime: String,
+    val maxTime: String,
     val hasLimit: Boolean,
-    val minQuestions: Int,
-    val maxQuestions: Int,
-    val selectedTheme: String?
+    val minQuestions: String,
+    val maxQuestions: String,
+    val selectedTheme: String?,
+    val orderFieldUI: TestOrderFieldUI
 ) : Serializable

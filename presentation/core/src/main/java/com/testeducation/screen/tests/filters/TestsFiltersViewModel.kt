@@ -1,5 +1,6 @@
 package com.testeducation.screen.tests.filters
 
+import com.testeducation.converter.test.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
@@ -9,9 +10,7 @@ import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.screen.tests.filters.TestsFiltersSideEffect
 import com.testeducation.logic.screen.tests.filters.TestsFiltersState
 import com.testeducation.navigation.core.NavigationRouter
-import com.testeducation.navigation.screen.NavigationScreen
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.ensureActive
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
@@ -33,7 +32,8 @@ class TestsFiltersViewModel(
         questionsLimitFrom = filtersUI.minQuestions,
         questionsLimitTo = filtersUI.maxQuestions,
         timeLimitFrom = filtersUI.minTime,
-        timeLimitTo = filtersUI.maxTime
+        timeLimitTo = filtersUI.maxTime,
+        testOrderField = filtersUI.orderFieldUI.toModel()
     )
 
     init {
@@ -43,16 +43,32 @@ class TestsFiltersViewModel(
 
     private fun initData() = intent {
         val sideEffect = TestsFiltersSideEffect.SetTextFilters(
-            filtersUI.minQuestions.toString(),
-            filtersUI.maxQuestions.toString(),
-            filtersUI.maxTime.toString(),
-            filtersUI.minTime.toString()
+            filtersUI.minQuestions,
+            filtersUI.maxQuestions,
+            filtersUI.maxTime,
+            filtersUI.minTime
         )
         postSideEffect(sideEffect)
     }
 
     fun exit() {
         router.exit()
+    }
+
+    fun setLimited() = intent {
+        updateModelState {
+            copy(
+                isTimeLimited = true
+            )
+        }
+    }
+
+    fun setUnlimited() = intent {
+        updateModelState {
+            copy(
+                isTimeLimited = false
+            )
+        }
     }
 
     fun selectTheme(id: String) = intent {
@@ -62,54 +78,68 @@ class TestsFiltersViewModel(
         loadTests()
     }
 
-    fun onMinQuestionsCountChanged(value: String) = intent {
+    fun onMinQuestionsCountChanged(value: String) = singleIntent(getTests.javaClass.name) {
         updateModelState {
-            copy(questionsLimitFrom = value.toInt())
+            copy(loadingState = TestsFiltersModelState.LoadingState.LOADING)
+        }
+        delay(TESTS_LOADING_DELAY)
+        updateModelState {
+            copy(questionsLimitFrom = value)
         }
         loadTests()
     }
 
-    fun onMaxQuestionsCountChanged(value: String) = intent {
+    fun onMaxQuestionsCountChanged(value: String) = singleIntent(getTests.javaClass.name) {
         updateModelState {
-            copy(questionsLimitTo = value.toInt())
+            copy(loadingState = TestsFiltersModelState.LoadingState.LOADING)
+        }
+        delay(TESTS_LOADING_DELAY)
+        updateModelState {
+            copy(questionsLimitTo = value)
         }
         loadTests()
     }
 
-    fun onMinAnswerTimeChanged(value: String) = intent {
+    fun onMinAnswerTimeChanged(value: String) = singleIntent(getTests.javaClass.name) {
         updateModelState {
-            copy(timeLimitFrom = value.toInt())
+            copy(loadingState = TestsFiltersModelState.LoadingState.LOADING)
+        }
+        delay(TESTS_LOADING_DELAY)
+        updateModelState {
+            copy(timeLimitFrom = value)
         }
         loadTests()
     }
 
-    fun onMaxAnswerTimeChanged(value: String) = intent {
+    fun onMaxAnswerTimeChanged(value: String) = singleIntent(getTests.javaClass.name) {
         updateModelState {
-            copy(timeLimitTo = value.toInt())
+            copy(loadingState = TestsFiltersModelState.LoadingState.LOADING)
+        }
+        delay(TESTS_LOADING_DELAY)
+        updateModelState {
+            copy(timeLimitTo = value)
         }
         loadTests()
     }
 
-    private fun loadTests() = intent {
-        launchSingleJob(getTests.javaClass.name) {
-            delay(TESTS_LOADING_DELAY)
-            updateModelState {
-                copy(
-                    loadingState = TestsFiltersModelState.LoadingState.LOADING
-                )
-            }
-            val modelState = getModelState()
-            val page = getTests(
-                themeId = modelState.selectedTheme,
-                orderField = modelState.testOrderField,
-                minTime = modelState.timeLimitFrom,
-                maxTime = modelState.timeLimitTo,
-                hasLimit = modelState.isTimeLimited,
-                maxQuestions = modelState.questionsLimitFrom,
-                minQuestions = modelState.questionsLimitTo,
-                limit = Int.MAX_VALUE,
-                pageIndex = 0
+    private fun loadTests() = singleIntent(getTests.javaClass.name) {
+        updateModelState {
+            copy(
+                loadingState = TestsFiltersModelState.LoadingState.LOADING
             )
+        }
+        val modelState = getModelState()
+        val page = getTests(
+            themeId = modelState.selectedTheme,
+            orderField = modelState.testOrderField,
+            minTime = modelState.timeLimitFrom.toIntOrNull(),
+            maxTime = modelState.timeLimitTo.toIntOrNull(),
+            hasLimit = modelState.isTimeLimited,
+            maxQuestions = modelState.questionsLimitTo.toIntOrNull(),
+            minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
+            limit = 20,
+            pageIndex = 0
+        )
             updateModelState {
                 copy(
                     filterResultCount = page.itemsTotal,
@@ -119,8 +149,6 @@ class TestsFiltersViewModel(
             }
         }
 
-    }
-
     private fun loadThemes() = intent {
         val themes = getThemes()
         updateModelState {
@@ -129,6 +157,6 @@ class TestsFiltersViewModel(
     }
 
     private companion object {
-        const val TESTS_LOADING_DELAY = 500L
+        const val TESTS_LOADING_DELAY = 600L
     }
 }

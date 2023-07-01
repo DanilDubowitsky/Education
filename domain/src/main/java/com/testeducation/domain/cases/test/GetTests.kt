@@ -15,11 +15,11 @@ class GetTests(
         themeId: String? = null,
         orderField: TestOrderField? = null,
         orderDirection: OrderDirection = OrderDirection.ASCENDING,
-        minTime: Int,
-        maxTime: Int,
+        minTime: Int?,
+        maxTime: Int?,
         hasLimit: Boolean,
-        minQuestions: Int,
-        maxQuestions: Int,
+        minQuestions: Int?,
+        maxQuestions: Int?,
         limit: Int,
         pageIndex: Int
     ): Page<TestShort> = testRepository.getTests(

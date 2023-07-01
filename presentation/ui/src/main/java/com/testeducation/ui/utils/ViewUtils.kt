@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.annotation.ColorRes
@@ -134,4 +135,12 @@ fun ChipGroup.addThemes(
         }
         this.addView(chip)
     }
+}
+
+fun Button.switchHalfVisibleState(isVisible: Boolean) {
+    alpha = if (!isVisible){
+        0.5f
+    }
+    else 1f
+    isEnabled = isVisible
 }
