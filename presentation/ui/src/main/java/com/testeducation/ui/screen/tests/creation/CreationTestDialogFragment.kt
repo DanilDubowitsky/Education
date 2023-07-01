@@ -62,6 +62,7 @@ class CreationTestDialogFragment :
         changeStepVisible(isFirstVisible = testCreationState.isFirstScreenVisible)
         iconDesignAdapter.items = testCreationState.iconDesignList
         binding.cardTest.setContent(testCreationState.testShortUI)
+        binding.btnCancel.text = testCreationState.btnCancelText
     }
 
     private fun onSideEffect(sideEffect: TestCreationSideEffect) {

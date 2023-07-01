@@ -30,20 +30,17 @@ class TestCreationViewModel(
     private val getThemes: GetThemes,
     private val resourceHelper: IResourceHelper,
     errorHandler: IExceptionHandler
-) :
-    BaseViewModel<TestCreationModelState, TestCreationState, TestCreationSideEffect>(
-        reducer,
-        errorHandler
-    ) {
+) : BaseViewModel<TestCreationModelState, TestCreationState, TestCreationSideEffect>(
+    reducer,
+    errorHandler
+) {
     override val initialModelState: TestCreationModelState = TestCreationModelState()
-
-    private val modelState
-        get() = run { viewModelScope.async { getModelState() } }
 
     init {
         updateLoadingState(TestCreationModelState.LoadingState.LOADING)
         loadingTheme()
         initItemIconDesign()
+        updateBtnText(getBtnText(TestCreationModelState.StepState.FIRST))
     }
 
     fun changeStateStep() {
@@ -55,6 +52,7 @@ class TestCreationViewModel(
                 TestCreationModelState.StepState.FIRST
             }.also { stepStateNew ->
                 updateStateStep(stepStateNew)
+                updateBtnText(getBtnText(stepStateNew))
             }
         }
     }
@@ -66,7 +64,7 @@ class TestCreationViewModel(
     }
 
     fun updateThemeSelected(title: String) = intent {
-        modelState.await().themes.find {
+        getModelState().themes.find {
             it.title == title
         }?.let { themeSelected ->
             updateModelState {
@@ -81,7 +79,7 @@ class TestCreationViewModel(
         launchJob {
             val colorFromResource = getCurrentColorFromResource(colorState)
             val updatedIconDesignItem =
-                modelState.await().iconDesign.changeColorIconDesignItem(colorFromResource)
+                getModelState().iconDesign.changeColorIconDesignItem(colorFromResource)
             updateModelState {
                 copy(
                     colorState = colorState,
@@ -93,7 +91,7 @@ class TestCreationViewModel(
 
     fun changeStyleTestCard(style: CardTestStyle) = intent {
         launchJob {
-            val newListStyleItems = modelState.await().iconDesign.map { item ->
+            val newListStyleItems = getModelState().iconDesign.map { item ->
                 item.copy(isSelected = style == item.style)
             }
             updateModelState {
@@ -107,16 +105,12 @@ class TestCreationViewModel(
 
     private fun getCurrentColorFromResource(colorState: TestCreationModelState.ColorState) =
         when (colorState) {
-            TestCreationModelState.ColorState.GREEN -> ColorResource.Main.Green.getColor(
-                resourceHelper
-            )
-
-            TestCreationModelState.ColorState.BLUE -> ColorResource.Main.Blue.getColor(
-                resourceHelper
-            )
-
-            TestCreationModelState.ColorState.RED -> ColorResource.Main.Red.getColor(resourceHelper)
-            TestCreationModelState.ColorState.ORANGE -> ColorResource.Main.Orange.getColor(
+            TestCreationModelState.ColorState.GREEN -> ColorResource.Main.Green
+            TestCreationModelState.ColorState.BLUE -> ColorResource.Main.Blue
+            TestCreationModelState.ColorState.RED -> ColorResource.Main.Red
+            TestCreationModelState.ColorState.ORANGE -> ColorResource.Main.Orange
+        }.run {
+            getColor(
                 resourceHelper
             )
         }
@@ -183,6 +177,24 @@ class TestCreationViewModel(
             copy(
                 loadingState = loadingState
             )
+        }
+    }
+
+    private fun getBtnText(step: TestCreationModelState.StepState) = if (step.isFirst()) {
+        StringResource.Common.CommonCancel
+    } else {
+        StringResource.Common.CommonBack
+    }.run {
+        getString(resourceHelper)
+    }
+
+    private fun updateBtnText(text: String) = intent {
+        launchJob {
+            updateModelState {
+                copy(
+                    backBtnText = text
+                )
+            }
         }
     }
 }

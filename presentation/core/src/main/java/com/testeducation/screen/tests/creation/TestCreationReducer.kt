@@ -20,7 +20,8 @@ class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> 
                 modelState.selectedTheme,
                 modelState.colorState.color,
                 modelState.styleCurrent
-            )
+            ),
+            btnCancelText = modelState.backBtnText
         )
     }
 

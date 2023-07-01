@@ -13,7 +13,8 @@ data class TestCreationModelState(
     val colorState: ColorState = ColorState.GREEN,
     val title: String = "",
     val selectedTheme: ThemeShort = ThemeShort("", ""),
-    val styleCurrent: CardTestStyle = CardTestStyle.X
+    val styleCurrent: CardTestStyle = CardTestStyle.X,
+    val backBtnText: String = ""
 ) {
     enum class LoadingState {
         LOADING,

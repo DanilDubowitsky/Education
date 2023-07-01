@@ -2,6 +2,7 @@ package com.testeducation.ui.helper.resource
 
 import android.content.Context
 import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
@@ -43,6 +44,8 @@ class ResourceHelper(
         StringResource.Common.CommonConfirmation -> context.getString(R.string.common_yes)
         StringResource.Common.ConfirmExitString ->
             context.getString(R.string.email_confirmation_exit_confirmation_text)
+        StringResource.Common.CommonBack -> string(R.string.common_back)
+        StringResource.Common.CommonCancel -> string(R.string.common_cancel)
     }
 
     private fun extractErrorStringResource(resource: StringResource.Error): String =
@@ -63,4 +66,6 @@ class ResourceHelper(
     }
 
     private fun color(@ColorRes id: Int) = ContextCompat.getColor(context, id)
+
+    private fun string(@StringRes id: Int) = context.getString(id)
 }

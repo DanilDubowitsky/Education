@@ -10,5 +10,6 @@ data class TestCreationState(
     val isLoading: Boolean,
     val isFirstScreenVisible: Boolean,
     val colorTestCard: String,
-    val testShortUI: TestShortUI
+    val testShortUI: TestShortUI,
+    val btnCancelText: String
 )
