@@ -1,6 +1,6 @@
 package com.testeducation.logic.model.test
 
-class IconDesignItem(
+data class IconDesignItem(
     val style: CardTestStyle,
     val image: Int,
     val backgroundColor: Int,

@@ -42,9 +42,7 @@ class CreationTestDialogFragment :
     private val iconDesignAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(IconDesignItem::style),
-            testCreationBackgroundIconDelegates {
-
-            }
+            testCreationBackgroundIconDelegates(viewModel::changeStyleTestCard)
         )
     }
 
@@ -54,6 +52,7 @@ class CreationTestDialogFragment :
         binding.rvIcon.apply {
             adapter = iconDesignAdapter
             layoutManager = GridLayoutManager(requireContext(), 3)
+            itemAnimator = null
         }
         binding.inputText.addTextChangedListener(viewModel::onTextChanged)
         onClickListenerProcess()
@@ -97,6 +96,9 @@ class CreationTestDialogFragment :
     private fun onClickListenerProcess() {
         binding {
             btnNext.setOnClickListener {
+                viewModel.changeStateStep()
+            }
+            btnCancel.setOnClickListener {
                 viewModel.changeStateStep()
             }
             firstColor.setOnClickListener {

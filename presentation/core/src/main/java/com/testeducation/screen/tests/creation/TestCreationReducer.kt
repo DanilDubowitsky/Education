@@ -19,7 +19,7 @@ class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> 
                 modelState.title,
                 modelState.selectedTheme,
                 modelState.colorState.color,
-                CardTestStyle.X
+                modelState.styleCurrent
             )
         )
     }

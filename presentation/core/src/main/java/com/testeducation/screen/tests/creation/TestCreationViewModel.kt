@@ -79,13 +79,54 @@ class TestCreationViewModel(
 
     fun changeColor(colorState: TestCreationModelState.ColorState) = intent {
         launchJob {
+            val colorFromResource = getCurrentColorFromResource(colorState)
+            val updatedIconDesignItem =
+                modelState.await().iconDesign.changeColorIconDesignItem(colorFromResource)
             updateModelState {
                 copy(
-                    colorState = colorState
+                    colorState = colorState,
+                    iconDesign = updatedIconDesignItem
                 )
             }
         }
     }
+
+    fun changeStyleTestCard(style: CardTestStyle) = intent {
+        launchJob {
+            val newListStyleItems = modelState.await().iconDesign.map { item ->
+                item.copy(isSelected = style == item.style)
+            }
+            updateModelState {
+                copy(
+                    styleCurrent = style,
+                    iconDesign = newListStyleItems
+                )
+            }
+        }
+    }
+
+    private fun getCurrentColorFromResource(colorState: TestCreationModelState.ColorState) =
+        when (colorState) {
+            TestCreationModelState.ColorState.GREEN -> ColorResource.Main.Green.getColor(
+                resourceHelper
+            )
+
+            TestCreationModelState.ColorState.BLUE -> ColorResource.Main.Blue.getColor(
+                resourceHelper
+            )
+
+            TestCreationModelState.ColorState.RED -> ColorResource.Main.Red.getColor(resourceHelper)
+            TestCreationModelState.ColorState.ORANGE -> ColorResource.Main.Orange.getColor(
+                resourceHelper
+            )
+        }
+
+    private fun List<IconDesignItem>.changeColorIconDesignItem(backgroundColor: Int) =
+        this.map { item ->
+            item.copy(
+                backgroundColor = backgroundColor
+            )
+        }
 
     private fun initItemIconDesign() {
         val items = mutableListOf<IconDesignItem>()
@@ -96,7 +137,7 @@ class TestCreationViewModel(
                 style = style,
                 image = image,
                 backgroundColor = colorDefaultGreen,
-                isSelected = false
+                isSelected = style == CardTestStyle.X
             ).also { itemCompleted ->
                 items.add(itemCompleted)
             }

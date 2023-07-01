@@ -1,6 +1,7 @@
 package com.testeducation.screen.tests.creation
 
 import com.testeducation.domain.model.theme.ThemeShort
+import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.IconDesignItem
 import com.testeducation.utils.MainColor
 
@@ -11,7 +12,8 @@ data class TestCreationModelState(
     val stepState: StepState = StepState.FIRST,
     val colorState: ColorState = ColorState.GREEN,
     val title: String = "",
-    val selectedTheme: ThemeShort = ThemeShort("", "")
+    val selectedTheme: ThemeShort = ThemeShort("", ""),
+    val styleCurrent: CardTestStyle = CardTestStyle.X
 ) {
     enum class LoadingState {
         LOADING,
