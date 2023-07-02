@@ -7,4 +7,12 @@
         <item quantity="few">%1$s вопроса</item>
         <item quantity="many">%1$s вопросов</item>
     </plurals>
+
+    <plurals name="tests_count_plurals">
+        <item quantity="zero">Показать %1$s тестов</item>
+        <item quantity="one">Показать %1$s тест</item>
+        <item quantity="two">Показать %1$s теста</item>
+        <item quantity="few">Показать %1$s тестов</item>
+        <item quantity="many">Показать %1$s тестов</item>
+    </plurals>
 </resources>

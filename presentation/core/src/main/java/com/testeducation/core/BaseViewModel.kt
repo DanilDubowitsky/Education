@@ -86,7 +86,9 @@ abstract class BaseViewModel<MODEL_STATE : Any, UI_STATE : Any, SIDE_EFFECT : An
         action: suspend CoroutineScope.() -> Unit
     ): Job {
         jobMap.remove(key)?.cancel()
-        return launchJob(onError, action)
+        return launchJob(onError, action).also { job ->
+            jobMap[key] = job
+        }
     }
 
     protected suspend fun launchJob(

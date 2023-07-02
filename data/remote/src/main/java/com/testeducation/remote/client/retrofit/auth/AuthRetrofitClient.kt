@@ -1,26 +1,24 @@
 package com.testeducation.remote.client.retrofit.auth
 
 import com.testeducation.remote.model.auth.RemoteToken
-import com.testeducation.remote.model.global.GenericResponse
+import com.testeducation.remote.model.global.RemoteResponse
 import com.testeducation.remote.request.auth.ConfirmEmailRequest
-import com.testeducation.remote.request.auth.RefreshRequest
 import com.testeducation.remote.request.auth.SignInRequest
 import com.testeducation.remote.request.auth.SignUpRequest
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthRetrofitClient {
 
     @POST("/api/auth/sign-up")
-    suspend fun signUp(@Body signUpRequest: SignUpRequest): Response<GenericResponse<Unit>>
+    suspend fun signUp(@Body signUpRequest: SignUpRequest): RemoteResponse<Unit>
 
     @POST("/api/auth/confirm-sign-up")
     suspend fun confirmEmail(
         @Body confirmEmailRequest: ConfirmEmailRequest
-    ): Response<GenericResponse<Unit>>
+    ): RemoteResponse<Unit>
 
     @POST("/api/auth/sign-in-password")
-    suspend fun signIn(@Body signInRequest: SignInRequest): Response<GenericResponse<RemoteToken>>
+    suspend fun signIn(@Body signInRequest: SignInRequest): RemoteResponse<RemoteToken>
 
 }

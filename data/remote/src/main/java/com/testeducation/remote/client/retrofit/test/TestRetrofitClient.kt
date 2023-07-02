@@ -1,8 +1,8 @@
 package com.testeducation.remote.client.retrofit.test
 
-import com.testeducation.remote.model.global.GenericResponse
+import com.testeducation.remote.model.global.RemoteResponse
+import com.testeducation.remote.model.test.RemotePage
 import com.testeducation.remote.model.test.RemoteTestShort
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,5 +14,12 @@ interface TestRetrofitClient {
         @Query("theme") theme: String?,
         @Query("order") order: String?,
         @Query("direction") direction: String?,
-    ): Response<GenericResponse<List<RemoteTestShort>>>
+        @Query("min_time") minTime: Int?,
+        @Query("max_time") maxTime: Int?,
+        @Query("has_limit") hasLimit: Boolean,
+        @Query("min_questions") minQuestions: Int?,
+        @Query("max_questions") maxQuestions: Int?,
+        @Query("page_index") index: Int,
+        @Query("page_size") limit: Int,
+    ): RemoteResponse<RemotePage<RemoteTestShort>>
 }

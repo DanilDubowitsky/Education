@@ -4,11 +4,20 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
+import com.google.android.material.chip.ChipGroup
+import com.google.android.material.shape.ShapeAppearanceModel
+import com.testeducation.logic.model.theme.ThemeShortUI
+import com.testeducation.ui.R
 
 
 private const val CLICK_DELAY = 300L
@@ -101,4 +110,37 @@ fun View.startAnimation(
         }
     })
     this.startAnimation(animation)
+}
+
+fun RecyclerView.disableChangeAnimation() {
+    (itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
+}
+
+fun ChipGroup.addThemes(
+    themes: List<ThemeShortUI>,
+    onChipSelected: (id: String) -> Unit
+) {
+    themes.forEachIndexed { index, theme ->
+        val chipDrawableS =
+            ChipDrawable.createFromAttributes(this.context, null, 0, R.style.ChipStyle)
+        val chip = Chip(
+            this.context,
+        ).apply {
+            id = index
+            setChipDrawable(chipDrawableS)
+            text = theme.title
+            setOnClickListener {
+                onChipSelected(theme.id)
+            }
+        }
+        this.addView(chip)
+    }
+}
+
+fun Button.switchHalfVisibleState(isVisible: Boolean) {
+    alpha = if (!isVisible){
+        0.5f
+    }
+    else 1f
+    isEnabled = isVisible
 }

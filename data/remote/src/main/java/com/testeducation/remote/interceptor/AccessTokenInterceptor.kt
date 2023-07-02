@@ -21,6 +21,7 @@ class AccessTokenInterceptor(
         val response = chain.proceed(newRequestWithAccessToken(userToken, request))
 
         if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            response.close()
             val newToken = getNewToken()
             return chain.proceed(newRequestWithAccessToken(newToken, request))
         }

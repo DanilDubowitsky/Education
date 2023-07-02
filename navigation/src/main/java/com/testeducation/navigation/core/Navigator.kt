@@ -54,7 +54,6 @@ class Navigator(
     private fun moveFragment(screen: Screen.FragmentScreen) {
         val fragment = screen.createFragment(fragmentFactory)
         val transaction = fragmentManager.beginTransaction()
-            .addToBackStack(null)
         if (animationSet != null) {
             transaction.setCustomAnimations(
                 animationSet.enterAnim,
@@ -63,14 +62,17 @@ class Navigator(
                 animationSet.popExitAnim
             )
         }
-        transaction.replace(containerId, fragment, screen.javaClass.name)
+        transaction.replace(containerId, fragment, screen::class.java.name)
+        transaction.addToBackStack(null)
+        transaction.setReorderingAllowed(true)
         transaction.commit()
         currentVisibleScreen = screen
     }
 
     private fun replaceFragment(screen: Screen.FragmentScreen) {
         val fragment = screen.createFragment(fragmentFactory)
-        fragmentManager.beginTransaction().replace(containerId, fragment, screen.javaClass.name)
+        fragmentManager.beginTransaction().replace(containerId, fragment, screen::class.java.name)
+            .setReorderingAllowed(true)
             .commit()
         currentVisibleScreen = screen
     }

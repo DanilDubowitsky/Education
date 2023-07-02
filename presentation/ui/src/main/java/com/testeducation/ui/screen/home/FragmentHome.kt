@@ -39,7 +39,8 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
         Navigator(
             requireActivity(),
             R.id.homeFragmentContainer,
-            screenAdapter
+            screenAdapter,
+            childFragmentManager
         )
     }
 
@@ -53,9 +54,6 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
-            viewModel.navigateToTests()
-        }
         setupListeners()
         observeData()
     }
@@ -125,7 +123,6 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
             )
         }
     }
-
 
     override fun onResume() {
         navigationHost.setNavigator(navigator, HOME_NAVIGATOR_KEY)
