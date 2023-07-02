@@ -19,13 +19,27 @@ class TestRemoteSource(
         query: String?,
         themeId: String?,
         orderField: TestOrderField?,
-        orderDirection: OrderDirection?
+        orderDirection: OrderDirection?,
+        minTime: Int?,
+        maxTime: Int?,
+        hasLimit: Boolean,
+        minQuestions: Int?,
+        maxQuestions: Int?,
+        limit: Int,
+        pageIndex: Int
     ): Page<TestShort> {
         return testRetrofitClient.getTests(
             query,
             themeId,
             orderField?.toRemote(),
-            orderDirection?.toRemote()
+            orderDirection?.toRemote(),
+            minTime,
+            maxTime,
+            hasLimit,
+            minQuestions,
+            maxQuestions,
+            pageIndex,
+            limit
         ).getResult().data.toModel()
     }
 }

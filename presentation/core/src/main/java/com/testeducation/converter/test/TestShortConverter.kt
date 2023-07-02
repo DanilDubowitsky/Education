@@ -44,6 +44,12 @@ fun TestOrderField.toUIModel() = when (this) {
     TestOrderField.QUESTIONS -> TestOrderFieldUI.QUESTIONS
 }
 
+fun TestOrderFieldUI.toModel() = when (this) {
+    TestOrderFieldUI.TITLE -> TestOrderField.TITLE
+    TestOrderFieldUI.CREATION -> TestOrderField.CREATION
+    TestOrderFieldUI.QUESTIONS -> TestOrderField.QUESTIONS
+}
+
 // TODO: remove this when styles and colors added on back end
 private fun getColor(): String {
     val rand = Random.nextInt(0..3)

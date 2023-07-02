@@ -2,30 +2,28 @@ package com.testeducation.ui.view.custom
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
+import android.widget.EditText
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.addListener
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
-import androidx.core.widget.doOnTextChanged
 import com.testeducation.ui.R
-import com.testeducation.ui.databinding.WidgetInputTextBinding
+import com.testeducation.ui.databinding.ViewInputTextPlaceHolderBinding
 import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.invoke
-import com.testeducation.ui.view.custom.InputText.AnimState.Companion.isDown
-import com.testeducation.ui.view.custom.InputText.AnimState.Companion.isUp
-import com.testeducation.utils.StringUtils.isEmptyOrBlank
-import com.testeducation.utils.StringUtils.isNotEmptyOrBlank
+import com.testeducation.ui.view.custom.InputTextPlaceHolder.AnimState.Companion.isDown
+import com.testeducation.ui.view.custom.InputTextPlaceHolder.AnimState.Companion.isUp
 import kotlinx.parcelize.Parcelize
 
-class InputText @JvmOverloads constructor(
+class InputTextPlaceHolder @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
@@ -36,56 +34,21 @@ class InputText @JvmOverloads constructor(
         private val LABEL_MARGIN_TOP_DEFAULT = 6.dp
         private val EDIT_TEXT_MARGIN_TOP_UP = 20.dp
         private val EDIT_TEXT_MARGIN_TOP_DOWN = 26.dp
-
-        private const val KEY_INSTANCE_STATE_STATE = "state"
-        private const val KEY_INSTANCE_STATE_TEXT = "text"
-        private const val KEY_INSTANCE_STATE_CURRENT_STATE = "current_state"
-        private const val KEY_INSTANCE_STATE_FOCUSED = "focused"
-        private const val KEY_INSTANCE_STATE_ANIM_STATE_ORDER = "anim_state_order"
     }
 
-    private val binding = WidgetInputTextBinding.inflate(LayoutInflater.from(context), this)
+    private val binding =
+        ViewInputTextPlaceHolderBinding.inflate(LayoutInflater.from(context), this, true)
 
-    private var _currentState: InputState = InputState.Default
-    val currentState: InputState get() = _currentState
+    private var currentState: InputState = InputState.Default
+
+    private lateinit var editText: EditText
 
     private val textDefault = ContextCompat.getColor(context, R.color.colorTextPrimary)
     private val textDisabled = ContextCompat.getColor(context, R.color.colorGrayBlueTextDisabled)
 
-    private var _hint: String = ""
-        set(value) {
-            field = value
-
-            binding.etInput.hint = value
-        }
-    val hint: String get() = _hint
-
-    private var _label: String = ""
-        set(value) {
-            field = value
-            binding.tvLabel.text = value
-        }
-    val label: String get() = _label
-
-    private var _text: String = ""
-        set(value) {
-            binding.etInput.setText(value)
-            field = value
-        }
-    val text: String get() = binding.etInput.text.toString()
-
-    private var _focused: Boolean = false
-    val focused: Boolean get() = _focused
-
     private var animState: AnimState = AnimState.UP
 
-    var isEnabledInput: Boolean = true
-        get() = binding.etInput.isEnabled
-        set(value) {
-            binding.etInput.isEnabled = value
-            field = value
-        }
-
+    private var hint: String = ""
 
     private val editTextUpValueAnimator by lazy {
         ValueAnimator.ofInt(
@@ -98,7 +61,7 @@ class InputText @JvmOverloads constructor(
 
     private val editTextDownValueAnimation by lazy {
         ValueAnimator.ofInt(
-            binding.etInput.paddingTop,
+            editText.paddingTop,
             EDIT_TEXT_MARGIN_TOP_DOWN
         ).apply {
             valueAnimatorUpdateListener(AnimState.DOWN)
@@ -117,92 +80,62 @@ class InputText @JvmOverloads constructor(
         }
     }
 
-    init {
-        context.obtainStyledAttributes(attrs, R.styleable.InputText).apply {
-            _hint = getString(R.styleable.InputText_hint).orEmpty()
-            _label =
-                getString(R.styleable.InputText_label).orEmpty().let(::getLabelOrHintIfNotValid)
-            recycle()
+
+    override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
+        if (R.id.rootContainer == child?.id) {
+            super.addView(child, index, params)
+        } else if (child is ViewGroup) {
+            child.forEach { view ->
+                if (view is EditText) {
+                    binding.container.addView(child, index, params)
+                }
+            }
+        } else {
+            if (child is EditText) {
+                setEditText(child)
+                binding.container.addView(child, index, params)
+            }
         }
-        binding.etInput.id = View.generateViewId()
+    }
+
+    private fun setEditText(editText: EditText) {
+        if (::editText.isInitialized) throw IllegalStateException("Edit text already added")
+        this.editText = editText
+        hint = editText.hint?.toString().orEmpty()
+        binding.tvLabel.text = hint
+        setInputState(InputState.Default)
         processFocusedChange()
+        reactToFocus(true)
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        isSaveEnabled = true
-    }
-
-    override fun onSaveInstanceState(): Parcelable = bundleOf(
-        KEY_INSTANCE_STATE_STATE to super.onSaveInstanceState(),
-        KEY_INSTANCE_STATE_TEXT to text,
-        KEY_INSTANCE_STATE_CURRENT_STATE to currentState,
-        KEY_INSTANCE_STATE_FOCUSED to focused,
-        KEY_INSTANCE_STATE_ANIM_STATE_ORDER to animState.ordinal
-    )
-
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        var viewStateNew = state
-        state?.let { lastState ->
-            if (lastState is Bundle) {
-                val stateInput : InputState =
-                    lastState.getParcelable(KEY_INSTANCE_STATE_CURRENT_STATE) ?: InputState.Default
-                setInputState(state = stateInput)
-
-                _text = lastState.getString(KEY_INSTANCE_STATE_TEXT).orEmpty()
-                viewStateNew = lastState.getParcelable(KEY_INSTANCE_STATE_STATE)
-                _focused = lastState.getBoolean(KEY_INSTANCE_STATE_FOCUSED)
-                animState =
-                    AnimState.getState(lastState.getInt(KEY_INSTANCE_STATE_ANIM_STATE_ORDER))
-            }
-        }
-        changeFaceTextInput(focused)
-        restoreAnimation()
-        super.onRestoreInstanceState(viewStateNew)
-    }
-
-    fun addTextChangedListener(onTextChange: (String) -> Unit) {
-        binding.etInput.doOnTextChanged { text, _, _, _ ->
-            onTextChange(text.toString().trim())
-            if (text.toString().isNotEmptyOrBlank() && currentState.isError()) {
-                setInputState(InputState.Default)
-            }
-        }
-    }
-
-    /**
-     * Метод вынуждает сменеить View свое состояние на [InputState.Error] и показать ошибку
-     *  */
     fun setErrorMsg(errorMsg: String) {
         setInputState(InputState.Error(errorMsg))
     }
 
-    /**
-     * Метод меняет состояние View
-     *  */
     private fun setInputState(state: InputState) {
         if (currentState == state) return
 
-        _currentState = state
+        currentState = state
 
         binding {
             when (state) {
                 is InputState.Default -> {
-                    etInput.setTextColor(textDefault)
+                    editText.setTextColor(textDefault)
                     setSettingsByEnabled(isEnabled = true)
-                    etInput.background = drawable(drawableId = R.drawable.selector_input_text)
+                    editText.background = drawable(drawableId = R.drawable.selector_input_text)
                     tvErrorText.isVisible = false
                 }
 
                 is InputState.Disabled -> {
-                    etInput.setTextColor(textDisabled)
+                    editText.setTextColor(textDisabled)
                     setSettingsByEnabled(isEnabled = false)
                     tvErrorText.isVisible = false
                 }
 
                 is InputState.Error -> {
                     setSettingsByEnabled(isEnabled = true)
-                    etInput.background = drawable(drawableId = R.drawable.selector_input_text_error)
+                    editText.background =
+                        drawable(drawableId = R.drawable.selector_input_text_error)
                     tvErrorText.text = state.errorText
                     tvErrorText.isVisible = true
                 }
@@ -214,14 +147,13 @@ class InputText @JvmOverloads constructor(
         ContextCompat.getDrawable(context, drawableId)
 
     private fun setSettingsByEnabled(isEnabled: Boolean) {
-        binding.etInput.isEnabled = isEnabled
+        editText.isEnabled = isEnabled
         isFocusableInTouchMode = isEnabled
     }
 
     private fun processFocusedChange() {
         binding {
-            etInput.setOnFocusChangeListener { _, hasFocus ->
-                _focused = hasFocus
+            editText.setOnFocusChangeListener { _, hasFocus ->
                 reactToFocus(hasFocus = hasFocus)
             }
         }
@@ -234,15 +166,15 @@ class InputText @JvmOverloads constructor(
 
     private fun changeFaceTextInput(hasFocus: Boolean) {
         binding {
-            etInput.hint = if (hasFocus) "" else hint
-            tvLabel.isVisible = hasFocus || text.isNotEmpty()
+            editText.hint = if (hasFocus) "" else hint
+            tvLabel.isVisible = hasFocus || editText.text.isNotEmpty()
         }
     }
 
     private fun startAnimation(hasFocus: Boolean) {
         val animIsDownAndFocused = animState.isDown() && hasFocus
         val animIsDownAndNoFocusedAndTextIsNotEmpty = animState.isDown()
-                && !hasFocus && text.isNotEmpty()
+                && !hasFocus && editText.text.isNotEmpty()
         if (animIsDownAndFocused || animIsDownAndNoFocusedAndTextIsNotEmpty) {
             return
         }
@@ -254,10 +186,6 @@ class InputText @JvmOverloads constructor(
             editTextUpValueAnimator.start()
         }
     }
-
-    private fun getLabelOrHintIfNotValid(labelStyle: String) = if (labelStyle.isEmptyOrBlank()) {
-        _hint
-    } else labelStyle
 
     private fun ValueAnimator.valueAnimatorUpdateListener(animStateNew: AnimState) {
         duration = VALUE_DURATION_DEFAULT
@@ -271,11 +199,11 @@ class InputText @JvmOverloads constructor(
 
     private fun actionUpdateListener(valueAnimator: ValueAnimator) {
         binding {
-            etInput.setPadding(
-                etInput.paddingStart,
+            editText.setPadding(
+                editText.paddingStart,
                 valueAnimator.animatedValue.toString().toInt(),
-                etInput.paddingEnd,
-                etInput.paddingBottom
+                editText.paddingEnd,
+                editText.paddingBottom
             )
         }
     }

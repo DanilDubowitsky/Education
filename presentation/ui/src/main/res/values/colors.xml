@@ -7,6 +7,7 @@
     <color name="colorDarkGreen">#1CCD9D</color>
     <color name="colorDarkGreenLight">#21F1B8</color>
     <color name="colorBlue">#4B9FFF</color>
+    <color name="colorBlueLight">#76B6FF</color>
     <color name="colorGrayBlue">#DCDCE8</color>
     <color name="colorGrayBlueSelected">#BDBDDF</color>
     <color name="colorGrayBlueDisabled">#BCBCBC</color>

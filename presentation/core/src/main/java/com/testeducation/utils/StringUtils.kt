@@ -1,9 +1,9 @@
 package com.testeducation.utils
 
 object StringUtils {
-    fun String.isNotEmptyBlank() = this.isNotEmpty() && this.isNotBlank()
+    fun String.isNotEmptyOrBlank() = this.isNotEmpty() && this.isNotBlank()
 
-    fun String.isEmptyBlank() = !this.isNotEmptyBlank()
+    fun String.isEmptyOrBlank() = !this.isNotEmptyOrBlank()
 
     fun String?.orDefault(default: String)  = this ?: default
 }

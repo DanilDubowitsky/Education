@@ -38,9 +38,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     private val themesAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(ThemeShortUI::id),
-            createThemeShortAdapterDelegate { themeId ->
-                viewModel.onThemeChanged(themeId)
-            }
+            createThemeShortAdapterDelegate(onClick = viewModel::onThemeChanged)
         )
     }
 
@@ -56,7 +54,6 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private fun setupRecycler() = with(binding) {
-        themesRecycler.disableChangeAnimation()
         testsRecycler.adapter = testsAdapter
         themesRecycler.adapter = themesAdapter
     }

@@ -14,11 +14,25 @@ class GetTests(
         query: String? = null,
         themeId: String? = null,
         orderField: TestOrderField? = null,
-        orderDirection: OrderDirection = OrderDirection.ASCENDING
+        orderDirection: OrderDirection = OrderDirection.ASCENDING,
+        minTime: Int?,
+        maxTime: Int?,
+        hasLimit: Boolean,
+        minQuestions: Int?,
+        maxQuestions: Int?,
+        limit: Int,
+        pageIndex: Int
     ): Page<TestShort> = testRepository.getTests(
         query,
         themeId,
         orderField,
-        orderDirection
+        orderDirection,
+        minTime,
+        maxTime,
+        hasLimit,
+        minQuestions,
+        maxQuestions,
+        limit,
+        pageIndex
     )
 }

@@ -1,5 +1,6 @@
 package com.testeducation.screen.tests.list
 
+import com.testeducation.converter.test.toUIModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
@@ -8,8 +9,10 @@ import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.screen.tests.list.TestsSideEffect
 import com.testeducation.logic.screen.tests.list.TestsState
+import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -25,6 +28,9 @@ class TestsViewModel(
 
     override val initialModelState: TestsModelState = TestsModelState()
 
+    @Volatile
+    private var resultDisposable: Disposable? = null
+
     init {
         loadTests()
         loadThemes()
@@ -35,48 +41,18 @@ class TestsViewModel(
         val modelState = getModelState()
         val tests = getTests(
             themeId = modelState.selectedThemeId,
-            orderField = modelState.selectedOrderField
+            orderField = modelState.selectedOrderField,
+            minTime = modelState.timeLimitFrom.toIntOrNull(),
+            maxTime = modelState.timeLimitTo.toIntOrNull(),
+            hasLimit = modelState.isTimeLimited,
+            maxQuestions = modelState.questionsLimitTo.toIntOrNull(),
+            minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
+            limit = PAGE_SIZE,
+            pageIndex = modelState.pageIndex
         )
         updateModelState {
             copy(
-                tests = tests.tests + listOf(
-                    TestShort(
-                        "ddf",
-                        "Test1",
-                        2,
-                        true,
-                        100,
-                        1000,
-                        ThemeShort("2", "Theme1")
-                    ),
-                    TestShort(
-                        "asda",
-                        "Test2",
-                        2,
-                        true,
-                        100,
-                        1000,
-                        ThemeShort("2", "Theme2")
-                    ),
-                    TestShort(
-                        "ddsf",
-                        "Test1",
-                        2,
-                        true,
-                        100,
-                        1000,
-                        ThemeShort("2", "Theme3")
-                    ),
-                    TestShort(
-                        "ddgdfgf",
-                        "Test4",
-                        2,
-                        true,
-                        100,
-                        1000,
-                        ThemeShort("2", "Theme4")
-                    ),
-                ),
+                tests = tests.tests,
                 testsLoadingState = TestsModelState.TestsLoadingState.IDLE,
             )
         }
@@ -124,8 +100,40 @@ class TestsViewModel(
     }
 
     fun openFiltersScreen() = intent {
-        val screen = NavigationScreen.Tests.Filters
+        val filters = getModelState().run {
+            TestFiltersUI(
+                timeLimitFrom,
+                timeLimitTo,
+                isTimeLimited,
+                questionsLimitFrom,
+                questionsLimitTo,
+                selectedThemeId,
+                selectedOrderField.toUIModel()
+            )
+        }
+
+        resultDisposable = router.setResultListener(
+            NavigationScreen.Tests.Filters.OnFiltersChanged,
+            ::handleNewFilters
+        )
+
+        val screen = NavigationScreen.Tests.Filters(
+            filters
+        )
         router.navigateTo(screen)
+    }
+
+    private fun handleNewFilters(newFilters: TestFiltersUI) {
+
+    }
+
+    override fun onCleared() {
+        resultDisposable?.dispose()
+        super.onCleared()
+    }
+
+    private companion object {
+        const val PAGE_SIZE = 20
     }
 
 }

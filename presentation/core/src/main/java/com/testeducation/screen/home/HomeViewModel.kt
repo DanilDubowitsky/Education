@@ -24,6 +24,7 @@ class HomeViewModel(
     init {
         intent {
             postSideEffect(HomeSideEffect.SlideUpNavigation)
+            navigateToTests()
         }
     }
 

@@ -11,7 +11,14 @@ interface ITestRemoteSource {
         query: String?,
         themeId: String?,
         orderField: TestOrderField?,
-        orderDirection: OrderDirection?
+        orderDirection: OrderDirection?,
+        minTime: Int?,
+        maxTime: Int?,
+        hasLimit: Boolean,
+        minQuestions: Int?,
+        maxQuestions: Int?,
+        limit: Int,
+        pageIndex: Int
     ): Page<TestShort>
 
 }

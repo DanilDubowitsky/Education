@@ -38,13 +38,15 @@ interface TestsModule {
             getThemes: GetThemes,
             reducer: IReducer<TestsModelState, TestsState>,
             exceptionHandler: IExceptionHandler
-        ): TestsViewModel = TestsViewModel(
-            router,
-            getTests,
-            getThemes,
-            getCurrentUser,
-            reducer,
-            exceptionHandler
-        )
+        ): TestsViewModel{
+            return TestsViewModel(
+                router,
+                getTests,
+                getThemes,
+                getCurrentUser,
+                reducer,
+                exceptionHandler
+            )
+        }
     }
 }

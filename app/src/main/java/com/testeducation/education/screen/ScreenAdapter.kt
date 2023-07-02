@@ -75,7 +75,7 @@ class ScreenAdapter : IScreenAdapter {
     private fun createPlatformScreen(screen: NavigationScreen.Tests) = when (screen) {
 
         is NavigationScreen.Tests.Filters -> Screen.FragmentScreen {
-            TestsFiltersFragment()
+            TestsFiltersFragment().withScreen(screen)
         }
     }
 }
