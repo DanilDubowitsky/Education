@@ -115,12 +115,6 @@
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_dialog_drawable</item>
     </style>
-    
-    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="rippleColor">@color/colorDarkGreenLight</item>
-        <item name="chipBackgroundColor">@color/selector_color_chip_background</item>
-        <item name="android:textColor">@color/selector_color_chip_text_color</item>
-    </style>
 
     <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="rippleColor">@color/colorBlueLight</item>
