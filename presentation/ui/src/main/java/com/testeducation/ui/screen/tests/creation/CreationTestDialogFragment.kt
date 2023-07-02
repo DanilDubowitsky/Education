@@ -25,6 +25,7 @@ import com.testeducation.ui.base.dialog.bottom.ViewModelHostBottomSheetDialog
 import com.testeducation.ui.databinding.DialogCreationTestBinding
 import com.testeducation.ui.delegates.tests.createTestShortAdapterDelegate
 import com.testeducation.ui.delegates.tests.testCreationBackgroundIconDelegates
+import com.testeducation.ui.utils.addThemes
 import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
@@ -73,55 +74,34 @@ class CreationTestDialogFragment :
         }
     }
 
-    private fun generateChips(themes: List<ThemeShortUI>) {
-        binding.chGroupTheme.removeAllViews()
-        themes.forEach { themeShort ->
-            val chipDrawableS =
-                ChipDrawable.createFromAttributes(requireContext(), null, 0, R.style.ChipStyle)
-            Chip(
-                requireContext(),
-            ).apply {
-                id = ViewCompat.generateViewId()
-                setChipDrawable(chipDrawableS)
-                shapeAppearanceModel = ShapeAppearanceModel().withCornerSize(8.dp.toFloat())
-                text = themeShort.title
-                setOnClickListener {
-                    viewModel.updateThemeSelected(themeShort.title)
-                }
-            }.run {
-                binding.chGroupTheme.addView(this)
-            }
+    private fun generateChips(themes: List<ThemeShortUI>) = binding {
+        chGroupTheme.addThemes(themes, viewModel::updateThemeSelected)
+    }
+
+    private fun onClickListenerProcess() = binding {
+        btnNext.setOnClickListener {
+            viewModel.changeStateStep()
+        }
+        btnCancel.setOnClickListener {
+            viewModel.changeStateStep()
+        }
+        firstColor.setOnClickListener {
+            viewModel.changeColor(colorState = TestCreationModelState.ColorState.GREEN)
+        }
+        secondColor.setOnClickListener {
+            viewModel.changeColor(colorState = TestCreationModelState.ColorState.BLUE)
+        }
+        threeColor.setOnClickListener {
+            viewModel.changeColor(colorState = TestCreationModelState.ColorState.RED)
+        }
+        fourColor.setOnClickListener {
+            viewModel.changeColor(colorState = TestCreationModelState.ColorState.ORANGE)
         }
     }
 
-    private fun onClickListenerProcess() {
-        binding {
-            btnNext.setOnClickListener {
-                viewModel.changeStateStep()
-            }
-            btnCancel.setOnClickListener {
-                viewModel.changeStateStep()
-            }
-            firstColor.setOnClickListener {
-                viewModel.changeColor(colorState = TestCreationModelState.ColorState.GREEN)
-            }
-            secondColor.setOnClickListener {
-                viewModel.changeColor(colorState = TestCreationModelState.ColorState.BLUE)
-            }
-            threeColor.setOnClickListener {
-                viewModel.changeColor(colorState = TestCreationModelState.ColorState.RED)
-            }
-            fourColor.setOnClickListener {
-                viewModel.changeColor(colorState = TestCreationModelState.ColorState.ORANGE)
-            }
-        }
-    }
-
-    private fun changeStepVisible(isFirstVisible: Boolean) {
-        binding {
-            containerFirst.isVisible = isFirstVisible
-            containerSecond.isVisible = !isFirstVisible
-        }
+    private fun changeStepVisible(isFirstVisible: Boolean) = binding {
+        containerFirst.isVisible = isFirstVisible
+        containerSecond.isVisible = !isFirstVisible
     }
 
 }

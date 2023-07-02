@@ -24,7 +24,7 @@ class ResourceHelper(
         is ColorResource.Main -> extractMainColorResource(resource)
     }
 
-    override fun extractDrawableResource(style: CardTestStyle): Int = when (style) {
+    override fun getDrawableStyleTestCard(style: CardTestStyle): Int = when (style) {
         CardTestStyle.X -> {
             R.drawable.ic_card_x
         }

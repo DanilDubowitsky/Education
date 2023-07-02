@@ -1,25 +1,22 @@
 package com.testeducation.screen.tests.creation
 
 import androidx.lifecycle.viewModelScope
-import com.testeducation.converter.test.toNotSelectedUiList
-import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.theme.GetThemes
+import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.IconDesignItem
-import com.testeducation.logic.screen.auth.login.LoginSideEffect
+import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.screen.tests.creation.TestCreationModelState.StepState.Companion.isFirst
 import com.testeducation.utils.getColor
 import com.testeducation.utils.getString
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -43,17 +40,15 @@ class TestCreationViewModel(
         updateBtnText(getBtnText(TestCreationModelState.StepState.FIRST))
     }
 
-    fun changeStateStep() {
-        viewModelScope.launch {
-            val currentStepState = getModelState().stepState
-            if (currentStepState.isFirst()) {
-                TestCreationModelState.StepState.SECOND
-            } else {
-                TestCreationModelState.StepState.FIRST
-            }.also { stepStateNew ->
-                updateStateStep(stepStateNew)
-                updateBtnText(getBtnText(stepStateNew))
-            }
+    fun changeStateStep() = intent {
+        val currentStepState = getModelState().stepState
+        if (currentStepState.isFirst()) {
+            TestCreationModelState.StepState.SECOND
+        } else {
+            TestCreationModelState.StepState.FIRST
+        }.also { stepStateNew ->
+            updateStateStep(stepStateNew)
+            updateBtnText(getBtnText(stepStateNew))
         }
     }
 
@@ -63,9 +58,9 @@ class TestCreationViewModel(
         }
     }
 
-    fun updateThemeSelected(title: String) = intent {
+    fun updateThemeSelected(id: String) = intent {
         getModelState().themes.find {
-            it.title == title
+            it.id == id
         }?.let { themeSelected ->
             updateModelState {
                 copy(
@@ -126,7 +121,7 @@ class TestCreationViewModel(
         val items = mutableListOf<IconDesignItem>()
         val colorDefaultGreen = ColorResource.Main.Green.getColor(resourceHelper)
         for (style in CardTestStyle.values()) {
-            val image = resourceHelper.extractDrawableResource(style)
+            val image = resourceHelper.getDrawableStyleTestCard(style)
             IconDesignItem(
                 style = style,
                 image = image,
@@ -170,6 +165,14 @@ class TestCreationViewModel(
                 )
             )
         }
+    }
+
+    private fun List<ThemeShort>.toNotSelectedUiList() = this.map { theme ->
+        ThemeShortUI(
+            theme.id,
+            theme.title,
+            isSelected = false
+        )
     }
 
     private fun updateLoadingState(loadingState: TestCreationModelState.LoadingState) = intent {

@@ -9,5 +9,5 @@ interface IResourceHelper {
     /**
      * Возвращает изображение на карточке теста из ресурсов
      * */
-    fun extractDrawableResource(style: CardTestStyle) : Int
+    fun getDrawableStyleTestCard(style: CardTestStyle) : Int
 }

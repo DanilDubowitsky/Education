@@ -24,18 +24,6 @@ fun TestShort.toUI() = TestShortUI(
     getStyle()
 )
 
-fun createTestShortUI(title: String = "", themeShort: ThemeShort, color: String, style: CardTestStyle) = TestShortUI(
-    id = "",
-    title = title,
-    questionsCount = 0,
-    isPublic = false,
-    likes = 0,
-    passesCount = 0,
-    theme = themeShort.toUISelected(),
-    color = color,
-    style = style
-)
-
 fun List<TestShort>.toUIModels() = this.map(TestShort::toUI)
 
 fun TestOrderField.toUIModel() = when (this) {
