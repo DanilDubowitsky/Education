@@ -103,6 +103,9 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
         etFromTime.addTextChangedListener {
             viewModel.onMinAnswerTimeChanged(etFromTime.trimmedTextOrEmpty)
         }
+        btnShowResults.setClickListener {
+
+        }
     }
 
     private fun setupListeners() = binding {

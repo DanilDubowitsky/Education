@@ -140,14 +140,14 @@ class TestsFiltersViewModel(
             limit = 20,
             pageIndex = 0
         )
-            updateModelState {
-                copy(
-                    filterResultCount = page.itemsTotal,
-                    result = page.tests,
-                    loadingState = TestsFiltersModelState.LoadingState.IDLE
-                )
-            }
+        updateModelState {
+            copy(
+                filterResultCount = page.itemsTotal,
+                result = page.tests,
+                loadingState = TestsFiltersModelState.LoadingState.IDLE
+            )
         }
+    }
 
     private fun loadThemes() = intent {
         val themes = getThemes()
