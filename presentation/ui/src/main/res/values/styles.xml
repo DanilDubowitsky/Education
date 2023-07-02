@@ -35,6 +35,13 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="Text.Title.Medium" parent="Text">
+        <item name="android:textColor">@color/colorTextSecondary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="Text.Label" parent="Text">
         <item name="android:textColor">@color/colorTextPrimary</item>
         <item name="android:fontFamily">@font/mulish_regular</item>
