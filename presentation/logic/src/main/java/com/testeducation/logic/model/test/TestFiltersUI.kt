@@ -9,5 +9,7 @@ data class TestFiltersUI(
     val minQuestions: String,
     val maxQuestions: String,
     val selectedTheme: String?,
-    val orderFieldUI: TestOrderFieldUI
+    val orderFieldUI: TestOrderFieldUI,
+    val preLoadedTests: List<TestShortUI>,
+    val currentItemsCount: Int
 ) : Serializable

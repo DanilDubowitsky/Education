@@ -26,7 +26,7 @@ class UserConfig(
     override fun isRefreshTokenExpired(): Boolean {
         val currentTime = System.currentTimeMillis()
         val lastUpdateTime = getLastRefreshTokenUpdateTime()
-        return (currentTime - lastUpdateTime) > (60 * MINUTE_IN_MILLIS)
+        return (currentTime - lastUpdateTime) > WEEK_IN_MILLIS
     }
 
     override fun setLastRefreshTokenUpdateTime(time: Long) {

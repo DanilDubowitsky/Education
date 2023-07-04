@@ -4,6 +4,7 @@ import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
+import com.testeducation.logic.model.theme.ThemeShortUI
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -32,6 +33,18 @@ fun TestOrderFieldUI.toModel() = when (this) {
     TestOrderFieldUI.CREATION -> TestOrderField.CREATION
     TestOrderFieldUI.QUESTIONS -> TestOrderField.QUESTIONS
 }
+
+fun TestShortUI.toModel() = TestShort(
+    id,
+    title,
+    questionsCount,
+    isPublic,
+    likes,
+    passesCount,
+    theme.toModel()
+)
+
+fun List<TestShortUI>.toModels() = this.map(TestShortUI::toModel)
 
 // TODO: remove this when styles and colors added on back end
 private fun getColor(): String {
