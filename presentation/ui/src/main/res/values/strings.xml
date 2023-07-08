@@ -15,6 +15,7 @@
     <string name="email_confirmation_btn_text">Подтвердить e-mail</string>
     <string name="email_confirmation_title">Подтверждение e-mail</string>
     <string name="email_confirmation_exit_confirmation_text">Вы действительно хотите выйти?</string>
+    <string name="email_confirmation_code_hint">Код подтверждения</string>
 
     <string name="confirmation_title">Подтверждение</string>
 
@@ -28,6 +29,7 @@
     <string name="common_cancel">Отменить</string>
     <string name="common_back">Назад</string>
     <string name="common_create">Создать</string>
+    <string name="common_email">E-mail</string>
 
     <string name="tests_filters_label">Фильтры</string>
 

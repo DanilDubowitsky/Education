@@ -17,7 +17,7 @@ class TestsFiltersReducer : IReducer<TestsFiltersModelState, TestsFiltersState> 
             TestsFiltersState(
                 themes = themes.toUIModels(modelState.selectedTheme),
                 isTimeLimited = isTimeLimited,
-                filterResultCount = filterResultCount,
+                filterResultCount = filterResultCount ?: result.size,
                 isLoading = loadingState == TestsFiltersModelState.LoadingState.LOADING,
                 selectedThemeIndex
             )

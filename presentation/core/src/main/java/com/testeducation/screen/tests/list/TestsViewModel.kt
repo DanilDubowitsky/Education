@@ -1,13 +1,13 @@
 package com.testeducation.screen.tests.list
 
+import com.testeducation.converter.test.toModels
 import com.testeducation.converter.test.toUIModel
+import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.cases.user.GetCurrentUser
-import com.testeducation.domain.model.test.TestShort
-import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.screen.tests.list.TestsSideEffect
@@ -108,7 +108,9 @@ class TestsViewModel(
                 questionsLimitFrom,
                 questionsLimitTo,
                 selectedThemeId,
-                selectedOrderField.toUIModel()
+                selectedOrderField.toUIModel(),
+                emptyList(),
+                tests.size
             )
         }
 
@@ -123,8 +125,19 @@ class TestsViewModel(
         router.navigateTo(screen)
     }
 
-    private fun handleNewFilters(newFilters: TestFiltersUI) {
-
+    private fun handleNewFilters(newFilters: TestFiltersUI) = intent {
+        updateModelState {
+            copy(
+                isTimeLimited = newFilters.hasLimit,
+                timeLimitFrom = newFilters.minTime,
+                timeLimitTo = newFilters.maxTime,
+                questionsLimitTo = newFilters.maxQuestions,
+                questionsLimitFrom = newFilters.minQuestions,
+                selectedThemeId = newFilters.selectedTheme,
+                tests = newFilters.preLoadedTests.toModels(),
+                pageIndex = 0
+            )
+        }
     }
 
     override fun onCleared() {
@@ -132,8 +145,13 @@ class TestsViewModel(
         super.onCleared()
     }
 
-    private companion object {
-        const val PAGE_SIZE = 20
+    companion object {
+        private const val PAGE_SIZE = 20
+        const val DEFAULT_QUESTIONS_MIN = "1"
+        const val DEFAULT_QUESTIONS_MAX = "50"
+        const val DEFAULT_TIME_MIN = "1"
+        const val DEFAULT_TIME_MAX = "60"
+        const val DEFAULT_HAS_LIMIT = false
     }
 
 }

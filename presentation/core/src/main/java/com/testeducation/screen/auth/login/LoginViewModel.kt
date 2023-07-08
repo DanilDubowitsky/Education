@@ -35,9 +35,6 @@ class LoginViewModel(
             copy(loadingState = LoginModelState.LoadingState.LOADING)
         }
         signIn(modelState.email, modelState.password)
-        updateModelState {
-            copy(loadingState = LoginModelState.LoadingState.IDLE)
-        }
         router.replace(NavigationScreen.Main.Home)
     }
 

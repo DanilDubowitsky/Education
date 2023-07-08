@@ -105,7 +105,7 @@ class InputTextPlaceHolder @JvmOverloads constructor(
         binding.tvLabel.text = hint
         setInputState(InputState.Default)
         processFocusedChange()
-        reactToFocus(true)
+        changeFaceTextInput(false)
     }
 
     fun setErrorMsg(errorMsg: String) {

@@ -38,6 +38,18 @@ fun TestOrderFieldUI.toModel() = when (this) {
     TestOrderFieldUI.QUESTIONS -> TestOrderField.QUESTIONS
 }
 
+fun TestShortUI.toModel() = TestShort(
+    id,
+    title,
+    questionsCount,
+    isPublic,
+    likes,
+    passesCount,
+    theme.toModel()
+)
+
+fun List<TestShortUI>.toModels() = this.map(TestShortUI::toModel)
+
 // TODO: remove this when styles and colors added on back end
 private fun getColor(): String {
     val rand = Random.nextInt(0..3)

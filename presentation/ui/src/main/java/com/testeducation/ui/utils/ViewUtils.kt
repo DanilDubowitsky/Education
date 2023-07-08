@@ -1,5 +1,6 @@
 package com.testeducation.ui.utils
 
+import android.content.res.ColorStateList
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -15,7 +16,6 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.shape.ShapeAppearanceModel
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.ui.R
 
@@ -132,6 +132,7 @@ fun ChipGroup.addThemes(
             setOnClickListener {
                 onChipSelected(theme.id)
             }
+            setTextColor(context.getColorStateList(R.color.selector_color_chip_text_color))
         }
         this.addView(chip)
     }

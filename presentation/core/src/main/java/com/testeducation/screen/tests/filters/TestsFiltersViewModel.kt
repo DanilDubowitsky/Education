@@ -1,6 +1,8 @@
 package com.testeducation.screen.tests.filters
 
 import com.testeducation.converter.test.toModel
+import com.testeducation.converter.test.toUIModel
+import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
@@ -10,6 +12,12 @@ import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.screen.tests.filters.TestsFiltersSideEffect
 import com.testeducation.logic.screen.tests.filters.TestsFiltersState
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.screen.tests.list.TestsViewModel.Companion.DEFAULT_HAS_LIMIT
+import com.testeducation.screen.tests.list.TestsViewModel.Companion.DEFAULT_QUESTIONS_MAX
+import com.testeducation.screen.tests.list.TestsViewModel.Companion.DEFAULT_QUESTIONS_MIN
+import com.testeducation.screen.tests.list.TestsViewModel.Companion.DEFAULT_TIME_MAX
+import com.testeducation.screen.tests.list.TestsViewModel.Companion.DEFAULT_TIME_MIN
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -33,7 +41,8 @@ class TestsFiltersViewModel(
         questionsLimitTo = filtersUI.maxQuestions,
         timeLimitFrom = filtersUI.minTime,
         timeLimitTo = filtersUI.maxTime,
-        testOrderField = filtersUI.orderFieldUI.toModel()
+        testOrderField = filtersUI.orderFieldUI.toModel(),
+        filterResultCount = filtersUI.currentItemsCount
     )
 
     init {
@@ -119,6 +128,48 @@ class TestsFiltersViewModel(
         updateModelState {
             copy(timeLimitTo = value)
         }
+        loadTests()
+    }
+
+    fun showResults() = intent {
+        getModelState().run {
+            val filters = TestFiltersUI(
+                minTime = timeLimitFrom,
+                maxTime = timeLimitTo,
+                minQuestions = questionsLimitFrom,
+                maxQuestions = questionsLimitTo,
+                hasLimit = isTimeLimited,
+                orderFieldUI = testOrderField?.toUIModel()!!,
+                preLoadedTests = result.toUIModels(),
+                selectedTheme = selectedTheme,
+                currentItemsCount = filterResultCount ?: 0
+            )
+            router.sendResult(NavigationScreen.Tests.Filters.OnFiltersChanged, filters)
+            router.exit()
+        }
+    }
+
+    fun resetFilters() = intent {
+        val previousState = getModelState()
+        updateModelState {
+            copy(
+                selectedTheme = null,
+                questionsLimitFrom = DEFAULT_QUESTIONS_MIN,
+                questionsLimitTo = DEFAULT_QUESTIONS_MAX,
+                timeLimitFrom = DEFAULT_TIME_MIN,
+                timeLimitTo = DEFAULT_TIME_MAX,
+                isTimeLimited = DEFAULT_HAS_LIMIT
+            )
+        }
+        val currentState = getModelState()
+        if (previousState == currentState) return@intent
+        val sideEffect = TestsFiltersSideEffect.SetTextFilters(
+            DEFAULT_QUESTIONS_MIN,
+            DEFAULT_QUESTIONS_MAX,
+            DEFAULT_TIME_MAX,
+            DEFAULT_TIME_MIN
+        )
+        postSideEffect(sideEffect)
         loadTests()
     }
 
