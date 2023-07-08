@@ -36,6 +36,10 @@ fun Fragment.showMessage(message: String, isLong: Boolean = true) {
     requireContext().showMessage(message, isLong)
 }
 
+fun Fragment.showSnackBar(view: View, message: String, isLong: Boolean = true) {
+    requireContext().showSnackBar(view, message, isLong)
+}
+
 fun <T : Fragment> Fragment.withScreen(screen: NavigationScreen): T {
     arguments = Bundle().apply {
         putSerializable(screen::class.simpleName, screen)

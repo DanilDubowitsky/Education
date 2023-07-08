@@ -34,9 +34,7 @@ class EmailConfirmationViewModel(
             copy(loadingState = EmailConfirmationModelState.LoadingState.LOADING)
         }
         confirmEmail(modelState.code)
-        updateModelState {
-            copy(loadingState = EmailConfirmationModelState.LoadingState.IDLE)
-        }
+        postSideEffect(EmailConfirmationSideEffect.RegistrationSuccess)
         router.replace(NavigationScreen.Auth.Login)
     }
 

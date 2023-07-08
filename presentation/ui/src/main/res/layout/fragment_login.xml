@@ -16,30 +16,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.testeducation.ui.view.custom.InputText
-        android:id="@+id/txtEmail"
+    <com.testeducation.ui.view.custom.InputTextPlaceHolder
+        android:id="@+id/txtEmailPlaceHolder"
         android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:hint="Email"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle">
 
-    <com.testeducation.ui.view.custom.InputText
-        android:id="@+id/txtPassword"
+        <EditText
+            android:id="@+id/txtEmail"
+            style="@style/EditText.Input.Simple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/common_email"
+            android:inputType="textEmailAddress" />
+
+    </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+    <com.testeducation.ui.view.custom.InputTextPlaceHolder
+        android:id="@+id/txtPasswordPlaceHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:inputType="textPassword"
-        app:hint="@string/registration_password_fld_hint"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailPlaceHolder">
+
+        <EditText
+            android:id="@+id/txtPassword"
+            style="@style/EditText.Input.Simple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/registration_password_fld_hint"
+            android:inputType="textPassword" />
+
+    </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
     <ProgressBar
         android:id="@+id/globalProgress"
@@ -55,7 +70,7 @@
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/rootGroup"
-        app:constraint_referenced_ids="txtEmail, txtPassword,
+        app:constraint_referenced_ids="txtEmailPlaceHolder, txtPasswordPlaceHolder,
          btnLogin, txtRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

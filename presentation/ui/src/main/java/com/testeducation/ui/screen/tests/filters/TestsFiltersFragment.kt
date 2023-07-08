@@ -2,13 +2,10 @@ package com.testeducation.ui.screen.tests.filters
 
 import android.os.Bundle
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.core.view.isEmpty
 import androidx.core.view.isGone
-import androidx.core.view.isNotEmpty
 import androidx.core.widget.addTextChangedListener
-import com.google.android.material.chip.ChipDrawable
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.filters.TestsFiltersSideEffect
 import com.testeducation.logic.screen.tests.filters.TestsFiltersState
@@ -22,7 +19,6 @@ import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.switchHalfVisibleState
 import com.testeducation.ui.utils.trimmedTextOrEmpty
-import com.testeducation.utils.firstByConditionOrNull
 
 class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, FragmentTestsFiltersBinding>(
     TestsFiltersViewModel::class,
@@ -71,7 +67,7 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
     private fun onSideEffect(sideEffect: TestsFiltersSideEffect) = when(
         sideEffect
     ) {
-        is TestsFiltersSideEffect.SetTextFilters ->{
+        is TestsFiltersSideEffect.SetTextFilters -> {
             removeTextListeners()
             binding.renderFilters(sideEffect)
             setupTextListeners()
