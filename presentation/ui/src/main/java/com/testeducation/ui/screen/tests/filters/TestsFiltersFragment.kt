@@ -83,7 +83,7 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
         etFromTime.setText(sideEffect.minTimeLimit)
     }
 
-    private fun removeTextListeners() = with(binding) {
+    private fun removeTextListeners() = binding {
         etFromQuestionsCount.removeTextChangedListener(questionsFromTextWatcher)
         etToQuestionsCount.removeTextChangedListener(questionsToTextWatcher)
         etFromTime.removeTextChangedListener(timeFromTextWatcher)
