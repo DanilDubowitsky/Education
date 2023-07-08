@@ -9,6 +9,12 @@ fun ThemeShort.toUI(selectedThemeId: String? = null) = ThemeShortUI(
     id == selectedThemeId
 )
 
+fun ThemeShort.toUISelected(isSelected: Boolean = true) = ThemeShortUI(
+    id,
+    title,
+    isSelected = isSelected
+)
+
 fun List<ThemeShort>.toUIModels(selectedThemeId: String? = null) = this.map { theme ->
     theme.toUI(selectedThemeId)
 }

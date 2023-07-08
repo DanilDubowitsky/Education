@@ -9,6 +9,10 @@ sealed interface StringResource {
         object CommonConfirmation : Common
 
         object CommonCancellation : Common
+
+        object CommonBack: Common
+
+        object CommonCancel: Common
     }
 
     sealed interface Error : StringResource {

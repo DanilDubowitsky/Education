@@ -2,8 +2,13 @@ package com.testeducation.converter.test
 
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
+import com.testeducation.domain.model.theme.ThemeShort
+import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
+import com.testeducation.logic.model.theme.ThemeShortUI
+import com.testeducation.utils.MainColor
+import com.testeducation.utils.MainColor.tempColors
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -39,9 +44,7 @@ private fun getColor(): String {
     return tempColors[rand]
 }
 
-private fun getStyle(): TestShortUI.Style {
+private fun getStyle(): CardTestStyle {
     val rand = Random.nextInt(0..3)
-    return TestShortUI.Style.values()[rand]
+    return CardTestStyle.values()[rand]
 }
-
-private val tempColors = arrayOf("#FCAF2A", "#FF6951", "#4B9FFF", "#1CCD9D")
