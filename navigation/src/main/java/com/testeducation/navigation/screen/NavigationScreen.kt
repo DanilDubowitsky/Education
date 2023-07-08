@@ -47,6 +47,8 @@ sealed interface NavigationScreen : Serializable {
 
         object Home : Main
 
+        object CreationTest : Main
+
         object Tests : Main {
 
             object OnScrollToBottom : ResultKey<Unit>

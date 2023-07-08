@@ -3,11 +3,14 @@ package com.testeducation.ui.base.dialog.bottom
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -30,11 +33,24 @@ abstract class BaseBottomSheetDialog<VB : ViewBinding>(
         return androidInjector
     }
 
-    protected var isFullScreen = false
+    open val isFullScreen = false
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (isFullScreen) {
+            val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            binding.root.layoutParams.height =
+                Resources.getSystem().displayMetrics.heightPixels
+        }
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).apply {
             setOnShowListener(::onDialogShow)
+            if (isFullScreen) {
+                dialog?.window?.setDimAmount(0f)
+            }
         }
     }
 

@@ -26,6 +26,9 @@
     <string name="common_error_handle">Ошибка в приложении</string>
     <string name="common_from">от</string>
     <string name="common_to">до</string>
+    <string name="common_cancel">Отменить</string>
+    <string name="common_back">Назад</string>
+    <string name="common_create">Создать</string>
     <string name="common_email">E-mail</string>
 
     <string name="tests_filters_label">Фильтры</string>
@@ -47,5 +50,11 @@
     <string name="tests_filters_refresh_label">Сбросить</string>
     <string name="tests_filters_limited">Ограничено</string>
     <string name="tests_filters_unlimited">Без ограничений</string>
+
+    <string name="test_creation_step_1">Шаг 1. Придумайте название</string>
+    <string name="test_creation_step_2">Шаг 2. Выберите тему</string>
+    <string name="test_creation_step_3">Шаг 3. Выберите цвет</string>
+    <string name="test_creation_step_4">Выберите дизайн</string>
+    <string name="test_creation_hint_input_name">Назовите этот тест</string>
 
 </resources>
