@@ -17,6 +17,7 @@ import com.testeducation.education.di.modules.helper.HelperModule
 import com.testeducation.education.di.modules.navigation.NavigationModule
 import com.testeducation.education.di.modules.remote.client.auth.AuthClientModule
 import com.testeducation.education.di.modules.remote.client.refresh.RefreshClientModule
+import com.testeducation.education.di.modules.remote.helper.RemoteHelperModule
 import com.testeducation.education.di.modules.remote.retrofit.category.ThemeRetrofitModule
 import com.testeducation.education.di.modules.remote.retrofit.global.RetrofitModule
 import com.testeducation.education.di.modules.remote.retrofit.internal.BackendRetrofitClientModule
@@ -44,6 +45,7 @@ import javax.inject.Singleton
         AuthClientModule::class,
         AuthServiceModule::class,
         AuthUseCaseModule::class,
+        RemoteHelperModule::class,
 
         // Core
         NavigationModule::class,

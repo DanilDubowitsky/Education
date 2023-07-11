@@ -1,9 +1,11 @@
 package com.testeducation.education.di.modules.domain.usecase.auth
 
 import com.testeducation.domain.cases.auth.ConfirmEmail
+import com.testeducation.domain.cases.auth.GetTokenExpiration
 import com.testeducation.domain.cases.auth.SignIn
 import com.testeducation.domain.cases.auth.SignUp
 import com.testeducation.domain.config.user.IUserConfig
+import com.testeducation.domain.service.IRefreshTokenExpirationHandler
 import com.testeducation.domain.service.auth.IAuthService
 import dagger.Module
 import dagger.Provides
@@ -30,5 +32,11 @@ object AuthUseCaseModule {
         service: IAuthService,
         config: IUserConfig
     ): SignIn = SignIn(service, config)
+
+    @Provides
+    @Reusable
+    fun provideGetTokenExpiration(
+        tokenExpirationHandler: IRefreshTokenExpirationHandler
+    ) = GetTokenExpiration(tokenExpirationHandler)
 
 }

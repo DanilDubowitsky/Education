@@ -9,12 +9,18 @@ fun <T> Response<T>.getResult(): T {
     if (this.isSuccessful) return this.body()!!
     val errorBodyString = this.errorBody()?.string().orEmpty()
     val errorJson = JSONUtils.toJsonObject<GenericResponse<T>>(errorBodyString)
-    throw ServerException(errorJson.status.message)
+    val message = errorJson.status.message.takeIf {
+        it.isNotEmpty()
+    } ?: errorBodyString
+    throw ServerException(message)
 }
 
 fun <T : GenericResponse<Unit>> Response<T>.getResult() {
     if (this.isSuccessful) return
     val errorBodyString = this.errorBody()?.string().orEmpty()
     val errorJson = JSONUtils.toJsonObject<GenericResponse<T>>(errorBodyString)
-    throw ServerException(errorJson.status.message)
+    val message = errorJson.status.message.takeIf {
+        it.isNotEmpty()
+    } ?: errorBodyString
+    throw ServerException(message)
 }

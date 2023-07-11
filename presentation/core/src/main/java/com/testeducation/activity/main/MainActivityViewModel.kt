@@ -2,6 +2,7 @@ package com.testeducation.activity.main
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.auth.GetTokenExpiration
 import com.testeducation.domain.cases.internal.IsAppVersionUpdateRequired
 import com.testeducation.domain.interaction.user.UserConfigInteractor
 import com.testeducation.helper.error.IExceptionHandler
@@ -11,6 +12,7 @@ import com.testeducation.logic.activity.MainActivitySideEffect
 import com.testeducation.logic.activity.MainActivityState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import kotlinx.coroutines.flow.collect
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class MainActivityViewModel(
@@ -18,6 +20,7 @@ class MainActivityViewModel(
     private val userConfigInteractor: UserConfigInteractor,
     private val resourceHelper: IResourceHelper,
     private val isAppVersionUpdateRequired: IsAppVersionUpdateRequired,
+    private val getTokenExpiration: GetTokenExpiration,
     reducer: IReducer<MainActivityModelState, MainActivityState>,
     errorHandler: IExceptionHandler
 ) : BaseViewModel<MainActivityModelState, MainActivityState, MainActivitySideEffect>(
@@ -44,6 +47,13 @@ class MainActivityViewModel(
         val isExpired = userConfigInteractor.isRefreshTokenExpired()
         val screen = if (isExpired) NavigationScreen.Auth.Login
         else NavigationScreen.Main.Home
+        router.replace(screen)
+
+        getTokenExpiration().collect(::handleTokenExpired)
+    }
+
+    private fun handleTokenExpired(unit: Unit) {
+        val screen = NavigationScreen.Auth.Login
         router.replace(screen)
     }
 

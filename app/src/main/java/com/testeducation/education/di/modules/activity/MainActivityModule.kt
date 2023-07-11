@@ -6,6 +6,7 @@ import com.testeducation.activity.main.MainActivityReducer
 import com.testeducation.logic.activity.MainActivityState
 import com.testeducation.activity.main.MainActivityViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.auth.GetTokenExpiration
 import com.testeducation.domain.cases.internal.IsAppVersionUpdateRequired
 import com.testeducation.domain.interaction.user.UserConfigInteractor
 import com.testeducation.education.di.viewmodel.ViewModelKey
@@ -36,6 +37,7 @@ interface MainActivityModule {
             userConfigInteractor: UserConfigInteractor,
             resourceHelper: IResourceHelper,
             isAppVersionUpdateRequired: IsAppVersionUpdateRequired,
+            getTokenExpiration: GetTokenExpiration,
             reducer: IReducer<MainActivityModelState, MainActivityState>,
             errorHandler: IExceptionHandler
         ): MainActivityViewModel = MainActivityViewModel(
@@ -43,6 +45,7 @@ interface MainActivityModule {
             userConfigInteractor,
             resourceHelper,
             isAppVersionUpdateRequired,
+            getTokenExpiration,
             reducer,
             errorHandler
         )
