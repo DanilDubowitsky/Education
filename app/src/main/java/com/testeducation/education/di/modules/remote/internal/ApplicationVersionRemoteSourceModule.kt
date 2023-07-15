@@ -1,4 +1,4 @@
-package com.testeducation.education.di.modules.remote.source.internal
+package com.testeducation.education.di.modules.remote.internal
 
 import com.testeducation.core.source.remote.internal.IAppVersionRemoteSource
 import com.testeducation.remote.client.retrofit.internal.BackendRetrofitClient

@@ -5,7 +5,6 @@
     android:layout_height="121dp"
     android:id="@+id/cardTest"
     android:layout_marginTop="16dp"
-    xmlns:tools="http://schemas.android.com/tools"
     app:cardBackgroundColor="@color/colorBlue"
     android:focusable="true"
     android:clickable="true"

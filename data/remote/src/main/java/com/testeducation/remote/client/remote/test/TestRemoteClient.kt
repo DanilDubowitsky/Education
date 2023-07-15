@@ -8,7 +8,8 @@ class TestRemoteClient(
     private val testRetrofitClient: TestRetrofitClient
 ) : ITestRemoteClient {
 
-    override suspend fun likeTest(id: String) =
-        testRetrofitClient.likeTest(id).getResult()
-
+    override suspend fun toggleTestLike(id: String, liked: Boolean) {
+        return if (liked) testRetrofitClient.unlikeTest(id).getResult()
+        else testRetrofitClient.likeTest(id).getResult()
+    }
 }

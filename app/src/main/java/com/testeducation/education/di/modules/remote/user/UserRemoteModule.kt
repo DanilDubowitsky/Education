@@ -1,4 +1,4 @@
-package com.testeducation.education.di.modules.remote.source.user
+package com.testeducation.education.di.modules.remote.user
 
 import com.testeducation.core.source.remote.user.IUserRemoteSource
 import com.testeducation.remote.client.retrofit.user.UserRetrofitClient
@@ -8,7 +8,7 @@ import dagger.Provides
 import dagger.Reusable
 
 @Module
-object UserRemoteSourceModule {
+object UserRemoteModule {
 
     @Provides
     @Reusable

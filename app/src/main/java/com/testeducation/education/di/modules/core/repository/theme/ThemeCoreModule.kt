@@ -1,4 +1,4 @@
-package com.testeducation.education.di.modules.domain.repository.theme
+package com.testeducation.education.di.modules.core.repository.theme
 
 import com.testeducation.core.repository.theme.ThemeRepository
 import com.testeducation.core.source.remote.theme.IThemeRemoteSource
@@ -8,7 +8,7 @@ import dagger.Provides
 import dagger.Reusable
 
 @Module
-object ThemeRepositoryModule {
+object ThemeCoreModule {
 
     @Provides
     @Reusable

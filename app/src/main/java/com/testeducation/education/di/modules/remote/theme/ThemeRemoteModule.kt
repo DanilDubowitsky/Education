@@ -1,4 +1,4 @@
-package com.testeducation.education.di.modules.remote.source.theme
+package com.testeducation.education.di.modules.remote.theme
 
 import com.testeducation.core.source.remote.theme.IThemeRemoteSource
 import com.testeducation.remote.client.retrofit.theme.ThemeRetrofitClient
@@ -8,7 +8,7 @@ import dagger.Provides
 import dagger.Reusable
 
 @Module
-object ThemeRemoteSourceModule {
+object ThemeRemoteModule {
 
     @Provides
     @Reusable

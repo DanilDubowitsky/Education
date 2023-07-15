@@ -1,7 +1,9 @@
 package com.testeducation.education.di.modules.domain.usecase.test
 
 import com.testeducation.domain.cases.test.GetTests
+import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.repository.test.ITestRepository
+import com.testeducation.domain.service.test.ITestService
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -14,4 +16,10 @@ object TestUseCaseModule {
     fun provideGetTests(
         testRepository: ITestRepository
     ): GetTests = GetTests(testRepository)
+
+    @Provides
+    @Reusable
+    fun provideLikeTest(
+        testService: ITestService
+    ): ToggleTestLike = ToggleTestLike(testService)
 }

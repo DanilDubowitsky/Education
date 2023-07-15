@@ -20,4 +20,6 @@ interface ITestRepository {
         limit: Int,
         pageIndex: Int
     ): Page<TestShort>
+
+    suspend fun getLikedTests()
 }

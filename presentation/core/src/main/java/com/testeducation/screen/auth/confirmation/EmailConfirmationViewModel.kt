@@ -35,7 +35,7 @@ class EmailConfirmationViewModel(
         }
         confirmEmail(modelState.code)
         postSideEffect(EmailConfirmationSideEffect.RegistrationSuccess)
-        router.replace(NavigationScreen.Auth.Login)
+        router.newRootChain(NavigationScreen.Auth.Login)
     }
 
     fun onCodeTextChanged(text: String) = intent {

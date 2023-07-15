@@ -5,9 +5,9 @@ import com.testeducation.education.di.modules.base.AppModule
 import com.testeducation.education.di.modules.config.ConfigModule
 import com.testeducation.education.di.modules.config.internal.AppVersionConfigModule
 import com.testeducation.education.di.modules.domain.interaction.UserInteractorModule
-import com.testeducation.education.di.modules.domain.repository.test.TestRepositoryModule
-import com.testeducation.education.di.modules.domain.repository.theme.ThemeRepositoryModule
-import com.testeducation.education.di.modules.domain.repository.user.UserRepositoryModule
+import com.testeducation.education.di.modules.core.repository.test.TestCoreModule
+import com.testeducation.education.di.modules.core.repository.theme.ThemeCoreModule
+import com.testeducation.education.di.modules.core.repository.user.UserCoreModule
 import com.testeducation.education.di.modules.domain.usecase.auth.AuthUseCaseModule
 import com.testeducation.education.di.modules.domain.usecase.internal.AppVersionUseCaseModule
 import com.testeducation.education.di.modules.domain.usecase.test.TestUseCaseModule
@@ -24,10 +24,10 @@ import com.testeducation.education.di.modules.remote.retrofit.internal.BackendRe
 import com.testeducation.education.di.modules.remote.retrofit.refresh.RefreshRetrofitModule
 import com.testeducation.education.di.modules.remote.retrofit.test.TestRetrofitClientModule
 import com.testeducation.education.di.modules.remote.retrofit.user.UserRetrofitClientModule
-import com.testeducation.education.di.modules.remote.source.internal.ApplicationVersionRemoteSourceModule
-import com.testeducation.education.di.modules.remote.source.test.TestRemoteSourceModule
-import com.testeducation.education.di.modules.remote.source.theme.ThemeRemoteSourceModule
-import com.testeducation.education.di.modules.remote.source.user.UserRemoteSourceModule
+import com.testeducation.education.di.modules.remote.internal.ApplicationVersionRemoteSourceModule
+import com.testeducation.education.di.modules.remote.test.TestRemoteModule
+import com.testeducation.education.di.modules.remote.theme.ThemeRemoteModule
+import com.testeducation.education.di.modules.remote.user.UserRemoteModule
 import com.testeducation.education.di.modules.service.auth.AuthServiceModule
 import dagger.BindsInstance
 import dagger.Component
@@ -57,20 +57,20 @@ import javax.inject.Singleton
         UserInteractorModule::class,
 
         // Test
-        TestRepositoryModule::class,
+        TestCoreModule::class,
         TestUseCaseModule::class,
         TestRetrofitClientModule::class,
-        TestRemoteSourceModule::class,
+        TestRemoteModule::class,
 
         //User
-        UserRepositoryModule::class,
-        UserRemoteSourceModule::class,
+        UserCoreModule::class,
+        UserRemoteModule::class,
         UserUseCaseModule::class,
         UserRetrofitClientModule::class,
 
         //Theme
-        ThemeRemoteSourceModule::class,
-        ThemeRepositoryModule::class,
+        ThemeRemoteModule::class,
+        ThemeCoreModule::class,
         ThemeRetrofitModule::class,
         ThemeUseCaseModule::class,
 
