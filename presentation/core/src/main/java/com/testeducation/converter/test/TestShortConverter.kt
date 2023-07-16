@@ -11,7 +11,7 @@ import com.testeducation.utils.MainColor.tempColors
 import kotlin.random.Random
 import kotlin.random.nextInt
 
-fun TestShort.toUI() = TestShortUI(
+fun TestShort.toUI(): TestShortUI = TestShortUI.Test(
     id,
     title,
     questionsCount,
@@ -26,7 +26,7 @@ fun TestShort.toUI() = TestShortUI(
     settings.toUI()
 )
 
-fun List<TestShort>.toUIModels() = this.map(TestShort::toUI)
+fun List<TestShort>.toUIModels(): List<TestShortUI> = this.map(TestShort::toUI)
 
 fun TestOrderField.toUIModel() = when (this) {
     TestOrderField.TITLE -> TestOrderFieldUI.TITLE
@@ -40,7 +40,7 @@ fun TestOrderFieldUI.toModel() = when (this) {
     TestOrderFieldUI.QUESTIONS -> TestOrderField.QUESTIONS
 }
 
-fun TestShortUI.toModel() = TestShort(
+fun TestShortUI.Test.toModel() = TestShort(
     id,
     title,
     questionsCount,
@@ -54,26 +54,29 @@ fun TestShortUI.toModel() = TestShort(
     settings.toModel()
 )
 
-fun List<TestShortUI>.toModels() = this.map(TestShortUI::toModel)
+fun List<TestShortUI>.toModels() = this.mapNotNull { testShortUI ->
+    if (testShortUI is TestShortUI.Test) testShortUI.toModel()
+    else null
+}
 
-private fun TestSettings.toUI() = TestShortUI.Settings(
+private fun TestSettings.toUI() = TestShortUI.Test.Settings(
     availability.toUI(),
     previewQuestions
 )
 
-private fun TestShortUI.Settings.toModel() = TestSettings(
+private fun TestShortUI.Test.Settings.toModel() = TestSettings(
     availability.toModel(),
     previewQuestions
 )
 
 private fun TestSettings.Availability.toUI() = when (this) {
-    TestSettings.Availability.PUBLIC -> TestShortUI.Settings.Availability.PUBLIC
-    TestSettings.Availability.PRIVATE -> TestShortUI.Settings.Availability.PRIVATE
+    TestSettings.Availability.PUBLIC -> TestShortUI.Test.Settings.Availability.PUBLIC
+    TestSettings.Availability.PRIVATE -> TestShortUI.Test.Settings.Availability.PRIVATE
 }
 
-private fun TestShortUI.Settings.Availability.toModel() = when (this) {
-    TestShortUI.Settings.Availability.PUBLIC -> TestSettings.Availability.PUBLIC
-    TestShortUI.Settings.Availability.PRIVATE -> TestSettings.Availability.PRIVATE
+private fun TestShortUI.Test.Settings.Availability.toModel() = when (this) {
+    TestShortUI.Test.Settings.Availability.PUBLIC -> TestSettings.Availability.PUBLIC
+    TestShortUI.Test.Settings.Availability.PRIVATE -> TestSettings.Availability.PRIVATE
 }
 
 // TODO: remove this when styles and colors added on back end

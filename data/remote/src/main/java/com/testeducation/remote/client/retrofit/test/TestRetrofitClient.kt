@@ -32,4 +32,7 @@ interface TestRetrofitClient {
 
     @DELETE("/api/app/account/tests/likes/{id}")
     suspend fun unlikeTest(@Path("id") id: String): RemoteResponse<Unit>
+
+    @GET("/api/app/account/tests/likes")
+    suspend fun getLikedTests(): RemoteResponse<List<RemoteTestShort>>
 }

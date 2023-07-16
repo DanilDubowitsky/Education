@@ -79,6 +79,7 @@ class Navigator(
     }
 
     private fun moveDialog(screen: Screen.DialogScreen) {
+        if (screen == currentVisibleScreen) return
         val dialog = screen.createDialog(fragmentFactory)
         dialog.showNow(fragmentManager, screen::class.java.name)
         currentVisibleScreen = screen
@@ -95,6 +96,7 @@ class Navigator(
     }
 
     private fun moveFragment(screen: Screen.FragmentScreen) {
+        if (screen == currentVisibleScreen) return
         val fragment = screen.createFragment(fragmentFactory)
         val transaction = fragmentManager.beginTransaction()
         if (animationSet != null) {
@@ -113,6 +115,7 @@ class Navigator(
     }
 
     private fun replaceFragment(screen: Screen.FragmentScreen) {
+        if (screen == currentVisibleScreen) return
         val fragment = screen.createFragment(fragmentFactory)
         fragmentManager.beginTransaction().replace(containerId, fragment, screen::class.java.name)
             .setReorderingAllowed(true)

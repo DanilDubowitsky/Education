@@ -1,6 +1,5 @@
 package com.testeducation.screen.tests.creation
 
-import androidx.lifecycle.viewModelScope
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.theme.GetThemes
@@ -17,7 +16,6 @@ import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.screen.tests.creation.TestCreationModelState.StepState.Companion.isFirst
 import com.testeducation.utils.getColor
 import com.testeducation.utils.getString
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
@@ -151,8 +149,7 @@ class TestCreationViewModel(
     }
 
     private fun loadingTheme() = intent {
-        launchJob {
-            val themes = getThemes()
+        getThemes().collect { themes ->
             updateModelState {
                 copy(
                     themes = themes,
@@ -165,6 +162,7 @@ class TestCreationViewModel(
                 )
             )
         }
+
     }
 
     private fun List<ThemeShort>.toNotSelectedUiList() = this.map { theme ->

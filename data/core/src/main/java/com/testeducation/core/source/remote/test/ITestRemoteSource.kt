@@ -21,4 +21,6 @@ interface ITestRemoteSource {
         pageIndex: Int
     ): Page<TestShort>
 
+    suspend fun getLikedTests(): List<TestShort>
+
 }

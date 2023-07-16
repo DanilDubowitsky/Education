@@ -20,7 +20,7 @@ class CardTest @JvmOverloads constructor(
 
     private val binding = WidgetCardTestBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setContent(testShortUI: TestShortUI) {
+    fun setContent(testShortUI: TestShortUI.Test) {
         binding {
             themeText.text = testShortUI.theme.title
             likesCountText.text = testShortUI.likes.toString()

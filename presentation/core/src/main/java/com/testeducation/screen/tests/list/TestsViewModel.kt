@@ -1,6 +1,5 @@
 package com.testeducation.screen.tests.list
 
-import androidx.lifecycle.viewModelScope
 import com.testeducation.converter.test.toModels
 import com.testeducation.converter.test.toUIModel
 import com.testeducation.core.BaseViewModel
@@ -16,8 +15,8 @@ import com.testeducation.logic.screen.tests.list.TestsState
 import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class TestsViewModel(
     private val router: NavigationRouter,
@@ -87,6 +86,16 @@ class TestsViewModel(
         router.navigateTo(screen)
     }
 
+    fun loadNextPage() = intent {
+        val modelState = getModelState()
+        if (modelState.tests.size >= modelState.totalTestsCount) return@intent
+        postSideEffect(TestsSideEffect.RemoveScrollListener)
+        updateModelState {
+            copy(testsLoadingState = TestsModelState.TestsLoadingState.NEXT_PAGE)
+        }
+        loadTests()
+    }
+
     fun toggleTestLike(position: Int) = intent {
         val modelState = getModelState()
         val newTests = testHelper.toggleTestLike(position, modelState.tests)
@@ -95,9 +104,9 @@ class TestsViewModel(
         }
     }
 
-    private fun loadTests() = intent {
+    private fun loadTests() = singleIntent(getTests.javaClass.name) {
         val modelState = getModelState()
-        val tests = getTests(
+        val page = getTests(
             themeId = modelState.selectedThemeId,
             orderField = modelState.selectedOrderField,
             minTime = modelState.timeLimitFrom.toIntOrNull(),
@@ -110,19 +119,23 @@ class TestsViewModel(
         )
         updateModelState {
             copy(
-                tests = tests.tests,
+                tests = modelState.tests + page.tests,
                 testsLoadingState = TestsModelState.TestsLoadingState.IDLE,
+                pageIndex = page.pageIndex + 1,
+                totalTestsCount = page.itemsTotal
             )
         }
+        postSideEffect(TestsSideEffect.AddScrollListener)
     }
 
     private fun loadThemes() = intent {
-        val themes = getThemes()
-        updateModelState {
-            copy(
-                themes = themes,
-                themesLoadingState = TestsModelState.ThemesLoadingState.IDLE
-            )
+        getThemes().collect { themes ->
+            updateModelState {
+                copy(
+                    themes = themes,
+                    themesLoadingState = TestsModelState.ThemesLoadingState.IDLE
+                )
+            }
         }
     }
 
@@ -157,7 +170,7 @@ class TestsViewModel(
     }
 
     companion object {
-        private const val PAGE_SIZE = 20
+        private const val PAGE_SIZE = 10
         const val DEFAULT_QUESTIONS_MIN = "1"
         const val DEFAULT_QUESTIONS_MAX = "50"
         const val DEFAULT_TIME_MIN = "1"

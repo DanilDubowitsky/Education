@@ -14,6 +14,8 @@ import com.testeducation.education.di.modules.domain.usecase.test.TestUseCaseMod
 import com.testeducation.education.di.modules.domain.usecase.theme.ThemeUseCaseModule
 import com.testeducation.education.di.modules.domain.usecase.user.UserUseCaseModule
 import com.testeducation.education.di.modules.helper.HelperModule
+import com.testeducation.education.di.modules.local.DataBaseModule
+import com.testeducation.education.di.modules.local.theme.ThemeLocalModule
 import com.testeducation.education.di.modules.navigation.NavigationModule
 import com.testeducation.education.di.modules.remote.client.auth.AuthClientModule
 import com.testeducation.education.di.modules.remote.client.refresh.RefreshClientModule
@@ -40,6 +42,7 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ActivityModule::class,
         RetrofitModule::class,
+        DataBaseModule::class,
 
         // Auth
         AuthClientModule::class,
@@ -73,6 +76,7 @@ import javax.inject.Singleton
         ThemeCoreModule::class,
         ThemeRetrofitModule::class,
         ThemeUseCaseModule::class,
+        ThemeLocalModule::class,
 
         // Internal
         BackendRetrofitClientModule::class,

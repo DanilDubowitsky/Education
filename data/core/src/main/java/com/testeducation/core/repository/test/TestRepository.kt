@@ -38,8 +38,7 @@ class TestRepository(
             pageIndex
         )
 
-    override suspend fun getLikedTests() {
-
-    }
+    override suspend fun getLikedTests(): List<TestShort> =
+        testRemoteSource.getLikedTests()
 
 }

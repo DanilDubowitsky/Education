@@ -7,15 +7,17 @@ import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestOrderFieldUI
-import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.logic.model.theme.ThemeShortUI
+import com.testeducation.logic.screen.tests.list.TestsSideEffect
 import com.testeducation.logic.screen.tests.list.TestsState
 import com.testeducation.screen.tests.list.TestsViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestsBinding
+import com.testeducation.ui.delegates.tests.createTestLoadingDelegate
 import com.testeducation.ui.delegates.tests.createTestShortAdapterDelegate
 import com.testeducation.ui.delegates.tests.createThemeShortAdapterDelegate
+import com.testeducation.ui.utils.addPageScrollListener
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.isShimmerHide
@@ -30,10 +32,11 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
 
     private val testsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
-            simpleDiffUtil(TestShortUI::id),
+            TestShortDiffUtil(),
             createTestShortAdapterDelegate(
                 viewModel::toggleTestLike
-            )
+            ),
+            createTestLoadingDelegate()
         )
     }
 
@@ -44,6 +47,8 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         )
     }
 
+    private var pageLoadingListener: RecyclerView.OnScrollListener? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
@@ -52,13 +57,18 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private fun observeData() {
-        viewModel.observe(this, ::render)
+        viewModel.observe(this, ::render, ::onSideEffect)
     }
 
     private fun setupRecycler() = with(binding) {
         testsRecycler.adapter = testsAdapter
         themesRecycler.adapter = themesAdapter
         testsRecycler.disableChangeAnimation()
+    }
+
+    private fun onSideEffect(sideEffect: TestsSideEffect) = when (sideEffect) {
+        TestsSideEffect.AddScrollListener -> addTestsLoadingListener()
+        TestsSideEffect.RemoveScrollListener -> removeTestsLoadingListener()
     }
 
     private fun render(state: TestsState) = binding {
@@ -75,6 +85,22 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         bindTests(state)
     }
 
+    private fun addTestsLoadingListener() {
+        if (pageLoadingListener == null) {
+            pageLoadingListener = binding.testsRecycler.addPageScrollListener(
+                TESTS_THRESHOLD,
+                viewModel::loadNextPage
+            )
+        }
+    }
+
+    private fun removeTestsLoadingListener() {
+        if (pageLoadingListener != null) {
+            binding.testsRecycler.removeOnScrollListener(pageLoadingListener!!)
+            pageLoadingListener = null
+        }
+    }
+
     private fun setupListeners() = with(binding) {
         testsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -89,6 +115,10 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         })
         filtersLabel.setClickListener(viewModel::openFiltersScreen)
         btnFilter.setClickListener(viewModel::openFiltersScreen)
+        pageLoadingListener = testsRecycler.addPageScrollListener(
+            TESTS_THRESHOLD,
+            viewModel::loadNextPage
+        )
     }
 
     private fun FragmentTestsBinding.bindTests(state: TestsState) {
@@ -112,6 +142,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
 
     private companion object {
         const val SCROLL_OFFSET = 20
+        const val TESTS_THRESHOLD = 2
     }
 
 }

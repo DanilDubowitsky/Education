@@ -12,5 +12,5 @@ class GetThemes(
         query: String = "",
         orderField: ThemeOrderField = ThemeOrderField.TITLE,
         direction: OrderDirection = OrderDirection.ASCENDING
-    ) = themeRepository.getThemes(query, orderField, direction)
+    ) = themeRepository.getThemesReactive(query, orderField, direction)
 }
