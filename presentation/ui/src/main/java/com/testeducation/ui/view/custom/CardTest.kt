@@ -11,6 +11,7 @@ import com.testeducation.ui.R
 import com.testeducation.ui.databinding.WidgetCardTestBinding
 import com.testeducation.ui.utils.hideView
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.showView
 
 class CardTest @JvmOverloads constructor(
@@ -19,7 +20,7 @@ class CardTest @JvmOverloads constructor(
 
     private val binding = WidgetCardTestBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setContent(testShortUI: TestShortUI) {
+    fun setContent(testShortUI: TestShortUI.Test) {
         binding {
             themeText.text = testShortUI.theme.title
             likesCountText.text = testShortUI.likes.toString()
@@ -33,6 +34,12 @@ class CardTest @JvmOverloads constructor(
                 )
             root.setCardBackgroundColor(Color.parseColor(testShortUI.color))
             setStyle(testShortUI.style)
+        }
+    }
+
+    fun setOnLikeClickListener(listener: () -> Unit) {
+        binding.likesIcon.setClickListener {
+            listener()
         }
     }
 

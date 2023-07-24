@@ -16,5 +16,13 @@ data class RemoteTestShort(
     @SerializedName("passes_count")
     val passesCount: Int,
     @SerializedName("theme")
-    val theme: RemoteThemeShort
+    val theme: RemoteThemeShort,
+    @SerializedName("style")
+    val style: RemoteTestStyle,
+    @SerializedName("settings")
+    val testSettings: RemoteTestSettings,
+    @SerializedName("liked")
+    val liked: Boolean,
+    @SerializedName("passed")
+    val passed: Boolean
 )

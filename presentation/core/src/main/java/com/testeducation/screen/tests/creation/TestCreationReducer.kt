@@ -21,13 +21,23 @@ class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> 
                 modelState.title,
                 modelState.selectedTheme,
                 modelState.colorState.color,
-                modelState.styleCurrent
+                modelState.styleCurrent,
+                // TODO: use another model for test creation
+                // TODO: add with creation
+                TestShortUI.Test.Settings(TestShortUI.Test.Settings.Availability.PUBLIC, true)
             ),
             btnCancelText = modelState.backBtnText
         )
     }
 
-    private fun createTestShortUI(title: String = "", themeShort: ThemeShort, color: String, style: CardTestStyle) = TestShortUI(
+    // TODO: use another model for test creation
+    private fun createTestShortUI(
+        title: String = "",
+        themeShort: ThemeShort,
+        color: String,
+        style: CardTestStyle,
+        settings: TestShortUI.Test.Settings
+    ) = TestShortUI.Test(
         id = "",
         title = title,
         questionsCount = 0,
@@ -36,7 +46,10 @@ class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> 
         passesCount = 0,
         theme = themeShort.toUISelected(),
         color = color,
-        style = style
+        style = style,
+        liked = false,
+        passed = false,
+        settings = settings
     )
 
 }

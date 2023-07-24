@@ -12,6 +12,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
@@ -113,7 +114,7 @@ fun View.startAnimation(
 }
 
 fun RecyclerView.disableChangeAnimation() {
-    (itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
+    (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 }
 
 fun ChipGroup.addThemes(

@@ -9,5 +9,9 @@ data class TestShort(
     val isPublic: Boolean,
     val likes: Int,
     val passesCount: Int,
-    val theme: ThemeShort
+    val theme: ThemeShort,
+    val liked: Boolean,
+    val passed: Boolean,
+    val style: TestStyle,
+    val settings: TestSettings
 )

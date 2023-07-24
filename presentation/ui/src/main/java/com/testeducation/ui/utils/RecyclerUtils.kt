@@ -4,6 +4,10 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
+import androidx.recyclerview.widget.RecyclerView.Recycler
 import androidx.viewbinding.ViewBinding
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.dsl.AdapterDelegateViewBindingViewHolder
@@ -45,4 +49,21 @@ fun <T : Any, R> simpleDiffUtil(
         override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
             oldItem == newItem
     }
+}
+
+inline fun RecyclerView.addPageScrollListener(
+    threshold: Int,
+    crossinline onNextPage: () -> Unit
+): OnScrollListener {
+    val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            val layoutManager = layoutManager as LinearLayoutManager
+            val lastVisiblePosition = layoutManager.findLastVisibleItemPosition()
+            if (layoutManager.itemCount - lastVisiblePosition >= threshold) {
+                onNextPage()
+            }
+        }
+    }
+    addOnScrollListener(scrollListener)
+    return scrollListener
 }

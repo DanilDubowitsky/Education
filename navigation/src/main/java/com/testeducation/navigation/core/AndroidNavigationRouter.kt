@@ -19,6 +19,10 @@ class AndroidNavigationRouter(
         navigationHost.executeCommand(Command.Replace(screen), key)
     }
 
+    override fun newRootChain(screen: NavigationScreen, key: String?) {
+        navigationHost.executeCommand(Command.NewRootChain(screen), key)
+    }
+
     override fun <T> setResultListener(
         key: ResultKey<T>,
         listener: ResultListener<T>

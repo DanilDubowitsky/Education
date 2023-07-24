@@ -8,6 +8,7 @@ import com.testeducation.domain.model.test.TestShort
 import com.testeducation.remote.client.retrofit.test.TestRetrofitClient
 import com.testeducation.remote.converter.global.toRemote
 import com.testeducation.remote.converter.test.toModel
+import com.testeducation.remote.converter.test.toModels
 import com.testeducation.remote.converter.test.toRemote
 import com.testeducation.remote.utils.getResult
 
@@ -41,5 +42,9 @@ class TestRemoteSource(
             pageIndex,
             limit
         ).getResult().data.toModel()
+    }
+
+    override suspend fun getLikedTests(): List<TestShort> {
+        return testRetrofitClient.getLikedTests().getResult().data.toModels()
     }
 }

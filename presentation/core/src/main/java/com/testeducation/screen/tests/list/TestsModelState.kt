@@ -25,7 +25,8 @@ data class TestsModelState(
     val timeLimitTo: String = DEFAULT_TIME_MAX,
     val questionsLimitFrom: String = DEFAULT_QUESTIONS_MIN,
     val questionsLimitTo: String = DEFAULT_QUESTIONS_MAX,
-    val pageIndex: Int = 0
+    val pageIndex: Int = 0,
+    val totalTestsCount: Int = 0
 ) {
 
     enum class ProfileLoadingState {
@@ -40,6 +41,7 @@ data class TestsModelState(
 
     enum class TestsLoadingState {
         LOADING,
-        IDLE
+        IDLE,
+        NEXT_PAGE
     }
 }

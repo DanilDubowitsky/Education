@@ -10,6 +10,7 @@ data class TestCreationState(
     val isLoading: Boolean,
     val isFirstScreenVisible: Boolean,
     val colorTestCard: String,
-    val testShortUI: TestShortUI,
+    // TODO: use another model for test creation
+    val testShortUI: TestShortUI.Test,
     val btnCancelText: String
 )

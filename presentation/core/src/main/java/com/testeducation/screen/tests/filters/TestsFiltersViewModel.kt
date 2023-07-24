@@ -19,6 +19,7 @@ import com.testeducation.screen.tests.list.TestsViewModel.Companion.DEFAULT_QUES
 import com.testeducation.screen.tests.list.TestsViewModel.Companion.DEFAULT_TIME_MAX
 import com.testeducation.screen.tests.list.TestsViewModel.Companion.DEFAULT_TIME_MIN
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
@@ -201,9 +202,10 @@ class TestsFiltersViewModel(
     }
 
     private fun loadThemes() = intent {
-        val themes = getThemes()
-        updateModelState {
-            copy(themes = themes)
+        getThemes().collect { themes ->
+            updateModelState {
+                copy(themes = themes)
+            }
         }
     }
 
