@@ -20,7 +20,7 @@ class SelectionQuestionTypeDialog :
         DialogSelectionQuestionTypeBinding::inflate
     ) {
     override val isFullScreen: Boolean
-        get() = true
+        get() = false
 
     private val questionTypeAdapter by lazy {
         AsyncListDifferDelegationAdapter(
