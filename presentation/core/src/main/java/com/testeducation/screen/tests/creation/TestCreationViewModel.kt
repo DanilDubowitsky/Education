@@ -13,6 +13,8 @@ import com.testeducation.logic.model.test.IconDesignItem
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.TestCreationState
+import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.creation.TestCreationModelState.StepState.Companion.isFirst
 import com.testeducation.utils.getColor
 import com.testeducation.utils.getString
@@ -24,7 +26,8 @@ class TestCreationViewModel(
     reducer: IReducer<TestCreationModelState, TestCreationState>,
     private val getThemes: GetThemes,
     private val resourceHelper: IResourceHelper,
-    errorHandler: IExceptionHandler
+    errorHandler: IExceptionHandler,
+    private val router: NavigationRouter
 ) : BaseViewModel<TestCreationModelState, TestCreationState, TestCreationSideEffect>(
     reducer,
     errorHandler
@@ -47,6 +50,18 @@ class TestCreationViewModel(
         }.also { stepStateNew ->
             updateStateStep(stepStateNew)
             updateBtnText(getBtnText(stepStateNew))
+        }
+    }
+
+    fun next() = intent {
+        val currentStepState = getModelState().stepState
+        if (currentStepState.isFirst()) {
+            val stepState = TestCreationModelState.StepState.SECOND
+            updateStateStep(stepState)
+            updateBtnText(getBtnText(stepState))
+        } else {
+            router.exit()
+            router.sendResult(NavigationScreen.Main.OnCreationTestResult, true)
         }
     }
 

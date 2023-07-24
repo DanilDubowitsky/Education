@@ -68,7 +68,7 @@ class CreationTestDialogFragment :
 
     private fun onClickListenerProcess() = binding {
         btnNext.setOnClickListener {
-            viewModel.changeStateStep()
+            viewModel.next()
         }
         btnCancel.setOnClickListener {
             viewModel.changeStateStep()

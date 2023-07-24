@@ -58,6 +58,12 @@ class HomeViewModel(
 
     fun navigateToCreation() = intent {
         val screen = NavigationScreen.Main.CreationTest
+        router.setResultListener(NavigationScreen.Main.OnCreationTestResult) { successResult ->
+            if (successResult) {
+                val screenSelectionQuestion = NavigationScreen.Main.SelectionTest
+                router.navigateTo(screenSelectionQuestion)
+            }
+        }
         router.navigateTo(screen)
     }
 

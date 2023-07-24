@@ -59,4 +59,11 @@
 
     <string name="test_favorites_title">Мне нравится</string>
 
+
+    <!--Question-->
+    <string name="question_type_match">Соотвествие</string>
+    <string name="question_type_answer">Выбор ответа</string>
+    <string name="question_type_write_answer">Написать ответ</string>
+    <string name="question_type_title">Выберите типа ответа</string>
+
 </resources>

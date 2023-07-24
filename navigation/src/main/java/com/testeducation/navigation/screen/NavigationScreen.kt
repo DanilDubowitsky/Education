@@ -49,12 +49,16 @@ sealed interface NavigationScreen : Serializable {
 
         object CreationTest : Main
 
+        object SelectionTest : Main
+
         object Tests : Main {
 
             object OnScrollToBottom : ResultKey<Unit>
 
             object OnScrollToTop : ResultKey<Unit>
         }
+
+        object OnCreationTestResult : ResultKey<Boolean>
     }
 
     sealed interface Tests : NavigationScreen {
