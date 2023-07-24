@@ -2,5 +2,5 @@ package com.testeducation.core.client.remote.test
 
 interface ITestRemoteClient {
 
-    suspend fun likeTest(id: String)
+    suspend fun toggleTestLike(id: String, liked: Boolean)
 }

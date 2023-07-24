@@ -20,7 +20,7 @@ import kotlin.coroutines.coroutineContext
 
 abstract class BaseViewModel<MODEL_STATE : Any, UI_STATE : Any, SIDE_EFFECT : Any>(
     protected val reducer: IReducer<MODEL_STATE, UI_STATE>,
-    protected val errorHandler: IExceptionHandler
+    protected val exceptionHandler: IExceptionHandler
 ) : ViewModel(), ContainerHost<UI_STATE, SIDE_EFFECT> {
 
     val stateFlow
@@ -50,7 +50,7 @@ abstract class BaseViewModel<MODEL_STATE : Any, UI_STATE : Any, SIDE_EFFECT : An
     }
 
     protected open fun handleThrowable(throwable: Throwable) {
-        errorHandler.handleError(throwable)
+        exceptionHandler.handleError(throwable)
     }
 
     protected suspend fun getModelState(): MODEL_STATE {
