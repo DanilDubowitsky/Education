@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
 import com.testeducation.screen.tests.creation.question.creation.QuestionCreationModelState
 import com.testeducation.screen.tests.creation.question.creation.QuestionCreationReducer
@@ -19,7 +20,7 @@ interface QuestionCreationModule {
     @Binds
     @IntoMap
     @ViewModelKey(QuestionCreationViewModel::class)
-    fun bindViewModelCreationQuestion(viewModel: QuestionCreationViewModel): ViewModel
+    fun bindViewModel(viewModel: QuestionCreationViewModel): ViewModel
 
     companion object {
         @Provides
@@ -29,10 +30,12 @@ interface QuestionCreationModule {
         @Provides
         fun provideViewModelQuestionCreation(
             reducer: IReducer<QuestionCreationModelState, QuestionCreationState>,
-            exceptionHandler: IExceptionHandler
+            exceptionHandler: IExceptionHandler,
+            resourceHelper: IResourceHelper
         ): QuestionCreationViewModel = QuestionCreationViewModel(
             reducer = reducer,
-            errorHandler = exceptionHandler
+            errorHandler = exceptionHandler,
+            resourceHelper = resourceHelper
         )
     }
 

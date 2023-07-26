@@ -8,7 +8,8 @@ sealed class AnswerItemUi {
         override val id: Int,
         val answerText: String,
         val isTrue: Boolean,
-        val isUrl: Boolean
+        val isUrl: Boolean,
+        val color: Int
     ) : AnswerItemUi()
 
     data class TextAnswer(override val id: Int) : AnswerItemUi()

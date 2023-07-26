@@ -22,8 +22,11 @@ class QuestionCreationFragment :
     private val questionAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             QuestionCreationDiffUtil(),
-            answersDelegateDefault(),
-            footerPlusAddDelegate()
+            answersDelegateDefault(
+                onClickCheckTrue = viewModel::changeCheckedAnswer,
+                onClickDelete = viewModel::deleteAnswer
+            ),
+            footerPlusAddDelegate(viewModel::addAnswer)
         )
     }
 

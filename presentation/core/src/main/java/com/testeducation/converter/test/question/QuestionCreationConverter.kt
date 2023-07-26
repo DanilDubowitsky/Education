@@ -10,7 +10,8 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
                 id = answerItem.id,
                 answerText = answerItem.answerText,
                 isTrue = answerItem.isTrue,
-                isUrl = answerItem.isUrl
+                isUrl = answerItem.isUrl,
+                color = answerItem.color
             )
         }
 

@@ -22,6 +22,7 @@ class ResourceHelper(
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {
         is ColorResource.Main -> extractMainColorResource(resource)
+        is ColorResource.MainLight -> extractMainColorResource(resource)
     }
 
     override fun getDrawableStyleTestCard(style: CardTestStyle): Int = when (style) {
@@ -59,6 +60,13 @@ class ResourceHelper(
         ColorResource.Main.Red -> color(R.color.colorRed)
         ColorResource.Main.Green -> color(R.color.colorDarkGreen)
         ColorResource.Main.Orange -> color(R.color.colorOrange)
+    }
+
+    private fun extractMainColorResource(resource: ColorResource.MainLight) = when (resource) {
+        ColorResource.MainLight.Blue -> color(R.color.colorMainBlueLight)
+        ColorResource.MainLight.Red -> color(R.color.colorMainRedLight)
+        ColorResource.MainLight.Green -> color(R.color.colorMainGreenLight)
+        ColorResource.MainLight.Orange -> color(R.color.colorMainOrangeLight)
     }
 
     private fun extractUpdateResource(resource: StringResource.Update) = when (resource) {
