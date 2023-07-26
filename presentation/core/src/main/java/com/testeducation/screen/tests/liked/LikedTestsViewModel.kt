@@ -2,11 +2,18 @@ package com.testeducation.screen.tests.liked
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.test.GetLikedTests
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.screen.tests.liked.LikedTestsSideEffect
 import com.testeducation.logic.screen.tests.liked.LikedTestsState
+import com.testeducation.navigation.core.NavigationRouter
+import org.orbitmvi.orbit.syntax.simple.intent
 
 class LikedTestsViewModel(
+    private val router: NavigationRouter,
+    private val testShortHelper: ITestHelper,
+    private val getLikedTests: GetLikedTests,
     reducer: IReducer<LikedTestsModelState, LikedTestsState>,
     exceptionHandler: IExceptionHandler
 ) : BaseViewModel<LikedTestsModelState, LikedTestsState, LikedTestsSideEffect>(
@@ -15,5 +22,28 @@ class LikedTestsViewModel(
 ) {
 
     override val initialModelState: LikedTestsModelState = LikedTestsModelState()
+
+    init {
+        loadData()
+    }
+
+    fun toggleTestLike(position: Int) = intent {
+        val modelState = getModelState()
+        val newTests = testShortHelper.toggleTestLike(
+            position,
+            modelState.tests,
+            removeFromList = true
+        )
+        updateModelState {
+            copy(tests = newTests)
+        }
+    }
+
+    private fun loadData() = intent {
+        val tests = getLikedTests()
+        updateModelState {
+            copy(tests = tests)
+        }
+    }
 
 }

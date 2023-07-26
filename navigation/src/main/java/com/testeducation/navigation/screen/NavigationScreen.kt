@@ -55,6 +55,8 @@ sealed interface NavigationScreen : Serializable {
 
             object OnScrollToTop : ResultKey<Unit>
         }
+
+        object LikedTests : Main
     }
 
     sealed interface Tests : NavigationScreen {

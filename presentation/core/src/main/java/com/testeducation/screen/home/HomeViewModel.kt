@@ -29,7 +29,7 @@ class HomeViewModel(
 
     fun navigateToTests() = intent {
         updateModelState {
-            copy(navigationItems = HomeModelState.BottomNavigationItems.TESTS)
+            copy(selectedScreen = HomeModelState.BottomNavigationItems.TESTS)
         }
         val screen = NavigationScreen.Main.Tests
         router.setResultListener(NavigationScreen.Main.Tests.OnScrollToTop, ::onScrollToTop)
@@ -39,20 +39,24 @@ class HomeViewModel(
 
 
     fun navigateToFavorites() = intent {
+        val currentScreen = getModelState().selectedScreen
+        val screen = NavigationScreen.Main.LikedTests
+        if (currentScreen == HomeModelState.BottomNavigationItems.FAVORITES) return@intent
         updateModelState {
-            copy(navigationItems = HomeModelState.BottomNavigationItems.FAVORITES)
+            copy(selectedScreen = HomeModelState.BottomNavigationItems.FAVORITES)
         }
+        router.replace(screen, HOME_NAVIGATOR_KEY)
     }
 
     fun navigateToProfile() = intent {
         updateModelState {
-            copy(navigationItems = HomeModelState.BottomNavigationItems.PROFILE)
+            copy(selectedScreen = HomeModelState.BottomNavigationItems.PROFILE)
         }
     }
 
     fun navigateToSettings() = intent {
         updateModelState {
-            copy(navigationItems = HomeModelState.BottomNavigationItems.SETTINGS)
+            copy(selectedScreen = HomeModelState.BottomNavigationItems.SETTINGS)
         }
     }
 

@@ -19,17 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_back"
-        app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtTitle" />
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
@@ -156,12 +145,6 @@
             tools:listitem="@layout/view_holder_test_short" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/rootGroup"
-        app:constraint_referenced_ids="coordinator, imgAvatar, txtUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <ProgressBar
         android:id="@+id/globalProgress"
