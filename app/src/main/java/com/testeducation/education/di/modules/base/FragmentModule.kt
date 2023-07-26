@@ -6,10 +6,12 @@ import com.testeducation.education.di.modules.screen.auth.RegistrationModule
 import com.testeducation.education.di.modules.screen.home.HomeModule
 import com.testeducation.education.di.modules.screen.tests.filters.TestsFiltersModule
 import com.testeducation.education.di.modules.screen.tests.list.TestsModule
+import com.testeducation.education.di.modules.screen.tests.question.QuestionCreationModule
 import com.testeducation.ui.screen.auth.confirmation.EmailConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
 import com.testeducation.ui.screen.home.FragmentHome
+import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
 import dagger.Module
@@ -35,5 +37,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [TestsFiltersModule::class])
     fun testsFiltersFragment(): TestsFiltersFragment
+
+    @ContributesAndroidInjector(modules = [QuestionCreationModule::class])
+    fun questionCreationFragment(): QuestionCreationFragment
 
 }

@@ -5,16 +5,17 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.domain.model.question.QuestionTypeItem
 import com.testeducation.helper.error.IExceptionHandler
-import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.SelectionQuestionTypeState
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class SelectionQuestionTypeViewModel(
     reducer: IReducer<SelectionQuestionTypeModelState, SelectionQuestionTypeState>,
     errorHandler: IExceptionHandler,
+    private val router: NavigationRouter
 ) : BaseViewModel<SelectionQuestionTypeModelState, SelectionQuestionTypeState, TestCreationSideEffect>(
     reducer,
     errorHandler
@@ -29,7 +30,18 @@ class SelectionQuestionTypeViewModel(
 
 
     fun submit(questionTypeUi: QuestionTypeUi) {
+        when(questionTypeUi) {
+            QuestionTypeUi.MATCH -> {
 
+            }
+            QuestionTypeUi.WRITE_ANSWER -> {
+
+            }
+            QuestionTypeUi.ACCORD -> {
+                router.exit()
+                router.navigateTo(NavigationScreen.QuestionCreation.QuestionEditor)
+            }
+        }
     }
 
     private fun initData() = intent {

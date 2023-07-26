@@ -30,6 +30,7 @@
     <string name="common_back">Назад</string>
     <string name="common_create">Создать</string>
     <string name="common_email">E-mail</string>
+    <string name="common_save">Сохранить</string>
 
     <string name="tests_filters_label">Фильтры</string>
 
@@ -65,5 +66,6 @@
     <string name="question_type_answer">Выбор ответа</string>
     <string name="question_type_write_answer">Написать ответ</string>
     <string name="question_type_title">Выберите типа ответа</string>
+    <string name="question_creation_answer_hint">Введите вариант ответа</string>
 
 </resources>

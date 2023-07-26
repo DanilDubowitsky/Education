@@ -77,4 +77,8 @@ sealed interface NavigationScreen : Serializable {
         }
     }
 
+    sealed interface QuestionCreation : NavigationScreen {
+        object QuestionEditor : QuestionCreation
+    }
+
 }

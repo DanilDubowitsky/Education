@@ -32,7 +32,7 @@ class SelectionQuestionTypeDialog :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.observe(this, ::render)
-        binding.rvQuestionType.apply {
+        binding.rvQuestionType {
             adapter = questionTypeAdapter
             layoutManager = LinearLayoutManager(requireContext())
             itemAnimator = null
