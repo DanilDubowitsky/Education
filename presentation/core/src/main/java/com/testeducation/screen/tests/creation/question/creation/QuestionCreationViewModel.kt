@@ -1,11 +1,13 @@
 package com.testeducation.screen.tests.creation.question.creation
 
+import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.model.question.AnswerItem
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
 import com.testeducation.utils.getColor
@@ -14,15 +16,18 @@ import org.orbitmvi.orbit.syntax.simple.intent
 class QuestionCreationViewModel(
     reducer: IReducer<QuestionCreationModelState, QuestionCreationState>,
     errorHandler: IExceptionHandler,
-    private val resourceHelper: IResourceHelper
+    private val resourceHelper: IResourceHelper,
+    questionTypeItem: QuestionTypeUiItem
 ) : BaseViewModel<QuestionCreationModelState, QuestionCreationState, QuestionCreationSideEffect>(
     reducer,
     errorHandler
 ) {
-    override val initialModelState: QuestionCreationModelState = QuestionCreationModelState()
+    override val initialModelState: QuestionCreationModelState = QuestionCreationModelState(
+        questionTypeItem = questionTypeItem.toModel()
+    )
 
     init {
-        initAnswerDefault()
+        initQuestionType()
     }
 
     fun addAnswer() = intent {
@@ -76,6 +81,10 @@ class QuestionCreationViewModel(
         id = getModelState().answerItem.size + 1,
         color = getColorAnswer(index)
     )
+
+    private fun initQuestionType() = intent {
+        initAnswerDefault()
+    }
 
     private fun initAnswerDefault() = intent {
         val answer = addDefaultAnswer()

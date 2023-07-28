@@ -5,7 +5,7 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.domain.model.question.QuestionTypeItem
 import com.testeducation.helper.error.IExceptionHandler
-import com.testeducation.logic.model.test.QuestionTypeUi
+import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.SelectionQuestionTypeState
 import com.testeducation.navigation.core.NavigationRouter
@@ -29,19 +29,11 @@ class SelectionQuestionTypeViewModel(
     }
 
 
-    fun submit(questionTypeUi: QuestionTypeUi) {
-        when(questionTypeUi) {
-            QuestionTypeUi.MATCH -> {
-
-            }
-            QuestionTypeUi.WRITE_ANSWER -> {
-
-            }
-            QuestionTypeUi.ACCORD -> {
-                router.exit()
-                router.navigateTo(NavigationScreen.QuestionCreation.QuestionEditor)
-            }
-        }
+    fun submit(questionTypeUiItem: QuestionTypeUiItem) {
+        router.exit()
+        router.navigateTo(NavigationScreen.QuestionCreation.QuestionEditor(
+            questionTypeUiItem
+        ))
     }
 
     private fun initData() = intent {
@@ -49,10 +41,10 @@ class SelectionQuestionTypeViewModel(
             copy(
                 questionTypeItems = listOf(
                     QuestionTypeItem(
-                        questionType = QuestionType.MATCH
+                        questionType = QuestionType.DEFAULT
                     ),
                     QuestionTypeItem(
-                        questionType = QuestionType.ACCORD
+                        questionType = QuestionType.MATCH
                     ),
                     QuestionTypeItem(
                         questionType = QuestionType.WRITE_ANSWER

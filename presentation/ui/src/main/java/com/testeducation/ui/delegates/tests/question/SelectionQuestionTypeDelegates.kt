@@ -9,7 +9,7 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.loadDrawable
 import com.testeducation.ui.utils.simpleDelegateAdapter
 
-fun selectionQuestionTypeDelegate(selectionOnClick: (QuestionTypeUi) -> Unit) =
+fun selectionQuestionTypeDelegate(selectionOnClick: (QuestionTypeUiItem) -> Unit) =
     simpleDelegateAdapter<QuestionTypeUiItem,
             QuestionTypeUiItem,
             ViewHolderQuestionTypeBinding>(
@@ -18,7 +18,7 @@ fun selectionQuestionTypeDelegate(selectionOnClick: (QuestionTypeUi) -> Unit) =
         bind {
             binding {
                 when (item.type) {
-                    QuestionTypeUi.MATCH -> {
+                    QuestionTypeUi.DEFAULT -> {
                         setResource(
                             title = R.string.question_type_answer,
                             icon = R.drawable.ic_answer_choosing,
@@ -26,7 +26,7 @@ fun selectionQuestionTypeDelegate(selectionOnClick: (QuestionTypeUi) -> Unit) =
                         )
                     }
 
-                    QuestionTypeUi.ACCORD -> {
+                    QuestionTypeUi.MATCH -> {
                         setResource(
                             title = R.string.question_type_match,
                             icon = R.drawable.ic_answer_match,
@@ -44,7 +44,7 @@ fun selectionQuestionTypeDelegate(selectionOnClick: (QuestionTypeUi) -> Unit) =
                     }
                 }
                 root.setOnClickListener {
-                    selectionOnClick(item.type)
+                    selectionOnClick(item)
                 }
             }
         }

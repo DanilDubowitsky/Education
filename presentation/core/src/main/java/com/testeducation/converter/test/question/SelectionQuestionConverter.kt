@@ -11,8 +11,8 @@ fun List<QuestionTypeItem>.toUiModel() = this.map {
             QuestionTypeUi.MATCH
         }
 
-        QuestionType.ACCORD -> {
-            QuestionTypeUi.ACCORD
+        QuestionType.DEFAULT -> {
+            QuestionTypeUi.DEFAULT
         }
 
         QuestionType.WRITE_ANSWER -> {
@@ -23,4 +23,32 @@ fun List<QuestionTypeItem>.toUiModel() = this.map {
             type = typeUi
         )
     }
+}
+
+fun QuestionTypeUiItem.toModel() = when (this.type) {
+    QuestionTypeUi.MATCH -> {
+        QuestionType.MATCH
+    }
+    QuestionTypeUi.DEFAULT -> {
+        QuestionType.DEFAULT
+    }
+    QuestionTypeUi.WRITE_ANSWER -> {
+        QuestionType.WRITE_ANSWER
+    }
+}.let {
+    QuestionTypeItem(it)
+}
+
+fun QuestionTypeItem.toUiModel() = when (this.questionType) {
+    QuestionType.MATCH -> {
+        QuestionTypeUi.MATCH
+    }
+    QuestionType.DEFAULT -> {
+        QuestionTypeUi.DEFAULT
+    }
+    QuestionType.WRITE_ANSWER -> {
+        QuestionTypeUi.WRITE_ANSWER
+    }
+}.let {
+    QuestionTypeUiItem(it)
 }

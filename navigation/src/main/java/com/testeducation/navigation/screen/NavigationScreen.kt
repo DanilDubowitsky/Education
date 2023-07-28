@@ -1,5 +1,6 @@
 package com.testeducation.navigation.screen
 
+import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.navigation.core.ResultKey
@@ -78,7 +79,7 @@ sealed interface NavigationScreen : Serializable {
     }
 
     sealed interface QuestionCreation : NavigationScreen {
-        object QuestionEditor : QuestionCreation
+        data class QuestionEditor(val questionTypeUiItem: QuestionTypeUiItem) : QuestionCreation
     }
 
 }
