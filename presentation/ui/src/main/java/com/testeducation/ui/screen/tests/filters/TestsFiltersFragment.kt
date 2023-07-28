@@ -59,7 +59,7 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
         selectedThemeIndex: Int?
     ) {
         if (themeChips.isEmpty()) {
-            themeChips.addThemes(themes, viewModel::selectTheme)
+            themeChips.addThemes(themes = themes, onChipSelected = viewModel::selectTheme)
         }
         selectedThemeIndex?.let(themeChips::check) ?: themeChips.clearCheck()
     }

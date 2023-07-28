@@ -55,7 +55,13 @@ class TestCreationViewModel(
     }
 
     fun next() = intent {
-        val currentStepState = getModelState().stepState
+        val modelState = getModelState()
+        val currentStepState = modelState.stepState
+        if (modelState.title.isEmpty()) {
+            val errorText = StringResource.Error.TitleCreationTestEmpty.getString(resourceHelper)
+            postSideEffect(TestCreationSideEffect.TitleInputError(errorText))
+            return@intent
+        }
         if (currentStepState.isFirst()) {
             val stepState = TestCreationModelState.StepState.SECOND
             updateStateStep(stepState)
@@ -168,9 +174,15 @@ class TestCreationViewModel(
     private fun loadingTheme() = intent {
         getThemes().collect { themes ->
             updateModelState {
+                val selectedTheme = if (themes.isNotEmpty()) {
+                    themes.first()
+                } else {
+                    ThemeShort("", "")
+                }
                 copy(
                     themes = themes,
-                    loadingState = TestCreationModelState.LoadingState.IDLE
+                    loadingState = TestCreationModelState.LoadingState.IDLE,
+                    selectedTheme = selectedTheme
                 )
             }
             postSideEffect(

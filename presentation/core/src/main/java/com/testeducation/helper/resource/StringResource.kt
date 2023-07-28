@@ -25,6 +25,8 @@ sealed interface StringResource {
 
         object PasswordIsEmptyString : Error
 
+        object TitleCreationTestEmpty: Error
+
     }
 
     sealed interface Update : StringResource {

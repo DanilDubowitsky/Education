@@ -60,11 +60,18 @@ class CreationTestDialogFragment :
             is TestCreationSideEffect.CreateChip -> {
                 generateChips(sideEffect.themes)
             }
+            is TestCreationSideEffect.TitleInputError -> {
+                binding.inputText.setErrorMsg(sideEffect.error)
+            }
         }
     }
 
     private fun generateChips(themes: List<ThemeShortUI>) = binding {
-        chGroupTheme.addThemes(themes, viewModel::updateThemeSelected)
+        chGroupTheme.addThemes(
+            themes = themes,
+            isSelectedFirst = true,
+            onChipSelected = viewModel::updateThemeSelected
+        )
     }
 
     private fun onClickListenerProcess() = binding {

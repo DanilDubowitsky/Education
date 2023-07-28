@@ -37,6 +37,7 @@
 
     <string name="error_email_empty">Поле email не может быть пустым</string>
     <string name="error_password_empty">Поле password не может быть пустым</string>
+    <string name="error_title_creation_test_empty">Название теста не может быть пустым</string>
 
     <string name="app_update_required">Для продолжения работы необходимо обновить приложение до последней версии</string>
 
