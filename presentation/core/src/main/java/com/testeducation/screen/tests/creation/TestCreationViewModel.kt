@@ -84,7 +84,7 @@ class TestCreationViewModel(
                     background = modelState.styleCurrent.name
                 )
                 router.exit()
-                router.sendResult(NavigationScreen.Main.OnCreationTestResult, true)
+                router.sendResult(NavigationScreen.Main.OnCreationTestResult, result.id)
             }
         }
     }

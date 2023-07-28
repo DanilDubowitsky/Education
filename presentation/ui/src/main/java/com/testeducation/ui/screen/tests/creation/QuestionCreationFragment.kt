@@ -39,6 +39,9 @@ class QuestionCreationFragment :
                 adapter = questionAdapter
                 disableChangeAnimation()
             }
+            containerQuestionType.setOnClickListener {
+                viewModel.changeTypeQuestion()
+            }
         }
         viewModel.observe(this, ::render)
     }

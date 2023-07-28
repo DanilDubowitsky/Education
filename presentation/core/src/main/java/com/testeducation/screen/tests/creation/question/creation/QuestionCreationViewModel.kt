@@ -10,6 +10,8 @@ import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
+import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.getColor
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -17,7 +19,8 @@ class QuestionCreationViewModel(
     reducer: IReducer<QuestionCreationModelState, QuestionCreationState>,
     errorHandler: IExceptionHandler,
     private val resourceHelper: IResourceHelper,
-    questionTypeItem: QuestionTypeUiItem
+    questionTypeItem: QuestionTypeUiItem,
+    private val router: NavigationRouter
 ) : BaseViewModel<QuestionCreationModelState, QuestionCreationState, QuestionCreationSideEffect>(
     reducer,
     errorHandler
@@ -28,6 +31,19 @@ class QuestionCreationViewModel(
 
     init {
         initQuestionType()
+    }
+
+    fun changeTypeQuestion() {
+        router.setResultListener(NavigationScreen.QuestionCreation.OnSelectionQuestionTypeChanged) { questionTypeUiItem ->
+            intent {
+                updateModelState {
+                    copy(
+                        questionTypeItem = questionTypeUiItem.toModel()
+                    )
+                }
+            }
+        }
+        router.navigateTo(NavigationScreen.Main.SelectionTest())
     }
 
     fun addAnswer() = intent {

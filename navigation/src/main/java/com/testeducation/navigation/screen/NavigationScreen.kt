@@ -50,7 +50,7 @@ sealed interface NavigationScreen : Serializable {
 
         object CreationTest : Main
 
-        object SelectionTest : Main
+        data class SelectionTest(val idTest: String = "") : Main
 
         object Tests : Main {
 
@@ -59,7 +59,7 @@ sealed interface NavigationScreen : Serializable {
             object OnScrollToTop : ResultKey<Unit>
         }
 
-        object OnCreationTestResult : ResultKey<Boolean>
+        object OnCreationTestResult : ResultKey<String>
     }
 
     sealed interface Tests : NavigationScreen {
@@ -80,6 +80,8 @@ sealed interface NavigationScreen : Serializable {
 
     sealed interface QuestionCreation : NavigationScreen {
         data class QuestionEditor(val questionTypeUiItem: QuestionTypeUiItem) : QuestionCreation
+
+        object OnSelectionQuestionTypeChanged : ResultKey<QuestionTypeUiItem>
     }
 
 }

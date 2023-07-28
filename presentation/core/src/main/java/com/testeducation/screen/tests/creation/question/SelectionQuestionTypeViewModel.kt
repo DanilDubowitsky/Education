@@ -15,7 +15,8 @@ import org.orbitmvi.orbit.syntax.simple.intent
 class SelectionQuestionTypeViewModel(
     reducer: IReducer<SelectionQuestionTypeModelState, SelectionQuestionTypeState>,
     errorHandler: IExceptionHandler,
-    private val router: NavigationRouter
+    private val router: NavigationRouter,
+    private val idTest: String
 ) : BaseViewModel<SelectionQuestionTypeModelState, SelectionQuestionTypeState, TestCreationSideEffect>(
     reducer,
     errorHandler
@@ -30,10 +31,17 @@ class SelectionQuestionTypeViewModel(
 
 
     fun submit(questionTypeUiItem: QuestionTypeUiItem) {
-        router.exit()
-        router.navigateTo(NavigationScreen.QuestionCreation.QuestionEditor(
-            questionTypeUiItem
-        ))
+        if (idTest.isNotEmpty()) {
+            router.exit()
+            router.navigateTo(
+                NavigationScreen.QuestionCreation.QuestionEditor(
+                    questionTypeUiItem
+                )
+            )
+        } else {
+            router.sendResult(NavigationScreen.QuestionCreation.OnSelectionQuestionTypeChanged, questionTypeUiItem)
+            router.exit()
+        }
     }
 
     private fun initData() = intent {

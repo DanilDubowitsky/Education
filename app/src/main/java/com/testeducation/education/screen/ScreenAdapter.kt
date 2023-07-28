@@ -74,7 +74,7 @@ class ScreenAdapter : IScreenAdapter {
             CreationTestDialogFragment().withScreen(screen)
         }
 
-        NavigationScreen.Main.SelectionTest -> Screen.DialogScreen {
+        is NavigationScreen.Main.SelectionTest -> Screen.DialogScreen {
             SelectionQuestionTypeDialog().withScreen(screen)
         }
     }

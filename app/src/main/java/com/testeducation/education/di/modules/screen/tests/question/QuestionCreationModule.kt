@@ -6,6 +6,7 @@ import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
+import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.creation.question.creation.QuestionCreationModelState
 import com.testeducation.screen.tests.creation.question.creation.QuestionCreationReducer
@@ -35,14 +36,16 @@ interface QuestionCreationModule {
             fragment: QuestionCreationFragment,
             reducer: IReducer<QuestionCreationModelState, QuestionCreationState>,
             exceptionHandler: IExceptionHandler,
-            resourceHelper: IResourceHelper
+            resourceHelper: IResourceHelper,
+            router: NavigationRouter
         ): QuestionCreationViewModel {
             val screen = fragment.getScreen<NavigationScreen.QuestionCreation.QuestionEditor>()
             return QuestionCreationViewModel(
                 reducer = reducer,
                 errorHandler = exceptionHandler,
                 resourceHelper = resourceHelper,
-                questionTypeItem = screen.questionTypeUiItem
+                questionTypeItem = screen.questionTypeUiItem,
+                router = router
             )
         }
     }
