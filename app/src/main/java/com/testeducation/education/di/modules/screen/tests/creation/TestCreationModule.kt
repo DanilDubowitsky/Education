@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.screen.tests.creation
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.test.CreateTest
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
@@ -34,13 +35,15 @@ interface TestCreationModule {
             exceptionHandler: IExceptionHandler,
             resourceHelper: IResourceHelper,
             getThemes: GetThemes,
-            navigationRouter: NavigationRouter
+            navigationRouter: NavigationRouter,
+            createTest: CreateTest
         ): TestCreationViewModel = TestCreationViewModel(
             reducer = reducer,
             getThemes = getThemes,
             resourceHelper = resourceHelper,
             errorHandler = exceptionHandler,
-            router = navigationRouter
+            router = navigationRouter,
+            createTest = createTest
         )
     }
 }

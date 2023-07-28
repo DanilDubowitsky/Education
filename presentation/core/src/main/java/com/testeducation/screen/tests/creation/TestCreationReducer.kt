@@ -27,7 +27,8 @@ class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> 
                 TestShortUI.Test.Settings(TestShortUI.Test.Settings.Availability.PUBLIC, true)
             ),
             btnCancelText = modelState.backBtnText,
-            btnNextText = modelState.nextBtnText
+            btnNextText = modelState.nextBtnText,
+            visibleProgressBar = modelState.loadingState == TestCreationModelState.LoadingState.LOADING
         )
     }
 

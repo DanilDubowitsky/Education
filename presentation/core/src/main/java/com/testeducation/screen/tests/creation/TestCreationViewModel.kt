@@ -2,6 +2,7 @@ package com.testeducation.screen.tests.creation
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.test.CreateTest
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
@@ -27,7 +28,8 @@ class TestCreationViewModel(
     private val getThemes: GetThemes,
     private val resourceHelper: IResourceHelper,
     errorHandler: IExceptionHandler,
-    private val router: NavigationRouter
+    private val router: NavigationRouter,
+    private val createTest: CreateTest
 ) : BaseViewModel<TestCreationModelState, TestCreationState, TestCreationSideEffect>(
     reducer,
     errorHandler
@@ -40,6 +42,11 @@ class TestCreationViewModel(
         initItemIconDesign()
         updateBtnText(getBtnText(TestCreationModelState.StepState.FIRST))
         updateBtnNext(getBtnNextText(TestCreationModelState.StepState.FIRST))
+    }
+
+    override fun handleThrowable(throwable: Throwable) = intent {
+        super.handleThrowable(throwable)
+        updateLoading(TestCreationModelState.LoadingState.IDLE)
     }
 
     fun back() = intent {
@@ -68,10 +75,28 @@ class TestCreationViewModel(
             updateBtnText(getBtnText(stepState))
             updateBtnNext(getBtnNextText(stepState))
         } else {
-            router.exit()
-            router.sendResult(NavigationScreen.Main.OnCreationTestResult, true)
+            launchJob {
+                updateLoading()
+                val result = createTest(
+                    title = modelState.title,
+                    themeId = modelState.selectedTheme.id,
+                    color = modelState.colorState.color,
+                    background = modelState.styleCurrent.name
+                )
+                router.exit()
+                router.sendResult(NavigationScreen.Main.OnCreationTestResult, true)
+            }
         }
     }
+
+    private fun updateLoading(state: TestCreationModelState.LoadingState = TestCreationModelState.LoadingState.LOADING) =
+        intent {
+            updateModelState {
+                copy(
+                    loadingState = state
+                )
+            }
+        }
 
     fun onTextChanged(text: String) = intent {
         updateModelState {

@@ -53,6 +53,7 @@ class CreationTestDialogFragment :
         cardTest.setContent(testCreationState.testShortUI)
         btnCancel.text = testCreationState.btnCancelText
         btnNext.text = testCreationState.btnNextText
+        changeVisibleProgressBar(testCreationState.visibleProgressBar)
     }
 
     private fun onSideEffect(sideEffect: TestCreationSideEffect) {
@@ -67,6 +68,7 @@ class CreationTestDialogFragment :
     }
 
     private fun generateChips(themes: List<ThemeShortUI>) = binding {
+        chGroupTheme.removeAllViews()
         chGroupTheme.addThemes(
             themes = themes,
             isSelectedFirst = true,
@@ -98,6 +100,16 @@ class CreationTestDialogFragment :
     private fun changeStepVisible(isFirstVisible: Boolean) = binding {
         containerFirst.isVisible = isFirstVisible
         containerSecond.isVisible = !isFirstVisible
+    }
+
+    private fun changeVisibleProgressBar(isVisibleProgressBar: Boolean) = binding {
+        loadingProgress.isVisible = isVisibleProgressBar
+        if (isVisibleProgressBar) {
+            containerFirst.isVisible = false
+            containerSecond.isVisible = false
+        }
+        btnNext.isVisible = !isVisibleProgressBar
+        btnCancel.isVisible = !isVisibleProgressBar
     }
 
 }

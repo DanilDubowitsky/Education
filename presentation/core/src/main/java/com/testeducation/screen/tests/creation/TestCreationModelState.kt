@@ -8,14 +8,14 @@ import com.testeducation.utils.MainColor
 data class TestCreationModelState(
     val themes: List<ThemeShort> = emptyList(),
     val iconDesign: List<IconDesignItem> = emptyList(),
-    val loadingState: LoadingState = LoadingState.LOADING,
+    val loadingState: LoadingState = LoadingState.IDLE,
     val stepState: StepState = StepState.FIRST,
     val colorState: ColorState = ColorState.GREEN,
     val title: String = "",
     val selectedTheme: ThemeShort = ThemeShort("", ""),
     val styleCurrent: CardTestStyle = CardTestStyle.X,
     val backBtnText: String = "",
-    val nextBtnText: String = "",
+    val nextBtnText: String = ""
 ) {
     enum class LoadingState {
         LOADING,

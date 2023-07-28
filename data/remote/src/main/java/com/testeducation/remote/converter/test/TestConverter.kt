@@ -1,10 +1,12 @@
 package com.testeducation.remote.converter.test
 
 import com.testeducation.domain.model.test.Page
+import com.testeducation.domain.model.test.TestCreationShort
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestSettings
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.test.TestStyle
+import com.testeducation.remote.model.test.RemoteCreationTest
 import com.testeducation.remote.model.test.RemotePage
 import com.testeducation.remote.model.test.RemoteTestSettings
 import com.testeducation.remote.model.test.RemoteTestShort
@@ -30,6 +32,10 @@ fun RemoteTestShort.toModel() = TestShort(
 )
 
 fun List<RemoteTestShort>.toModels() = this.map(RemoteTestShort::toModel)
+
+fun RemoteCreationTest.toModel() = TestCreationShort(
+    id, title, testStyle
+)
 
 fun TestOrderField.toRemote() = when (this) {
     TestOrderField.TITLE -> TITLE

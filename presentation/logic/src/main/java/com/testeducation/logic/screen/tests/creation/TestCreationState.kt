@@ -13,5 +13,6 @@ data class TestCreationState(
     // TODO: use another model for test creation
     val testShortUI: TestShortUI.Test,
     val btnCancelText: String,
-    val btnNextText: String
+    val btnNextText: String,
+    val visibleProgressBar: Boolean
 )
