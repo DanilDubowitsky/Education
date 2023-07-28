@@ -69,5 +69,6 @@
     <string name="question_type_write_answer">Написать ответ</string>
     <string name="question_type_title">Выберите типа ответа</string>
     <string name="question_creation_answer_hint">Введите вариант ответа</string>
+    <string name="question_creation_answer_write_hint">Введите правильный ответ здесь</string>
 
 </resources>

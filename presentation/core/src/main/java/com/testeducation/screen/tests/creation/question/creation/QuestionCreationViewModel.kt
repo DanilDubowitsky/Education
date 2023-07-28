@@ -4,6 +4,7 @@ import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.model.question.AnswerItem
+import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
@@ -36,11 +37,14 @@ class QuestionCreationViewModel(
     fun changeTypeQuestion() {
         router.setResultListener(NavigationScreen.QuestionCreation.OnSelectionQuestionTypeChanged) { questionTypeUiItem ->
             intent {
+                val questionTypeItem = questionTypeUiItem.toModel()
                 updateModelState {
                     copy(
-                        questionTypeItem = questionTypeUiItem.toModel()
+                        questionTypeItem = questionTypeItem,
+                        answerItem = emptyList()
                     )
                 }
+                initQuestionType(questionTypeItem.questionType)
             }
         }
         router.navigateTo(NavigationScreen.Main.SelectionTest())
@@ -98,8 +102,34 @@ class QuestionCreationViewModel(
         color = getColorAnswer(index)
     )
 
-    private fun initQuestionType() = intent {
-        initAnswerDefault()
+    private fun initQuestionType(questionType: QuestionType = initialModelState.questionTypeItem.questionType) = intent {
+        when (questionType) {
+            QuestionType.MATCH -> {
+
+            }
+
+            QuestionType.DEFAULT -> {
+                initAnswerDefault()
+            }
+
+            QuestionType.WRITE_ANSWER -> {
+                initAnswerWriteText()
+            }
+        }
+
+    }
+
+    private fun initAnswerWriteText() = intent {
+        val id = getModelState().answerItem.size
+        updateModelState {
+            copy(
+                answerItem = listOf(
+                    AnswerItem.TextAnswer(
+                        id = id
+                    )
+                )
+            )
+        }
     }
 
     private fun initAnswerDefault() = intent {

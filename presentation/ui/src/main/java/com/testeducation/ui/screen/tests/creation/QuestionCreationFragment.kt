@@ -9,6 +9,7 @@ import com.testeducation.screen.tests.creation.question.creation.QuestionCreatio
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentQuestionCreationBinding
+import com.testeducation.ui.delegates.tests.question.answerDelegateWrite
 import com.testeducation.ui.delegates.tests.question.answersDelegateDefault
 import com.testeducation.ui.delegates.tests.question.footerPlusAddDelegate
 import com.testeducation.ui.utils.disableChangeAnimation
@@ -28,6 +29,7 @@ class QuestionCreationFragment :
                 onClickCheckTrue = viewModel::changeCheckedAnswer,
                 onClickDelete = viewModel::deleteAnswer
             ),
+            answerDelegateWrite(),
             footerPlusAddDelegate(viewModel::addAnswer)
         )
     }
@@ -48,15 +50,17 @@ class QuestionCreationFragment :
 
     private fun render(questionCreationState: QuestionCreationState) = binding {
         questionAdapter.items = questionCreationState.answerItemUiList
-        when(questionCreationState.questionTypeUiItem.type) {
+        when (questionCreationState.questionTypeUiItem.type) {
             QuestionTypeUi.MATCH -> {
                 imgIconQuestionType.setImageResource(R.drawable.ic_answer_match)
                 tvTitleQuestionType.text = getString(R.string.question_type_match)
             }
+
             QuestionTypeUi.DEFAULT -> {
                 imgIconQuestionType.setImageResource(R.drawable.ic_answer_choosing)
                 tvTitleQuestionType.text = getString(R.string.question_type_answer)
             }
+
             QuestionTypeUi.WRITE_ANSWER -> {
                 imgIconQuestionType.setImageResource(R.drawable.ic_answer_write)
                 tvTitleQuestionType.text = getString(R.string.question_type_write_answer)

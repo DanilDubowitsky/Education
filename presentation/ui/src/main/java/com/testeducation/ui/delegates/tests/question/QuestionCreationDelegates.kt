@@ -5,6 +5,7 @@ import com.testeducation.logic.model.test.AnswerItemUi
 import com.testeducation.ui.R
 import com.testeducation.ui.databinding.ViewHolderAnswerDefaultBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerFootPlusBinding
+import com.testeducation.ui.databinding.ViewHolderAnswerWriteBinding
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 
@@ -31,13 +32,26 @@ fun answersDelegateDefault(
                 } else {
                     R.color.colorWhite
                 }.also { color ->
-                    imgCheckIcon.backgroundTintList = ColorStateList.valueOf(context.getColor(color))
+                    imgCheckIcon.backgroundTintList =
+                        ColorStateList.valueOf(context.getColor(color))
                 }
                 root.backgroundTintList = ColorStateList.valueOf(item.color)
 
             }
         }
     }
+
+fun answerDelegateWrite() = simpleDelegateAdapter<AnswerItemUi.TextAnswer,
+        AnswerItemUi,
+        ViewHolderAnswerWriteBinding>(
+    ViewHolderAnswerWriteBinding::inflate
+) {
+    bind {
+        binding {
+
+        }
+    }
+}
 
 fun footerPlusAddDelegate(onClickAdd: () -> Unit) =
     simpleDelegateAdapter<AnswerItemUi.FooterPlusAdd,
