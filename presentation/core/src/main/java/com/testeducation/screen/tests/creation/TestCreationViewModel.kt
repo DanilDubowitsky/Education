@@ -39,18 +39,19 @@ class TestCreationViewModel(
         loadingTheme()
         initItemIconDesign()
         updateBtnText(getBtnText(TestCreationModelState.StepState.FIRST))
+        updateBtnNext(getBtnNextText(TestCreationModelState.StepState.FIRST))
     }
 
-    fun changeStateStep() = intent {
+    fun back() = intent {
         val currentStepState = getModelState().stepState
         if (currentStepState.isFirst()) {
-            TestCreationModelState.StepState.SECOND
-        } else {
-            TestCreationModelState.StepState.FIRST
-        }.also { stepStateNew ->
-            updateStateStep(stepStateNew)
-            updateBtnText(getBtnText(stepStateNew))
+            router.exit()
+            return@intent
         }
+        val stepStateNew = TestCreationModelState.StepState.FIRST
+        updateStateStep(stepStateNew)
+        updateBtnText(getBtnText(stepStateNew))
+        updateBtnNext(getBtnNextText(stepStateNew))
     }
 
     fun next() = intent {
@@ -59,6 +60,7 @@ class TestCreationViewModel(
             val stepState = TestCreationModelState.StepState.SECOND
             updateStateStep(stepState)
             updateBtnText(getBtnText(stepState))
+            updateBtnNext(getBtnNextText(stepState))
         } else {
             router.exit()
             router.sendResult(NavigationScreen.Main.OnCreationTestResult, true)
@@ -204,6 +206,14 @@ class TestCreationViewModel(
         getString(resourceHelper)
     }
 
+    private fun getBtnNextText(step: TestCreationModelState.StepState) = if (step.isFirst()) {
+        StringResource.Common.CommonNext
+    } else {
+        StringResource.Common.CommonSave
+    }.run {
+        getString(resourceHelper)
+    }
+
     private fun updateBtnText(text: String) = intent {
         launchJob {
             updateModelState {
@@ -211,6 +221,14 @@ class TestCreationViewModel(
                     backBtnText = text
                 )
             }
+        }
+    }
+
+    private fun updateBtnNext(text: String) = intent {
+        updateModelState {
+            copy(
+                nextBtnText = text
+            )
         }
     }
 }

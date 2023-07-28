@@ -47,6 +47,8 @@ class ResourceHelper(
             context.getString(R.string.email_confirmation_exit_confirmation_text)
         StringResource.Common.CommonBack -> string(R.string.common_back)
         StringResource.Common.CommonCancel -> string(R.string.common_cancel)
+        StringResource.Common.CommonNext -> string(R.string.common_next)
+        StringResource.Common.CommonSave -> string(R.string.common_save)
     }
 
     private fun extractErrorStringResource(resource: StringResource.Error): String =

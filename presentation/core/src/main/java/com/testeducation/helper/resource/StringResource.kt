@@ -13,6 +13,10 @@ sealed interface StringResource {
         object CommonBack: Common
 
         object CommonCancel: Common
+
+        object CommonNext: Common
+
+        object CommonSave: Common
     }
 
     sealed interface Error : StringResource {

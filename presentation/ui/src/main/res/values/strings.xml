@@ -31,6 +31,7 @@
     <string name="common_create">Создать</string>
     <string name="common_email">E-mail</string>
     <string name="common_save">Сохранить</string>
+    <string name="common_next">Продолжить</string>
 
     <string name="tests_filters_label">Фильтры</string>
 

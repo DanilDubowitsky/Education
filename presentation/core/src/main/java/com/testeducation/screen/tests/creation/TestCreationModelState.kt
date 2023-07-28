@@ -14,7 +14,8 @@ data class TestCreationModelState(
     val title: String = "",
     val selectedTheme: ThemeShort = ThemeShort("", ""),
     val styleCurrent: CardTestStyle = CardTestStyle.X,
-    val backBtnText: String = ""
+    val backBtnText: String = "",
+    val nextBtnText: String = "",
 ) {
     enum class LoadingState {
         LOADING,

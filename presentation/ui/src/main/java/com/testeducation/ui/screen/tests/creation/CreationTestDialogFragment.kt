@@ -47,11 +47,12 @@ class CreationTestDialogFragment :
         onClickListenerProcess()
     }
 
-    private fun render(testCreationState: TestCreationState) {
+    private fun render(testCreationState: TestCreationState) = binding {
         changeStepVisible(isFirstVisible = testCreationState.isFirstScreenVisible)
         iconDesignAdapter.items = testCreationState.iconDesignList
-        binding.cardTest.setContent(testCreationState.testShortUI)
-        binding.btnCancel.text = testCreationState.btnCancelText
+        cardTest.setContent(testCreationState.testShortUI)
+        btnCancel.text = testCreationState.btnCancelText
+        btnNext.text = testCreationState.btnNextText
     }
 
     private fun onSideEffect(sideEffect: TestCreationSideEffect) {
@@ -71,7 +72,7 @@ class CreationTestDialogFragment :
             viewModel.next()
         }
         btnCancel.setOnClickListener {
-            viewModel.changeStateStep()
+            viewModel.back()
         }
         firstColor.setOnClickListener {
             viewModel.changeColor(colorState = TestCreationModelState.ColorState.GREEN)
