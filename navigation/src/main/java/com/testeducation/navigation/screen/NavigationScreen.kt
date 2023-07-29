@@ -1,5 +1,6 @@
 package com.testeducation.navigation.screen
 
+import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.navigation.core.ResultKey
@@ -49,6 +50,8 @@ sealed interface NavigationScreen : Serializable {
 
         object CreationTest : Main
 
+        data class SelectionTest(val idTest: String = "") : Main
+
         object Tests : Main {
 
             object OnScrollToBottom : ResultKey<Unit>
@@ -73,6 +76,12 @@ sealed interface NavigationScreen : Serializable {
                 )
             }
         }
+    }
+
+    sealed interface QuestionCreation : NavigationScreen {
+        data class QuestionEditor(val questionTypeUiItem: QuestionTypeUiItem) : QuestionCreation
+
+        object OnSelectionQuestionTypeChanged : ResultKey<QuestionTypeUiItem>
     }
 
 }

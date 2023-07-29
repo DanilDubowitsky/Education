@@ -10,6 +10,9 @@ import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
+import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
+import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
+import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
@@ -24,6 +27,7 @@ class ScreenAdapter : IScreenAdapter {
             is NavigationScreen.Common -> createPlatformScreen(screen)
             is NavigationScreen.Main -> createPlatformScreen(screen)
             is NavigationScreen.Tests -> createPlatformScreen(screen)
+            is NavigationScreen.QuestionCreation -> createPlatformScreen(screen)
         }
 
     private fun createPlatformScreen(screen: NavigationScreen.Auth): Screen =
@@ -72,6 +76,10 @@ class ScreenAdapter : IScreenAdapter {
             CreationTestDialogFragment().withScreen(screen)
         }
 
+        is NavigationScreen.Main.SelectionTest -> Screen.DialogScreen {
+            SelectionQuestionTypeDialog().withScreen(screen)
+        }
+
         NavigationScreen.Main.LikedTests -> Screen.FragmentScreen {
             LikedTestsFragment()
         }
@@ -81,6 +89,12 @@ class ScreenAdapter : IScreenAdapter {
 
         is NavigationScreen.Tests.Filters -> Screen.FragmentScreen {
             TestsFiltersFragment().withScreen(screen)
+        }
+    }
+
+    private fun createPlatformScreen(screen: NavigationScreen.QuestionCreation) = when(screen) {
+        is NavigationScreen.QuestionCreation.QuestionEditor -> Screen.FragmentScreen {
+            QuestionCreationFragment().withScreen(screen)
         }
     }
 }

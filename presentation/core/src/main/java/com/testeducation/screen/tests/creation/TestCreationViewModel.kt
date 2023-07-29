@@ -2,6 +2,7 @@ package com.testeducation.screen.tests.creation
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.test.CreateTest
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
@@ -13,6 +14,8 @@ import com.testeducation.logic.model.test.IconDesignItem
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.TestCreationState
+import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.creation.TestCreationModelState.StepState.Companion.isFirst
 import com.testeducation.utils.getColor
 import com.testeducation.utils.getString
@@ -24,10 +27,12 @@ class TestCreationViewModel(
     reducer: IReducer<TestCreationModelState, TestCreationState>,
     private val getThemes: GetThemes,
     private val resourceHelper: IResourceHelper,
-    errorHandler: IExceptionHandler
+    exceptionHandler: IExceptionHandler,
+    private val router: NavigationRouter,
+    private val createTest: CreateTest
 ) : BaseViewModel<TestCreationModelState, TestCreationState, TestCreationSideEffect>(
     reducer,
-    errorHandler
+    exceptionHandler
 ) {
     override val initialModelState: TestCreationModelState = TestCreationModelState()
 
@@ -36,19 +41,60 @@ class TestCreationViewModel(
         loadingTheme()
         initItemIconDesign()
         updateBtnText(getBtnText(TestCreationModelState.StepState.FIRST))
+        updateBtnNext(getBtnNextText(TestCreationModelState.StepState.FIRST))
     }
 
-    fun changeStateStep() = intent {
+    override fun handleThrowable(throwable: Throwable) = intent {
+        super.handleThrowable(throwable)
+        updateLoading(TestCreationModelState.LoadingState.IDLE)
+    }
+
+    fun back() = intent {
         val currentStepState = getModelState().stepState
         if (currentStepState.isFirst()) {
-            TestCreationModelState.StepState.SECOND
+            router.exit()
+            return@intent
+        }
+        val stepStateNew = TestCreationModelState.StepState.FIRST
+        updateStateStep(stepStateNew)
+        updateBtnText(getBtnText(stepStateNew))
+        updateBtnNext(getBtnNextText(stepStateNew))
+    }
+
+    fun next() = intent {
+        val modelState = getModelState()
+        val currentStepState = modelState.stepState
+        if (modelState.title.isEmpty()) {
+            val errorText = StringResource.Error.TitleCreationTestEmpty.getString(resourceHelper)
+            postSideEffect(TestCreationSideEffect.TitleInputError(errorText))
+            return@intent
+        }
+        if (currentStepState.isFirst()) {
+            val stepState = TestCreationModelState.StepState.SECOND
+            updateStateStep(stepState)
+            updateBtnText(getBtnText(stepState))
+            updateBtnNext(getBtnNextText(stepState))
         } else {
-            TestCreationModelState.StepState.FIRST
-        }.also { stepStateNew ->
-            updateStateStep(stepStateNew)
-            updateBtnText(getBtnText(stepStateNew))
+            updateLoading()
+            val result = createTest(
+                title = modelState.title,
+                themeId = modelState.selectedTheme.id,
+                color = modelState.colorState.color,
+                background = modelState.styleCurrent.name
+            )
+            router.exit()
+            router.sendResult(NavigationScreen.Main.OnCreationTestResult, result.id)
         }
     }
+
+    private fun updateLoading(state: TestCreationModelState.LoadingState = TestCreationModelState.LoadingState.LOADING) =
+        intent {
+            updateModelState {
+                copy(
+                    loadingState = state
+                )
+            }
+        }
 
     fun onTextChanged(text: String) = intent {
         updateModelState {
@@ -151,9 +197,15 @@ class TestCreationViewModel(
     private fun loadingTheme() = intent {
         getThemes().collect { themes ->
             updateModelState {
+                val selectedTheme = if (themes.isNotEmpty()) {
+                    themes.first()
+                } else {
+                    ThemeShort("", "")
+                }
                 copy(
                     themes = themes,
-                    loadingState = TestCreationModelState.LoadingState.IDLE
+                    loadingState = TestCreationModelState.LoadingState.IDLE,
+                    selectedTheme = selectedTheme
                 )
             }
             postSideEffect(
@@ -189,6 +241,14 @@ class TestCreationViewModel(
         getString(resourceHelper)
     }
 
+    private fun getBtnNextText(step: TestCreationModelState.StepState) = if (step.isFirst()) {
+        StringResource.Common.CommonNext
+    } else {
+        StringResource.Common.CommonSave
+    }.run {
+        getString(resourceHelper)
+    }
+
     private fun updateBtnText(text: String) = intent {
         launchJob {
             updateModelState {
@@ -196,6 +256,14 @@ class TestCreationViewModel(
                     backBtnText = text
                 )
             }
+        }
+    }
+
+    private fun updateBtnNext(text: String) = intent {
+        updateModelState {
+            copy(
+                nextBtnText = text
+            )
         }
     }
 }

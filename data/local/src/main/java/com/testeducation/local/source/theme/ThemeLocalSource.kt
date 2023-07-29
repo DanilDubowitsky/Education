@@ -19,4 +19,9 @@ class ThemeLocalSource(
     override suspend fun getShortThemesReactive(): Flow<List<ThemeShort>> =
         themeShortDao.getThemesShortReactive().map(List<ThemeShortEntity>::toModels)
 
+    override suspend fun hasEntries(): Boolean =
+        themeShortDao.hasEntries()
+
+    override suspend fun clearTableAndAddThemes(themes: List<ThemeShort>) =
+        themeShortDao.clearTableAndSetData(themes.toEntities())
 }

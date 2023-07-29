@@ -1,6 +1,5 @@
 package com.testeducation.ui.utils
 
-import android.content.res.ColorStateList
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -10,7 +9,6 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -119,6 +117,7 @@ fun RecyclerView.disableChangeAnimation() {
 
 fun ChipGroup.addThemes(
     themes: List<ThemeShortUI>,
+    isSelectedFirst: Boolean = false,
     onChipSelected: (id: String) -> Unit
 ) {
     themes.forEachIndexed { index, theme ->
@@ -130,6 +129,7 @@ fun ChipGroup.addThemes(
             id = index
             setChipDrawable(chipDrawableS)
             text = theme.title
+            if (isSelectedFirst) check(0)
             setOnClickListener {
                 onChipSelected(theme.id)
             }

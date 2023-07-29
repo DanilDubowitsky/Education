@@ -30,6 +30,7 @@ class AccessTokenInterceptor(
         return response
     }
 
+    @Synchronized
     private fun getNewToken(): String {
         return runBlocking {
             val refreshToken = userConfig.getRefreshToken()

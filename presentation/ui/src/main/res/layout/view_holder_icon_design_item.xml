@@ -4,7 +4,6 @@
     android:layout_width="92dp"
     android:id="@+id/containerImageIcon"
     android:layout_marginTop="18dp"
-    android:layout_marginStart="22dp"
     android:background="@drawable/background_color_template_gray_10"
     android:backgroundTint="@color/colorDarkGreen"
     android:layout_height="92dp">

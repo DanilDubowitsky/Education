@@ -1,10 +1,12 @@
 package com.testeducation.education.di.modules.base
 
 import com.testeducation.education.di.modules.screen.tests.creation.TestCreationModule
+import com.testeducation.education.di.modules.screen.tests.question.QuestionModule
 import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
+import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -22,4 +24,7 @@ interface DialogsModule {
 
     @ContributesAndroidInjector(modules = [TestCreationModule::class])
     fun creationTestDialog() : CreationTestDialogFragment
+
+    @ContributesAndroidInjector(modules = [QuestionModule::class])
+    fun selectionQuestionTypeDialog() : SelectionQuestionTypeDialog
 }

@@ -21,4 +21,9 @@
     <color name="colorOrange">#FCAF2A</color>
     <color name="colorRed">#FF6951</color>
     <color name="colorTextSecondary">#101D30</color>
+    <color name="colorBlueSky">#A8B4CA</color>
+    <color name="colorMainBlueLight">#93C5FF</color>
+    <color name="colorMainGreenLight">#77E1C4</color>
+    <color name="colorMainOrangeLight">#FFE399</color>
+    <color name="colorMainRedLight">#FCACA3</color>
 </resources>

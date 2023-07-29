@@ -8,4 +8,10 @@ interface IThemeLocalSource {
     suspend fun addShortThemes(themes: List<ThemeShort>)
 
     suspend fun getShortThemesReactive(): Flow<List<ThemeShort>>
+
+    suspend fun hasEntries(): Boolean
+
+    suspend fun clearTableAndAddThemes(
+        themes: List<ThemeShort>
+    )
 }

@@ -13,6 +13,10 @@ sealed interface StringResource {
         object CommonBack: Common
 
         object CommonCancel: Common
+
+        object CommonNext: Common
+
+        object CommonSave: Common
     }
 
     sealed interface Error : StringResource {
@@ -20,6 +24,8 @@ sealed interface StringResource {
         object EmailIsEmptyString : Error
 
         object PasswordIsEmptyString : Error
+
+        object TitleCreationTestEmpty: Error
 
     }
 
