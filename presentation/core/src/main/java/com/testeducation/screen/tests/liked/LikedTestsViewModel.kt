@@ -4,6 +4,7 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetLikedTests
 import com.testeducation.domain.cases.theme.GetThemes
+import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.screen.tests.liked.LikedTestsSideEffect
@@ -26,7 +27,8 @@ class LikedTestsViewModel(
     override val initialModelState: LikedTestsModelState = LikedTestsModelState()
 
     init {
-        loadData()
+        loadTests()
+        loadThemes()
     }
 
     fun toggleTestLike(position: Int) = intent {
@@ -42,13 +44,28 @@ class LikedTestsViewModel(
     }
 
     fun onThemeChanged(themeId: String) = intent {
-
+        updateModelState {
+            copy(selectedThemeId = themeId)
+        }
     }
 
-    private fun loadData() = intent {
+    private fun handleThemes(themes: List<ThemeShort>) = intent {
+        updateModelState {
+            copy(themes = themes, themesLoadingState = LikedTestsModelState.ThemeLoadingState.IDLE)
+        }
+    }
+
+    private fun loadThemes() = intent {
+        getThemes().collect(::handleThemes)
+    }
+
+    private fun loadTests() = intent {
         val tests = getLikedTests()
         updateModelState {
-            copy(tests = tests)
+            copy(
+                tests = tests,
+                testsLoadingState = LikedTestsModelState.TestsLoadingState.IDLE
+            )
         }
     }
 

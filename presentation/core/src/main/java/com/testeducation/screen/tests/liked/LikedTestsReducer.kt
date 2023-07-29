@@ -8,7 +8,15 @@ class LikedTestsReducer : IReducer<LikedTestsModelState, LikedTestsState> {
 
     override fun reduce(modelState: LikedTestsModelState): LikedTestsState {
         val tests = modelState.tests.toUIModels()
-        return LikedTestsState(tests = tests)
+        val themes = modelState.themes.toUIModels(modelState.selectedThemeId)
+        return LikedTestsState(
+            tests = tests,
+            themes = themes,
+            isThemesLoading = modelState.themesLoadingState ==
+                    LikedTestsModelState.ThemeLoadingState.LOADING,
+            isTestsLoading = modelState.testsLoadingState ==
+                    LikedTestsModelState.TestsLoadingState.LOADING
+        )
     }
 
 }
