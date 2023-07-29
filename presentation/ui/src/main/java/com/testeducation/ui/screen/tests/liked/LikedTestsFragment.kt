@@ -3,18 +3,21 @@ package com.testeducation.ui.screen.tests.liked
 import android.os.Bundle
 import android.view.View
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.liked.LikedTestsState
 import com.testeducation.screen.tests.liked.LikedTestsViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentLikedTestsBinding
 import com.testeducation.ui.delegates.tests.createTestShortAdapterDelegate
+import com.testeducation.ui.delegates.tests.createThemeShortAdapterDelegate
 import com.testeducation.ui.screen.tests.list.TestShortDiffUtil
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
+import com.testeducation.ui.utils.simpleDiffUtil
 import org.orbitmvi.orbit.viewmodel.observe
 
 class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLikedTestsBinding>(
@@ -26,6 +29,13 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
         AsyncListDifferDelegationAdapter(
             TestShortDiffUtil(),
             createTestShortAdapterDelegate(viewModel::toggleTestLike)
+        )
+    }
+
+    private val themesAdapter by lazy {
+        AsyncListDifferDelegationAdapter(
+            simpleDiffUtil(ThemeShortUI::id),
+            createThemeShortAdapterDelegate(onClick = viewModel::onThemeChanged)
         )
     }
 

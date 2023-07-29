@@ -48,7 +48,10 @@ sealed interface NavigationScreen : Serializable {
 
         object Home : Main
 
-        object CreationTest : Main
+        object CreationTest : Main {
+
+            object OnCreationTestResult : ResultKey<String>
+        }
 
         data class SelectionTest(val idTest: String = "") : Main
 

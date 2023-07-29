@@ -41,16 +41,17 @@ interface LikedTestsModule {
 
         @Provides
         fun provideViewModel(
-            fragment: LikedTestsFragment,
             router: NavigationRouter,
             testShortHelper: ITestHelper,
             getLikedTests: GetLikedTests,
+            getThemes: GetThemes,
             reducer: IReducer<LikedTestsModelState, LikedTestsState>,
             exceptionHandler: IExceptionHandler
         ): LikedTestsViewModel {
             return LikedTestsViewModel(
                 router,
                 testShortHelper,
+                getThemes,
                 getLikedTests,
                 reducer,
                 exceptionHandler

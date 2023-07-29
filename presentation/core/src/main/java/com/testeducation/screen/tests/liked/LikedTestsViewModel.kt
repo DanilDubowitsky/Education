@@ -3,6 +3,7 @@ package com.testeducation.screen.tests.liked
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetLikedTests
+import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.screen.tests.liked.LikedTestsSideEffect
@@ -13,6 +14,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 class LikedTestsViewModel(
     private val router: NavigationRouter,
     private val testShortHelper: ITestHelper,
+    private val getThemes: GetThemes,
     private val getLikedTests: GetLikedTests,
     reducer: IReducer<LikedTestsModelState, LikedTestsState>,
     exceptionHandler: IExceptionHandler
@@ -37,6 +39,10 @@ class LikedTestsViewModel(
         updateModelState {
             copy(tests = newTests)
         }
+    }
+
+    fun onThemeChanged(themeId: String) = intent {
+
     }
 
     private fun loadData() = intent {

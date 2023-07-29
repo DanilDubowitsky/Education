@@ -38,7 +38,6 @@ class HomeViewModel(
         router.replace(screen, HOME_NAVIGATOR_KEY)
     }
 
-
     fun navigateToFavorites() = intent {
         val currentScreen = getModelState().selectedScreen
         val screen = NavigationScreen.Main.LikedTests
@@ -63,7 +62,9 @@ class HomeViewModel(
 
     fun navigateToCreation() = intent {
         val screen = NavigationScreen.Main.CreationTest
-        router.setResultListener(NavigationScreen.Main.OnCreationTestResult) { idTest ->
+        router.setResultListener(
+            NavigationScreen.Main.CreationTest.OnCreationTestResult
+        ) { idTest ->
             if (idTest.isNotEmptyOrBlank()) {
                 val screenSelectionQuestion = NavigationScreen.Main.SelectionTest(idTest)
                 router.navigateTo(screenSelectionQuestion)

@@ -34,6 +34,8 @@ class CardTest @JvmOverloads constructor(
                 )
             root.setCardBackgroundColor(Color.parseColor(testShortUI.color))
             setStyle(testShortUI.style)
+            if (testShortUI.liked) likesIcon.setImageResource(R.drawable.ic_fav_filled)
+            else likesIcon.setImageResource(R.drawable.ic_test_favorite)
         }
     }
 

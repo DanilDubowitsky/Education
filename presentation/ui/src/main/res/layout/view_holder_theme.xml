@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Text.Label"
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/limited"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:focusable="true"
-    android:clickable="true"
-    android:background="@drawable/background_selectable_theme_white"
-    android:paddingHorizontal="10dp"
-    android:paddingVertical="8dp"
-    android:textSize="14sp"
-    tools:text="История" />
+    android:layout_marginEnd="8dp"
+    android:paddingVertical="5dp"
+    style="@style/ChipStyle"
+    android:text="@string/tests_filters_limited" />

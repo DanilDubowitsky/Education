@@ -46,7 +46,8 @@ class TestsViewModel(
             copy(
                 tests = emptyList(),
                 selectedThemeId = id,
-                testsLoadingState = TestsModelState.TestsLoadingState.LOADING
+                testsLoadingState = TestsModelState.TestsLoadingState.LOADING,
+                pageIndex = 0
             )
         }
         loadTests()
@@ -91,7 +92,10 @@ class TestsViewModel(
         if (modelState.tests.size >= modelState.totalTestsCount) return@intent
         postSideEffect(TestsSideEffect.RemoveScrollListener)
         updateModelState {
-            copy(testsLoadingState = TestsModelState.TestsLoadingState.NEXT_PAGE)
+            copy(
+                testsLoadingState = TestsModelState.TestsLoadingState.NEXT_PAGE,
+                pageIndex = pageIndex + 1
+            )
         }
         loadTests()
     }
@@ -121,7 +125,7 @@ class TestsViewModel(
             copy(
                 tests = modelState.tests + page.tests,
                 testsLoadingState = TestsModelState.TestsLoadingState.IDLE,
-                pageIndex = page.pageIndex + 1,
+                pageIndex = page.pageIndex,
                 totalTestsCount = page.itemsTotal
             )
         }
