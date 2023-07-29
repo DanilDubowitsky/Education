@@ -1,8 +1,11 @@
 package com.testeducation.remote.client.retrofit.test
 
 import com.testeducation.remote.model.global.RemoteResponse
+import com.testeducation.remote.model.test.RemoteCreationTest
 import com.testeducation.remote.model.test.RemotePage
 import com.testeducation.remote.model.test.RemoteTestShort
+import com.testeducation.remote.request.test.TestCreationRequest
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -35,4 +38,7 @@ interface TestRetrofitClient {
 
     @GET("/api/app/account/tests/likes")
     suspend fun getLikedTests(): RemoteResponse<List<RemoteTestShort>>
+
+    @POST("/api/app/content/tests")
+    suspend fun createTest(@Body testCreationRequest: TestCreationRequest): RemoteResponse<RemoteCreationTest>
 }

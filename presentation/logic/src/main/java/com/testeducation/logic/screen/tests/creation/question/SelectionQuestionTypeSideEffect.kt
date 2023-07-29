@@ -1,0 +1,3 @@
+package com.testeducation.logic.screen.tests.creation.question
+
+sealed interface SelectionQuestionTypeSideEffect
