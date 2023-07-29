@@ -50,18 +50,4 @@ class TestRemoteSource(
     override suspend fun getLikedTests(): List<TestShort> {
         return testRetrofitClient.getLikedTests().getResult().data.toModels()
     }
-
-    override suspend fun createTest(
-        title: String,
-        themeId: String,
-        color: String,
-        background: String
-    ): TestCreationShort {
-        val testCreationRequest = TestCreationRequest(
-            title = title, themeId = themeId, style = TestStyleRequest(
-                color = color, background = background
-            )
-        )
-        return testRetrofitClient.createTest(testCreationRequest).getResult().data.toModel()
-    }
 }

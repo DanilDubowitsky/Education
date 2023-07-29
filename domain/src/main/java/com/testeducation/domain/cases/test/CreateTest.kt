@@ -1,10 +1,10 @@
 package com.testeducation.domain.cases.test
 
 import com.testeducation.domain.model.test.TestCreationShort
-import com.testeducation.domain.repository.test.ITestRepository
+import com.testeducation.domain.service.test.ITestService
 
 class CreateTest (
-    private val testRepository: ITestRepository
+    private val testService: ITestService
 ) {
 
     suspend operator fun invoke(
@@ -12,7 +12,10 @@ class CreateTest (
         themeId: String,
         color: String,
         background: String
-    ): TestCreationShort = testRepository.createTest(
-        title = title, themeId = themeId, color = color, background = background
+    ): TestCreationShort = testService.createTest(
+        title,
+        themeId,
+        color,
+        background
     )
 }

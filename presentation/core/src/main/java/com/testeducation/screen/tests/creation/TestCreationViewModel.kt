@@ -27,12 +27,12 @@ class TestCreationViewModel(
     reducer: IReducer<TestCreationModelState, TestCreationState>,
     private val getThemes: GetThemes,
     private val resourceHelper: IResourceHelper,
-    errorHandler: IExceptionHandler,
+    exceptionHandler: IExceptionHandler,
     private val router: NavigationRouter,
     private val createTest: CreateTest
 ) : BaseViewModel<TestCreationModelState, TestCreationState, TestCreationSideEffect>(
     reducer,
-    errorHandler
+    exceptionHandler
 ) {
     override val initialModelState: TestCreationModelState = TestCreationModelState()
 
@@ -75,17 +75,15 @@ class TestCreationViewModel(
             updateBtnText(getBtnText(stepState))
             updateBtnNext(getBtnNextText(stepState))
         } else {
-            launchJob {
-                updateLoading()
-                val result = createTest(
-                    title = modelState.title,
-                    themeId = modelState.selectedTheme.id,
-                    color = modelState.colorState.color,
-                    background = modelState.styleCurrent.name
-                )
-                router.exit()
-                router.sendResult(NavigationScreen.Main.OnCreationTestResult, result.id)
-            }
+            updateLoading()
+            val result = createTest(
+                title = modelState.title,
+                themeId = modelState.selectedTheme.id,
+                color = modelState.colorState.color,
+                background = modelState.styleCurrent.name
+            )
+            router.exit()
+            router.sendResult(NavigationScreen.Main.OnCreationTestResult, result.id)
         }
     }
 

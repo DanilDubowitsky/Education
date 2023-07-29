@@ -15,6 +15,7 @@ import com.testeducation.ui.delegates.tests.question.footerPlusAddDelegate
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
+import com.testeducation.ui.utils.setClickListener
 
 class QuestionCreationFragment :
     ViewModelHostFragment<QuestionCreationViewModel, FragmentQuestionCreationBinding>(
@@ -36,16 +37,22 @@ class QuestionCreationFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding {
-            rvAnswers {
-                adapter = questionAdapter
-                disableChangeAnimation()
-            }
-            containerQuestionType.setOnClickListener {
-                viewModel.changeTypeQuestion()
-            }
+        setupRecycler()
+        setupListeners()
+        observeData()
+    }
+
+    private fun setupRecycler() = binding {
+        rvAnswers {
+            adapter = questionAdapter
+            disableChangeAnimation()
         }
-        viewModel.observe(this, ::render)
+    }
+
+    private fun observeData() = viewModel.observe(this, ::render)
+
+    private fun setupListeners() = binding {
+        containerQuestionType.setClickListener(viewModel::changeTypeQuestion)
     }
 
     private fun render(questionCreationState: QuestionCreationState) = binding {

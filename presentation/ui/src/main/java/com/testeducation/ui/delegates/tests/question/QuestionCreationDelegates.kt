@@ -12,8 +12,7 @@ import com.testeducation.ui.utils.simpleDelegateAdapter
 fun answersDelegateDefault(
     onClickCheckTrue: (Int) -> Unit,
     onClickDelete: (Int) -> Unit
-) =
-    simpleDelegateAdapter<AnswerItemUi.DefaultAnswer,
+) = simpleDelegateAdapter<AnswerItemUi.DefaultAnswer,
             AnswerItemUi,
             ViewHolderAnswerDefaultBinding>(
         ViewHolderAnswerDefaultBinding::inflate
@@ -36,7 +35,6 @@ fun answersDelegateDefault(
                         ColorStateList.valueOf(context.getColor(color))
                 }
                 root.backgroundTintList = ColorStateList.valueOf(item.color)
-
             }
         }
     }
@@ -45,13 +43,7 @@ fun answerDelegateWrite() = simpleDelegateAdapter<AnswerItemUi.TextAnswer,
         AnswerItemUi,
         ViewHolderAnswerWriteBinding>(
     ViewHolderAnswerWriteBinding::inflate
-) {
-    bind {
-        binding {
-
-        }
-    }
-}
+) {}
 
 fun footerPlusAddDelegate(onClickAdd: () -> Unit) =
     simpleDelegateAdapter<AnswerItemUi.FooterPlusAdd,

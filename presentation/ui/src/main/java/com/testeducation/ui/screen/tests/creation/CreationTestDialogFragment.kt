@@ -17,6 +17,7 @@ import com.testeducation.ui.delegates.tests.testCreationBackgroundIconDelegates
 import com.testeducation.ui.utils.addThemes
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
+import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
 
 class CreationTestDialogFragment :
@@ -37,14 +38,37 @@ class CreationTestDialogFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.observe(this, ::render, ::onSideEffect)
-        binding.rvIcon.apply {
+        setupListeners()
+        setupRecycler()
+        observeData()
+    }
+
+    private fun observeData() = viewModel.observe(this, ::render, ::onSideEffect)
+
+    private fun setupRecycler() = binding {
+        rvIcon.apply {
             adapter = iconDesignAdapter
             layoutManager = GridLayoutManager(requireContext(), 3)
             itemAnimator = null
         }
-        binding.inputText.addTextChangedListener(viewModel::onTextChanged)
-        onClickListenerProcess()
+    }
+
+    private fun setupListeners() = binding {
+        inputText.addTextChangedListener(viewModel::onTextChanged)
+        btnNext.setClickListener(viewModel::next)
+        btnCancel.setClickListener(viewModel::back)
+        firstColor.setClickListener {
+            viewModel.changeColor(colorState = TestCreationModelState.ColorState.GREEN)
+        }
+        secondColor.setClickListener {
+            viewModel.changeColor(colorState = TestCreationModelState.ColorState.BLUE)
+        }
+        threeColor.setClickListener {
+            viewModel.changeColor(colorState = TestCreationModelState.ColorState.RED)
+        }
+        fourColor.setClickListener {
+            viewModel.changeColor(colorState = TestCreationModelState.ColorState.ORANGE)
+        }
     }
 
     private fun render(testCreationState: TestCreationState) = binding {
@@ -74,27 +98,6 @@ class CreationTestDialogFragment :
             isSelectedFirst = true,
             onChipSelected = viewModel::updateThemeSelected
         )
-    }
-
-    private fun onClickListenerProcess() = binding {
-        btnNext.setOnClickListener {
-            viewModel.next()
-        }
-        btnCancel.setOnClickListener {
-            viewModel.back()
-        }
-        firstColor.setOnClickListener {
-            viewModel.changeColor(colorState = TestCreationModelState.ColorState.GREEN)
-        }
-        secondColor.setOnClickListener {
-            viewModel.changeColor(colorState = TestCreationModelState.ColorState.BLUE)
-        }
-        threeColor.setOnClickListener {
-            viewModel.changeColor(colorState = TestCreationModelState.ColorState.RED)
-        }
-        fourColor.setOnClickListener {
-            viewModel.changeColor(colorState = TestCreationModelState.ColorState.ORANGE)
-        }
     }
 
     private fun changeStepVisible(isFirstVisible: Boolean) = binding {

@@ -33,7 +33,7 @@ object TestUseCaseModule {
 
     @Provides
     @Reusable
-    fun provideCreationTest(
-        testRepository: ITestRepository
-    ): CreateTest = CreateTest(testRepository)
+    fun provideCreateTest(
+        testService: ITestService
+    ): CreateTest = CreateTest(testService)
 }

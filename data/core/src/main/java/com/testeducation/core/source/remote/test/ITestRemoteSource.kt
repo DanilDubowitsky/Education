@@ -24,11 +24,4 @@ interface ITestRemoteSource {
 
     suspend fun getLikedTests(): List<TestShort>
 
-    suspend fun createTest(
-        title: String,
-        themeId: String,
-        color: String,
-        background: String
-    ): TestCreationShort
-
 }

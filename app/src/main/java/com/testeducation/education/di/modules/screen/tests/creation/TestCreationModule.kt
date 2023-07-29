@@ -41,7 +41,7 @@ interface TestCreationModule {
             reducer = reducer,
             getThemes = getThemes,
             resourceHelper = resourceHelper,
-            errorHandler = exceptionHandler,
+            exceptionHandler = exceptionHandler,
             router = navigationRouter,
             createTest = createTest
         )
