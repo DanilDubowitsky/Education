@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import androidx.viewbinding.ViewBinding
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.dsl.AdapterDelegateViewBindingViewHolder
@@ -57,9 +56,15 @@ inline fun RecyclerView.addPageScrollListener(
 ): OnScrollListener {
     val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) return
+
+            val totalItemCount = layoutManager!!.itemCount
+            if (threshold >= totalItemCount) return
+
             val layoutManager = layoutManager as LinearLayoutManager
             val lastVisiblePosition = layoutManager.findLastVisibleItemPosition()
-            if (layoutManager.itemCount - lastVisiblePosition >= threshold) {
+
+            if (lastVisiblePosition >= totalItemCount - threshold) {
                 onNextPage()
             }
         }

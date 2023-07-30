@@ -20,7 +20,7 @@ fun TestShort.toUI(): TestShortUI = TestShortUI.Test(
     passesCount,
     theme.toUI(),
     style.color,
-    getStyle(),
+    CardTestStyle.ELLIPSE,
     liked,
     passed,
     settings.toUI()

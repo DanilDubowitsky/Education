@@ -94,7 +94,7 @@ class TestsViewModel(
         updateModelState {
             copy(
                 testsLoadingState = TestsModelState.TestsLoadingState.NEXT_PAGE,
-                pageIndex = pageIndex + 1
+                pageIndex = modelState.pageIndex + 1
             )
         }
         loadTests()
