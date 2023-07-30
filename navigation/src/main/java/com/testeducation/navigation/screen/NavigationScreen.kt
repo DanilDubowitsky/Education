@@ -48,7 +48,10 @@ sealed interface NavigationScreen : Serializable {
 
         object Home : Main
 
-        object CreationTest : Main
+        object CreationTest : Main {
+
+            object OnCreationTestResult : ResultKey<String>
+        }
 
         data class SelectionTest(val idTest: String = "") : Main
 
@@ -59,7 +62,7 @@ sealed interface NavigationScreen : Serializable {
             object OnScrollToTop : ResultKey<Unit>
         }
 
-        object OnCreationTestResult : ResultKey<String>
+        object LikedTests : Main
     }
 
     sealed interface Tests : NavigationScreen {

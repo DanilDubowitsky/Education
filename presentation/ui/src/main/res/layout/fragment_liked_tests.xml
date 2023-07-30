@@ -19,17 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_back"
-        app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtTitle" />
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
@@ -95,49 +84,49 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:listitem="@layout/view_holder_theme" />
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/btnFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="60dp"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_filter"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+<!--                    <androidx.appcompat.widget.AppCompatImageButton-->
+<!--                        android:id="@+id/btnFilter"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="24dp"-->
+<!--                        android:layout_marginTop="60dp"-->
+<!--                        android:background="?selectableItemBackgroundBorderless"-->
+<!--                        android:src="@drawable/ic_filter"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <TextView
-                        android:id="@+id/filtersLabel"
-                        style="@style/Text.Label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="@string/tests_filters_label"
-                        app:layout_constraintBottom_toBottomOf="@+id/btnFilter"
-                        app:layout_constraintStart_toEndOf="@+id/btnFilter"
-                        app:layout_constraintTop_toTopOf="@+id/btnFilter" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/filtersLabel"-->
+<!--                        style="@style/Text.Label"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:text="@string/tests_filters_label"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@+id/btnFilter"-->
+<!--                        app:layout_constraintStart_toEndOf="@+id/btnFilter"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/btnFilter" />-->
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/btnSort"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="60dp"
-                        android:layout_marginEnd="140dp"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_sort"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+<!--                    <androidx.appcompat.widget.AppCompatImageButton-->
+<!--                        android:id="@+id/btnSort"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="60dp"-->
+<!--                        android:layout_marginEnd="140dp"-->
+<!--                        android:background="?selectableItemBackgroundBorderless"-->
+<!--                        android:src="@drawable/ic_sort"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <TextView
-                        android:id="@+id/sortLabel"
-                        style="@style/Text.Label"
-                        android:layout_marginStart="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="@string/tests_filters_label"
-                        app:layout_constraintBottom_toBottomOf="@+id/btnFilter"
-                        app:layout_constraintStart_toEndOf="@+id/btnSort"
-                        app:layout_constraintTop_toTopOf="@+id/btnFilter" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/sortLabel"-->
+<!--                        style="@style/Text.Label"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        tools:text="@string/tests_filters_label"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@+id/btnFilter"-->
+<!--                        app:layout_constraintStart_toEndOf="@+id/btnSort"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/btnFilter" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -156,12 +145,6 @@
             tools:listitem="@layout/view_holder_test_short" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/rootGroup"
-        app:constraint_referenced_ids="coordinator, imgAvatar, txtUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <ProgressBar
         android:id="@+id/globalProgress"

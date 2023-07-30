@@ -8,7 +8,11 @@ class TestHelper(
     private val toggleTestLike: ToggleTestLike,
 ) : ITestHelper {
 
-    override suspend fun toggleTestLike(position: Int, tests: List<TestShort>): List<TestShort> {
+    override suspend fun toggleTestLike(
+        position: Int,
+        tests: List<TestShort>,
+        removeFromList: Boolean
+    ): List<TestShort> {
         val mutableList = tests.toMutableList()
         val selectedTest = mutableList[position]
         val likesCount = if (selectedTest.liked) selectedTest.likes - 1
@@ -18,6 +22,7 @@ class TestHelper(
             likes = likesCount
         )
         mutableList[position] = newTest
+        if (removeFromList) mutableList.remove(newTest)
         startAsync {
             toggleTestLike(selectedTest.id, selectedTest.liked)
         }

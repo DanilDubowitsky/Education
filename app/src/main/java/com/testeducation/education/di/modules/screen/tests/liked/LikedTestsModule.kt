@@ -2,10 +2,14 @@ package com.testeducation.education.di.modules.screen.tests.liked
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.test.GetLikedTests
 import com.testeducation.domain.cases.test.GetTests
+import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.test.ITestHelper
+import com.testeducation.helper.test.TestHelper
 import com.testeducation.logic.screen.tests.liked.LikedTestsState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.screen.tests.liked.LikedTestsModelState
@@ -31,15 +35,24 @@ interface LikedTestsModule {
             LikedTestsReducer()
 
         @Provides
+        fun provideTestHelper(
+            toggleTestLike: ToggleTestLike
+        ): ITestHelper = TestHelper(toggleTestLike)
+
+        @Provides
         fun provideViewModel(
-            fragment: LikedTestsFragment,
-            getThemes: GetThemes,
             router: NavigationRouter,
-            getTests: GetTests,
+            testShortHelper: ITestHelper,
+            getLikedTests: GetLikedTests,
+            getThemes: GetThemes,
             reducer: IReducer<LikedTestsModelState, LikedTestsState>,
             exceptionHandler: IExceptionHandler
         ): LikedTestsViewModel {
             return LikedTestsViewModel(
+                router,
+                testShortHelper,
+                getThemes,
+                getLikedTests,
                 reducer,
                 exceptionHandler
             )

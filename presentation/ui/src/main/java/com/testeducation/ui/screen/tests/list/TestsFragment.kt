@@ -43,7 +43,10 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     private val themesAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(ThemeShortUI::id),
-            createThemeShortAdapterDelegate(onClick = viewModel::onThemeChanged)
+            createThemeShortAdapterDelegate(
+                R.color.selector_color_chip_white,
+                onClick = viewModel::onThemeChanged
+            )
         )
     }
 

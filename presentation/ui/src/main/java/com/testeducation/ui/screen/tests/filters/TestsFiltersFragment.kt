@@ -34,7 +34,6 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
         observeData()
-        setupViews()
     }
 
     private fun observeData() = viewModel.observe(this, ::render, ::onSideEffect)
@@ -88,17 +87,6 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
         etToQuestionsCount.removeTextChangedListener(questionsToTextWatcher)
         etFromTime.removeTextChangedListener(timeFromTextWatcher)
         etToTime.removeTextChangedListener(timeToTextWatcher)
-    }
-
-    private fun setupViews() = binding {
-//        val chipDrawable = ChipDrawable.createFromAttributes(
-//            requireContext(),
-//            null,
-//            0,
-//            R.style.ChipStyle
-//        )
-//        unlimited.setChipDrawable(chipDrawable)
-//        limited.setChipDrawable(chipDrawable)
     }
 
     private fun setupTextListeners() = binding {

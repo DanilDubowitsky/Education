@@ -7,7 +7,7 @@ class HomeReducer : IReducer<HomeModelState, HomeState> {
 
     override fun reduce(modelState: HomeModelState): HomeState {
         return HomeState(
-            selectedNavigationItem = modelState.navigationItems.toUI()
+            selectedNavigationItem = modelState.selectedScreen.toUI()
         )
     }
 
