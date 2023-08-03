@@ -3,89 +3,109 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBlue"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/txtTitle"
-        style="@style/Text.Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/login_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.testeducation.ui.view.custom.InputTextPlaceHolder
-        android:id="@+id/txtEmailPlaceHolder"
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="16dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle">
-
-        <EditText
-            android:id="@+id/txtEmail"
-            style="@style/EditText.Input.Simple"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/common_email"
-            android:inputType="textEmailAddress" />
-
-    </com.testeducation.ui.view.custom.InputTextPlaceHolder>
-
-    <com.testeducation.ui.view.custom.InputTextPlaceHolder
-        android:id="@+id/txtPasswordPlaceHolder"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="88dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailPlaceHolder">
+        android:background="@drawable/background_white_rounded_large">
 
-        <EditText
-            android:id="@+id/txtPassword"
-            style="@style/EditText.Input.Simple"
+        <TextView
+            android:id="@+id/txtTitle"
+            style="@style/Text.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/login_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.testeducation.ui.view.custom.InputTextPlaceHolder
+            android:id="@+id/txtEmailPlaceHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/registration_password_fld_hint"
-            android:inputType="textPassword" />
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+            android:layout_marginHorizontal="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtPasswordPlaceHolder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-    </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+            <EditText
+                android:id="@+id/txtEmail"
+                style="@style/EditText.Input.Simple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/common_email"
+                android:inputType="textEmailAddress" />
+
+        </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+        <com.testeducation.ui.view.custom.InputTextPlaceHolder
+            android:id="@+id/txtPasswordPlaceHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvForgetPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/txtPassword"
+                style="@style/EditText.Input.Simple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registration_password_fld_hint"
+                android:inputType="textPassword" />
+
+        </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogin"
+            style="@style/Button.Normal.Green"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/login_button_login_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvForgetPassword"
+            style="@style/Text.Label.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+            android:text="@string/login_forget_password_label"
+            android:textColor="@color/colorBlue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
         android:id="@+id/globalProgress"
         android:visibility="gone"
         tools:visibility="visible"
-        android:indeterminateTint="@color/colorBlue"
+        android:indeterminateTint="@color/colorDarkGreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/rootGroup"
-        app:constraint_referenced_ids="txtEmailPlaceHolder, txtPasswordPlaceHolder,
-         btnLogin, txtRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogin"
-        style="@style/Button.Normal.Green"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/login_button_login_text"
-        app:layout_constraintBottom_toTopOf="@+id/txtRegister"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtRegister"

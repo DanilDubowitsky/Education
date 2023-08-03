@@ -13,6 +13,7 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.showMessage
+import com.testeducation.ui.utils.trimmedTextOrEmpty
 
 class RegistrationFragment :
     ViewModelHostFragment<RegistrationViewModel, FragmentRegistrationBinding>(
@@ -33,17 +34,17 @@ class RegistrationFragment :
     private fun setupListeners() = binding {
         btnRegister.setClickListener {
             viewModel.register(
-                txtNickName.text,
-                txtPassword.text,
-                txtLogin.text,
-                txtRepeatPassword.text
+                txtNickName.trimmedTextOrEmpty,
+                txtPassword.trimmedTextOrEmpty,
+                txtEmail.trimmedTextOrEmpty,
+                txtRepeatPassword.trimmedTextOrEmpty
             )
         }
     }
 
     private fun render(state: RegistrationState) = binding {
         globalProgress.isVisible = state.isLoading
-        rootContent.isVisible = !state.isLoading
+        rootForm.isVisible = !state.isLoading
     }
 
     private fun onSideEffect(sideEffect: RegistrationSideEffect) {

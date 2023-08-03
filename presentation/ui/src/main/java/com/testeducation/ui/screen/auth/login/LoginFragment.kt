@@ -30,7 +30,7 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
     }
 
     private fun render(state: LoginState) = binding {
-        rootGroup.isGone = state.isLoading
+        rootForm.isGone = state.isLoading
         globalProgress.isGone = !state.isLoading
     }
 

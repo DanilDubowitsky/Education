@@ -9,7 +9,7 @@
     <string name="registration_password_repeat_fld_hint">Повторите пароль</string>
     <string name="registration_success_message">Вы успешно зарегистрировались</string>
 
-    <string name="login_title">Авторизация</string>
+    <string name="login_title">Вход и регистрация</string>
     <string name="login_button_login_text">Войти</string>
 
     <string name="email_confirmation_btn_text">Подтвердить e-mail</string>
@@ -70,5 +70,6 @@
     <string name="question_type_title">Выберите типа ответа</string>
     <string name="question_creation_answer_hint">Введите вариант ответа</string>
     <string name="question_creation_answer_write_hint">Введите правильный ответ здесь</string>
+    <string name="login_forget_password_label">Забыл пароль</string>
 
 </resources>
