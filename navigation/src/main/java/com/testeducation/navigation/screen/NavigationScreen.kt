@@ -14,7 +14,9 @@ sealed interface NavigationScreen : Serializable {
 
         object Registration : Auth
 
-        object EmailConfirmation : Auth
+        data class EmailConfirmation(
+            val email: String
+        ) : Auth
 
     }
 

@@ -17,6 +17,7 @@ import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentHomeBinding
 import com.testeducation.ui.utils.hideView
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.showView
@@ -56,6 +57,13 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
         observeData()
+        setupViews()
+    }
+
+    private fun setupViews() {
+        requireActivity().window.statusBarColor = requireContext().loadColor(
+            android.R.color.transparent
+        )
     }
 
     private fun setupListeners() = binding {

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import com.testeducation.logic.screen.auth.confirmation.EmailConfirmationSideEffect
 import com.testeducation.logic.screen.auth.confirmation.EmailConfirmationState
 import com.testeducation.screen.auth.confirmation.EmailConfirmationViewModel
@@ -15,7 +14,6 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.showSnackBar
-import com.testeducation.ui.utils.trimmedTextOrEmpty
 
 class EmailConfirmationFragment :
     ViewModelHostFragment<EmailConfirmationViewModel, FragmentEmailConfirmationBinding>(
@@ -51,14 +49,11 @@ class EmailConfirmationFragment :
     }
 
     private fun setupListeners() = binding {
+        codeConfirmationView.addCodeChangeListener(viewModel::onCodeChanged)
         btnConfirmEmail.setClickListener(viewModel::confirmEmail)
-        txtConfirmation.addTextChangedListener {
-            viewModel.onCodeTextChanged(txtConfirmation.trimmedTextOrEmpty)
-        }
     }
 
     private fun render(state: EmailConfirmationState) = with(binding) {
-        rootGroup.isVisible = !state.isLoading
         globalProgress.isVisible = state.isLoading
     }
 

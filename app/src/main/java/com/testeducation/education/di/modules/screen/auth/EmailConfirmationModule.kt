@@ -8,9 +8,12 @@ import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.auth.confirmation.EmailConfirmationState
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.auth.confirmation.EmailConfirmationModelState
 import com.testeducation.screen.auth.confirmation.EmailConfirmationReducer
 import com.testeducation.screen.auth.confirmation.EmailConfirmationViewModel
+import com.testeducation.ui.screen.auth.confirmation.EmailConfirmationFragment
+import com.testeducation.ui.utils.getScreen
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -30,17 +33,22 @@ interface EmailConfirmationModule {
 
         @Provides
         fun provideViewModel(
+            fragment: EmailConfirmationFragment,
             resourceHelper: IResourceHelper,
             router: NavigationRouter,
             confirmEmail: ConfirmEmail,
             reducer: IReducer<EmailConfirmationModelState, EmailConfirmationState>,
             errorHandler: IExceptionHandler
-        ): EmailConfirmationViewModel = EmailConfirmationViewModel(
-            resourceHelper,
-            router,
-            confirmEmail,
-            reducer,
-            errorHandler
-        )
+        ): EmailConfirmationViewModel {
+            val screen = fragment.getScreen<NavigationScreen.Auth.EmailConfirmation>()
+            return EmailConfirmationViewModel(
+                screen.email,
+                resourceHelper,
+                router,
+                confirmEmail,
+                reducer,
+                errorHandler
+            )
+        }
     }
 }

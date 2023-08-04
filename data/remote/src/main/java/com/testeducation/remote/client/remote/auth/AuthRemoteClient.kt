@@ -24,9 +24,9 @@ class AuthRemoteClient(
         return response.getResult()
     }
 
-    override suspend fun confirmEmail(code: String) {
+    override suspend fun confirmEmail(code: String, email: String) {
         val request = ConfirmEmailRequest(code)
-        val response = authRetrofitClient.confirmEmail(request)
+        val response = authRetrofitClient.confirmEmail(email, request)
         return response.getResult()
     }
 

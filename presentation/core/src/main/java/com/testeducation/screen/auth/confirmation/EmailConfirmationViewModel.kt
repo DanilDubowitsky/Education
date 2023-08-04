@@ -14,6 +14,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class EmailConfirmationViewModel(
+    private val email: String,
     private val resourceHelper: IResourceHelper,
     private val router: NavigationRouter,
     private val confirmEmail: ConfirmEmail,
@@ -33,12 +34,12 @@ class EmailConfirmationViewModel(
         updateModelState {
             copy(loadingState = EmailConfirmationModelState.LoadingState.LOADING)
         }
-        confirmEmail(modelState.code)
+        confirmEmail(modelState.code, email)
         postSideEffect(EmailConfirmationSideEffect.RegistrationSuccess)
         router.newRootChain(NavigationScreen.Auth.Login)
     }
 
-    fun onCodeTextChanged(text: String) = intent {
+    fun onCodeChanged(text: String) = intent {
         updateModelState {
             copy(code = text)
         }

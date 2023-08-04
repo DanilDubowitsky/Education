@@ -20,8 +20,8 @@ class AuthService(
         confirmPassword
     )
 
-    override suspend fun confirmEmail(code: String) =
-        authRemoteClient.confirmEmail(code)
+    override suspend fun confirmEmail(code: String, email: String) =
+        authRemoteClient.confirmEmail(code, email)
 
     override suspend fun signIn(email: String, password: String): Token =
         authRemoteClient.signIn(email, password)

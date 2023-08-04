@@ -7,6 +7,7 @@ import com.testeducation.remote.request.auth.SignInRequest
 import com.testeducation.remote.request.auth.SignUpRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AuthRetrofitClient {
 
@@ -15,6 +16,7 @@ interface AuthRetrofitClient {
 
     @POST("/api/auth/confirm-sign-up")
     suspend fun confirmEmail(
+        @Query("email") email: String,
         @Body confirmEmailRequest: ConfirmEmailRequest
     ): RemoteResponse<Unit>
 

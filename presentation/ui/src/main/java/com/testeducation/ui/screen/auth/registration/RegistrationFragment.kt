@@ -3,6 +3,7 @@ package com.testeducation.ui.screen.auth.registration
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import com.testeducation.logic.screen.auth.registration.RegistrationSideEffect
 import com.testeducation.logic.screen.auth.registration.RegistrationState
 import com.testeducation.screen.auth.registration.RegistrationViewModel
@@ -32,13 +33,18 @@ class RegistrationFragment :
     }
 
     private fun setupListeners() = binding {
-        btnRegister.setClickListener {
-            viewModel.register(
-                txtNickName.trimmedTextOrEmpty,
-                txtPassword.trimmedTextOrEmpty,
-                txtEmail.trimmedTextOrEmpty,
-                txtRepeatPassword.trimmedTextOrEmpty
-            )
+        btnRegister.setClickListener(viewModel::register)
+        txtPassword.addTextChangedListener {
+            viewModel.onPasswordChanged(txtPassword.trimmedTextOrEmpty)
+        }
+        txtRepeatPassword.addTextChangedListener {
+            viewModel.onRepeatedPasswordChanged(txtRepeatPassword.trimmedTextOrEmpty)
+        }
+        txtNickName.addTextChangedListener {
+            viewModel.onUserNameChanged(txtNickName.trimmedTextOrEmpty)
+        }
+        txtEmail.addTextChangedListener {
+            viewModel.onEmailChanged(txtEmail.trimmedTextOrEmpty)
         }
     }
 

@@ -12,7 +12,8 @@ interface IAuthRemoteClient {
     )
 
     suspend fun confirmEmail(
-        code: String
+        code: String,
+        email: String
     )
 
     suspend fun signIn(

@@ -23,20 +23,26 @@ class RegistrationViewModel(
 
     override val initialModelState: RegistrationModelState = RegistrationModelState()
 
-    fun register(
-        nickName: String,
-        password: String,
-        email: String,
-        repeatedPassword: String
-    ) = intent {
-        val isValid = validate(nickName, password, email, repeatedPassword)
+    fun register() = intent {
+        val modelState = getModelState()
+        val isValid = validate(
+            modelState.userName,
+            modelState.password,
+            modelState.email,
+            modelState.confirmPassword
+        )
         if (!isValid) return@intent
         updateModelState {
             copy(loadingState = RegistrationModelState.LoadingState.LOADING)
         }
-        signUp(nickName, email, password, repeatedPassword)
+        signUp(
+            modelState.userName!!,
+            modelState.email!!,
+            modelState.password!!,
+            modelState.confirmPassword!!
+        )
 
-        val screen = NavigationScreen.Auth.EmailConfirmation
+        val screen = NavigationScreen.Auth.EmailConfirmation(modelState.email)
         router.navigateTo(screen)
 
         updateModelState {
@@ -44,13 +50,39 @@ class RegistrationViewModel(
         }
     }
 
+    fun onPasswordChanged(password: String?) = intent {
+        updateModelState {
+            copy(password = password)
+        }
+    }
+
+    fun onEmailChanged(email: String?) = intent {
+        updateModelState {
+            copy(email = password)
+        }
+    }
+
+    fun onUserNameChanged(userName: String?) = intent {
+        updateModelState {
+            copy(userName = password)
+        }
+    }
+
+    fun onRepeatedPasswordChanged(password: String?) = intent {
+        updateModelState {
+            copy(confirmPassword = password)
+        }
+    }
+
     override fun handleThrowable(throwable: Throwable) = intent {
+        val email = getModelState().email ?: return@intent
         updateModelState {
             copy(loadingState = RegistrationModelState.LoadingState.IDLE)
         }
         if (throwable is ServerException) {
             if (throwable.displayMessage == REGISTRATION_CODE_ALREADY_SEND_ERROR) {
-                router.navigateTo(NavigationScreen.Auth.EmailConfirmation)
+                val screen = NavigationScreen.Auth.EmailConfirmation(email)
+                router.navigateTo(screen)
                 return@intent
             } else super.handleThrowable(throwable)
         }
@@ -58,14 +90,14 @@ class RegistrationViewModel(
 
     //todo Переписать валидацию
     private fun validate(
-        nickName: String,
-        password: String,
-        userName: String,
-        repeatedPassword: String
+        nickName: String?,
+        password: String?,
+        userName: String?,
+        repeatedPassword: String?
     ): Boolean =
-        nickName.isNotEmpty()
-                && password.isNotEmpty()
-                && userName.isNotEmpty()
+        !nickName.isNullOrEmpty()
+                && !password.isNullOrEmpty()
+                && !userName.isNullOrEmpty()
                 && password == repeatedPassword
 
     private companion object {

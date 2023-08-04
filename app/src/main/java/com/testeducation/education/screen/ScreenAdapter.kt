@@ -40,8 +40,8 @@ class ScreenAdapter : IScreenAdapter {
                 RegistrationFragment()
             }
 
-            NavigationScreen.Auth.EmailConfirmation -> Screen.FragmentScreen {
-                EmailConfirmationFragment()
+            is NavigationScreen.Auth.EmailConfirmation -> Screen.FragmentScreen {
+                EmailConfirmationFragment().withScreen(screen)
             }
         }
 

@@ -11,11 +11,13 @@
 
     <string name="login_title">Вход и регистрация</string>
     <string name="login_button_login_text">Войти</string>
+    <string name="login_forget_password_label">Забыл пароль</string>
 
     <string name="email_confirmation_btn_text">Подтвердить e-mail</string>
-    <string name="email_confirmation_title">Подтверждение e-mail</string>
+    <string name="email_confirmation_title">Введите код</string>
     <string name="email_confirmation_exit_confirmation_text">Вы действительно хотите выйти?</string>
     <string name="email_confirmation_code_hint">Код подтверждения</string>
+    <string name="email_confirmation_send_code_again">Отправить код повторно</string>
 
     <string name="confirmation_title">Подтверждение</string>
 
@@ -32,6 +34,7 @@
     <string name="common_email">E-mail</string>
     <string name="common_save">Сохранить</string>
     <string name="common_next">Продолжить</string>
+    <string name="common_apply">Применить</string>
 
     <string name="tests_filters_label">Фильтры</string>
 
@@ -62,7 +65,6 @@
 
     <string name="test_favorites_title">Мне нравится</string>
 
-
     <!--Question-->
     <string name="question_type_match">Соотвествие</string>
     <string name="question_type_answer">Выбор ответа</string>
@@ -70,6 +72,5 @@
     <string name="question_type_title">Выберите типа ответа</string>
     <string name="question_creation_answer_hint">Введите вариант ответа</string>
     <string name="question_creation_answer_write_hint">Введите правильный ответ здесь</string>
-    <string name="login_forget_password_label">Забыл пароль</string>
 
 </resources>
