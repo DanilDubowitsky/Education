@@ -21,4 +21,8 @@ interface IAuthService {
         password: String
     ): Token
 
+    suspend fun sendCodeAgain(
+        email: String
+    )
+
 }

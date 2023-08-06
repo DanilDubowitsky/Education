@@ -14,7 +14,7 @@ interface AuthRetrofitClient {
     @POST("/api/auth/sign-up")
     suspend fun signUp(@Body signUpRequest: SignUpRequest): RemoteResponse<Unit>
 
-    @POST("/api/auth/confirm-sign-up")
+    @POST("/api/auth/confirm-sign-up-code")
     suspend fun confirmEmail(
         @Query("email") email: String,
         @Body confirmEmailRequest: ConfirmEmailRequest
@@ -22,5 +22,8 @@ interface AuthRetrofitClient {
 
     @POST("/api/auth/sign-in-password")
     suspend fun signIn(@Body signInRequest: SignInRequest): RemoteResponse<RemoteToken>
+
+    @POST("/api/auth/send-sign-up-code")
+    suspend fun sendCodeAgain(@Query("email") email: String): RemoteResponse<Unit>
 
 }

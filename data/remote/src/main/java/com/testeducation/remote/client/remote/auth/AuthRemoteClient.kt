@@ -36,4 +36,6 @@ class AuthRemoteClient(
         return response.getResult().data.toModel()
     }
 
+    override suspend fun sendCodeAgain(email: String) =
+        authRetrofitClient.sendCodeAgain(email).getResult()
 }

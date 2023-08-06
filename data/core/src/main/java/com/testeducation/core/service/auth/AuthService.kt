@@ -26,4 +26,8 @@ class AuthService(
     override suspend fun signIn(email: String, password: String): Token =
         authRemoteClient.signIn(email, password)
 
+    override suspend fun sendCodeAgain(email: String) =
+        authRemoteClient.sendCodeAgain(email)
+
+
 }

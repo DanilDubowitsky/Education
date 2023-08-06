@@ -58,13 +58,13 @@ class RegistrationViewModel(
 
     fun onEmailChanged(email: String?) = intent {
         updateModelState {
-            copy(email = password)
+            copy(email = email)
         }
     }
 
     fun onUserNameChanged(userName: String?) = intent {
         updateModelState {
-            copy(userName = password)
+            copy(userName = userName)
         }
     }
 

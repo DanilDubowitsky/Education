@@ -3,6 +3,7 @@ package com.testeducation.education.di.modules.screen.auth
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.auth.ConfirmEmail
+import com.testeducation.domain.cases.auth.SendCodeAgain
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
@@ -37,6 +38,7 @@ interface EmailConfirmationModule {
             resourceHelper: IResourceHelper,
             router: NavigationRouter,
             confirmEmail: ConfirmEmail,
+            sendCodeAgain: SendCodeAgain,
             reducer: IReducer<EmailConfirmationModelState, EmailConfirmationState>,
             errorHandler: IExceptionHandler
         ): EmailConfirmationViewModel {
@@ -46,6 +48,7 @@ interface EmailConfirmationModule {
                 resourceHelper,
                 router,
                 confirmEmail,
+                sendCodeAgain,
                 reducer,
                 errorHandler
             )

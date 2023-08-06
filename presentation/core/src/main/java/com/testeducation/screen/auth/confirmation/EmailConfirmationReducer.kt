@@ -8,7 +8,8 @@ class EmailConfirmationReducer : IReducer<EmailConfirmationModelState, EmailConf
     override fun reduce(modelState: EmailConfirmationModelState): EmailConfirmationState {
 
         return EmailConfirmationState(
-            isLoading = modelState.loadingState == EmailConfirmationModelState.LoadingState.LOADING
+            isLoading = modelState.loadingState == EmailConfirmationModelState.LoadingState.LOADING,
+            isCodeExpired = modelState.isCodeExpired
         )
     }
 }

@@ -47,6 +47,19 @@
             tools:text="Осталось времени: 50 сек"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/tvSendCodeAgain"
+            style="@style/Text.Label.Medium"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_confirmation_send_code_again"
+            android:textColor="@color/colorBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvExpireTime"
+            app:layout_constraintBottom_toBottomOf="@+id/tvExpireTime"/>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnConfirmEmail"
             style="@style/Button.Normal.Green"
@@ -57,19 +70,6 @@
             android:layout_marginBottom="32dp"
             android:text="@string/common_apply"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvForgetPassword" />
-
-        <TextView
-            android:id="@+id/tvForgetPassword"
-            style="@style/Text.Label.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"
-            android:text="@string/email_confirmation_send_code_again"
-            android:textColor="@color/colorBlue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvExpireTime" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

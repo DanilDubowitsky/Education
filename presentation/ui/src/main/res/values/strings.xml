@@ -18,6 +18,7 @@
     <string name="email_confirmation_exit_confirmation_text">Вы действительно хотите выйти?</string>
     <string name="email_confirmation_code_hint">Код подтверждения</string>
     <string name="email_confirmation_send_code_again">Отправить код повторно</string>
+    <string name="email_confirmation_code_remaining_time">Осталось времени: %1$s сек.</string>
 
     <string name="confirmation_title">Подтверждение</string>
 

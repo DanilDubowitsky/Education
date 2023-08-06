@@ -20,4 +20,8 @@ interface IAuthRemoteClient {
         email: String,
         password: String
     ): Token
+
+    suspend fun sendCodeAgain(
+        email: String
+    )
 }

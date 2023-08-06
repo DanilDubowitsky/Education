@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.domain.usecase.auth
 
 import com.testeducation.domain.cases.auth.ConfirmEmail
 import com.testeducation.domain.cases.auth.GetTokenExpiration
+import com.testeducation.domain.cases.auth.SendCodeAgain
 import com.testeducation.domain.cases.auth.SignIn
 import com.testeducation.domain.cases.auth.SignUp
 import com.testeducation.domain.config.user.IUserConfig
@@ -38,5 +39,11 @@ object AuthUseCaseModule {
     fun provideGetTokenExpiration(
         tokenExpirationHandler: IRefreshTokenExpirationHandler
     ) = GetTokenExpiration(tokenExpirationHandler)
+
+    @Provides
+    @Reusable
+    fun provideSendCodeAgain(
+        authService: IAuthService
+    ) = SendCodeAgain(authService)
 
 }
