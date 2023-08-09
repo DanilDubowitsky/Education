@@ -5,6 +5,7 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.auth.SignUp
 import com.testeducation.domain.exception.ServerException
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.logic.model.auth.ConfirmationType
 import com.testeducation.logic.screen.auth.registration.RegistrationSideEffect
 import com.testeducation.logic.screen.auth.registration.RegistrationState
 import com.testeducation.navigation.core.NavigationRouter
@@ -42,7 +43,10 @@ class RegistrationViewModel(
             modelState.confirmPassword!!
         )
 
-        val screen = NavigationScreen.Auth.EmailConfirmation(modelState.email)
+        val screen = NavigationScreen.Auth.CodeConfirmation(
+            modelState.email,
+            ConfirmationType.EMAIL_CONFIRMATION
+        )
         router.navigateTo(screen)
 
         updateModelState {
@@ -81,7 +85,10 @@ class RegistrationViewModel(
         }
         if (throwable is ServerException) {
             if (throwable.displayMessage == REGISTRATION_CODE_ALREADY_SEND_ERROR) {
-                val screen = NavigationScreen.Auth.EmailConfirmation(email)
+                val screen = NavigationScreen.Auth.CodeConfirmation(
+                    email,
+                    ConfirmationType.EMAIL_CONFIRMATION
+                )
                 router.navigateTo(screen)
                 return@intent
             } else super.handleThrowable(throwable)

@@ -35,7 +35,7 @@ class Navigator(
             }
 
             is Screen.DialogScreen -> moveDialog(screen)
-            is Screen.FragmentScreen -> moveFragment(screen)
+            is Screen.FragmentScreen -> moveFragment(screen, command.addToBackStack)
         }
     }
 
@@ -95,7 +95,7 @@ class Navigator(
         }
     }
 
-    private fun moveFragment(screen: Screen.FragmentScreen) {
+    private fun moveFragment(screen: Screen.FragmentScreen, addToBackStack: Boolean) {
         if (screen == currentVisibleScreen) return
         val fragment = screen.createFragment(fragmentFactory)
         val transaction = fragmentManager.beginTransaction()
@@ -108,7 +108,7 @@ class Navigator(
             )
         }
         transaction.replace(containerId, fragment, screen::class.java.name)
-        transaction.addToBackStack(null)
+        if (addToBackStack) transaction.addToBackStack(null)
         transaction.setReorderingAllowed(true)
         transaction.commit()
         currentVisibleScreen = screen

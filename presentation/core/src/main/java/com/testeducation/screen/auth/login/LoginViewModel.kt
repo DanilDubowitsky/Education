@@ -50,11 +50,20 @@ class LoginViewModel(
         }
     }
 
+    fun registration() {
+        router.navigateTo(NavigationScreen.Auth.Registration)
+    }
+
     override fun handleThrowable(throwable: Throwable) = intent {
         super.handleThrowable(throwable)
         updateModelState {
             copy(loadingState = LoginModelState.LoadingState.IDLE)
         }
+    }
+
+    fun forgetPassword() = intent {
+        val screen = NavigationScreen.Auth.PasswordResetEmail
+        router.navigateTo(screen)
     }
 
     private fun getValidInput(modelState: LoginModelState): Boolean {
@@ -79,10 +88,6 @@ class LoginViewModel(
         }
 
         return modelState.email.isEmptyOrBlank() || modelState.password.isEmptyOrBlank()
-    }
-
-    fun registration() {
-        router.navigateTo(NavigationScreen.Auth.Registration)
     }
 
 }

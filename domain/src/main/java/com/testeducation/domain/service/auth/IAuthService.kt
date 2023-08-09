@@ -25,4 +25,13 @@ interface IAuthService {
         email: String
     )
 
+    suspend fun getResetPasswordToken(
+        email: String,
+        code: String
+    ): String
+
+    suspend fun sendResetPasswordCode(
+        email: String
+    )
+
 }

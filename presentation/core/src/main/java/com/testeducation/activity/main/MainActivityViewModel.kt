@@ -12,7 +12,6 @@ import com.testeducation.logic.activity.MainActivitySideEffect
 import com.testeducation.logic.activity.MainActivityState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import kotlinx.coroutines.flow.collect
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class MainActivityViewModel(

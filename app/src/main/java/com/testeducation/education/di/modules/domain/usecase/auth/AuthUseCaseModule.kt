@@ -1,8 +1,10 @@
 package com.testeducation.education.di.modules.domain.usecase.auth
 
 import com.testeducation.domain.cases.auth.ConfirmEmail
+import com.testeducation.domain.cases.auth.GetResetPasswordToken
 import com.testeducation.domain.cases.auth.GetTokenExpiration
 import com.testeducation.domain.cases.auth.SendCodeAgain
+import com.testeducation.domain.cases.auth.SendResetPasswordCode
 import com.testeducation.domain.cases.auth.SignIn
 import com.testeducation.domain.cases.auth.SignUp
 import com.testeducation.domain.config.user.IUserConfig
@@ -45,5 +47,17 @@ object AuthUseCaseModule {
     fun provideSendCodeAgain(
         authService: IAuthService
     ) = SendCodeAgain(authService)
+
+    @Provides
+    @Reusable
+    fun provideSendResetPasswordCode(
+        authService: IAuthService
+    ) = SendResetPasswordCode(authService)
+
+    @Provides
+    @Reusable
+    fun provideGetResetPasswordToken(
+        authService: IAuthService
+    ) = GetResetPasswordToken(authService)
 
 }

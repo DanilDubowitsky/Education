@@ -5,6 +5,7 @@ import com.testeducation.domain.model.auth.Token
 import com.testeducation.remote.client.retrofit.auth.AuthRetrofitClient
 import com.testeducation.remote.converter.auth.toModel
 import com.testeducation.remote.request.auth.ConfirmEmailRequest
+import com.testeducation.remote.request.auth.GetResetPasswordTokenRequest
 import com.testeducation.remote.request.auth.SignInRequest
 import com.testeducation.remote.request.auth.SignUpRequest
 import com.testeducation.remote.utils.getResult
@@ -38,4 +39,13 @@ class AuthRemoteClient(
 
     override suspend fun sendCodeAgain(email: String) =
         authRetrofitClient.sendCodeAgain(email).getResult()
+
+    override suspend fun getResetPasswordToken(email: String, code: String): String {
+        val request = GetResetPasswordTokenRequest(code)
+        val response = authRetrofitClient.getResetPasswordToken(email, request)
+        return response.getResult().data
+    }
+
+    override suspend fun sendResetPasswordCode(email: String) =
+        authRetrofitClient.sendResetPasswordCode(email).getResult()
 }

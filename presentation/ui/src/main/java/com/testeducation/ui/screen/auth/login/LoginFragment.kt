@@ -62,6 +62,7 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
         txtPassword.addTextChangedListener {
             viewModel.onPasswordChanged(txtPassword.trimmedTextOrEmpty)
         }
+        tvForgetPassword.setClickListener(viewModel::forgetPassword)
     }
 
 }
