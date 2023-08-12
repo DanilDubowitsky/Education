@@ -12,12 +12,33 @@ interface IAuthService {
     )
 
     suspend fun confirmEmail(
-        code: String
+        code: String,
+        email: String
     )
 
     suspend fun signIn(
         email: String,
         password: String
     ): Token
+
+    suspend fun sendCodeAgain(
+        email: String
+    )
+
+    suspend fun getResetPasswordToken(
+        email: String,
+        code: String
+    ): String
+
+    suspend fun sendResetPasswordCode(
+        email: String
+    )
+
+    suspend fun resetPassword(
+        email: String,
+        token: String,
+        newPassword: String,
+        repeatedPassword: String
+    )
 
 }

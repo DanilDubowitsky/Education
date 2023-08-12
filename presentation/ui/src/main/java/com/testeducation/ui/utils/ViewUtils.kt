@@ -1,9 +1,11 @@
 package com.testeducation.ui.utils
 
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -145,4 +147,19 @@ fun Button.switchHalfVisibleState(isVisible: Boolean) {
     }
     else 1f
     isEnabled = isVisible
+}
+
+fun View.showKeyboard() {
+    requestFocus()
+    val inputMethodService = context.getSystemService(
+        Context.INPUT_METHOD_SERVICE
+    ) as InputMethodManager
+    inputMethodService.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+}
+
+fun View.hideKeyboard() {
+    val inputMethodService = context.getSystemService(
+        Context.INPUT_METHOD_SERVICE
+    ) as InputMethodManager
+    inputMethodService.hideSoftInputFromWindow(windowToken, InputMethodManager.SHOW_IMPLICIT)
 }

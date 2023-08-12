@@ -1,5 +1,6 @@
 package com.testeducation.navigation.screen
 
+import com.testeducation.logic.model.auth.ConfirmationType
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.model.test.TestShortUI
@@ -14,7 +15,17 @@ sealed interface NavigationScreen : Serializable {
 
         object Registration : Auth
 
-        object EmailConfirmation : Auth
+        data class CodeConfirmation(
+            val email: String,
+            val confirmationType: ConfirmationType
+        ) : Auth
+
+        object PasswordResetEmail : Auth
+
+        data class NewPassword(
+            val email: String,
+            val token: String
+        ) : Auth
 
     }
 

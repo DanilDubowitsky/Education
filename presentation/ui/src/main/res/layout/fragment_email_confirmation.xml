@@ -3,53 +3,76 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBlue"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        style="@style/Text.Title"
-        android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/email_confirmation_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.testeducation.ui.view.custom.InputTextPlaceHolder
-        android:id="@+id/confirmationTextPlaceHolder"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_marginTop="88dp"
+        android:background="@drawable/background_white_rounded_large"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/txtConfirmation"
-            style="@style/EditText.Input.Simple"
+        <TextView
+            android:id="@+id/txtTitle"
+            style="@style/Text.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/email_confirmation_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.testeducation.ui.view.custom.CodeConfirmationView
+            android:id="@+id/codeConfirmationView"
             android:layout_width="match_parent"
-            android:hint="@string/email_confirmation_code_hint"
-            android:background="@drawable/selector_input_text"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+
+        <TextView
+            android:id="@+id/tvExpireTime"
+            style="@style/Text.Label.Medium"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/codeConfirmationView"
+            tools:text="Осталось времени: 50 сек"
             android:layout_height="wrap_content" />
 
-    </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+        <TextView
+            android:id="@+id/tvSendCodeAgain"
+            style="@style/Text.Label.Medium"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_confirmation_send_code_again"
+            android:textColor="@color/colorBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvExpireTime"
+            app:layout_constraintBottom_toBottomOf="@+id/tvExpireTime"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        style="@style/Button.Normal.Green"
-        android:id="@+id/btnConfirmEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/email_confirmation_btn_text"
-        app:layout_constraintTop_toBottomOf="@+id/confirmationTextPlaceHolder"
-        tools:layout_editor_absoluteX="0dp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConfirmEmail"
+            style="@style/Button.Normal.Green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/common_apply"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvExpireTime" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/rootGroup"
-        app:constraint_referenced_ids="btnConfirmEmail, confirmationTextPlaceHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
         android:id="@+id/globalProgress"

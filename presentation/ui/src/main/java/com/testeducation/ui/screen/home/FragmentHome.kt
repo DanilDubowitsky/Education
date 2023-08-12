@@ -7,6 +7,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.testeducation.logic.screen.home.HomeSideEffect
 import com.testeducation.logic.screen.home.HomeState
+import com.testeducation.navigation.core.AnimationSet
 import com.testeducation.navigation.core.IScreenAdapter
 import com.testeducation.navigation.core.NavigationHost
 import com.testeducation.navigation.core.Navigator
@@ -17,6 +18,7 @@ import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentHomeBinding
 import com.testeducation.ui.utils.hideView
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.showView
@@ -40,7 +42,13 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
             requireActivity(),
             R.id.homeFragmentContainer,
             screenAdapter,
-            childFragmentManager
+            childFragmentManager,
+            replaceAnimationSet = AnimationSet(
+                com.testeducation.navigation.R.anim.fade_in,
+                com.testeducation.navigation.R.anim.fade_out,
+                com.testeducation.navigation.R.anim.fade_in,
+                com.testeducation.navigation.R.anim.fade_out
+            )
         )
     }
 
@@ -56,6 +64,13 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
         observeData()
+        setupViews()
+    }
+
+    private fun setupViews() {
+        requireActivity().window.statusBarColor = requireContext().loadColor(
+            android.R.color.transparent
+        )
     }
 
     private fun setupListeners() = binding {

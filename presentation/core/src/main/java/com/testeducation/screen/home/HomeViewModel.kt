@@ -7,7 +7,7 @@ import com.testeducation.logic.screen.home.HomeSideEffect
 import com.testeducation.logic.screen.home.HomeState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import com.testeducation.utils.StringUtils.isNotEmptyOrBlank
+import com.testeducation.utils.isNotEmptyOrBlank
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 

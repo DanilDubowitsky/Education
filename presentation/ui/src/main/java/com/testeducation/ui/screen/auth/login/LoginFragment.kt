@@ -7,9 +7,11 @@ import androidx.core.widget.addTextChangedListener
 import com.testeducation.logic.screen.auth.login.LoginSideEffect
 import com.testeducation.logic.screen.auth.login.LoginState
 import com.testeducation.screen.auth.login.LoginViewModel
+import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentLoginBinding
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.trimmedTextOrEmpty
@@ -23,6 +25,11 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
         super.onViewCreated(view, savedInstanceState)
         observeData()
         setupListeners()
+        setupViews()
+    }
+
+    private fun setupViews() {
+        requireActivity().window.statusBarColor = requireContext().loadColor(R.color.colorBlue)
     }
 
     private fun observeData() {
@@ -30,7 +37,7 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
     }
 
     private fun render(state: LoginState) = binding {
-        rootGroup.isGone = state.isLoading
+        rootForm.isGone = state.isLoading
         globalProgress.isGone = !state.isLoading
     }
 
@@ -55,6 +62,7 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
         txtPassword.addTextChangedListener {
             viewModel.onPasswordChanged(txtPassword.trimmedTextOrEmpty)
         }
+        tvForgetPassword.setClickListener(viewModel::forgetPassword)
     }
 
 }

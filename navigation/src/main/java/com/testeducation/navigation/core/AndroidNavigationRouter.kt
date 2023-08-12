@@ -7,8 +7,8 @@ class AndroidNavigationRouter(
     private val resultWire: IResultWire
 ) : NavigationRouter {
 
-    override fun navigateTo(screen: NavigationScreen, key: String?) {
-        navigationHost.executeCommand(Command.Forward(screen), key)
+    override fun navigateTo(screen: NavigationScreen, addToBackStack: Boolean, key: String?) {
+        navigationHost.executeCommand(Command.Forward(screen, addToBackStack), key)
     }
 
     override fun exit(key: String?) {

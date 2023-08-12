@@ -21,8 +21,8 @@ import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.view.custom.InputText.AnimState.Companion.isDown
 import com.testeducation.ui.view.custom.InputText.AnimState.Companion.isUp
-import com.testeducation.utils.StringUtils.isEmptyOrBlank
-import com.testeducation.utils.StringUtils.isNotEmptyOrBlank
+import com.testeducation.utils.isEmptyOrBlank
+import com.testeducation.utils.isNotEmptyOrBlank
 import kotlinx.parcelize.Parcelize
 
 class InputText @JvmOverloads constructor(

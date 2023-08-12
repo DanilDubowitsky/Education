@@ -10,8 +10,8 @@ import com.testeducation.logic.screen.auth.login.LoginSideEffect
 import com.testeducation.logic.screen.auth.login.LoginState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import com.testeducation.utils.StringUtils.isEmptyOrBlank
 import com.testeducation.utils.getString
+import com.testeducation.utils.isEmptyOrBlank
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
@@ -50,11 +50,20 @@ class LoginViewModel(
         }
     }
 
+    fun registration() {
+        router.navigateTo(NavigationScreen.Auth.Registration)
+    }
+
     override fun handleThrowable(throwable: Throwable) = intent {
         super.handleThrowable(throwable)
         updateModelState {
             copy(loadingState = LoginModelState.LoadingState.IDLE)
         }
+    }
+
+    fun forgetPassword() = intent {
+        val screen = NavigationScreen.Auth.PasswordResetEmail
+        router.navigateTo(screen)
     }
 
     private fun getValidInput(modelState: LoginModelState): Boolean {
@@ -79,10 +88,6 @@ class LoginViewModel(
         }
 
         return modelState.email.isEmptyOrBlank() || modelState.password.isEmptyOrBlank()
-    }
-
-    fun registration() {
-        router.navigateTo(NavigationScreen.Auth.Registration)
     }
 
 }
