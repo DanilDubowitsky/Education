@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.base
 
 import com.testeducation.education.di.modules.screen.auth.CodeConfirmationModule
 import com.testeducation.education.di.modules.screen.auth.LoginModule
+import com.testeducation.education.di.modules.screen.auth.NewPasswordModule
 import com.testeducation.education.di.modules.screen.auth.PasswordResetEmailModule
 import com.testeducation.education.di.modules.screen.auth.RegistrationModule
 import com.testeducation.education.di.modules.screen.home.HomeModule
@@ -12,7 +13,8 @@ import com.testeducation.education.di.modules.screen.tests.question.QuestionCrea
 import com.testeducation.ui.screen.auth.confirmation.CodeConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
-import com.testeducation.ui.screen.auth.reset.PasswordResetEmailFragment
+import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
+import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
@@ -50,5 +52,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [PasswordResetEmailModule::class])
     fun passwordResetEmailFragment(): PasswordResetEmailFragment
+
+    @ContributesAndroidInjector(modules = [NewPasswordModule::class])
+    fun newPasswordFragment(): NewPasswordFragment
 
 }

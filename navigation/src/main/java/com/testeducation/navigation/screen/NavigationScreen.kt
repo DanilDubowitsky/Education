@@ -22,6 +22,11 @@ sealed interface NavigationScreen : Serializable {
 
         object PasswordResetEmail : Auth
 
+        data class NewPassword(
+            val email: String,
+            val token: String
+        ) : Auth
+
     }
 
     sealed interface Common : NavigationScreen {

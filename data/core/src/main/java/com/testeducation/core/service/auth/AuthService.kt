@@ -34,4 +34,11 @@ class AuthService(
 
     override suspend fun sendResetPasswordCode(email: String) =
         authRemoteClient.sendResetPasswordCode(email)
+
+    override suspend fun resetPassword(
+        email: String,
+        token: String,
+        newPassword: String,
+        repeatedPassword: String
+    ) = authRemoteClient.resetPassword(email, token, newPassword, repeatedPassword)
 }

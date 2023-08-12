@@ -10,8 +10,8 @@ import com.testeducation.logic.screen.auth.login.LoginSideEffect
 import com.testeducation.logic.screen.auth.login.LoginState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import com.testeducation.utils.StringUtils.isEmptyOrBlank
 import com.testeducation.utils.getString
+import com.testeducation.utils.isEmptyOrBlank
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 

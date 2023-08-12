@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.format.DateUtils.SECOND_IN_MILLIS
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.testeducation.logic.screen.auth.confirmation.CodeConfirmationSideEffect
@@ -34,9 +35,9 @@ class CodeConfirmationFragment :
         observeData()
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         timeHandler.release()
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     private fun observeData() {
@@ -85,6 +86,7 @@ class CodeConfirmationFragment :
         globalProgress.isVisible = state.isLoading
         tvExpireTime.isInvisible = state.isCodeExpired
         tvSendCodeAgain.isInvisible = !state.isCodeExpired
+        rootForm.isGone = state.isLoading
     }
 
     private companion object {

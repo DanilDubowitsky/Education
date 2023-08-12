@@ -1,10 +1,7 @@
 package com.testeducation.ui.activity
 
 import android.os.Bundle
-import androidx.core.view.WindowCompat
 import com.testeducation.activity.main.MainActivityViewModel
-import com.testeducation.logic.activity.MainActivitySideEffect
-import com.testeducation.logic.screen.tests.filters.TestsFiltersSideEffect
 import com.testeducation.navigation.core.AnimationSet
 import com.testeducation.navigation.core.IScreenAdapter
 import com.testeducation.navigation.core.NavigationHost
@@ -13,8 +10,6 @@ import com.testeducation.ui.R
 
 import com.testeducation.ui.base.activity.ViewModelHostActivity
 import com.testeducation.ui.databinding.ActivityMainBinding
-import com.testeducation.ui.utils.observe
-import org.orbitmvi.orbit.viewmodel.observe
 import javax.inject.Inject
 
 class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBinding>(
@@ -33,11 +28,17 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
             activity = this,
             containerId = R.id.fragmentContainer,
             screenAdapter = screenAdapter,
-            animationSet = AnimationSet(
+            moveAnimationSet = AnimationSet(
                 com.testeducation.navigation.R.anim.slide_in,
                 com.testeducation.navigation.R.anim.fade_out,
                 com.testeducation.navigation.R.anim.fade_in,
                 com.testeducation.navigation.R.anim.slide_out,
+            ),
+            replaceAnimationSet = AnimationSet(
+                com.testeducation.navigation.R.anim.fade_in,
+                com.testeducation.navigation.R.anim.fade_out,
+                com.testeducation.navigation.R.anim.fade_in,
+                com.testeducation.navigation.R.anim.fade_out
             )
         )
     }

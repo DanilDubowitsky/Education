@@ -105,7 +105,8 @@ class CodeConfirmationViewModel(
             copy(loadingState = CodeConfirmationModelState.LoadingState.LOADING)
         }
         val token = getResetPasswordToken(email, modelState.code)
-        println("PASSWORD_RESET_TOKEN: $token")
+        val screen = NavigationScreen.Auth.NewPassword(email, token)
+        router.navigateTo(screen, false)
         updateModelState {
             copy(loadingState = CodeConfirmationModelState.LoadingState.IDLE)
         }

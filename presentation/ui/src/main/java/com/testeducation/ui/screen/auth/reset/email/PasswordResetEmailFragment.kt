@@ -1,11 +1,11 @@
-package com.testeducation.ui.screen.auth.reset
+package com.testeducation.ui.screen.auth.reset.email
 
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.widget.addTextChangedListener
-import com.testeducation.logic.screen.auth.reset.PasswordResetEmailState
-import com.testeducation.screen.auth.reset.PasswordResetEmailViewModel
+import com.testeducation.logic.screen.auth.reset.email.PasswordResetEmailState
+import com.testeducation.screen.auth.reset.email.PasswordResetEmailViewModel
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentPasswordResetEmailBinding
 import com.testeducation.ui.utils.invoke

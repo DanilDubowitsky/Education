@@ -116,6 +116,18 @@
             android:text="@string/registration_btn_title"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <TextView
+            style="@style/Text.Label.Medium"
+            android:id="@+id/termsAndConditionsTxt"
+            android:textColor="@color/colorBlueSky"
+            android:layout_marginHorizontal="24dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ProgressBar

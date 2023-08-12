@@ -34,4 +34,11 @@ interface IAuthService {
         email: String
     )
 
+    suspend fun resetPassword(
+        email: String,
+        token: String,
+        newPassword: String,
+        repeatedPassword: String
+    )
+
 }

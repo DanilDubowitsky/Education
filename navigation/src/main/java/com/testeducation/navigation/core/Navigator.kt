@@ -12,7 +12,8 @@ class Navigator(
     private val screenAdapter: IScreenAdapter,
     private val fragmentManager: FragmentManager = activity.supportFragmentManager,
     private val fragmentFactory: FragmentFactory = fragmentManager.fragmentFactory,
-    private val animationSet: AnimationSet? = null
+    private val moveAnimationSet: AnimationSet? = null,
+    private val replaceAnimationSet: AnimationSet? = null
 ) : INavigator {
 
     // TODO: add screen history
@@ -99,12 +100,12 @@ class Navigator(
         if (screen == currentVisibleScreen) return
         val fragment = screen.createFragment(fragmentFactory)
         val transaction = fragmentManager.beginTransaction()
-        if (animationSet != null) {
+        if (moveAnimationSet != null) {
             transaction.setCustomAnimations(
-                animationSet.enterAnim,
-                animationSet.exitAnim,
-                animationSet.popEnterAnim,
-                animationSet.popExitAnim
+                moveAnimationSet.enterAnim,
+                moveAnimationSet.exitAnim,
+                moveAnimationSet.popEnterAnim,
+                moveAnimationSet.popExitAnim
             )
         }
         transaction.replace(containerId, fragment, screen::class.java.name)
@@ -117,7 +118,14 @@ class Navigator(
     private fun replaceFragment(screen: Screen.FragmentScreen) {
         if (screen == currentVisibleScreen) return
         val fragment = screen.createFragment(fragmentFactory)
-        fragmentManager.beginTransaction().replace(containerId, fragment, screen::class.java.name)
+        val transaction = fragmentManager.beginTransaction()
+        if (replaceAnimationSet != null) {
+            transaction.setCustomAnimations(
+                replaceAnimationSet.enterAnim,
+                replaceAnimationSet.exitAnim
+            )
+        }
+        transaction.replace(containerId, fragment, screen::class.java.name)
             .setReorderingAllowed(true)
             .commit()
         currentVisibleScreen = screen

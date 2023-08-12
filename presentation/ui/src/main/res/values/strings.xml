@@ -8,12 +8,21 @@
     <string name="registration_password_fld_hint">Пароль</string>
     <string name="registration_password_repeat_fld_hint">Повторите пароль</string>
     <string name="registration_success_message">Вы успешно зарегистрировались</string>
+    <string name="registration_rules_label">При регистрации вы соглашаетесь с правилами предоставления информации</string>
+    <string name="registration_rules">правилами предоставления информации</string>
 
     <string name="login_title">Вход и регистрация</string>
     <string name="login_button_login_text">Войти</string>
     <string name="login_forget_password_label">Забыл пароль</string>
     <string name="login_password_reset">Введите email, на который необходимо  отправить код для сброса пароля</string>
     <string name="login_password_reset_title">Сбросить пароль</string>
+    <string name="login_password_reset_new_password_title">Придумайте новый пароль</string>
+    <string name="login_password_reset_password_label">Сменить пароль</string>
+    <string name="login_password_reset_new_password_label">Новый пароль</string>
+
+    <string name="login_password_reset_password_invalid">Неверный пароль</string>
+    <string name="login_password_reset_password_not_match">Пароли не совпадают</string>
+    <string name="login_password_reset_success_label">Пароль успешно изменен</string>
 
     <string name="email_confirmation_btn_text">Подтвердить e-mail</string>
     <string name="email_confirmation_title">Введите код</string>

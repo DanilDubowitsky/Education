@@ -7,6 +7,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.testeducation.logic.screen.home.HomeSideEffect
 import com.testeducation.logic.screen.home.HomeState
+import com.testeducation.navigation.core.AnimationSet
 import com.testeducation.navigation.core.IScreenAdapter
 import com.testeducation.navigation.core.NavigationHost
 import com.testeducation.navigation.core.Navigator
@@ -41,7 +42,13 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
             requireActivity(),
             R.id.homeFragmentContainer,
             screenAdapter,
-            childFragmentManager
+            childFragmentManager,
+            replaceAnimationSet = AnimationSet(
+                com.testeducation.navigation.R.anim.fade_in,
+                com.testeducation.navigation.R.anim.fade_out,
+                com.testeducation.navigation.R.anim.fade_in,
+                com.testeducation.navigation.R.anim.fade_out
+            )
         )
     }
 

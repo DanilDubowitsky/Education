@@ -33,4 +33,11 @@ interface IAuthRemoteClient {
     suspend fun sendResetPasswordCode(
         email: String
     )
+
+    suspend fun resetPassword(
+        email: String,
+        token: String,
+        newPassword: String,
+        repeatedPassword: String
+    )
 }

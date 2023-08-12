@@ -6,7 +6,8 @@ import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.ui.screen.auth.confirmation.CodeConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
-import com.testeducation.ui.screen.auth.reset.PasswordResetEmailFragment
+import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
+import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
 import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
@@ -47,6 +48,10 @@ class ScreenAdapter : IScreenAdapter {
 
             NavigationScreen.Auth.PasswordResetEmail -> Screen.FragmentScreen {
                 PasswordResetEmailFragment()
+            }
+
+            is NavigationScreen.Auth.NewPassword -> Screen.FragmentScreen {
+                NewPasswordFragment().withScreen(screen)
             }
         }
 

@@ -4,11 +4,12 @@ import com.testeducation.remote.model.auth.RemoteToken
 import com.testeducation.remote.model.global.RemoteResponse
 import com.testeducation.remote.request.auth.ConfirmEmailRequest
 import com.testeducation.remote.request.auth.GetResetPasswordTokenRequest
+import com.testeducation.remote.request.auth.ResetPasswordRequest
 import com.testeducation.remote.request.auth.SignInRequest
 import com.testeducation.remote.request.auth.SignUpRequest
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface AuthRetrofitClient {
@@ -28,7 +29,7 @@ interface AuthRetrofitClient {
     @POST("/api/auth/send-sign-up-code")
     suspend fun sendCodeAgain(@Query("email") email: String): RemoteResponse<Unit>
 
-    @GET("/api/auth/reset-password-token")
+    @POST("/api/auth/reset-password-token")
     suspend fun getResetPasswordToken(
         @Query("email") email: String,
         @Body request: GetResetPasswordTokenRequest
@@ -37,6 +38,12 @@ interface AuthRetrofitClient {
     @POST("/api/auth/reset-password")
     suspend fun sendResetPasswordCode(
         @Query("email") email: String
+    ): RemoteResponse<Unit>
+
+    @PUT("/api/auth/reset-password")
+    suspend fun resetPassword(
+        @Query("email") email: String,
+        @Body request: ResetPasswordRequest
     ): RemoteResponse<Unit>
 
 }

@@ -1,7 +1,7 @@
-package com.testeducation.screen.auth.reset
+package com.testeducation.screen.auth.reset.email
 
 import com.testeducation.core.IReducer
-import com.testeducation.logic.screen.auth.reset.PasswordResetEmailState
+import com.testeducation.logic.screen.auth.reset.email.PasswordResetEmailState
 
 class PasswordResetEmailReducer : IReducer<PasswordResetEmailModelState, PasswordResetEmailState> {
 

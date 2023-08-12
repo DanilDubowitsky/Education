@@ -15,6 +15,7 @@ import androidx.core.animation.addListener
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import com.testeducation.ui.R
 import com.testeducation.ui.databinding.ViewInputTextPlaceHolderBinding
 import com.testeducation.ui.utils.dp
@@ -98,6 +99,16 @@ class InputTextPlaceHolder @JvmOverloads constructor(
         }
     }
 
+    fun setErrorMsg(errorMsg: String) {
+        setInputState(InputState.Error(errorMsg))
+    }
+
+    private fun onEditTextChanged() {
+        editText.addTextChangedListener {
+            setInputState(InputState.Default)
+        }
+    }
+
     private fun setEditText(editText: EditText) {
         if (::editText.isInitialized) throw IllegalStateException("Edit text already added")
         this.editText = editText
@@ -106,10 +117,7 @@ class InputTextPlaceHolder @JvmOverloads constructor(
         setInputState(InputState.Default)
         processFocusedChange()
         changeFaceTextInput(false)
-    }
-
-    fun setErrorMsg(errorMsg: String) {
-        setInputState(InputState.Error(errorMsg))
+        onEditTextChanged()
     }
 
     private fun setInputState(state: InputState) {
