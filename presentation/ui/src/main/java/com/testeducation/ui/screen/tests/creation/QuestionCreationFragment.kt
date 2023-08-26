@@ -2,6 +2,7 @@ package com.testeducation.ui.screen.tests.creation
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.doOnTextChanged
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
@@ -28,7 +29,8 @@ class QuestionCreationFragment :
             QuestionCreationDiffUtil(),
             answersDelegateDefault(
                 onClickCheckTrue = viewModel::changeCheckedAnswer,
-                onClickDelete = viewModel::deleteAnswer
+                onClickDelete = viewModel::deleteAnswer,
+                onAnswerTextChanger = viewModel::answerTextChanger
             ),
             answerDelegateWrite(),
             footerPlusAddDelegate(viewModel::addAnswer)
@@ -40,6 +42,15 @@ class QuestionCreationFragment :
         setupRecycler()
         setupListeners()
         observeData()
+        binding {
+            etQuestion.doOnTextChanged { text, start, before, count ->
+                viewModel.updateQuestionText(text.toString())
+            }
+            btnCreate.setOnClickListener {
+                viewModel.saveQuestion()
+            }
+        }
+
     }
 
     private fun setupRecycler() = binding {

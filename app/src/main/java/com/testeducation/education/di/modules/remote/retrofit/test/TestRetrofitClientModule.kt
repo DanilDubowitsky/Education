@@ -1,5 +1,6 @@
 package com.testeducation.education.di.modules.remote.retrofit.test
 
+import com.testeducation.remote.client.retrofit.question.QuestionRetrofitClient
 import com.testeducation.remote.client.retrofit.test.TestRetrofitClient
 import dagger.Module
 import dagger.Provides
@@ -14,5 +15,11 @@ object TestRetrofitClientModule {
     fun provideTestRetrofitClient(
         retrofit: Retrofit
     ): TestRetrofitClient = retrofit.create(TestRetrofitClient::class.java)
+
+    @Provides
+    @Singleton
+    fun provideQuestionRetrofitClient(
+        retrofit: Retrofit
+    ) : QuestionRetrofitClient = retrofit.create(QuestionRetrofitClient::class.java)
 
 }

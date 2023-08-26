@@ -3,6 +3,7 @@ package com.testeducation.screen.tests.creation.question.creation
 import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.question.QuestionCreate
 import com.testeducation.domain.model.question.AnswerItem
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.helper.error.IExceptionHandler
@@ -21,7 +22,8 @@ class QuestionCreationViewModel(
     errorHandler: IExceptionHandler,
     private val resourceHelper: IResourceHelper,
     questionTypeItem: QuestionTypeUiItem,
-    private val router: NavigationRouter
+    private val router: NavigationRouter,
+    private val questionCreate: QuestionCreate
 ) : BaseViewModel<QuestionCreationModelState, QuestionCreationState, QuestionCreationSideEffect>(
     reducer,
     errorHandler
@@ -32,6 +34,18 @@ class QuestionCreationViewModel(
 
     init {
         initQuestionType()
+    }
+
+    fun saveQuestion() {
+
+    }
+
+    fun updateQuestionText(textQuestion: String) = intent {
+        updateModelState {
+            copy(
+                questionText = textQuestion
+            )
+        }
     }
 
     fun changeTypeQuestion() {
@@ -81,6 +95,22 @@ class QuestionCreationViewModel(
         }
     }
 
+    fun answerTextChanger(answerId: Int, text: String) = intent {
+        var answerItems = getModelState().answerItem
+        answerItems = answerItems.map { answerItem ->
+            if (answerItem.id == answerId && answerItem is AnswerItem.DefaultAnswer) {
+                answerItem.copy(
+                    answerText = text
+                )
+            } else answerItem
+        }
+        updateModelState {
+            copy(
+                answerItem = answerItems
+            )
+        }
+    }
+
     fun changeCheckedAnswer(selectedId: Int) = intent {
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
@@ -102,22 +132,23 @@ class QuestionCreationViewModel(
         color = getColorAnswer(index)
     )
 
-    private fun initQuestionType(questionType: QuestionType = initialModelState.questionTypeItem.questionType) = intent {
-        when (questionType) {
-            QuestionType.MATCH -> {
+    private fun initQuestionType(questionType: QuestionType = initialModelState.questionTypeItem.questionType) =
+        intent {
+            when (questionType) {
+                QuestionType.MATCH -> {
 
+                }
+
+                QuestionType.DEFAULT -> {
+                    initAnswerDefault()
+                }
+
+                QuestionType.WRITE_ANSWER -> {
+                    initAnswerWriteText()
+                }
             }
 
-            QuestionType.DEFAULT -> {
-                initAnswerDefault()
-            }
-
-            QuestionType.WRITE_ANSWER -> {
-                initAnswerWriteText()
-            }
         }
-
-    }
 
     private fun initAnswerWriteText() = intent {
         val id = getModelState().answerItem.size
