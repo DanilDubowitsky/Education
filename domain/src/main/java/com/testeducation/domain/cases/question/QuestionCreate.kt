@@ -1,6 +1,7 @@
 package com.testeducation.domain.cases.question
 
 import com.testeducation.domain.model.question.AnswerItem
+import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.domain.service.question.IQuestionService
 
 class QuestionCreate(
@@ -8,7 +9,7 @@ class QuestionCreate(
 ) {
     suspend operator fun invoke(
         testId: String,
-        type: String,
+        type: QuestionType,
         questionText: String,
         answerItem: List<AnswerItem>
     ) = questionService.createQuestion(

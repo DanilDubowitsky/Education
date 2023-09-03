@@ -29,6 +29,11 @@ class QuestionCreationViewModel(
     reducer,
     errorHandler
 ) {
+
+    companion object {
+        private const val ERROR_NUMBER_TEXT = "The number cannot be more than 2"
+    }
+
     override val initialModelState: QuestionCreationModelState = QuestionCreationModelState(
         questionTypeItem = questionTypeItem.toModel()
     )
@@ -41,7 +46,7 @@ class QuestionCreationViewModel(
         val modelState = getModelState()
         questionCreate(
             testId = testId,
-            type = modelState.questionTypeItem.questionType.name,
+            type = modelState.questionTypeItem.questionType,
             questionText = modelState.questionText,
             answerItem = modelState.answerItem
         )
@@ -74,8 +79,8 @@ class QuestionCreationViewModel(
     fun addAnswer() = intent {
         val answerItems = getModelState().answerItem
         val index = answerItems.size - 1
-        val answer = addDefaultAnswer(
-            index
+        val answer = createAnswer(
+            index, getModelState().questionTypeItem.questionType
         )
         updateModelState {
             copy(
@@ -118,6 +123,36 @@ class QuestionCreationViewModel(
         }
     }
 
+    fun answerMatchChanger(answerId: Int, number: Int, text: String) = intent {
+        if (number > 2) throw IllegalArgumentException(ERROR_NUMBER_TEXT)
+
+        var answerItems = getModelState().answerItem
+        answerItems = answerItems.map { answerItem ->
+            if (answerItem.id == answerId &&
+                number == AnswerItem.MatchAnswer.FIRST_ANSWER_MATCH &&
+                answerItem is AnswerItem.MatchAnswer
+            ) {
+                answerItem.copy(
+                    firstAnswer = text
+                )
+            } else if (
+                answerItem.id == answerId &&
+                number == AnswerItem.MatchAnswer.SECOND_ANSWER_MATCH &&
+                answerItem is AnswerItem.MatchAnswer
+            ) {
+                answerItem.copy(
+                    secondAnswer = text
+                )
+            } else answerItem
+        }
+        updateModelState {
+            copy(
+                answerItem = answerItems
+            )
+        }
+
+    }
+
     fun changeCheckedAnswer(selectedId: Int) = intent {
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
@@ -134,16 +169,37 @@ class QuestionCreationViewModel(
         }
     }
 
-    private suspend fun addDefaultAnswer(index: Int = 0) = AnswerItem.DefaultAnswer(
-        id = getModelState().answerItem.size + 1,
-        color = getColorAnswer(index)
-    )
+    private suspend fun createAnswer(index: Int = 0, type: QuestionType): AnswerItem {
+        val id = getModelState().answerItem.size + 1
+        val color = getColorAnswer(index)
+        return when (type) {
+            QuestionType.DEFAULT -> {
+                AnswerItem.DefaultAnswer(
+                    id = id,
+                    color = color
+                )
+            }
+
+            QuestionType.MATCH -> {
+                AnswerItem.MatchAnswer(
+                    id = id,
+                    color = color
+                )
+            }
+
+            QuestionType.WRITE_ANSWER -> {
+                AnswerItem.TextAnswer(
+                    id = id
+                )
+            }
+        }
+    }
 
     private fun initQuestionType(questionType: QuestionType = initialModelState.questionTypeItem.questionType) =
         intent {
             when (questionType) {
                 QuestionType.MATCH -> {
-
+                    initAnswerMatch()
                 }
 
                 QuestionType.DEFAULT -> {
@@ -157,21 +213,34 @@ class QuestionCreationViewModel(
 
         }
 
-    private fun initAnswerWriteText() = intent {
-        val id = getModelState().answerItem.size
+    private fun initAnswerMatch() = intent {
+        val answer = createAnswer(index = 0, type = QuestionType.MATCH)
         updateModelState {
             copy(
                 answerItem = listOf(
-                    AnswerItem.TextAnswer(
-                        id = id
-                    )
+                    answer,
+                    AnswerItem.FooterPlusAdd()
+                )
+            )
+        }
+    }
+
+    private fun initAnswerWriteText() = intent {
+        val answer = createAnswer(index = 0, type = QuestionType.WRITE_ANSWER)
+        updateModelState {
+            copy(
+                answerItem = listOf(
+                    answer
                 )
             )
         }
     }
 
     private fun initAnswerDefault() = intent {
-        val answer = addDefaultAnswer()
+        val answerItems = getModelState().answerItem
+        val answer = createAnswer(
+            index = 0, type = QuestionType.DEFAULT
+        )
         updateModelState {
             copy(
                 answerItem = listOf(

@@ -23,7 +23,10 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
 
         is AnswerItem.MatchAnswer -> {
             AnswerItemUi.MatchAnswer(
-                id = answerItem.id
+                id = answerItem.id,
+                firstAnswer = answerItem.firstAnswer,
+                secondAnswer = answerItem.secondAnswer,
+                color = answerItem.color
             )
         }
 

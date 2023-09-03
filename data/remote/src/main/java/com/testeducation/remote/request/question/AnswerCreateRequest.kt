@@ -8,7 +8,7 @@ data class AnswerCreateRequest(
     @SerializedName("media")
     val media: String = "",
     @SerializedName("current")
-    val current: Boolean,
+    val current: Boolean = false,
     @SerializedName("order")
     val order: Int = 0,
     @SerializedName("match")

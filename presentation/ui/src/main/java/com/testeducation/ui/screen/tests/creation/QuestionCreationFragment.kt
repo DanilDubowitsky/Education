@@ -10,6 +10,7 @@ import com.testeducation.screen.tests.creation.question.creation.QuestionCreatio
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentQuestionCreationBinding
+import com.testeducation.ui.delegates.tests.question.answerDelegateMatch
 import com.testeducation.ui.delegates.tests.question.answerDelegateWrite
 import com.testeducation.ui.delegates.tests.question.answersDelegateDefault
 import com.testeducation.ui.delegates.tests.question.footerPlusAddDelegate
@@ -33,6 +34,10 @@ class QuestionCreationFragment :
                 onAnswerTextChanger = viewModel::answerTextChanger
             ),
             answerDelegateWrite(),
+            answerDelegateMatch(
+                onClickDelete = viewModel::deleteAnswer,
+                onAnswerTextChanger = viewModel::answerMatchChanger
+            ),
             footerPlusAddDelegate(viewModel::addAnswer)
         )
     }
