@@ -23,7 +23,8 @@ class QuestionCreationViewModel(
     private val resourceHelper: IResourceHelper,
     questionTypeItem: QuestionTypeUiItem,
     private val router: NavigationRouter,
-    private val questionCreate: QuestionCreate
+    private val questionCreate: QuestionCreate,
+    private val testId: String
 ) : BaseViewModel<QuestionCreationModelState, QuestionCreationState, QuestionCreationSideEffect>(
     reducer,
     errorHandler
@@ -36,8 +37,14 @@ class QuestionCreationViewModel(
         initQuestionType()
     }
 
-    fun saveQuestion() {
-
+    fun saveQuestion() = intent {
+        val modelState = getModelState()
+        questionCreate(
+            testId = testId,
+            type = modelState.questionTypeItem.questionType.name,
+            questionText = modelState.questionText,
+            answerItem = modelState.answerItem
+        )
     }
 
     fun updateQuestionText(textQuestion: String) = intent {

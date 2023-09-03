@@ -1,5 +1,5 @@
 package com.testeducation.domain.model.question
 
-enum class QuestionType {
-    MATCH, DEFAULT, WRITE_ANSWER
+enum class QuestionType(val typeName: String) {
+    MATCH("Match"), DEFAULT("Choice"), WRITE_ANSWER("Text")
 }

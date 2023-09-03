@@ -48,7 +48,8 @@ interface QuestionCreationModule {
                 resourceHelper = resourceHelper,
                 questionTypeItem = screen.questionTypeUiItem,
                 router = router,
-                questionCreate = questionCreate
+                questionCreate = questionCreate,
+                testId = screen.testId
             )
         }
     }

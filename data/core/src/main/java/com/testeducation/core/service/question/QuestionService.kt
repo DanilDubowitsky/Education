@@ -7,7 +7,12 @@ import com.testeducation.domain.service.question.IQuestionService
 class QuestionService(
     private val questionRemoteClient: IQuestionRemoteClient
 ) : IQuestionService {
-    override suspend fun createQuestion(questionText: String, answers: List<AnswerItem>) {
-        questionRemoteClient.createQuestion(questionText, answers)
+    override suspend fun createQuestion(
+        testId: String,
+        type: String,
+        questionText: String,
+        answers: List<AnswerItem>
+    ) {
+        questionRemoteClient.createQuestion(testId, type, questionText, answers)
     }
 }

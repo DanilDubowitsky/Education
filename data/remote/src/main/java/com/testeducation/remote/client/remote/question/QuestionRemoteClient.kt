@@ -9,9 +9,21 @@ import com.testeducation.remote.request.question.QuestionCreateRequest
 class QuestionRemoteClient(
     private val questionRetrofitClient: QuestionRetrofitClient
 ) : IQuestionRemoteClient {
-    override suspend fun createQuestion(questionText: String, answers: List<AnswerItem>) {
+    override suspend fun createQuestion(
+        testId: String,
+        type: String,
+        questionText: String,
+        answers: List<AnswerItem>
+    ) {
         val request = QuestionCreateRequest(
-            title = questionText, type = "", time = 0, answers = answers.mapToRequestTypeDefault()
+            title = questionText,
+            type = type,
+            time = 0,
+            answers = answers.mapToRequestTypeDefault()
+        )
+        questionRetrofitClient.createQuestion(
+            id = testId,
+            request = request
         )
     }
 }

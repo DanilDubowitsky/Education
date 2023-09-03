@@ -7,9 +7,11 @@ class QuestionCreate(
     private val questionService: IQuestionService
 ) {
     suspend operator fun invoke(
+        testId: String,
+        type: String,
         questionText: String,
         answerItem: List<AnswerItem>
     ) = questionService.createQuestion(
-        questionText, answerItem
+        testId, type, questionText, answerItem
     )
 }
