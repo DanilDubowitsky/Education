@@ -2,6 +2,7 @@ package com.testeducation.screen.tests.list
 
 import com.testeducation.converter.test.toModels
 import com.testeducation.converter.test.toUIModel
+import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
@@ -15,6 +16,7 @@ import com.testeducation.logic.screen.tests.list.TestsState
 import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.screen.tests.base.TestsDefaults
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
@@ -34,6 +36,7 @@ class TestsViewModel(
     private var resultDisposable: Disposable? = null
 
     init {
+        onScrollToBottom()
         loadTests()
         loadThemes()
         loadUserData()
@@ -46,8 +49,7 @@ class TestsViewModel(
             copy(
                 tests = emptyList(),
                 selectedThemeId = id,
-                testsLoadingState = TestsModelState.TestsLoadingState.LOADING,
-                pageIndex = 0
+                testsLoadingState = TestsModelState.TestsLoadingState.LOADING
             )
         }
         loadTests()
@@ -71,7 +73,7 @@ class TestsViewModel(
                 questionsLimitTo,
                 selectedThemeId,
                 selectedOrderField.toUIModel(),
-                emptyList(),
+                tests.toUIModels(),
                 tests.size
             )
         }
@@ -90,11 +92,9 @@ class TestsViewModel(
     fun loadNextPage() = intent {
         val modelState = getModelState()
         if (modelState.tests.size >= modelState.totalTestsCount) return@intent
-        postSideEffect(TestsSideEffect.RemoveScrollListener)
         updateModelState {
             copy(
-                testsLoadingState = TestsModelState.TestsLoadingState.NEXT_PAGE,
-                pageIndex = modelState.pageIndex + 1
+                testsLoadingState = TestsModelState.TestsLoadingState.NEXT_PAGE
             )
         }
         loadTests()
@@ -118,18 +118,17 @@ class TestsViewModel(
             hasLimit = modelState.isTimeLimited,
             maxQuestions = modelState.questionsLimitTo.toIntOrNull(),
             minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
-            limit = PAGE_SIZE,
-            pageIndex = modelState.pageIndex
+            limit = TestsDefaults.TESTS_PAGE_SIZE,
+            offset = modelState.tests.size
         )
         updateModelState {
             copy(
                 tests = modelState.tests + page.tests,
                 testsLoadingState = TestsModelState.TestsLoadingState.IDLE,
-                pageIndex = page.pageIndex,
                 totalTestsCount = page.itemsTotal
             )
         }
-        postSideEffect(TestsSideEffect.AddScrollListener)
+        postSideEffect(TestsSideEffect.OnLoadReady)
     }
 
     private fun loadThemes() = intent {
@@ -162,8 +161,7 @@ class TestsViewModel(
                 questionsLimitTo = newFilters.maxQuestions,
                 questionsLimitFrom = newFilters.minQuestions,
                 selectedThemeId = newFilters.selectedTheme,
-                tests = newFilters.preLoadedTests.toModels(),
-                pageIndex = 0
+                tests = newFilters.preLoadedTests.toModels()
             )
         }
     }
@@ -172,14 +170,4 @@ class TestsViewModel(
         resultDisposable?.dispose()
         super.onCleared()
     }
-
-    companion object {
-        private const val PAGE_SIZE = 10
-        const val DEFAULT_QUESTIONS_MIN = "1"
-        const val DEFAULT_QUESTIONS_MAX = "50"
-        const val DEFAULT_TIME_MIN = "1"
-        const val DEFAULT_TIME_MAX = "60"
-        const val DEFAULT_HAS_LIMIT = false
-    }
-
 }

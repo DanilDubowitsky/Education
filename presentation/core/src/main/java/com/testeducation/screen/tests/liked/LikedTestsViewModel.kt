@@ -1,5 +1,8 @@
 package com.testeducation.screen.tests.liked
 
+import com.testeducation.converter.test.toModels
+import com.testeducation.converter.test.toUIModel
+import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetLikedTests
@@ -7,10 +10,16 @@ import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
+import com.testeducation.logic.model.test.TestFiltersUI
+import com.testeducation.logic.model.test.TestType
 import com.testeducation.logic.screen.tests.liked.LikedTestsSideEffect
 import com.testeducation.logic.screen.tests.liked.LikedTestsState
+import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.screen.tests.base.TestsDefaults
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class LikedTestsViewModel(
     private val router: NavigationRouter,
@@ -26,7 +35,11 @@ class LikedTestsViewModel(
 
     override val initialModelState: LikedTestsModelState = LikedTestsModelState()
 
+    @Volatile
+    private var resultDisposable: Disposable? = null
+
     init {
+        onScrollToBottom()
         loadTests()
         loadThemes()
     }
@@ -45,7 +58,72 @@ class LikedTestsViewModel(
 
     fun onThemeChanged(themeId: String) = intent {
         updateModelState {
-            copy(selectedThemeId = themeId)
+            copy(
+                selectedThemeId = themeId,
+                tests = emptyList(),
+                testsLoadingState = LikedTestsModelState.TestsLoadingState.LOADING
+            )
+        }
+        loadTests()
+    }
+
+    fun openFilters() = intent {
+        val filters = getModelState().run {
+            TestFiltersUI(
+                timeLimitFrom,
+                timeLimitTo,
+                isTimeLimited,
+                questionsLimitFrom,
+                questionsLimitTo,
+                selectedThemeId,
+                selectedOrderField.toUIModel(),
+                tests.toUIModels(),
+                tests.size,
+                TestType.LIKED
+            )
+        }
+
+        resultDisposable = router.setResultListener(
+            NavigationScreen.Tests.Filters.OnFiltersChanged,
+            ::handleNewFilters
+        )
+
+        val screen = NavigationScreen.Tests.Filters(
+            filters
+        )
+        router.navigateTo(screen)
+    }
+
+    fun loadNextPage() = intent {
+        val modelState = getModelState()
+        if (modelState.tests.size >= modelState.totalTestsCount) return@intent
+        updateModelState {
+            copy(
+                testsLoadingState = LikedTestsModelState.TestsLoadingState.NEXT_PAGE
+            )
+        }
+        loadTests()
+    }
+
+    fun onScrollToBottom() = intent {
+        router.sendResult(NavigationScreen.Main.Tests.OnScrollToBottom, Unit, false)
+    }
+
+    fun onScrollToTop() = intent {
+        router.sendResult(NavigationScreen.Main.Tests.OnScrollToTop, Unit, false)
+    }
+
+    private fun handleNewFilters(newFilters: TestFiltersUI) = intent {
+        updateModelState {
+            copy(
+                isTimeLimited = newFilters.hasLimit,
+                timeLimitFrom = newFilters.minTime,
+                timeLimitTo = newFilters.maxTime,
+                questionsLimitTo = newFilters.maxQuestions,
+                questionsLimitFrom = newFilters.minQuestions,
+                selectedThemeId = newFilters.selectedTheme,
+                tests = newFilters.preLoadedTests.toModels()
+            )
         }
     }
 
@@ -59,14 +137,29 @@ class LikedTestsViewModel(
         getThemes().collect(::handleThemes)
     }
 
-    private fun loadTests() = intent {
-        val tests = getLikedTests()
-        updateModelState {
-            copy(
-                tests = tests,
-                testsLoadingState = LikedTestsModelState.TestsLoadingState.IDLE
+    private fun loadTests() = singleIntent(getLikedTests.javaClass.name) {
+        val modelState = getModelState()
+        val testsPage = modelState.run {
+            getLikedTests(
+                themeId = selectedThemeId,
+                orderField = selectedOrderField,
+                minTime = timeLimitFrom.toIntOrNull(),
+                maxTime = timeLimitTo.toIntOrNull(),
+                hasLimit = isTimeLimited,
+                maxQuestions = questionsLimitTo.toIntOrNull(),
+                minQuestions = questionsLimitFrom.toIntOrNull(),
+                limit = TestsDefaults.TESTS_PAGE_SIZE,
+                offset = tests.size
             )
         }
-    }
 
+        updateModelState {
+            copy(
+                tests = tests + testsPage.tests,
+                testsLoadingState = LikedTestsModelState.TestsLoadingState.IDLE,
+                totalTestsCount = testsPage.itemsTotal
+            )
+        }
+        postSideEffect(LikedTestsSideEffect.OnLoadReady)
+    }
 }

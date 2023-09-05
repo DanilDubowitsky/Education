@@ -10,6 +10,7 @@ import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.logic.screen.tests.list.TestsSideEffect
 import com.testeducation.logic.screen.tests.list.TestsState
+import com.testeducation.screen.tests.base.TestsDefaults
 import com.testeducation.screen.tests.list.TestsViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
@@ -70,8 +71,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private fun onSideEffect(sideEffect: TestsSideEffect) = when (sideEffect) {
-        TestsSideEffect.AddScrollListener -> addTestsLoadingListener()
-        TestsSideEffect.RemoveScrollListener -> removeTestsLoadingListener()
+        TestsSideEffect.OnLoadReady -> addTestsLoadingListener()
     }
 
     private fun render(state: TestsState) = binding {
@@ -91,9 +91,11 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     private fun addTestsLoadingListener() {
         if (pageLoadingListener == null) {
             pageLoadingListener = binding.testsRecycler.addPageScrollListener(
-                TESTS_THRESHOLD,
-                viewModel::loadNextPage
-            )
+                TestsDefaults.TESTS_THRESHOLD
+            ) {
+                removeTestsLoadingListener()
+                viewModel.loadNextPage()
+            }
         }
     }
 
@@ -107,9 +109,9 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     private fun setupListeners() = with(binding) {
         testsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > SCROLL_OFFSET) viewModel.onScrollToTop()
+                if (dy > TestsDefaults.SCROLL_OFFSET) viewModel.onScrollToTop()
 
-                if (dy < -SCROLL_OFFSET) viewModel.onScrollToBottom()
+                if (dy < -TestsDefaults.SCROLL_OFFSET) viewModel.onScrollToBottom()
 
                 if (!recyclerView.canScrollVertically(-1)) {
                     viewModel.onScrollToBottom()
@@ -119,7 +121,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         filtersLabel.setClickListener(viewModel::openFiltersScreen)
         btnFilter.setClickListener(viewModel::openFiltersScreen)
         pageLoadingListener = testsRecycler.addPageScrollListener(
-            TESTS_THRESHOLD,
+            TestsDefaults.TESTS_THRESHOLD,
             viewModel::loadNextPage
         )
     }
@@ -142,10 +144,4 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         appBarShimmer.isShimmerHide = !state.isProfileLoading
         txtUserName.text = state.userName
     }
-
-    private companion object {
-        const val SCROLL_OFFSET = 20
-        const val TESTS_THRESHOLD = 2
-    }
-
 }

@@ -22,7 +22,7 @@ class TestRepository(
         minQuestions: Int?,
         maxQuestions: Int?,
         limit: Int,
-        pageIndex: Int
+        offset: Int
     ): Page<TestShort> =
         testRemoteSource.getTests(
             query,
@@ -35,9 +35,33 @@ class TestRepository(
             minQuestions,
             maxQuestions,
             limit,
-            pageIndex
+            offset
         )
 
-    override suspend fun getLikedTests(): List<TestShort> =
-        testRemoteSource.getLikedTests()
+    override suspend fun getLikedTests(
+        query: String?,
+        themeId: String?,
+        orderField: TestOrderField?,
+        orderDirection: OrderDirection,
+        minTime: Int?,
+        maxTime: Int?,
+        hasLimit: Boolean,
+        minQuestions: Int?,
+        maxQuestions: Int?,
+        limit: Int,
+        offset: Int
+    ): Page<TestShort> =
+        testRemoteSource.getLikedTests(
+            query,
+            themeId,
+            orderField,
+            orderDirection,
+            minTime,
+            maxTime,
+            hasLimit,
+            minQuestions,
+            maxQuestions,
+            limit,
+            offset
+        )
 }

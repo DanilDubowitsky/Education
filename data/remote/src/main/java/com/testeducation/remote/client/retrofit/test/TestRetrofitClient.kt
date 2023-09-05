@@ -26,7 +26,7 @@ interface TestRetrofitClient {
         @Query("has_limit") hasLimit: Boolean,
         @Query("min_questions") minQuestions: Int?,
         @Query("max_questions") maxQuestions: Int?,
-        @Query("page_index") index: Int,
+        @Query("offset") offset: Int,
         @Query("page_size") limit: Int,
     ): RemoteResponse<RemotePage<RemoteTestShort>>
 
@@ -37,7 +37,19 @@ interface TestRetrofitClient {
     suspend fun unlikeTest(@Path("id") id: String): RemoteResponse<Unit>
 
     @GET("/api/app/account/tests/likes")
-    suspend fun getLikedTests(): RemoteResponse<List<RemoteTestShort>>
+    suspend fun getLikedTests(
+        @Query("title") query: String?,
+        @Query("theme") theme: String?,
+        @Query("order") order: String?,
+        @Query("direction") direction: String?,
+        @Query("min_time") minTime: Int?,
+        @Query("max_time") maxTime: Int?,
+        @Query("has_limit") hasLimit: Boolean,
+        @Query("min_questions") minQuestions: Int?,
+        @Query("max_questions") maxQuestions: Int?,
+        @Query("offset") offset: Int,
+        @Query("page_size") limit: Int,
+    ): RemoteResponse<RemotePage<RemoteTestShort>>
 
     @POST("/api/app/content/tests")
     suspend fun createTest(@Body testCreationRequest: TestCreationRequest): RemoteResponse<RemoteCreationTest>

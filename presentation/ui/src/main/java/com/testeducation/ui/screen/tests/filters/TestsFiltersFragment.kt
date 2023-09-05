@@ -15,6 +15,7 @@ import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestsFiltersBinding
 import com.testeducation.ui.utils.addThemes
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.switchHalfVisibleState
@@ -32,6 +33,9 @@ class TestsFiltersFragment : ViewModelHostFragment<TestsFiltersViewModel, Fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.statusBarColor = requireContext().loadColor(
+            android.R.color.transparent
+        )
         setupListeners()
         observeData()
     }
