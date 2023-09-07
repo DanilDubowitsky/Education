@@ -7,7 +7,7 @@ data class HomeModelState(
     enum class BottomNavigationItems {
         TESTS,
         FAVORITES,
-        SETTINGS,
+        LIBRARY,
         PROFILE
     }
 }

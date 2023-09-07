@@ -74,6 +74,8 @@ sealed interface NavigationScreen : Serializable {
         }
 
         object LikedTests : Main
+
+        object Library : Main
     }
 
     sealed interface Tests : NavigationScreen {

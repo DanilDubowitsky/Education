@@ -1,10 +1,12 @@
 package com.testeducation.converter.test
 
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestSettings
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.test.TestStyle
 import com.testeducation.logic.model.test.CardTestStyle
+import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.utils.MainColor.tempColors
@@ -57,6 +59,20 @@ fun TestShortUI.Test.toModel() = TestShort(
 fun List<TestShortUI>.toModels() = this.mapNotNull { testShortUI ->
     if (testShortUI is TestShortUI.Test) testShortUI.toModel()
     else null
+}
+
+fun TestGetType.toUI() = when (this) {
+    TestGetType.MAIN -> TestGetTypeUI.MAIN
+    TestGetType.LIKED -> TestGetTypeUI.LIKED
+    TestGetType.CREATED -> TestGetTypeUI.CREATED
+    TestGetType.PASSED -> TestGetTypeUI.PASSED
+}
+
+fun TestGetTypeUI.toModel() = when (this) {
+    TestGetTypeUI.MAIN -> TestGetType.MAIN
+    TestGetTypeUI.LIKED -> TestGetType.LIKED
+    TestGetTypeUI.CREATED -> TestGetType.CREATED
+    TestGetTypeUI.PASSED -> TestGetType.PASSED
 }
 
 private fun TestSettings.toUI() = TestShortUI.Test.Settings(

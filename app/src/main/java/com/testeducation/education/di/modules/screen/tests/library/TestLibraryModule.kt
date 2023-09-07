@@ -1,4 +1,4 @@
-package com.testeducation.education.di.modules.screen.tests.liked
+package com.testeducation.education.di.modules.screen.tests.library
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
@@ -9,28 +9,28 @@ import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.helper.test.TestHelper
-import com.testeducation.logic.screen.tests.liked.LikedTestsState
+import com.testeducation.logic.screen.tests.library.TestLibraryState
 import com.testeducation.navigation.core.NavigationRouter
-import com.testeducation.screen.tests.liked.LikedTestsModelState
-import com.testeducation.screen.tests.liked.LikedTestsReducer
-import com.testeducation.screen.tests.liked.LikedTestsViewModel
+import com.testeducation.screen.tests.library.TestLibraryModelState
+import com.testeducation.screen.tests.library.TestLibraryReducer
+import com.testeducation.screen.tests.library.TestLibraryViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 
 @Module
-interface LikedTestsModule {
+interface TestLibraryModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(LikedTestsViewModel::class)
-    fun bindViewModel(viewModel: LikedTestsViewModel): ViewModel
+    @ViewModelKey(TestLibraryViewModel::class)
+    fun bindViewModel(viewModel: TestLibraryViewModel): ViewModel
 
     companion object {
         @Provides
-        fun provideReducer(): IReducer<LikedTestsModelState, LikedTestsState> =
-            LikedTestsReducer()
+        fun provideReducer(): IReducer<TestLibraryModelState, TestLibraryState> =
+            TestLibraryReducer()
 
         @Provides
         fun provideTestHelper(
@@ -41,16 +41,16 @@ interface LikedTestsModule {
         fun provideViewModel(
             router: NavigationRouter,
             testShortHelper: ITestHelper,
-            getLikedTests: GetTests,
+            getTests: GetTests,
             getThemes: GetThemes,
-            reducer: IReducer<LikedTestsModelState, LikedTestsState>,
+            reducer: IReducer<TestLibraryModelState, TestLibraryState>,
             exceptionHandler: IExceptionHandler
-        ): LikedTestsViewModel {
-            return LikedTestsViewModel(
-                router,
+        ): TestLibraryViewModel {
+            return TestLibraryViewModel(
                 testShortHelper,
+                router,
+                getTests,
                 getThemes,
-                getLikedTests,
                 reducer,
                 exceptionHandler
             )

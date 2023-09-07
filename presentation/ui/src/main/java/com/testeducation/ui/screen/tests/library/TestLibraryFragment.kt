@@ -1,4 +1,4 @@
-package com.testeducation.ui.screen.tests.liked
+package com.testeducation.ui.screen.tests.library
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,18 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.theme.ThemeShortUI
-import com.testeducation.logic.screen.tests.liked.LikedTestsSideEffect
-import com.testeducation.logic.screen.tests.liked.LikedTestsState
+import com.testeducation.logic.screen.tests.library.TestLibrarySideEffect
+import com.testeducation.logic.screen.tests.library.TestLibraryState
 import com.testeducation.screen.tests.base.TestsDefaults
-import com.testeducation.screen.tests.liked.LikedTestsViewModel
+import com.testeducation.screen.tests.library.TestLibraryViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
-import com.testeducation.ui.databinding.FragmentLikedTestsBinding
+import com.testeducation.ui.databinding.FragmentLibraryBinding
 import com.testeducation.ui.delegates.tests.createTestLoadingDelegate
 import com.testeducation.ui.delegates.tests.createTestShortAdapterDelegate
 import com.testeducation.ui.delegates.tests.createThemeShortAdapterDelegate
 import com.testeducation.ui.screen.tests.list.TestShortDiffUtil
-import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.utils.addPageScrollListener
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
@@ -30,11 +29,10 @@ import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
-import org.orbitmvi.orbit.viewmodel.observe
 
-class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLikedTestsBinding>(
-    LikedTestsViewModel::class,
-    FragmentLikedTestsBinding::inflate
+class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, FragmentLibraryBinding>(
+    TestLibraryViewModel::class,
+    FragmentLibraryBinding::inflate
 ) {
 
     private val testsAdapter by lazy {
@@ -59,7 +57,7 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        requireActivity().window.statusBarColor = requireContext().loadColor(R.color.colorRed)
+        requireActivity().window.statusBarColor = requireContext().loadColor(R.color.colorBlue)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -72,7 +70,7 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
 
     private fun observeData() = viewModel.observe(this, ::render, ::onSideEffect)
 
-    private fun render(state: LikedTestsState) = binding {
+    private fun render(state: TestLibraryState) = binding {
         val orderFieldText = when (state.selectedSortField) {
             TestOrderFieldUI.TITLE -> getString(R.string.tests_list_sort_field_title)
             TestOrderFieldUI.CREATION -> getString(R.string.tests_list_sort_field_creation_date)
@@ -91,8 +89,8 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
         testsRecycler.isInvisible = state.isTestsLoading
     }
 
-    private fun onSideEffect(sideEffect: LikedTestsSideEffect) = when (sideEffect) {
-        LikedTestsSideEffect.OnLoadReady -> addScrollListener()
+    private fun onSideEffect(sideEffect: TestLibrarySideEffect) = when (sideEffect) {
+        TestLibrarySideEffect.OnLoadReady -> addScrollListener()
     }
 
     private fun setupViews() = binding {

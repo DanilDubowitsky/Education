@@ -3,6 +3,7 @@ package com.testeducation.remote.source.test
 import com.testeducation.core.source.remote.test.ITestRemoteSource
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.Page
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.remote.client.retrofit.test.TestRetrofitClient
@@ -26,41 +27,21 @@ class TestRemoteSource(
         minQuestions: Int?,
         maxQuestions: Int?,
         limit: Int,
-        offset: Int
+        offset: Int,
+        getType: TestGetType
     ): Page<TestShort> {
-        return testRetrofitClient.getTests(
+        val method = when (getType) {
+            TestGetType.MAIN -> testRetrofitClient::getTests
+            TestGetType.LIKED -> testRetrofitClient::getLikedTests
+            TestGetType.CREATED -> testRetrofitClient::getCreatedTests
+            TestGetType.PASSED -> testRetrofitClient::getPassedTests
+        }
+
+        return method.invoke(
             query,
             themeId,
             orderField?.toRemote(),
             orderDirection?.toRemote(),
-            minTime,
-            maxTime,
-            hasLimit,
-            minQuestions,
-            maxQuestions,
-            offset,
-            limit
-        ).getResult().data.toModel()
-    }
-
-    override suspend fun getLikedTests(
-        query: String?,
-        themeId: String?,
-        orderField: TestOrderField?,
-        orderDirection: OrderDirection,
-        minTime: Int?,
-        maxTime: Int?,
-        hasLimit: Boolean,
-        minQuestions: Int?,
-        maxQuestions: Int?,
-        limit: Int,
-        offset: Int
-    ): Page<TestShort> {
-        return testRetrofitClient.getLikedTests(
-            query,
-            themeId,
-            orderField?.toRemote(),
-            orderDirection.toRemote(),
             minTime,
             maxTime,
             hasLimit,

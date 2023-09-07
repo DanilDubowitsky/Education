@@ -3,7 +3,7 @@ package com.testeducation.screen.tests.filters
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.theme.ThemeShort
-import com.testeducation.logic.model.test.TestType
+import com.testeducation.logic.model.test.TestGetTypeUI
 
 data class TestsFiltersModelState(
     val themes: List<ThemeShort> = emptyList(),
@@ -17,7 +17,7 @@ data class TestsFiltersModelState(
     val filterResultCount: Int? = null,
     val result: List<TestShort> = emptyList(),
     val loadingState: LoadingState = LoadingState.IDLE,
-    val testType: TestType
+    val testGetTypeUI: TestGetTypeUI
 ) {
 
     enum class LoadingState {

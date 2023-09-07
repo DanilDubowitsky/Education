@@ -2,7 +2,6 @@ package com.testeducation.education.di.modules.screen.tests.filters
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
-import com.testeducation.domain.cases.test.GetLikedTests
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.education.di.viewmodel.ViewModelKey
@@ -39,7 +38,6 @@ interface TestsFiltersModule {
             getThemes: GetThemes,
             router: NavigationRouter,
             getTests: GetTests,
-            getLikedTests: GetLikedTests,
             reducer: IReducer<TestsFiltersModelState, TestsFiltersState>,
             exceptionHandler: IExceptionHandler
         ): TestsFiltersViewModel {
@@ -49,7 +47,6 @@ interface TestsFiltersModule {
                 router,
                 getThemes,
                 getTests,
-                getLikedTests,
                 reducer,
                 exceptionHandler
             )

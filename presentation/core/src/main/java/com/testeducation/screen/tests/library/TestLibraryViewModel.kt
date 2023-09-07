@@ -1,6 +1,7 @@
-package com.testeducation.screen.tests.liked
+package com.testeducation.screen.tests.library
 
 import com.testeducation.converter.test.toModels
+import com.testeducation.converter.test.toUI
 import com.testeducation.converter.test.toUIModel
 import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
@@ -13,8 +14,8 @@ import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.model.test.TestGetTypeUI
-import com.testeducation.logic.screen.tests.liked.LikedTestsSideEffect
-import com.testeducation.logic.screen.tests.liked.LikedTestsState
+import com.testeducation.logic.screen.tests.library.TestLibrarySideEffect
+import com.testeducation.logic.screen.tests.library.TestLibraryState
 import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
@@ -22,19 +23,19 @@ import com.testeducation.screen.tests.base.TestsDefaults
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
-class LikedTestsViewModel(
-    private val router: NavigationRouter,
+class TestLibraryViewModel(
     private val testShortHelper: ITestHelper,
+    private val router: NavigationRouter,
+    private val getTests: GetTests,
     private val getThemes: GetThemes,
-    private val getLikedTests: GetTests,
-    reducer: IReducer<LikedTestsModelState, LikedTestsState>,
+    reducer: IReducer<TestLibraryModelState, TestLibraryState>,
     exceptionHandler: IExceptionHandler
-) : BaseViewModel<LikedTestsModelState, LikedTestsState, LikedTestsSideEffect>(
+) : BaseViewModel<TestLibraryModelState, TestLibraryState, TestLibrarySideEffect>(
     reducer,
     exceptionHandler
 ) {
 
-    override val initialModelState: LikedTestsModelState = LikedTestsModelState()
+    override val initialModelState: TestLibraryModelState = TestLibraryModelState()
 
     @Volatile
     private var resultDisposable: Disposable? = null
@@ -49,8 +50,7 @@ class LikedTestsViewModel(
         val modelState = getModelState()
         val newTests = testShortHelper.toggleTestLike(
             position,
-            modelState.tests,
-            removeFromList = true
+            modelState.tests
         )
         updateModelState {
             copy(tests = newTests)
@@ -62,7 +62,7 @@ class LikedTestsViewModel(
             copy(
                 selectedThemeId = themeId,
                 tests = emptyList(),
-                testsLoadingState = LikedTestsModelState.TestsLoadingState.LOADING
+                testsLoadingState = TestLibraryModelState.TestsLoadingState.LOADING
             )
         }
         loadTests()
@@ -80,7 +80,7 @@ class LikedTestsViewModel(
                 selectedOrderField.toUIModel(),
                 tests.toUIModels(),
                 tests.size,
-                TestGetTypeUI.LIKED
+                testGetType.toUI()
             )
         }
 
@@ -100,7 +100,7 @@ class LikedTestsViewModel(
         if (modelState.tests.size >= modelState.totalTestsCount) return@intent
         updateModelState {
             copy(
-                testsLoadingState = LikedTestsModelState.TestsLoadingState.NEXT_PAGE
+                testsLoadingState = TestLibraryModelState.TestsLoadingState.NEXT_PAGE
             )
         }
         loadTests()
@@ -130,7 +130,10 @@ class LikedTestsViewModel(
 
     private fun handleThemes(themes: List<ThemeShort>) = intent {
         updateModelState {
-            copy(themes = themes, themesLoadingState = LikedTestsModelState.ThemeLoadingState.IDLE)
+            copy(
+                themes = themes,
+                themesLoadingState = TestLibraryModelState.ThemeLoadingState.IDLE
+            )
         }
     }
 
@@ -138,10 +141,10 @@ class LikedTestsViewModel(
         getThemes().collect(::handleThemes)
     }
 
-    private fun loadTests() = singleIntent(getLikedTests.javaClass.name) {
+    private fun loadTests() = singleIntent(getTests.javaClass.name) {
         val modelState = getModelState()
         val testsPage = modelState.run {
-            getLikedTests(
+            getTests(
                 themeId = selectedThemeId,
                 orderField = selectedOrderField,
                 minTime = timeLimitFrom.toIntOrNull(),
@@ -151,17 +154,18 @@ class LikedTestsViewModel(
                 minQuestions = questionsLimitFrom.toIntOrNull(),
                 limit = TestsDefaults.TESTS_PAGE_SIZE,
                 offset = tests.size,
-                getType = TestGetType.LIKED
+                getType = testGetType
             )
         }
 
         updateModelState {
             copy(
                 tests = tests + testsPage.tests,
-                testsLoadingState = LikedTestsModelState.TestsLoadingState.IDLE,
+                testsLoadingState = TestLibraryModelState.TestsLoadingState.IDLE,
                 totalTestsCount = testsPage.itemsTotal
             )
         }
-        postSideEffect(LikedTestsSideEffect.OnLoadReady)
+        postSideEffect(TestLibrarySideEffect.OnLoadReady)
     }
+
 }

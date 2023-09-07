@@ -16,6 +16,7 @@ import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
+import com.testeducation.ui.screen.tests.library.TestLibraryFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import com.testeducation.ui.utils.withScreen
@@ -91,6 +92,10 @@ class ScreenAdapter : IScreenAdapter {
 
         NavigationScreen.Main.LikedTests -> Screen.FragmentScreen {
             LikedTestsFragment()
+        }
+
+        NavigationScreen.Main.Library -> Screen.FragmentScreen {
+            TestLibraryFragment()
         }
     }
 

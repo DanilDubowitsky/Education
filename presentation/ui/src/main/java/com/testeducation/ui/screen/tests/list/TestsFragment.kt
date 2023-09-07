@@ -1,7 +1,9 @@
 package com.testeducation.ui.screen.tests.list
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +24,7 @@ import com.testeducation.ui.utils.addPageScrollListener
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.isShimmerHide
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
@@ -52,6 +55,17 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private var pageLoadingListener: RecyclerView.OnScrollListener? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        requireActivity().window.statusBarColor = requireContext().loadColor(
+            android.R.color.transparent
+        )
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
