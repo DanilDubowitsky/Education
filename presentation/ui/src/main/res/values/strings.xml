@@ -87,5 +87,6 @@
     <string name="question_creation_answer_write_hint">Введите правильный ответ здесь</string>
     <string name="question_match_answer_position_hint">Ответ %s</string>
     <string name="question_match_hint">Cоответствие</string>
+    <string name="question_creation_save_data">Сохраняем вопрос…</string>
 
 </resources>

@@ -17,6 +17,7 @@ import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.getColor
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class QuestionCreationViewModel(
     reducer: IReducer<QuestionCreationModelState, QuestionCreationState>,
@@ -43,13 +44,28 @@ class QuestionCreationViewModel(
         initQuestionType()
     }
 
+    override fun handleThrowable(throwable: Throwable) {
+        intent {
+            postSideEffect(
+                QuestionCreationSideEffect.LoaderInvisible
+            )
+        }
+        super.handleThrowable(throwable)
+    }
+
     fun saveQuestion() = intent {
+        postSideEffect(
+            QuestionCreationSideEffect.LoaderVisible
+        )
         val modelState = getModelState()
         questionCreate(
             testId = testId,
             type = modelState.questionTypeItem.questionType,
             questionText = modelState.questionText,
             answerItem = modelState.answerItem
+        )
+        postSideEffect(
+            QuestionCreationSideEffect.LoaderInvisible
         )
     }
 
