@@ -115,7 +115,12 @@ class QuestionCreationViewModel(
                 answerItem.copy(
                     answerText = text
                 )
-            } else answerItem
+            } else if (answerItem.id == answerId && answerItem is AnswerItem.TextAnswer) {
+                answerItem.copy(
+                    text = text
+                )
+            }
+            else answerItem
         }
         updateModelState {
             copy(
@@ -238,7 +243,6 @@ class QuestionCreationViewModel(
     }
 
     private fun initAnswerDefault() = intent {
-        val answerItems = getModelState().answerItem
         val answer = createAnswer(
             index = 0, type = QuestionType.DEFAULT
         )

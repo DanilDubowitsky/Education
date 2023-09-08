@@ -23,8 +23,17 @@ fun List<AnswerItem>.mapToRequestTypeMatch() = mapNotNull { answer ->
     } else null
 }
 
+fun List<AnswerItem>.mapToRequestTypeWriteAnswer() = mapNotNull { answer ->
+    if (answer is AnswerItem.TextAnswer) {
+        AnswerCreateRequest(
+            text = answer.text
+        )
+    } else null
+}
+
 fun List<AnswerItem>.mapToRequestAnswer(type: QuestionType) = when (type) {
     QuestionType.DEFAULT -> this.mapToRequestTypeDefault()
     QuestionType.MATCH -> this.mapToRequestTypeMatch()
+    QuestionType.WRITE_ANSWER -> this.mapToRequestTypeWriteAnswer()
     else -> emptyList()
 }

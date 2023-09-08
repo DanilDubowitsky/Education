@@ -94,11 +94,20 @@ fun answerDelegateMatch(
     }
 }
 
-fun answerDelegateWrite() = simpleDelegateAdapter<AnswerItemUi.TextAnswer,
-        AnswerItemUi,
-        ViewHolderAnswerWriteBinding>(
-    ViewHolderAnswerWriteBinding::inflate
-) {}
+fun answerDelegateWrite(onAnswerTextChanger: (Int, String) -> Unit) =
+    simpleDelegateAdapter<AnswerItemUi.TextAnswer,
+            AnswerItemUi,
+            ViewHolderAnswerWriteBinding>(
+        ViewHolderAnswerWriteBinding::inflate
+    ) {
+        binding {
+            bind {
+                etAnswer.doOnTextChanged { text, start, before, count ->
+                    onAnswerTextChanger(item.id, text.toString())
+                }
+            }
+        }
+    }
 
 fun footerPlusAddDelegate(onClickAdd: () -> Unit) =
     simpleDelegateAdapter<AnswerItemUi.FooterPlusAdd,

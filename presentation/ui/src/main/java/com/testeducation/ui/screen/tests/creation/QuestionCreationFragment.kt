@@ -33,7 +33,7 @@ class QuestionCreationFragment :
                 onClickDelete = viewModel::deleteAnswer,
                 onAnswerTextChanger = viewModel::answerTextChanger
             ),
-            answerDelegateWrite(),
+            answerDelegateWrite(onAnswerTextChanger = viewModel::answerTextChanger),
             answerDelegateMatch(
                 onClickDelete = viewModel::deleteAnswer,
                 onAnswerTextChanger = viewModel::answerMatchChanger

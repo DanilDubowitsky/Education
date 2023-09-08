@@ -11,7 +11,7 @@ sealed class AnswerItem {
         val color: Int = 0
     ) : AnswerItem()
 
-    data class TextAnswer(override val id: Int) : AnswerItem()
+    data class TextAnswer(override val id: Int, val text: String = "") : AnswerItem()
 
     data class MatchAnswer(
         override val id: Int,
