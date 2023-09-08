@@ -128,7 +128,8 @@
             app:layout_constraintBottom_toTopOf="@+id/btnNext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/tvTitleThree"
@@ -165,9 +166,9 @@
                 android:layout_height="66dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:maxWidth="66dp"
                 android:background="@drawable/background_color_template_gray_10"
                 android:backgroundTint="@color/colorError_2"
+                android:maxWidth="66dp"
                 app:layout_constraintEnd_toStartOf="@+id/fourColor"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/secondColor"
@@ -178,10 +179,10 @@
                 android:layout_width="66dp"
                 android:layout_height="66dp"
                 android:layout_marginStart="16dp"
-                android:maxWidth="66dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/background_color_template_gray_10"
                 android:backgroundTint="@color/colorBlue"
+                android:maxWidth="66dp"
                 app:layout_constraintEnd_toStartOf="@+id/threeColor"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/firstColor"
