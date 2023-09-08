@@ -57,22 +57,20 @@ fun answerDelegateMatch(
         ViewHolderAnswerMatchBinding>(
     ViewHolderAnswerMatchBinding::inflate
 ) {
-    onViewAttachedToWindow {
-        binding.etAnswerFirst.doOnTextChanged { text, start, before, count ->
-            onAnswerTextChanger(
-                item.id,
-                AnswerItemUi.MatchAnswer.FIRST_ANSWER_MATCH,
-                text.toString()
-            )
-        }
+    binding.etAnswerFirst.doOnTextChanged { text, start, before, count ->
+        onAnswerTextChanger(
+            item.id,
+            AnswerItemUi.MatchAnswer.FIRST_ANSWER_MATCH,
+            text.toString()
+        )
+    }
 
-        binding.etAnswerSecond.doOnTextChanged { text, start, before, count ->
-            onAnswerTextChanger(
-                item.id,
-                AnswerItemUi.MatchAnswer.FIRST_ANSWER_MATCH,
-                text.toString()
-            )
-        }
+    binding.etAnswerSecond.doOnTextChanged { text, start, before, count ->
+        onAnswerTextChanger(
+            item.id,
+            AnswerItemUi.MatchAnswer.SECOND_ANSWER_MATCH,
+            text.toString()
+        )
     }
 
     bind {
