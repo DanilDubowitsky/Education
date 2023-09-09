@@ -27,4 +27,5 @@
     <color name="colorMainOrangeLight">#FFE399</color>
     <color name="colorMainRedLight">#FCACA3</color>
     <color name="loaderBackground">#66FFFFFF</color>
+    <color name="colorSmokyWhite">#F0F0F6</color>
 </resources>
