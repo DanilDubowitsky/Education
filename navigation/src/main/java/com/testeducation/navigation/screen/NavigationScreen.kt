@@ -90,6 +90,10 @@ sealed interface NavigationScreen : Serializable {
                 )
             }
         }
+
+        data class Details(
+            val testId: String
+        ) : Tests
     }
 
     sealed interface QuestionCreation : NavigationScreen {

@@ -10,12 +10,15 @@ import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.creation.TestCreationModelState
 import com.testeducation.screen.tests.creation.TestCreationReducer
 import com.testeducation.screen.tests.creation.TestCreationViewModel
 import com.testeducation.screen.tests.edit.TestEditorModelState
 import com.testeducation.screen.tests.edit.TestEditorReducer
 import com.testeducation.screen.tests.edit.TestEditorViewModel
+import com.testeducation.ui.screen.tests.edit.TestEditorFragment
+import com.testeducation.ui.utils.getScreen
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -35,13 +38,18 @@ interface TestEditorModule {
 
         @Provides
         fun provideViewModel(
+            fragment: TestEditorFragment,
             reducer: IReducer<TestEditorModelState, TestEditorState>,
             exceptionHandler: IExceptionHandler,
             resourceHelper: IResourceHelper
-        ): TestEditorViewModel = TestEditorViewModel(
-            reducer = reducer,
-            exceptionHandler = exceptionHandler,
-            resourceHelper = resourceHelper
-        )
+        ): TestEditorViewModel {
+            val screen = fragment.getScreen<NavigationScreen.Tests.Details>()
+            return TestEditorViewModel(
+                reducer = reducer,
+                exceptionHandler = exceptionHandler,
+                resourceHelper = resourceHelper,
+                testId = screen.testId
+            )
+        }
     }
 }
