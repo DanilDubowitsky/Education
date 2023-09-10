@@ -108,7 +108,7 @@ class QuestionCreationViewModel(
         }
     }
 
-    fun deleteAnswer(selectedId: Int) = intent {
+    fun deleteAnswer(selectedId: String) = intent {
         val answerItems = getModelState().answerItem.toMutableList()
         val answerForDelete = answerItems.find { item ->
             item.id == selectedId
@@ -124,7 +124,7 @@ class QuestionCreationViewModel(
         }
     }
 
-    fun answerTextChanger(answerId: Int, text: String) = intent {
+    fun answerTextChanger(answerId: String, text: String) = intent {
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
             if (answerItem.id == answerId && answerItem is AnswerItem.DefaultAnswer) {
@@ -145,7 +145,7 @@ class QuestionCreationViewModel(
         }
     }
 
-    fun answerMatchChanger(answerId: Int, number: Int, text: String) = intent {
+    fun answerMatchChanger(answerId: String, number: Int, text: String) = intent {
         if (number > 2) throw IllegalArgumentException(ERROR_NUMBER_TEXT)
 
         var answerItems = getModelState().answerItem
@@ -175,7 +175,7 @@ class QuestionCreationViewModel(
 
     }
 
-    fun changeCheckedAnswer(selectedId: Int) = intent {
+    fun changeCheckedAnswer(selectedId: String) = intent {
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
             if (answerItem.id == selectedId && answerItem is AnswerItem.DefaultAnswer) {
@@ -197,21 +197,21 @@ class QuestionCreationViewModel(
         return when (type) {
             QuestionType.DEFAULT -> {
                 AnswerItem.DefaultAnswer(
-                    id = id,
+                    id = id.toString(),
                     color = color
                 )
             }
 
             QuestionType.MATCH -> {
                 AnswerItem.MatchAnswer(
-                    id = id,
+                    id = id.toString(),
                     color = color
                 )
             }
 
             QuestionType.WRITE_ANSWER -> {
                 AnswerItem.TextAnswer(
-                    id = id
+                    id = id.toString()
                 )
             }
         }

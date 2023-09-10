@@ -3,6 +3,7 @@ package com.testeducation.remote.client.retrofit.test
 import com.testeducation.remote.model.global.RemoteResponse
 import com.testeducation.remote.model.test.RemoteCreationTest
 import com.testeducation.remote.model.test.RemotePage
+import com.testeducation.remote.model.test.RemoteTestDetails
 import com.testeducation.remote.model.test.RemoteTestShort
 import com.testeducation.remote.request.test.TestCreationRequest
 import retrofit2.http.Body
@@ -53,4 +54,7 @@ interface TestRetrofitClient {
 
     @POST("/api/app/content/tests")
     suspend fun createTest(@Body testCreationRequest: TestCreationRequest): RemoteResponse<RemoteCreationTest>
+
+    @GET("/api/app/content/tests/{id}")
+    suspend fun getDetailsTest(@Path("id") id: String) : RemoteResponse<RemoteTestDetails>
 }

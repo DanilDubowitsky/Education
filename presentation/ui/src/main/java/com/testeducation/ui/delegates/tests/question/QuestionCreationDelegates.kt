@@ -13,9 +13,9 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 
 fun answersDelegateDefault(
-    onClickCheckTrue: (Int) -> Unit,
-    onClickDelete: (Int) -> Unit,
-    onAnswerTextChanger: (Int, String) -> Unit
+    onClickCheckTrue: (String) -> Unit,
+    onClickDelete: (String) -> Unit,
+    onAnswerTextChanger: (String, String) -> Unit
 ) = simpleDelegateAdapter<AnswerItemUi.DefaultAnswer,
         AnswerItemUi,
         ViewHolderAnswerDefaultBinding>(
@@ -50,8 +50,8 @@ fun answersDelegateDefault(
 }
 
 fun answerDelegateMatch(
-    onClickDelete: (Int) -> Unit,
-    onAnswerTextChanger: (Int, Int, String) -> Unit
+    onClickDelete: (String) -> Unit,
+    onAnswerTextChanger: (String, Int, String) -> Unit
 ) = simpleDelegateAdapter<AnswerItemUi.MatchAnswer,
         AnswerItemUi,
         ViewHolderAnswerMatchBinding>(
@@ -94,7 +94,7 @@ fun answerDelegateMatch(
     }
 }
 
-fun answerDelegateWrite(onAnswerTextChanger: (Int, String) -> Unit) =
+fun answerDelegateWrite(onAnswerTextChanger: (String, String) -> Unit) =
     simpleDelegateAdapter<AnswerItemUi.TextAnswer,
             AnswerItemUi,
             ViewHolderAnswerWriteBinding>(

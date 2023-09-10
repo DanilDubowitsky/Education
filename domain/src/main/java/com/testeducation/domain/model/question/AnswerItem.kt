@@ -1,20 +1,20 @@
 package com.testeducation.domain.model.question
 
 sealed class AnswerItem {
-    abstract val id: Int
+    abstract val id: String
 
     data class DefaultAnswer(
-        override val id: Int,
+        override val id: String,
         val answerText: String = "",
         val isTrue: Boolean = false,
         val isUrl: Boolean = false,
         val color: Int = 0
     ) : AnswerItem()
 
-    data class TextAnswer(override val id: Int, val text: String = "") : AnswerItem()
+    data class TextAnswer(override val id: String, val text: String = "") : AnswerItem()
 
     data class MatchAnswer(
-        override val id: Int,
+        override val id: String,
         val firstAnswer: String = "",
         val secondAnswer: String = "",
         val color: Int = 0
@@ -25,5 +25,5 @@ sealed class AnswerItem {
         }
     }
 
-    data class FooterPlusAdd(override val id: Int = -1) : AnswerItem()
+    data class FooterPlusAdd(override val id: String = "-1") : AnswerItem()
 }

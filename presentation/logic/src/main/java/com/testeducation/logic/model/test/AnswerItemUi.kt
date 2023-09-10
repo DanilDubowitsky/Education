@@ -2,20 +2,20 @@ package com.testeducation.logic.model.test
 
 sealed class AnswerItemUi {
 
-    abstract val id: Int
+    abstract val id: String
 
     data class DefaultAnswer(
-        override val id: Int,
+        override val id: String,
         val answerText: String,
         val isTrue: Boolean,
         val isUrl: Boolean,
         val color: Int
     ) : AnswerItemUi()
 
-    data class TextAnswer(override val id: Int) : AnswerItemUi()
+    data class TextAnswer(override val id: String) : AnswerItemUi()
 
     data class MatchAnswer(
-        override val id: Int,
+        override val id: String,
         val firstAnswer: String,
         val secondAnswer: String,
         val color: Int
@@ -26,6 +26,6 @@ sealed class AnswerItemUi {
         }
     }
 
-    data class FooterPlusAdd(override val id: Int) : AnswerItemUi()
+    data class FooterPlusAdd(override val id: String) : AnswerItemUi()
 
 }
