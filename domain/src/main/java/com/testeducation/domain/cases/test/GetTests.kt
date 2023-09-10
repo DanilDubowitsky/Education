@@ -21,7 +21,7 @@ class GetTests(
         minQuestions: Int?,
         maxQuestions: Int?,
         limit: Int,
-        pageIndex: Int
+        offset: Int
     ): Page<TestShort> = testRepository.getTests(
         query,
         themeId,
@@ -33,6 +33,6 @@ class GetTests(
         minQuestions,
         maxQuestions,
         limit,
-        pageIndex
+        offset
     )
 }
