@@ -1,9 +1,7 @@
 package com.testeducation.remote.model.test
 
 import com.google.gson.annotations.SerializedName
-import com.testeducation.remote.client.remote.question.QuestionRemoteClient
 import com.testeducation.remote.model.question.RemoteQuestion
-import com.testeducation.remote.request.question.AnswerCreateRequest
 
 data class RemoteTestDetails(
     @SerializedName("id")
@@ -14,7 +12,7 @@ data class RemoteTestDetails(
     val style: RemoteTestStyle,
     @SerializedName("settings")
     val settings: RemoteTestSettings,
-    @SerializedName("question")
+    @SerializedName("questions")
     val question: List<RemoteQuestion>,
     @SerializedName("status")
     val status: String,
