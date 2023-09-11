@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.domain.usecase.test
 
 import com.testeducation.domain.cases.test.CreateTest
 import com.testeducation.domain.cases.test.GetLikedTests
+import com.testeducation.domain.cases.test.GetTestDetails
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.repository.test.ITestRepository
@@ -36,5 +37,11 @@ object TestUseCaseModule {
     fun provideCreateTest(
         testService: ITestService
     ): CreateTest = CreateTest(testService)
+
+    @Provides
+    @Reusable
+    fun provideGetTestDetails(
+        testRepository: ITestRepository
+    ): GetTestDetails = GetTestDetails(testRepository)
 
 }

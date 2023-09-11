@@ -2,18 +2,12 @@ package com.testeducation.education.di.modules.screen.tests.edit
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
-import com.testeducation.domain.cases.test.CreateTest
-import com.testeducation.domain.cases.theme.GetThemes
+import com.testeducation.domain.cases.test.GetTestDetails
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
-import com.testeducation.logic.screen.tests.creation.TestCreationState
 import com.testeducation.logic.screen.tests.edit.TestEditorState
-import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import com.testeducation.screen.tests.creation.TestCreationModelState
-import com.testeducation.screen.tests.creation.TestCreationReducer
-import com.testeducation.screen.tests.creation.TestCreationViewModel
 import com.testeducation.screen.tests.edit.TestEditorModelState
 import com.testeducation.screen.tests.edit.TestEditorReducer
 import com.testeducation.screen.tests.edit.TestEditorViewModel
@@ -33,22 +27,24 @@ interface TestEditorModule {
 
     companion object {
         @Provides
-        fun provideReducer(): IReducer<TestEditorModelState, TestEditorState> =
-            TestEditorReducer()
+        fun provideReducer(resourceHelper: IResourceHelper,): IReducer<TestEditorModelState, TestEditorState> =
+            TestEditorReducer(resourceHelper)
 
         @Provides
         fun provideViewModel(
             fragment: TestEditorFragment,
             reducer: IReducer<TestEditorModelState, TestEditorState>,
             exceptionHandler: IExceptionHandler,
-            resourceHelper: IResourceHelper
+            resourceHelper: IResourceHelper,
+            getTestDetails: GetTestDetails
         ): TestEditorViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Details>()
             return TestEditorViewModel(
                 reducer = reducer,
                 exceptionHandler = exceptionHandler,
                 resourceHelper = resourceHelper,
-                testId = screen.testId
+                testId = screen.testId,
+                getTestDetails = getTestDetails
             )
         }
     }

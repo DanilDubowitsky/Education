@@ -1,7 +1,6 @@
 package com.testeducation.ui.delegates.tests.question
 
 import android.content.res.ColorStateList
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import com.testeducation.logic.model.test.AnswerItemUi
 import com.testeducation.ui.R
@@ -77,7 +76,7 @@ fun answerDelegateMatch(
         binding {
             etAnswerFirst.hint = context.getString(
                 R.string.question_match_answer_position_hint,
-                (absoluteAdapterPosition + 1).toString()
+                (adapterPosition + 1).toString()
             )
             if (etAnswerFirst.text.isEmpty()) {
                 etAnswerFirst.setText(item.firstAnswer)

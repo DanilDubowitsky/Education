@@ -59,7 +59,7 @@ fun List<TestShortUI>.toModels() = this.mapNotNull { testShortUI ->
     else null
 }
 
-private fun TestSettings.toUI() = TestShortUI.Test.Settings(
+fun TestSettings.toUI() = TestShortUI.Test.Settings(
     availability.toUI(),
     previewQuestions
 )

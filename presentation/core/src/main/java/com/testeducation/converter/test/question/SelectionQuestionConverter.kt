@@ -39,7 +39,7 @@ fun QuestionTypeUiItem.toModel() = when (this.type) {
     QuestionTypeItem(it)
 }
 
-fun QuestionTypeItem.toUiModel() = when (this.questionType) {
+fun QuestionType.toUiModel() = when (this) {
     QuestionType.MATCH -> {
         QuestionTypeUi.MATCH
     }
