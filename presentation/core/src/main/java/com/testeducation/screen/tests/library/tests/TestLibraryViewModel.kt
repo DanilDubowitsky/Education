@@ -1,4 +1,4 @@
-package com.testeducation.screen.tests.library
+package com.testeducation.screen.tests.library.tests
 
 import com.testeducation.converter.test.toModels
 import com.testeducation.converter.test.toUI
@@ -8,14 +8,12 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
-import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestFiltersUI
-import com.testeducation.logic.model.test.TestGetTypeUI
-import com.testeducation.logic.screen.tests.library.TestLibrarySideEffect
-import com.testeducation.logic.screen.tests.library.TestLibraryState
+import com.testeducation.logic.screen.tests.library.tests.TestLibrarySideEffect
+import com.testeducation.logic.screen.tests.library.tests.TestLibraryState
 import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen

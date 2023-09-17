@@ -1,4 +1,4 @@
-package com.testeducation.screen.tests.library
+package com.testeducation.screen.tests.library.tests
 
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField

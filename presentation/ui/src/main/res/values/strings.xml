@@ -87,4 +87,8 @@
     <string name="question_creation_answer_hint">Введите вариант ответа</string>
     <string name="question_creation_answer_write_hint">Введите правильный ответ здесь</string>
 
+    <string name="library_published_title">Опубликованные</string>
+    <string name="library_passed_title">Пройденные</string>
+    <string name="library_draft_title">Черновики</string>
+
 </resources>

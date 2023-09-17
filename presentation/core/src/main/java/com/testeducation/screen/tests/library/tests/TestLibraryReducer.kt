@@ -1,9 +1,9 @@
-package com.testeducation.screen.tests.library
+package com.testeducation.screen.tests.library.tests
 
 import com.testeducation.converter.test.toUIModel
 import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.IReducer
-import com.testeducation.logic.screen.tests.library.TestLibraryState
+import com.testeducation.logic.screen.tests.library.tests.TestLibraryState
 
 class TestLibraryReducer : IReducer<TestLibraryModelState, TestLibraryState> {
 

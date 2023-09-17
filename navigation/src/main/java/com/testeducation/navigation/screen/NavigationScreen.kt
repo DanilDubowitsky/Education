@@ -92,6 +92,8 @@ sealed interface NavigationScreen : Serializable {
                 )
             }
         }
+
+        object Library : Tests
     }
 
     sealed interface QuestionCreation : NavigationScreen {

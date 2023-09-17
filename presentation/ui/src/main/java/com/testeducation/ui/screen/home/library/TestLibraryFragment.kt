@@ -1,4 +1,4 @@
-package com.testeducation.ui.screen.tests.library
+package com.testeducation.ui.screen.home.library
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.theme.ThemeShortUI
-import com.testeducation.logic.screen.tests.library.TestLibrarySideEffect
-import com.testeducation.logic.screen.tests.library.TestLibraryState
+import com.testeducation.logic.screen.tests.library.tests.TestLibrarySideEffect
+import com.testeducation.logic.screen.tests.library.tests.TestLibraryState
 import com.testeducation.screen.tests.base.TestsDefaults
-import com.testeducation.screen.tests.library.TestLibraryViewModel
+import com.testeducation.screen.tests.library.tests.TestLibraryViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentLibraryBinding

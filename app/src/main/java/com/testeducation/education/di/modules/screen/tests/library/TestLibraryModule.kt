@@ -9,11 +9,11 @@ import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.helper.test.TestHelper
-import com.testeducation.logic.screen.tests.library.TestLibraryState
+import com.testeducation.logic.screen.tests.library.tests.TestLibraryState
 import com.testeducation.navigation.core.NavigationRouter
-import com.testeducation.screen.tests.library.TestLibraryModelState
-import com.testeducation.screen.tests.library.TestLibraryReducer
-import com.testeducation.screen.tests.library.TestLibraryViewModel
+import com.testeducation.screen.tests.library.tests.TestLibraryModelState
+import com.testeducation.screen.tests.library.tests.TestLibraryReducer
+import com.testeducation.screen.tests.library.tests.TestLibraryViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
