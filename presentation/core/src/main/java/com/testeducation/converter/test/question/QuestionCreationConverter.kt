@@ -42,12 +42,14 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
 }
 
 fun List<QuestionItem>.toUi() = map { question ->
-    QuestionItemUi(
-        id = question.id,
-        title = question.title,
-        icon = question.icon,
-        questionTypeUiItem = question.type.toUiModel(),
-        numberQuestion = question.numberQuestion,
-        answerItemUiList = question.answers.toModelUi()
-    )
+    question.toUi()
 }
+
+fun QuestionItem.toUi() = QuestionItemUi(
+    id = id,
+    title = title,
+    icon = icon,
+    questionTypeUiItem = type.toUiModel(),
+    numberQuestion = numberQuestion,
+    answerItemUiList = answers.toModelUi()
+)

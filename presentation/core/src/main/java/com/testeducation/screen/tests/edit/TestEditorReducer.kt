@@ -31,7 +31,8 @@ class TestEditorReducer(resourceHelper: IResourceHelper) :
                 passesUser = test.passesUser,
                 passed = test.passed,
                 theme = test.theme.toUI()
-            )
+            ),
+            questionDetailsUi = modelState.questionDetails.toUi()
         )
     }
 }

@@ -4,32 +4,50 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.testeducation.logic.model.question.QuestionDetailsUi
 import com.testeducation.logic.model.question.QuestionItemUi
 import com.testeducation.logic.model.test.AnswerItemUi
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.ui.databinding.ViewHolderAnswerDefaultDisplayBinding
+import com.testeducation.ui.databinding.ViewHolderAnswerFootPlusBinding
 import com.testeducation.ui.databinding.ViewHolderQuestionBinding
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 
 fun answersDisplayDelegateDefault(
-) = simpleDelegateAdapter<QuestionItemUi,
-        QuestionItemUi,
+) = simpleDelegateAdapter<QuestionDetailsUi.QuestionItemDetails,
+        QuestionDetailsUi,
         ViewHolderQuestionBinding>(
     ViewHolderQuestionBinding::inflate
 ) {
     bind {
         binding {
-            tvQuestion.text = item.title
-            icon.setImageResource(item.icon)
-            tvNumberTitle.text = item.numberQuestion
+            val itemQuestion = item.question
+            tvQuestion.text = itemQuestion.title
+            icon.setImageResource(itemQuestion.icon)
+            tvNumberTitle.text = itemQuestion.numberQuestion
             listAnswer.apply {
                 removeAllViews()
-                item.initAnswerDefault(context, this)
+                itemQuestion.initAnswerDefault(context, this)
             }
         }
     }
 }
+
+fun footerQuestionDetailsPlusAddDelegate(onClickAdd: () -> Unit) =
+    simpleDelegateAdapter<QuestionDetailsUi.FooterAdd,
+            QuestionDetailsUi,
+            ViewHolderAnswerFootPlusBinding>(
+        ViewHolderAnswerFootPlusBinding::inflate
+    ) {
+        bind {
+            binding {
+                imgPlus.setOnClickListener {
+                    onClickAdd()
+                }
+            }
+        }
+    }
 
 private fun QuestionItemUi.initAnswerDefault(context: Context, linearLayout: LinearLayout) {
     if (questionTypeUiItem.type == QuestionTypeUi.DEFAULT) {

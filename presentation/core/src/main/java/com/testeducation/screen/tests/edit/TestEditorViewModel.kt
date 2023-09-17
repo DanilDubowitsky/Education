@@ -3,6 +3,8 @@ package com.testeducation.screen.tests.edit
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTestDetails
+import com.testeducation.domain.model.question.QuestionDetails
+import com.testeducation.domain.model.question.QuestionItem
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionResourceHelper
 import com.testeducation.helper.resource.IResourceHelper
@@ -28,12 +30,24 @@ class TestEditorViewModel(
 
     private fun getTestDetails(testId: String) = singleIntent(getTestDetails.javaClass.name) {
         val details = getTestDetails.invoke(id = testId)
+        val questionItems = questionResourceHelper.getQuestionItemPrepared(details.questions)
+        val questionDetails : MutableList<QuestionDetails> = mutableListOf()
+        questionDetails.addAll(questionItems.prepareQuestionDetailsItems())
+        questionDetails.add(QuestionDetails.FooterAdd())
         updateModelState {
             copy(
                 testDetails = details.copy(
-                    questions = questionResourceHelper.getQuestionItemPrepared(details.questions)
-                )
+                    questions = questionItems
+                ),
+                questionDetails = questionDetails
             )
         }
+    }
+
+    private fun List<QuestionItem>.prepareQuestionDetailsItems() = map {
+        QuestionDetails.QuestionItemDetails(
+            id = it.id,
+            question = it
+        )
     }
 }
