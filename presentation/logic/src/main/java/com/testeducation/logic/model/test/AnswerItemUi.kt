@@ -9,8 +9,13 @@ sealed class AnswerItemUi {
         val answerText: String,
         val isTrue: Boolean,
         val isUrl: Boolean,
-        val color: Int
-    ) : AnswerItemUi()
+        val color: Int,
+        val resource: Resource = Resource()
+    ) : AnswerItemUi() {
+        data class Resource(
+            val isTrueColor: Int = 0
+        )
+    }
 
     data class TextAnswer(override val id: String) : AnswerItemUi()
 

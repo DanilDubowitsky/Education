@@ -179,8 +179,17 @@ class QuestionCreationViewModel(
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
             if (answerItem.id == selectedId && answerItem is AnswerItem.DefaultAnswer) {
+                val newStateIsTrue = !answerItem.isTrue
+                val isTrueColor = if (newStateIsTrue) {
+                    ColorResource.Secondary.Gray1.getColor(resourceHelper)
+                } else {
+                    ColorResource.Main.White.getColor(resourceHelper)
+                }
                 answerItem.copy(
-                    isTrue = !answerItem.isTrue
+                    isTrue = newStateIsTrue,
+                    resource = answerItem.resource.copy(
+                        isTrueColor = isTrueColor
+                    )
                 )
             } else answerItem
         }
@@ -198,7 +207,10 @@ class QuestionCreationViewModel(
             QuestionType.DEFAULT -> {
                 AnswerItem.DefaultAnswer(
                     id = id.toString(),
-                    color = color
+                    color = color,
+                    resource = AnswerItem.DefaultAnswer.Resource(
+                        isTrueColor = ColorResource.Main.White.getColor(resourceHelper)
+                    )
                 )
             }
 

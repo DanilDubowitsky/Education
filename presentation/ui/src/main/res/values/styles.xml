@@ -47,6 +47,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="Text.Label.Mini" parent="Text">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:fontFamily">@font/mulish_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="Text.Label.Medium" parent="Text">
         <item name="android:textColor">@color/colorTextPrimary</item>
         <item name="android:fontFamily">@font/mulish_medium</item>

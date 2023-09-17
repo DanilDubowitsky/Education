@@ -31,14 +31,10 @@ fun answersDelegateDefault(
             imgCheckIcon.setOnClickListener {
                 onClickCheckTrue(item.id)
             }
-            if (item.isTrue) {
-                R.color.colorGray_1
-            } else {
-                R.color.colorWhite
-            }.also { color ->
-                imgCheckIcon.backgroundTintList =
-                    ColorStateList.valueOf(context.getColor(color))
-            }
+
+            imgCheckIcon.backgroundTintList =
+                ColorStateList.valueOf(item.resource.isTrueColor)
+
             root.backgroundTintList = ColorStateList.valueOf(item.color)
 
             etAnswer.doOnTextChanged { text, start, before, count ->

@@ -88,5 +88,6 @@
     <string name="question_match_answer_position_hint">Ответ %s</string>
     <string name="question_match_hint">Cоответствие</string>
     <string name="question_creation_save_data">Сохраняем вопрос…</string>
+    <string name="question_number">Вопрос %s</string>
 
 </resources>

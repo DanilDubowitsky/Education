@@ -5,6 +5,10 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTestDetails
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.question.IQuestionDrawableIconByType
+import com.testeducation.helper.question.IQuestionResourceHelper
+import com.testeducation.helper.question.QuestionDrawableIconByType
+import com.testeducation.helper.question.QuestionResourceHelper
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 import com.testeducation.navigation.screen.NavigationScreen
@@ -27,6 +31,23 @@ interface TestEditorModule {
 
     companion object {
         @Provides
+        fun questionDrawableIconByType(resourceHelper: IResourceHelper): IQuestionDrawableIconByType {
+            return QuestionDrawableIconByType(
+                resourceHelper
+            )
+        }
+
+        @Provides
+        fun provideQuestionResourceHelper(
+            resourceHelper: IResourceHelper,
+            questionDrawableIconByType: IQuestionDrawableIconByType
+        ): IQuestionResourceHelper {
+            return QuestionResourceHelper(
+                resourceHelper, questionDrawableIconByType
+            )
+        }
+
+        @Provides
         fun provideReducer(resourceHelper: IResourceHelper,): IReducer<TestEditorModelState, TestEditorState> =
             TestEditorReducer(resourceHelper)
 
@@ -36,7 +57,8 @@ interface TestEditorModule {
             reducer: IReducer<TestEditorModelState, TestEditorState>,
             exceptionHandler: IExceptionHandler,
             resourceHelper: IResourceHelper,
-            getTestDetails: GetTestDetails
+            getTestDetails: GetTestDetails,
+            questionResourceHelper: IQuestionResourceHelper
         ): TestEditorViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Details>()
             return TestEditorViewModel(
@@ -44,7 +66,8 @@ interface TestEditorModule {
                 exceptionHandler = exceptionHandler,
                 resourceHelper = resourceHelper,
                 testId = screen.testId,
-                getTestDetails = getTestDetails
+                getTestDetails = getTestDetails,
+                questionResourceHelper = questionResourceHelper
             )
         }
     }

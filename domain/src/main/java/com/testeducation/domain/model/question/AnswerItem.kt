@@ -8,8 +8,14 @@ sealed class AnswerItem {
         val answerText: String = "",
         val isTrue: Boolean = false,
         val isUrl: Boolean = false,
-        val color: Int = 0
-    ) : AnswerItem()
+        val color: Int = 0,
+        val resource: Resource = Resource()
+    ) : AnswerItem() {
+        data class Resource(
+            /* Обозначает цвет при различных состояния параметра isTrue */
+            val isTrueColor: Int = 0
+        )
+    }
 
     data class TextAnswer(override val id: String, val text: String = "") : AnswerItem()
 

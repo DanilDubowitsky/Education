@@ -13,7 +13,8 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
                 answerText = answerItem.answerText,
                 isTrue = answerItem.isTrue,
                 isUrl = answerItem.isUrl,
-                color = answerItem.color
+                color = answerItem.color,
+                resource = AnswerItemUi.DefaultAnswer.Resource(answerItem.resource.isTrueColor)
             )
         }
 
@@ -44,7 +45,9 @@ fun List<QuestionItem>.toUi() = map { question ->
     QuestionItemUi(
         id = question.id,
         title = question.title,
+        icon = question.icon,
         questionTypeUiItem = question.type.toUiModel(),
+        numberQuestion = question.numberQuestion,
         answerItemUiList = question.answers.toModelUi()
     )
 }

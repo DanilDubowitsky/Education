@@ -1,5 +1,7 @@
 package com.testeducation.ui.screen.tests.edit
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,6 +49,10 @@ class TestEditorFragment :
                 questionAdapter.items = state.testDetails.questions
                 tvTitleTest.text = state.testDetails.title
                 tvTypeTest.text = state.testDetails.theme.title
+                val colorTest = Color.parseColor(state.testDetails.style.color)
+                toolbar.backgroundTintList = ColorStateList.valueOf(colorTest)
+                btnCreate.backgroundTintList = ColorStateList.valueOf(colorTest)
+                requireActivity().window.statusBarColor = colorTest
             }
             is TestEditorState.NoInit -> {
 
