@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.question.IQuestionDrawableIconByType
+import com.testeducation.helper.question.IQuestionResourceHelper
+import com.testeducation.helper.question.QuestionDrawableIconByType
+import com.testeducation.helper.question.QuestionResourceHelper
 import com.testeducation.logic.screen.tests.creation.question.SelectionQuestionTypeState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
@@ -23,6 +27,12 @@ interface QuestionModule {
     @IntoMap
     @ViewModelKey(SelectionQuestionTypeViewModel::class)
     fun bindViewModel(viewModel: SelectionQuestionTypeViewModel): ViewModel
+
+    @Binds
+    fun questionDrawableIconByType(questionDrawableIconByType: QuestionDrawableIconByType): IQuestionDrawableIconByType
+
+    @Binds
+    fun questionResourceHelper(questionResourceHelper: QuestionResourceHelper): IQuestionResourceHelper
 
     companion object {
         @Provides

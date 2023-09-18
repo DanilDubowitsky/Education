@@ -2,6 +2,7 @@ package com.testeducation.domain.repository.test
 
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.Page
+import com.testeducation.domain.model.test.TestDetails
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
 
@@ -34,4 +35,6 @@ interface ITestRepository {
         limit: Int,
         offset: Int
     ): Page<TestShort>
+
+    suspend fun getTestDetails(id: String) : TestDetails
 }

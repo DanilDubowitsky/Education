@@ -90,10 +90,14 @@ sealed interface NavigationScreen : Serializable {
                 )
             }
         }
+
+        data class Details(
+            val testId: String
+        ) : Tests
     }
 
     sealed interface QuestionCreation : NavigationScreen {
-        data class QuestionEditor(val questionTypeUiItem: QuestionTypeUiItem) : QuestionCreation
+        data class QuestionEditor(val questionTypeUiItem: QuestionTypeUiItem, val testId: String) : QuestionCreation
 
         object OnSelectionQuestionTypeChanged : ResultKey<QuestionTypeUiItem>
     }

@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.screen.tests.question
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.question.QuestionCreate
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
@@ -37,7 +38,8 @@ interface QuestionCreationModule {
             reducer: IReducer<QuestionCreationModelState, QuestionCreationState>,
             exceptionHandler: IExceptionHandler,
             resourceHelper: IResourceHelper,
-            router: NavigationRouter
+            router: NavigationRouter,
+            questionCreate: QuestionCreate
         ): QuestionCreationViewModel {
             val screen = fragment.getScreen<NavigationScreen.QuestionCreation.QuestionEditor>()
             return QuestionCreationViewModel(
@@ -45,7 +47,9 @@ interface QuestionCreationModule {
                 errorHandler = exceptionHandler,
                 resourceHelper = resourceHelper,
                 questionTypeItem = screen.questionTypeUiItem,
-                router = router
+                router = router,
+                questionCreate = questionCreate,
+                testId = screen.testId
             )
         }
     }

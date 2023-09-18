@@ -6,6 +6,7 @@ sealed interface ColorResource {
         object Red : Main
         object Green : Main
         object Orange: Main
+        object White: Main
     }
 
     sealed interface MainLight: ColorResource {
@@ -13,5 +14,9 @@ sealed interface ColorResource {
         object Red : MainLight
         object Green : MainLight
         object Orange: MainLight
+    }
+
+    sealed interface Secondary: ColorResource {
+        object Gray1: Secondary
     }
 }

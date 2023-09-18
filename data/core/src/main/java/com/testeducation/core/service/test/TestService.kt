@@ -8,7 +8,6 @@ class TestService(
     private val testRemoteClient: ITestRemoteClient
 ) : ITestService {
 
-
     override suspend fun toggleTestLike(id: String, liked: Boolean) =
         testRemoteClient.toggleTestLike(id, liked)
 
