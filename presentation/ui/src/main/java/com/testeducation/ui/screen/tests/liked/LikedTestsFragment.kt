@@ -87,7 +87,7 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
         themesRecycler.isInvisible = state.isThemesLoading
         themesShimmer.isShimmerHide = !state.isThemesLoading
 
-        globalProgress.isGone = !state.isTestsLoading
+        shimmerLoading.isShimmerHide = !state.isTestsLoading
         testsRecycler.isInvisible = state.isTestsLoading
     }
 

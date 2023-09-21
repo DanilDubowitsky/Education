@@ -8,10 +8,12 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestFiltersUI
+import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.screen.tests.library.tests.TestLibrarySideEffect
 import com.testeducation.logic.screen.tests.library.tests.TestLibraryState
 import com.testeducation.navigation.core.Disposable
@@ -22,6 +24,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class TestLibraryViewModel(
+    private val testGetType: TestGetType,
     private val testShortHelper: ITestHelper,
     private val router: NavigationRouter,
     private val getTests: GetTests,

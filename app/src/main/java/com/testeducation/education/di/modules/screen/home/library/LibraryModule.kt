@@ -6,6 +6,7 @@ import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.library.LibraryState
+import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.screen.tests.library.LibraryModelState
 import com.testeducation.screen.tests.library.LibraryReducer
 import com.testeducation.screen.tests.library.LibraryViewModel
@@ -29,11 +30,17 @@ interface LibraryModule {
 
         @Provides
         fun provideViewModel(
+            router: NavigationRouter,
             getTests: GetTests,
             reducer: IReducer<LibraryModelState, LibraryState>,
             exceptionHandler: IExceptionHandler
         ): LibraryViewModel {
-            return LibraryViewModel(getTests, reducer, exceptionHandler)
+            return LibraryViewModel(
+                router,
+                getTests,
+                reducer,
+                exceptionHandler
+            )
         }
     }
 }

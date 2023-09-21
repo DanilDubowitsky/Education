@@ -106,8 +106,8 @@ class ScreenAdapter : IScreenAdapter {
             TestsFiltersFragment().withScreen(screen)
         }
 
-        NavigationScreen.Tests.Library -> Screen.FragmentScreen {
-            TestLibraryFragment()
+        is NavigationScreen.Tests.Library -> Screen.FragmentScreen {
+            TestLibraryFragment().withScreen(screen)
         }
     }
 

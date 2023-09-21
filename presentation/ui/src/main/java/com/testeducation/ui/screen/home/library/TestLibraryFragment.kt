@@ -17,6 +17,7 @@ import com.testeducation.screen.tests.library.tests.TestLibraryViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentLibraryBinding
+import com.testeducation.ui.databinding.FragmentLibraryTestsBinding
 import com.testeducation.ui.delegates.tests.createTestLoadingDelegate
 import com.testeducation.ui.delegates.tests.createTestShortAdapterDelegate
 import com.testeducation.ui.delegates.tests.createThemeShortAdapterDelegate
@@ -30,9 +31,9 @@ import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
 
-class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, FragmentLibraryBinding>(
+class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, FragmentLibraryTestsBinding>(
     TestLibraryViewModel::class,
-    FragmentLibraryBinding::inflate
+    FragmentLibraryTestsBinding::inflate
 ) {
 
     private val testsAdapter by lazy {
@@ -85,7 +86,7 @@ class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, Fragment
         themesRecycler.isInvisible = state.isThemesLoading
         themesShimmer.isShimmerHide = !state.isThemesLoading
 
-        globalProgress.isGone = !state.isTestsLoading
+        shimmerLoading.isShimmerHide = !state.isTestsLoading
         testsRecycler.isInvisible = state.isTestsLoading
     }
 

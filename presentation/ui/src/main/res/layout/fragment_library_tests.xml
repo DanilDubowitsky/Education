@@ -134,6 +134,32 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLoading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:layout_anchor="@id/appBar"
+            app:layout_anchorGravity="bottom"
+            app:layout_constraintTop_toBottomOf="@id/coordinator">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_short_test_shimmer" />
+
+                <include layout="@layout/layout_short_test_shimmer" />
+
+                <include layout="@layout/layout_short_test_shimmer" />
+
+                <include layout="@layout/layout_short_test_shimmer" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/testsRecycler"
             android:layout_width="match_parent"
@@ -145,17 +171,5 @@
             tools:listitem="@layout/view_holder_test_short" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <ProgressBar
-        android:id="@+id/globalProgress"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:indeterminateTint="@color/colorBlue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

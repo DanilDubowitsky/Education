@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtPublishedPlaceHolder"
+        style="@style/Text.Label.SemiBold"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        android:text="@string/library_published_title"
+        android:foreground="@drawable/background_grey_rounded_14"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrowPlaceHolder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgPublishedArrowPlaceHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_right_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/txtPublishedPlaceHolder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtPublishedPlaceHolder"
+        app:tint="@color/colorGrayBlueDisabled" />
+
+    <View
+        android:id="@+id/publishedPlaceHolder"
+        android:layout_width="match_parent"
+        android:layout_height="121dp"
+        android:background="@drawable/background_grey_rounded_14"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtPublishedPlaceHolder" />
+
+    <TextView
+        android:id="@+id/txtPassedPlaceHolder"
+        style="@style/Text.Label.SemiBold"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        android:foreground="@drawable/background_grey_rounded_14"
+        android:text="@string/library_passed_title"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrowPlaceHolder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/publishedPlaceHolder" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgPassedPlaceHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:tint="@color/colorGrayBlueDisabled"
+        android:src="@drawable/ic_right_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/txtPassedPlaceHolder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtPassedPlaceHolder" />
+
+    <View
+        android:id="@+id/passedPlaceHolder"
+        android:layout_width="match_parent"
+        android:background="@drawable/background_grey_rounded_14"
+        android:layout_height="121dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtPassedPlaceHolder" />
+
+    <TextView
+        android:id="@+id/txtDraftsPlaceHolder"
+        style="@style/Text.Label.SemiBold"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:foreground="@drawable/background_grey_rounded_14"
+        android:gravity="center_vertical"
+        android:text="@string/library_draft_title"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrowPlaceHolder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passedPlaceHolder" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgDraftsPlaceHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:tint="@color/colorGrayBlueDisabled"
+        android:src="@drawable/ic_right_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/txtDraftsPlaceHolder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtDraftsPlaceHolder" />
+
+    <View
+        android:id="@+id/draftsPlaceHolder"
+        android:layout_width="match_parent"
+        android:background="@drawable/background_grey_rounded_14"
+        android:layout_height="121dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtDraftsPlaceHolder" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

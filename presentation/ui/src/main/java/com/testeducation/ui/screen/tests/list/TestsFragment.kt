@@ -141,9 +141,9 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private fun FragmentTestsBinding.bindTests(state: TestsState) {
-        globalProgress.isGone = !state.isTestsLoading
         testsAdapter.items = state.tests
         testsRecycler.isInvisible = state.isTestsLoading
+        shimmerLoading.isShimmerHide = !state.isTestsLoading
     }
 
     private fun FragmentTestsBinding.bindThemes(state: TestsState) {

@@ -18,8 +18,7 @@ data class TestLibraryModelState(
     val timeLimitTo: String = TestsDefaults.DEFAULT_TIME_MAX,
     val questionsLimitFrom: String = TestsDefaults.DEFAULT_QUESTIONS_MIN,
     val questionsLimitTo: String = TestsDefaults.DEFAULT_QUESTIONS_MAX,
-    val totalTestsCount: Int = 0,
-    val testGetType: TestGetType = TestGetType.CREATED
+    val totalTestsCount: Int = 0
 ) {
 
     enum class TestsLoadingState {

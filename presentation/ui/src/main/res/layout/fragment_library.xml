@@ -32,6 +32,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/loadingShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include layout="@layout/layout_library_shimmer" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/contentGroop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="txtPublished, imgPublishedArrow,
+                 txtDrafts, txtPassed, imgDrafts, imgPassed,
+                  draftsPager, publishedPager, passedPager" />
+
             <TextView
                 android:id="@+id/txtPublished"
                 style="@style/Text.Label.SemiBold"
@@ -71,7 +89,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:text="@string/library_published_title"
+                android:text="@string/library_passed_title"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrow"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +120,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:text="@string/library_published_title"
+                android:text="@string/library_draft_title"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrow"
                 app:layout_constraintStart_toStartOf="parent"
@@ -128,17 +146,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
-    <ProgressBar
-        android:id="@+id/globalProgress"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:indeterminateTint="@color/colorBlue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

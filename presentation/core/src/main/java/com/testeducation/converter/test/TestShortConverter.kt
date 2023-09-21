@@ -94,14 +94,3 @@ private fun TestShortUI.Test.Settings.Availability.toModel() = when (this) {
     TestShortUI.Test.Settings.Availability.PUBLIC -> TestSettings.Availability.PUBLIC
     TestShortUI.Test.Settings.Availability.PRIVATE -> TestSettings.Availability.PRIVATE
 }
-
-// TODO: remove this when styles and colors added on back end
-private fun getColor(): String {
-    val rand = Random.nextInt(0..3)
-    return tempColors[rand]
-}
-
-private fun getStyle(): CardTestStyle {
-    val rand = Random.nextInt(0..3)
-    return CardTestStyle.values()[rand]
-}
