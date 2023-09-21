@@ -10,6 +10,8 @@ import com.testeducation.logic.model.test.AnswerItemUi
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.ui.databinding.ViewHolderAnswerDefaultDisplayBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerFootPlusBinding
+import com.testeducation.ui.databinding.ViewHolderAnswerMatchDisplayBinding
+import com.testeducation.ui.databinding.ViewHolderAnswerWriteAnswerDisplayBinding
 import com.testeducation.ui.databinding.ViewHolderQuestionBinding
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
@@ -29,6 +31,8 @@ fun answersDisplayDelegateDefault(
             listAnswer.apply {
                 removeAllViews()
                 itemQuestion.initAnswerDefault(context, this)
+                itemQuestion.initAnswerWriteAnswer(context, this)
+                itemQuestion.initAnswerMatchAnswer(context, this)
             }
         }
     }
@@ -58,6 +62,29 @@ private fun QuestionItemUi.initAnswerDefault(context: Context, linearLayout: Lin
                 inflate.imgIndicator.backgroundTintList = ColorStateList.valueOf(
                     itemAnswer.resource.isTrueColor
                 )
+            }
+        }
+    }
+}
+
+private fun QuestionItemUi.initAnswerWriteAnswer(context: Context, linearLayout: LinearLayout) {
+    if (questionTypeUiItem.type == QuestionTypeUi.WRITE_ANSWER) {
+        for (itemAnswer in answerItemUiList) {
+            if (itemAnswer is AnswerItemUi.TextAnswer) {
+                val inflate = ViewHolderAnswerWriteAnswerDisplayBinding.inflate(LayoutInflater.from(context), linearLayout, true)
+                inflate.tvText.text = itemAnswer.text
+            }
+        }
+    }
+}
+
+private fun QuestionItemUi.initAnswerMatchAnswer(context: Context, linearLayout: LinearLayout) {
+    if (questionTypeUiItem.type == QuestionTypeUi.MATCH) {
+        for (itemAnswer in answerItemUiList) {
+            if (itemAnswer is AnswerItemUi.MatchAnswer) {
+                val inflate = ViewHolderAnswerMatchDisplayBinding.inflate(LayoutInflater.from(context), linearLayout, true)
+                inflate.tvText.text = itemAnswer.firstAnswer
+                inflate.tvTextMatch.text = itemAnswer.secondAnswer
             }
         }
     }

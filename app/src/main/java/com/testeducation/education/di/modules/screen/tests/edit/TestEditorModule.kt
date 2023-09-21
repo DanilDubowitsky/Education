@@ -11,6 +11,7 @@ import com.testeducation.helper.question.QuestionDrawableIconByType
 import com.testeducation.helper.question.QuestionResourceHelper
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.edit.TestEditorState
+import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.edit.TestEditorModelState
 import com.testeducation.screen.tests.edit.TestEditorReducer
@@ -58,7 +59,8 @@ interface TestEditorModule {
             exceptionHandler: IExceptionHandler,
             resourceHelper: IResourceHelper,
             getTestDetails: GetTestDetails,
-            questionResourceHelper: IQuestionResourceHelper
+            questionResourceHelper: IQuestionResourceHelper,
+            navigationRouter: NavigationRouter
         ): TestEditorViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Details>()
             return TestEditorViewModel(
@@ -67,7 +69,8 @@ interface TestEditorModule {
                 resourceHelper = resourceHelper,
                 testId = screen.testId,
                 getTestDetails = getTestDetails,
-                questionResourceHelper = questionResourceHelper
+                questionResourceHelper = questionResourceHelper,
+                router = navigationRouter
             )
         }
     }

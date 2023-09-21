@@ -20,7 +20,8 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
 
         is AnswerItem.TextAnswer -> {
             AnswerItemUi.TextAnswer(
-                id = answerItem.id
+                id = answerItem.id,
+                text = answerItem.text
             )
         }
 

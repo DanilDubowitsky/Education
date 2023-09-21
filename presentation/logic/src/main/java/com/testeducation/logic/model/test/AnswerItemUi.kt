@@ -17,7 +17,7 @@ sealed class AnswerItemUi {
         )
     }
 
-    data class TextAnswer(override val id: String) : AnswerItemUi()
+    data class TextAnswer(override val id: String, val text: String) : AnswerItemUi()
 
     data class MatchAnswer(
         override val id: String,

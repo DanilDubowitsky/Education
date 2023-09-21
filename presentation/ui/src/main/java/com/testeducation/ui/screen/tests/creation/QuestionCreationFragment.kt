@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.widget.doOnTextChanged
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.QuestionTypeUi
-import com.testeducation.logic.screen.tests.creation.TestCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
 import com.testeducation.screen.tests.creation.question.creation.QuestionCreationViewModel
@@ -52,6 +51,7 @@ class QuestionCreationFragment :
         setupRecycler()
         setupListeners()
         observeData()
+        requireActivity().window.statusBarColor = requireContext().getColor(R.color.colorBackground)
         binding {
             etQuestion.doOnTextChanged { text, start, before, count ->
                 viewModel.updateQuestionText(text.toString())
