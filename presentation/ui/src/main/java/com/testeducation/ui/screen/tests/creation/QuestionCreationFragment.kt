@@ -1,11 +1,12 @@
 package com.testeducation.ui.screen.tests.creation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import com.testeducation.logic.model.test.AnswerIndicatorItemUi
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
@@ -14,7 +15,9 @@ import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentQuestionCreationBinding
 import com.testeducation.ui.delegates.tests.question.answerDelegateMatch
+import com.testeducation.ui.delegates.tests.question.answerDelegateOrder
 import com.testeducation.ui.delegates.tests.question.answerDelegateWrite
+import com.testeducation.ui.delegates.tests.question.answerIndicatorItemDelegate
 import com.testeducation.ui.delegates.tests.question.answersDelegateDefault
 import com.testeducation.ui.delegates.tests.question.footerPlusAddDelegate
 import com.testeducation.ui.listener.DragStartListener
@@ -25,6 +28,7 @@ import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
+import com.testeducation.ui.utils.simpleDiffUtil
 
 class QuestionCreationFragment :
     ViewModelHostFragment<QuestionCreationViewModel, FragmentQuestionCreationBinding>(
@@ -50,16 +54,28 @@ class QuestionCreationFragment :
             answersDelegateDefault(
                 onClickCheckTrue = viewModel::changeCheckedAnswer,
                 onClickDelete = viewModel::deleteAnswer,
-                onAnswerTextChanger = viewModel::answerTextChanger,
-                mDragStartListener = dragStartListener,
-                onSelectedElement = viewModel::updateSelectedDropElement
+                onAnswerTextChanger = viewModel::answerTextChanger
             ),
             answerDelegateWrite(onAnswerTextChanger = viewModel::answerTextChanger),
             answerDelegateMatch(
                 onClickDelete = viewModel::deleteAnswer,
                 onAnswerTextChanger = viewModel::answerMatchChanger
             ),
-            footerPlusAddDelegate(viewModel::addAnswer)
+            answerDelegateOrder(
+                onAnswerTextChanger = viewModel::answerTextChanger,
+                mDragStartListener = dragStartListener,
+                onSelectedElement = viewModel::updateSelectedDropElement
+            ),
+            footerPlusAddDelegate(
+                viewModel::addAnswer
+            )
+        )
+    }
+
+    private val answerIndicatorAdapter by lazy {
+        AsyncListDifferDelegationAdapter(
+            simpleDiffUtil(AnswerIndicatorItemUi::text),
+            answerIndicatorItemDelegate()
         )
     }
 
@@ -91,6 +107,10 @@ class QuestionCreationFragment :
             adapter = questionAdapter
             disableChangeAnimation()
         }
+        rvIndicator {
+            adapter = answerIndicatorAdapter
+            disableChangeAnimation()
+        }
         val itemTouchHelper = ItemTouchHelper(questionItemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(rvAnswers)
         dragStartListener.itemTouchHelper = itemTouchHelper
@@ -103,8 +123,10 @@ class QuestionCreationFragment :
     }
 
     private fun render(questionCreationState: QuestionCreationState) = binding {
-        Log.e("TAG1", questionCreationState.answerItemUiList.toString())
         questionAdapter.items = questionCreationState.answerItemUiList
+        answerIndicatorAdapter.items = questionCreationState.answerIndicatorItems
+
+        rvIndicator.isVisible = questionCreationState.visibleIndicator
         when (questionCreationState.questionTypeUiItem.type) {
             QuestionTypeUi.MATCH -> {
                 imgIconQuestionType.setImageResource(R.drawable.ic_answer_match)
@@ -119,6 +141,11 @@ class QuestionCreationFragment :
             QuestionTypeUi.WRITE_ANSWER -> {
                 imgIconQuestionType.setImageResource(R.drawable.ic_answer_write)
                 tvTitleQuestionType.text = getString(R.string.question_type_write_answer)
+            }
+
+            QuestionTypeUi.ORDER -> {
+                imgIconQuestionType.setImageResource(R.drawable.ic_answer_order)
+                tvTitleQuestionType.text = getString(R.string.question_type_order)
             }
         }
     }

@@ -26,6 +26,14 @@ fun selectionQuestionTypeDelegate(selectionOnClick: (QuestionTypeUiItem) -> Unit
                         )
                     }
 
+                    QuestionTypeUi.ORDER -> {
+                        setResource(
+                            title = R.string.question_type_order,
+                            icon = R.drawable.ic_answer_order,
+                            context
+                        )
+                    }
+
                     QuestionTypeUi.MATCH -> {
                         setResource(
                             title = R.string.question_type_match,

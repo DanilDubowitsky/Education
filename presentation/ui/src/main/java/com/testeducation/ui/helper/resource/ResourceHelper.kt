@@ -32,6 +32,7 @@ class ResourceHelper(
         DrawableResource.MatchIconQuestion -> R.drawable.ic_answer_match
         DrawableResource.DefaultIconQuestion -> R.drawable.ic_answer_choosing
         DrawableResource.WriteAnswerIconQuestion -> R.drawable.ic_answer_write
+        DrawableResource.OrderAnswerIconQuestion -> R.drawable.ic_answer_order
     }
 
 

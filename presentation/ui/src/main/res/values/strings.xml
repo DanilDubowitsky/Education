@@ -83,6 +83,7 @@
     <string name="question_type_answer">Выбор ответа</string>
     <string name="question_type_write_answer">Написать ответ</string>
     <string name="question_type_title">Выберите типа ответа</string>
+    <string name="question_type_order">Изменение порядка</string>
     <string name="question_creation_answer_hint">Введите вариант ответа</string>
     <string name="question_creation_answer_write_hint">Введите правильный ответ здесь</string>
     <string name="question_match_answer_position_hint">Ответ %s</string>

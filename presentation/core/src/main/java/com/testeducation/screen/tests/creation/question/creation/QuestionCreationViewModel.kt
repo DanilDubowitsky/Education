@@ -5,6 +5,7 @@ import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.QuestionCreate
+import com.testeducation.domain.model.question.AnswerIndicatorItem
 import com.testeducation.domain.model.question.AnswerItem
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.helper.error.IExceptionHandler
@@ -105,16 +106,24 @@ class QuestionCreationViewModel(
     }
 
     fun addAnswer() = intent {
-        val answerItems = getModelState().answerItem
+        val modelState = getModelState()
+        val answerItems = modelState.answerItem
         val index = answerItems.size - 1
         val answer = createAnswer(
             index, getModelState().questionTypeItem.questionType
         )
+        val answerIndicator = if (modelState.questionTypeItem.questionType == QuestionType.ORDER) {
+            val indicator = createAnswerIndicator(index)
+            modelState.answerIndicatorItems.toMutableList().apply {
+                add(indicator)
+            }
+        } else emptyList()
         updateModelState {
             copy(
                 answerItem = answerItems.toMutableList().apply {
                     add(index, answer)
-                }
+                },
+                answerIndicatorItems = answerIndicator
             )
         }
     }
@@ -138,15 +147,32 @@ class QuestionCreationViewModel(
     fun answerTextChanger(answerId: String, text: String) = intent {
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
-            if (answerItem.id == answerId && answerItem is AnswerItem.DefaultAnswer) {
-                answerItem.copy(
-                    answerText = text
-                )
-            } else if (answerItem.id == answerId && answerItem is AnswerItem.TextAnswer) {
-                answerItem.copy(
-                    text = text
-                )
-            } else answerItem
+            if (answerItem.id != answerId) {
+                return@map answerItem
+            }
+            when (answerItem) {
+                is AnswerItem.DefaultAnswer -> {
+                    answerItem.copy(
+                        answerText = text
+                    )
+                }
+
+                is AnswerItem.TextAnswer -> {
+                    answerItem.copy(
+                        text = text
+                    )
+                }
+
+                is AnswerItem.OrderAnswer -> {
+                    answerItem.copy(
+                        answerText = text
+                    )
+                }
+
+                else -> {
+                    answerItem
+                }
+            }
         }
         updateModelState {
             copy(
@@ -268,6 +294,14 @@ class QuestionCreationViewModel(
                     id = id.toString()
                 )
             }
+
+            QuestionType.ORDER -> {
+                AnswerItem.OrderAnswer(
+                    id = id.toString(),
+                    color = color,
+                    order = 1
+                )
+            }
         }
     }
 
@@ -284,6 +318,10 @@ class QuestionCreationViewModel(
 
                 QuestionType.WRITE_ANSWER -> {
                     initAnswerWriteText()
+                }
+
+                QuestionType.ORDER -> {
+                    initAnswerOrder()
                 }
             }
 
@@ -311,6 +349,25 @@ class QuestionCreationViewModel(
             )
         }
     }
+
+    private fun initAnswerOrder() = intent {
+        val answer = createAnswer(index = 0, type = QuestionType.ORDER)
+        val answerIndicator = createAnswerIndicator(index = 0)
+        updateModelState {
+            copy(
+                answerItem = listOf(
+                    answer,
+                    AnswerItem.FooterPlusAdd(isOrderAnswer = true)
+                ),
+                answerIndicatorItems = listOf(answerIndicator)
+            )
+        }
+    }
+
+    private fun createAnswerIndicator(index: Int) = AnswerIndicatorItem(
+        text = (index + 1).toString(),
+        color = getColorAnswer(index)
+    )
 
     private fun initAnswerDefault() = intent {
         val answer = createAnswer(

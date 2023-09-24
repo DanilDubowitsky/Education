@@ -34,9 +34,19 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
             )
         }
 
+        is AnswerItem.OrderAnswer -> {
+            AnswerItemUi.OrderAnswer(
+                id = answerItem.id,
+                answerText = answerItem.answerText,
+                order = answerItem.order,
+                color = answerItem.color
+            )
+        }
+
         is AnswerItem.FooterPlusAdd -> {
             AnswerItemUi.FooterPlusAdd(
-                id = answerItem.id
+                id = answerItem.id,
+                isOrderAnswer = answerItem.isOrderAnswer
             )
         }
     }

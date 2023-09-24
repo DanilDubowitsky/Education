@@ -23,5 +23,9 @@ class QuestionDrawableIconByType(private val resourceHelper: IResourceHelper) :
         QuestionType.WRITE_ANSWER -> {
             DrawableResource.WriteAnswerIconQuestion.getDrawable(resourceHelper)
         }
+
+        QuestionType.ORDER -> {
+            DrawableResource.OrderAnswerIconQuestion.getDrawable(resourceHelper)
+        }
     }
 }
