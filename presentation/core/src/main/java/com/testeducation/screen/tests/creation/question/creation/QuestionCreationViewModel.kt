@@ -1,5 +1,6 @@
 package com.testeducation.screen.tests.creation.question.creation
 
+import android.util.Log
 import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
@@ -17,6 +18,7 @@ import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.getColor
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import java.util.Collections
 
 class QuestionCreationViewModel(
     reducer: IReducer<QuestionCreationModelState, QuestionCreationState>,
@@ -73,6 +75,15 @@ class QuestionCreationViewModel(
         updateModelState {
             copy(
                 questionText = textQuestion
+            )
+        }
+    }
+
+    fun updateSelectedDropElement(id: String) = intent {
+        val answerItems = getModelState().answerItem
+        updateModelState {
+            copy(
+                selectedDropElement = answerItems.find { it.id == id }
             )
         }
     }
@@ -135,8 +146,7 @@ class QuestionCreationViewModel(
                 answerItem.copy(
                     text = text
                 )
-            }
-            else answerItem
+            } else answerItem
         }
         updateModelState {
             copy(
@@ -196,6 +206,38 @@ class QuestionCreationViewModel(
         updateModelState {
             copy(
                 answerItem = answerItems
+            )
+        }
+    }
+
+    fun updatePosition(positionCurrent: Int, targetPosition: Int) = intent {
+        Log.e("TAG1", "idFrom = ${positionCurrent} - idTarget = ${targetPosition}")
+        val modelState = getModelState()
+        val answerItems = modelState.answerItem.toMutableList()
+        val selectedElement = modelState.selectedDropElement
+
+        Log.e("TAG1", "targetId = ${answerItems[targetPosition]}")
+        if (selectedElement == answerItems[targetPosition]) {
+            return@intent
+        }
+        if (positionCurrent + 1 == answerItems.size) {
+            return@intent
+        }
+        if (targetPosition + 1 == answerItems.size) {
+            return@intent
+        }
+        Collections.swap(answerItems, positionCurrent, targetPosition)
+        updateModelState {
+            copy(
+                answerItem = answerItems
+            )
+        }
+    }
+
+    fun clearSelectedDropElement() = intent {
+        updateModelState {
+            copy(
+                selectedDropElement = null
             )
         }
     }

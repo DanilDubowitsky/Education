@@ -1,8 +1,10 @@
 package com.testeducation.ui.screen.tests.creation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.widget.doOnTextChanged
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationSideEffect
@@ -15,6 +17,9 @@ import com.testeducation.ui.delegates.tests.question.answerDelegateMatch
 import com.testeducation.ui.delegates.tests.question.answerDelegateWrite
 import com.testeducation.ui.delegates.tests.question.answersDelegateDefault
 import com.testeducation.ui.delegates.tests.question.footerPlusAddDelegate
+import com.testeducation.ui.listener.DragStartListener
+import com.testeducation.ui.listener.IDragStartListener
+import com.testeducation.ui.listener.QuestionItemTouchHelperCallback
 import com.testeducation.ui.screen.LoaderDialog
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
@@ -27,7 +32,17 @@ class QuestionCreationFragment :
         FragmentQuestionCreationBinding::inflate
     ) {
 
+    //TODO: butusov.k move to router
     private var dialogLoader: LoaderDialog? = null
+
+    private val questionItemTouchHelperCallback by lazy {
+        QuestionItemTouchHelperCallback(
+            updateResultMove = viewModel::updatePosition,
+            onClearView = viewModel::clearSelectedDropElement
+        )
+    }
+
+    private var dragStartListener: IDragStartListener = DragStartListener()
 
     private val questionAdapter by lazy {
         AsyncListDifferDelegationAdapter(
@@ -35,7 +50,9 @@ class QuestionCreationFragment :
             answersDelegateDefault(
                 onClickCheckTrue = viewModel::changeCheckedAnswer,
                 onClickDelete = viewModel::deleteAnswer,
-                onAnswerTextChanger = viewModel::answerTextChanger
+                onAnswerTextChanger = viewModel::answerTextChanger,
+                mDragStartListener = dragStartListener,
+                onSelectedElement = viewModel::updateSelectedDropElement
             ),
             answerDelegateWrite(onAnswerTextChanger = viewModel::answerTextChanger),
             answerDelegateMatch(
@@ -74,6 +91,9 @@ class QuestionCreationFragment :
             adapter = questionAdapter
             disableChangeAnimation()
         }
+        val itemTouchHelper = ItemTouchHelper(questionItemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(rvAnswers)
+        dragStartListener.itemTouchHelper = itemTouchHelper
     }
 
     private fun observeData() = viewModel.observe(this, ::render, ::onSideEffect)
@@ -83,6 +103,7 @@ class QuestionCreationFragment :
     }
 
     private fun render(questionCreationState: QuestionCreationState) = binding {
+        Log.e("TAG1", questionCreationState.answerItemUiList.toString())
         questionAdapter.items = questionCreationState.answerItemUiList
         when (questionCreationState.questionTypeUiItem.type) {
             QuestionTypeUi.MATCH -> {
