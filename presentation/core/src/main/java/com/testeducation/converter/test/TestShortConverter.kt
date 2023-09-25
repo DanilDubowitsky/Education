@@ -9,9 +9,6 @@ import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
-import com.testeducation.utils.MainColor.tempColors
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 fun TestShort.toUI(): TestShortUI = TestShortUI.Test(
     id,

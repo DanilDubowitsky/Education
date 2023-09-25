@@ -6,4 +6,5 @@ import com.testeducation.domain.model.question.QuestionTypeItem
 data class QuestionCreationModelState(
     val answerItem: List<AnswerItem> = emptyList(),
     val questionTypeItem: QuestionTypeItem,
+    val questionText: String = ""
 )

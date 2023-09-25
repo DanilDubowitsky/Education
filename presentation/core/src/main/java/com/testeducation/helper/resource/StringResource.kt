@@ -10,13 +10,13 @@ sealed interface StringResource {
 
         object CommonCancellation : Common
 
-        object CommonBack: Common
+        object CommonBack : Common
 
-        object CommonCancel: Common
+        object CommonCancel : Common
 
-        object CommonNext: Common
+        object CommonNext : Common
 
-        object CommonSave: Common
+        object CommonSave : Common
     }
 
     sealed interface Error : StringResource {
@@ -25,12 +25,16 @@ sealed interface StringResource {
 
         object PasswordIsEmptyString : Error
 
-        object TitleCreationTestEmpty: Error
+        object TitleCreationTestEmpty : Error
 
     }
 
     sealed interface Update : StringResource {
 
         object UpdateRequiredError : Update
+    }
+
+    sealed interface Question : StringResource {
+        data class NumberQuestion(val number: Int) : Question
     }
 }

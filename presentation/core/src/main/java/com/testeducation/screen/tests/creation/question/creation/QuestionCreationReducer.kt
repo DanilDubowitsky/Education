@@ -10,7 +10,7 @@ class QuestionCreationReducer :
     override fun reduce(modelState: QuestionCreationModelState): QuestionCreationState {
         return QuestionCreationState(
             answerItemUiList = modelState.answerItem.toModelUi(),
-            questionTypeUiItem = modelState.questionTypeItem.toUiModel()
+            questionTypeUiItem = modelState.questionTypeItem.questionType.toUiModel()
         )
     }
 }

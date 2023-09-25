@@ -35,7 +35,8 @@ class SelectionQuestionTypeViewModel(
             router.exit()
             router.navigateTo(
                 NavigationScreen.QuestionCreation.QuestionEditor(
-                    questionTypeUiItem
+                    questionTypeUiItem,
+                    idTest
                 )
             )
         } else {

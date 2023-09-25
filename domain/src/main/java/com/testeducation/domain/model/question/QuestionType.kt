@@ -1,5 +1,16 @@
 package com.testeducation.domain.model.question
 
-enum class QuestionType {
-    MATCH, DEFAULT, WRITE_ANSWER
+import java.awt.Choice
+
+enum class QuestionType(val typeName: String) {
+    MATCH("Match"), DEFAULT("Choice"), WRITE_ANSWER("Text");
+
+    companion object {
+        fun getType(type: String) = when (type) {
+            "Match" -> MATCH
+            "Text" -> WRITE_ANSWER
+            else -> DEFAULT
+        }
+
+    }
 }

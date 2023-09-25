@@ -7,6 +7,7 @@ import com.testeducation.education.di.modules.screen.auth.PasswordResetEmailModu
 import com.testeducation.education.di.modules.screen.auth.RegistrationModule
 import com.testeducation.education.di.modules.screen.home.HomeModule
 import com.testeducation.education.di.modules.screen.home.library.LibraryModule
+import com.testeducation.education.di.modules.screen.tests.edit.TestEditorModule
 import com.testeducation.education.di.modules.screen.tests.filters.TestsFiltersModule
 import com.testeducation.education.di.modules.screen.tests.library.TestLibraryModule
 import com.testeducation.education.di.modules.screen.tests.liked.LikedTestsModule
@@ -19,6 +20,7 @@ import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
 import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
+import com.testeducation.ui.screen.tests.edit.TestEditorFragment
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
 import com.testeducation.ui.screen.home.library.TestLibraryFragment
 import com.testeducation.ui.screen.tests.library.LibraryFragment
@@ -59,6 +61,9 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [NewPasswordModule::class])
     fun newPasswordFragment(): NewPasswordFragment
+
+    @ContributesAndroidInjector(modules = [TestEditorModule::class])
+    fun testEditorFragment() : TestEditorFragment
 
     @ContributesAndroidInjector(modules = [TestLibraryModule::class])
     fun testLibraryFragment(): TestLibraryFragment

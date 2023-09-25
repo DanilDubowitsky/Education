@@ -4,12 +4,14 @@ import com.testeducation.education.di.modules.base.ActivityModule
 import com.testeducation.education.di.modules.base.AppModule
 import com.testeducation.education.di.modules.config.ConfigModule
 import com.testeducation.education.di.modules.config.internal.AppVersionConfigModule
-import com.testeducation.education.di.modules.domain.interaction.UserInteractorModule
+import com.testeducation.education.di.modules.core.repository.question.QuestionCoreModule
 import com.testeducation.education.di.modules.core.repository.test.TestCoreModule
 import com.testeducation.education.di.modules.core.repository.theme.ThemeCoreModule
 import com.testeducation.education.di.modules.core.repository.user.UserCoreModule
+import com.testeducation.education.di.modules.domain.interaction.UserInteractorModule
 import com.testeducation.education.di.modules.domain.usecase.auth.AuthUseCaseModule
 import com.testeducation.education.di.modules.domain.usecase.internal.AppVersionUseCaseModule
+import com.testeducation.education.di.modules.domain.usecase.question.QuestionUseCaseModule
 import com.testeducation.education.di.modules.domain.usecase.test.TestUseCaseModule
 import com.testeducation.education.di.modules.domain.usecase.theme.ThemeUseCaseModule
 import com.testeducation.education.di.modules.domain.usecase.user.UserUseCaseModule
@@ -20,13 +22,13 @@ import com.testeducation.education.di.modules.navigation.NavigationModule
 import com.testeducation.education.di.modules.remote.client.auth.AuthClientModule
 import com.testeducation.education.di.modules.remote.client.refresh.RefreshClientModule
 import com.testeducation.education.di.modules.remote.helper.RemoteHelperModule
+import com.testeducation.education.di.modules.remote.internal.ApplicationVersionRemoteSourceModule
 import com.testeducation.education.di.modules.remote.retrofit.category.ThemeRetrofitModule
 import com.testeducation.education.di.modules.remote.retrofit.global.RetrofitModule
 import com.testeducation.education.di.modules.remote.retrofit.internal.BackendRetrofitClientModule
 import com.testeducation.education.di.modules.remote.retrofit.refresh.RefreshRetrofitModule
 import com.testeducation.education.di.modules.remote.retrofit.test.TestRetrofitClientModule
 import com.testeducation.education.di.modules.remote.retrofit.user.UserRetrofitClientModule
-import com.testeducation.education.di.modules.remote.internal.ApplicationVersionRemoteSourceModule
 import com.testeducation.education.di.modules.remote.test.TestRemoteModule
 import com.testeducation.education.di.modules.remote.theme.ThemeRemoteModule
 import com.testeducation.education.di.modules.remote.user.UserRemoteModule
@@ -82,7 +84,11 @@ import javax.inject.Singleton
         BackendRetrofitClientModule::class,
         ApplicationVersionRemoteSourceModule::class,
         AppVersionConfigModule::class,
-        AppVersionUseCaseModule::class
+        AppVersionUseCaseModule::class,
+
+        //Question
+        QuestionUseCaseModule::class,
+        QuestionCoreModule::class,
     ]
 )
 @Singleton
