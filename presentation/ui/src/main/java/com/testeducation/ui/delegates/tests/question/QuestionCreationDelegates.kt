@@ -112,18 +112,18 @@ fun answerDelegateOrder(
             etAnswer.doOnTextChanged { text, start, before, count ->
                 onAnswerTextChanger(item.id, text.toString())
             }
-            bind {
-                if (etAnswer.text.isEmpty()) {
-                    etAnswer.setText(item.answerText)
-                }
-                root.backgroundTintList = ColorStateList.valueOf(item.color)
-            }
             root.setOnTouchListener { _, motionEvent ->
                 if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
                     mDragStartListener.oDragStarted(viewHolder = this@simpleDelegateAdapter);
                     onSelectedElement(item.id)
                 }
                 false
+            }
+            bind {
+                if (etAnswer.text.isEmpty()) {
+                    etAnswer.setText(item.answerText)
+                }
+                root.backgroundTintList = ColorStateList.valueOf(item.color)
             }
         }
     }

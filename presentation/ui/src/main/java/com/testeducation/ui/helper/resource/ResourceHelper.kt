@@ -90,6 +90,7 @@ class ResourceHelper(
 
     private fun extractSecondaryColorResource(resource: ColorResource.Secondary) = when (resource) {
         ColorResource.Secondary.Gray1 -> color(R.color.colorGray_1)
+        ColorResource.Secondary.ColorGrayBlueDisable -> color(R.color.colorGrayBlueDisabled)
     }
 
     private fun extractUpdateResource(resource: StringResource.Update) = when (resource) {

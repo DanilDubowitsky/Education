@@ -1,6 +1,5 @@
 package com.testeducation.screen.tests.creation.question.creation
 
-import android.util.Log
 import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
@@ -81,10 +80,20 @@ class QuestionCreationViewModel(
     }
 
     fun updateSelectedDropElement(id: String) = intent {
-        val answerItems = getModelState().answerItem
+        val answerItems = getModelState().answerItem.toMutableList()
+
+        var currentAnswer = answerItems.find { it.id == id }
+        val position = answerItems.indexOf(currentAnswer)
+        if (currentAnswer is AnswerItem.OrderAnswer) {
+            currentAnswer = currentAnswer.copy(
+                color = ColorResource.Secondary.ColorGrayBlueDisable.getColor(resourceHelper)
+            )
+            answerItems[position] = currentAnswer
+        }
         updateModelState {
             copy(
-                selectedDropElement = answerItems.find { it.id == id }
+                selectedDropElement = currentAnswer,
+                answerItem = answerItems
             )
         }
     }
@@ -237,12 +246,10 @@ class QuestionCreationViewModel(
     }
 
     fun updatePosition(positionCurrent: Int, targetPosition: Int) = intent {
-        Log.e("TAG1", "idFrom = ${positionCurrent} - idTarget = ${targetPosition}")
         val modelState = getModelState()
         val answerItems = modelState.answerItem.toMutableList()
         val selectedElement = modelState.selectedDropElement
 
-        Log.e("TAG1", "targetId = ${answerItems[targetPosition]}")
         if (selectedElement == answerItems[targetPosition]) {
             return@intent
         }
@@ -261,9 +268,19 @@ class QuestionCreationViewModel(
     }
 
     fun clearSelectedDropElement() = intent {
+        val modelState = getModelState()
+        val answerItems = modelState.answerItem.toMutableList()
+        modelState.answerIndicatorItems.forEachIndexed { index, answerIndicatorItem ->
+            val answerItem = answerItems[index]
+            if (answerItem is AnswerItem.OrderAnswer) {
+                answerItems[index] = answerItem.copy(color = answerIndicatorItem.color)
+            }
+        }
+
         updateModelState {
             copy(
-                selectedDropElement = null
+                selectedDropElement = null,
+                answerItem = answerItems
             )
         }
     }

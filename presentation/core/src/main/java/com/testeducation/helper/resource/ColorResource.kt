@@ -18,5 +18,6 @@ sealed interface ColorResource {
 
     sealed interface Secondary: ColorResource {
         object Gray1: Secondary
+        object ColorGrayBlueDisable: Secondary
     }
 }
