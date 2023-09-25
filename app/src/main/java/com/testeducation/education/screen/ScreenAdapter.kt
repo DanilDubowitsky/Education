@@ -12,12 +12,15 @@ import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
+import com.testeducation.ui.screen.home.library.TestLibraryFragment
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
+import com.testeducation.ui.screen.tests.edit.TestEditorFragment
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
-import com.testeducation.ui.screen.tests.list.TestsFragment
+import com.testeducation.ui.screen.tests.library.LibraryFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
+import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.utils.withScreen
 
 class ScreenAdapter : IScreenAdapter {

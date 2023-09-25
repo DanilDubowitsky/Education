@@ -72,7 +72,7 @@ fun TestGetTypeUI.toModel() = when (this) {
     TestGetTypeUI.PASSED -> TestGetType.PASSED
 }
 
-private fun TestSettings.toUI() = TestShortUI.Test.Settings(
+fun TestSettings.toUI() = TestShortUI.Test.Settings(
     availability.toUI(),
     previewQuestions
 )
