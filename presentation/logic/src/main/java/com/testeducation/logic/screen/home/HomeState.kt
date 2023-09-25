@@ -7,7 +7,7 @@ data class HomeState(
     enum class NavigationItem {
         MAIN,
         FAVORITES,
-        SETTINGS,
+        LIBRARY,
         PROFILE
     }
 }

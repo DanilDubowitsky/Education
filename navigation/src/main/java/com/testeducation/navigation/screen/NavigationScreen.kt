@@ -3,6 +3,7 @@ package com.testeducation.navigation.screen
 import com.testeducation.logic.model.auth.ConfirmationType
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.model.test.TestFiltersUI
+import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.navigation.core.ResultKey
 import java.io.Serializable
@@ -74,6 +75,8 @@ sealed interface NavigationScreen : Serializable {
         }
 
         object LikedTests : Main
+
+        object Library : Main
     }
 
     sealed interface Tests : NavigationScreen {
@@ -90,6 +93,10 @@ sealed interface NavigationScreen : Serializable {
                 )
             }
         }
+
+        data class Library(
+            val getTypeUI: TestGetTypeUI
+        ) : Tests
 
         data class Details(
             val testId: String

@@ -54,10 +54,14 @@ class HomeViewModel(
         }
     }
 
-    fun navigateToSettings() = intent {
+    fun navigateToLibrary() = intent {
+        val currentScreen = getModelState().selectedScreen
+        val screen = NavigationScreen.Main.Library
+        if (currentScreen == HomeModelState.BottomNavigationItems.LIBRARY) return@intent
         updateModelState {
-            copy(selectedScreen = HomeModelState.BottomNavigationItems.SETTINGS)
+            copy(selectedScreen = HomeModelState.BottomNavigationItems.LIBRARY)
         }
+        router.replace(screen, HOME_NAVIGATOR_KEY)
     }
 
     fun navigateToCreation() = intent {

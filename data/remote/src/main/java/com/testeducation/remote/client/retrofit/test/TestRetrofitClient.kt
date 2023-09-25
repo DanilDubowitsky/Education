@@ -55,6 +55,36 @@ interface TestRetrofitClient {
     @POST("/api/app/content/tests")
     suspend fun createTest(@Body testCreationRequest: TestCreationRequest): RemoteResponse<RemoteCreationTest>
 
+    @GET("/api/app/account/tests")
+    suspend fun getCreatedTests(
+        @Query("title") query: String?,
+        @Query("theme") theme: String?,
+        @Query("order") order: String?,
+        @Query("direction") direction: String?,
+        @Query("min_time") minTime: Int?,
+        @Query("max_time") maxTime: Int?,
+        @Query("has_limit") hasLimit: Boolean,
+        @Query("min_questions") minQuestions: Int?,
+        @Query("max_questions") maxQuestions: Int?,
+        @Query("offset") offset: Int,
+        @Query("page_size") limit: Int,
+    ): RemoteResponse<RemotePage<RemoteTestShort>>
+
+    @GET("/api/app/account/tests/passes")
+    suspend fun getPassedTests(
+        @Query("title") query: String?,
+        @Query("theme") theme: String?,
+        @Query("order") order: String?,
+        @Query("direction") direction: String?,
+        @Query("min_time") minTime: Int?,
+        @Query("max_time") maxTime: Int?,
+        @Query("has_limit") hasLimit: Boolean,
+        @Query("min_questions") minQuestions: Int?,
+        @Query("max_questions") maxQuestions: Int?,
+        @Query("offset") offset: Int,
+        @Query("page_size") limit: Int,
+    ): RemoteResponse<RemotePage<RemoteTestShort>>
+
     @GET("/api/app/content/tests/{id}")
     suspend fun getDetailsTest(@Path("id") id: String) : RemoteResponse<RemoteTestDetails>
 }

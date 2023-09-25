@@ -77,6 +77,7 @@
     <string name="test_creation_hint_input_name">Назовите этот тест</string>
 
     <string name="test_favorites_title">Мне нравится</string>
+    <string name="test_library_title">Моя библиотека</string>
 
     <!--Question-->
     <string name="question_type_match">Соотвествие</string>
@@ -89,5 +90,9 @@
     <string name="question_match_hint">Cоответствие</string>
     <string name="question_creation_save_data">Сохраняем вопрос…</string>
     <string name="question_number">Вопрос %s</string>
+
+    <string name="library_published_title">Опубликованные</string>
+    <string name="library_passed_title">Пройденные</string>
+    <string name="library_draft_title">Черновики</string>
 
 </resources>

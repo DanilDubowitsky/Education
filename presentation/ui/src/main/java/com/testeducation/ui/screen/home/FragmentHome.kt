@@ -77,7 +77,7 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
         btnHome.setClickListener(viewModel::navigateToTests)
         btnFavorites.setClickListener(viewModel::navigateToFavorites)
         btnPlus.setClickListener(viewModel::navigateToCreation)
-        btnSettings.setClickListener(viewModel::navigateToSettings)
+        btnLibrary.setClickListener(viewModel::navigateToLibrary)
         btnProfile.setClickListener(viewModel::navigateToProfile)
     }
 
@@ -112,29 +112,29 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
     }
 
     private fun render(state: HomeState) = binding {
-        btnHome.switchEnabledState(true, R.drawable.ic_navigation_home)
-        btnFavorites.switchEnabledState(true, R.drawable.ic_navigation_favorites)
-        btnProfile.switchEnabledState(true, R.drawable.ic_navigation_profile)
-        btnSettings.switchEnabledState(true, R.drawable.ic_navigation_settings)
+        btnHome.switchEnabledState(true, R.drawable.ic_home_outline)
+        btnFavorites.switchEnabledState(true, R.drawable.ic_favorite_outline)
+        btnProfile.switchEnabledState(true, R.drawable.ic_profile_outline)
+        btnLibrary.switchEnabledState(true, R.drawable.ic_library_outline)
         when (state.selectedNavigationItem) {
             HomeState.NavigationItem.MAIN -> btnHome.switchEnabledState(
                 false,
-                disableIcon = R.drawable.ic_navigation_home_filled
+                disableIcon = R.drawable.ic_home_filled
             )
 
             HomeState.NavigationItem.FAVORITES -> btnFavorites.switchEnabledState(
                 false,
-                disableIcon = R.drawable.ic_navigation_favorites_filled
+                disableIcon = R.drawable.ic_favorite_filled
             )
 
-            HomeState.NavigationItem.SETTINGS -> btnSettings.switchEnabledState(
+            HomeState.NavigationItem.LIBRARY -> btnLibrary.switchEnabledState(
                 false,
-                disableIcon = R.drawable.ic_navigation_settings_filled
+                disableIcon = R.drawable.ic_library_filled
             )
 
             HomeState.NavigationItem.PROFILE -> btnProfile.switchEnabledState(
                 false,
-                disableIcon = R.drawable.ic_navigation_profile_filled
+                disableIcon = R.drawable.ic_profile_filled
             )
         }
     }
