@@ -92,6 +92,9 @@ class QuestionCreationFragment :
             btnCreate.setOnClickListener {
                 viewModel.saveQuestion()
             }
+            containerTimer.setOnClickListener {
+                viewModel.openTimeDialog()
+            }
         }
 
     }

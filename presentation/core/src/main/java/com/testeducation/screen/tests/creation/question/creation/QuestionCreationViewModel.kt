@@ -71,6 +71,10 @@ class QuestionCreationViewModel(
         )
     }
 
+    fun openTimeDialog() {
+        router.navigateTo(NavigationScreen.QuestionCreation.TimeQuestion(0))
+    }
+
     fun updateQuestionText(textQuestion: String) = intent {
         updateModelState {
             copy(

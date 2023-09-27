@@ -90,5 +90,8 @@
     <string name="question_match_hint">Cоответствие</string>
     <string name="question_creation_save_data">Сохраняем вопрос…</string>
     <string name="question_number">Вопрос %s</string>
+    <string name="question_time_title">Время вопроса</string>
+    <string name="question_time_more_that_minute">%sм%sсек</string>
+    <string name="question_time_less_that_minute">%sсек</string>
 
 </resources>

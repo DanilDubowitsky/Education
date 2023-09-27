@@ -102,6 +102,16 @@ class ResourceHelper(
             R.string.question_number,
             resource.number.toString()
         )
+
+        is StringResource.Question.TimeQuestionMore -> context.getString(
+            R.string.question_time_more_that_minute,
+            resource.minutes, resource.seconds
+        )
+
+        is StringResource.Question.TimeQuestionLess -> context.getString(
+            R.string.question_time_less_that_minute,
+            resource.seconds
+        )
     }
 
     private fun color(@ColorRes id: Int) = ContextCompat.getColor(context, id)
