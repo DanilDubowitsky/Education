@@ -1,8 +1,8 @@
 package com.testeducation.education.di.modules.remote.retrofit.global
 
 import com.testeducation.core.app.IAppBuildConfigHelper
-import com.testeducation.remote.BuildConfig
 import com.testeducation.education.di.modules.remote.retrofit.refresh.RefreshRetrofitModule.REFRESH_HTTP_CLIENT
+import com.testeducation.remote.BuildConfig
 import com.testeducation.remote.client.retrofit.auth.AuthRetrofitClient
 import com.testeducation.remote.interceptor.AccessTokenInterceptor
 import com.testeducation.remote.interceptor.AppVersionInterceptor
@@ -13,11 +13,14 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 object RetrofitModule {
+
+    private const val TIMEOUT = 60L
 
     @Provides
     @Singleton
@@ -50,6 +53,7 @@ object RetrofitModule {
         okHttpBuilder.addInterceptor(tokenInterceptor)
         okHttpBuilder.addInterceptor(appVersionInterceptor)
         okHttpBuilder.addInterceptor(userAgentInterceptor)
+        okHttpBuilder.readTimeout(TIMEOUT, TimeUnit.SECONDS).connectTimeout(TIMEOUT, TimeUnit.SECONDS)
         return okHttpBuilder.build()
     }
 
