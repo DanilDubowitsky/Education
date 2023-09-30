@@ -2,9 +2,7 @@ package com.testeducation.ui.delegates.tests.question
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
-import android.view.Gravity
 import android.view.MotionEvent
-import android.widget.FrameLayout
 import androidx.core.widget.doOnTextChanged
 import com.testeducation.logic.model.test.AnswerItemUi
 import com.testeducation.ui.R
@@ -14,7 +12,6 @@ import com.testeducation.ui.databinding.ViewHolderAnswerMatchBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerOrderBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerWriteBinding
 import com.testeducation.ui.listener.IDragStartListener
-import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 
@@ -156,7 +153,7 @@ fun footerPlusAddDelegate(
                 imgPlus.setOnClickListener {
                     onClickAdd()
                 }
-                val marginRight = if (item.isOrderAnswer) {
+               /* val marginRight = if (item.isOrderAnswer) {
                     46.dp
                 } else {
                     0.dp
@@ -167,7 +164,7 @@ fun footerPlusAddDelegate(
                 )
                 params.setMargins(0.dp, 0.dp, marginRight, 0.dp)
                 params.gravity = Gravity.CENTER
-                imgPlus.layoutParams = params
+                imgPlus.layoutParams = params*/
             }
         }
     }
