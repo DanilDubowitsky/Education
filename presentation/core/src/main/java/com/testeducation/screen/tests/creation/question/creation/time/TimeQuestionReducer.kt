@@ -13,7 +13,8 @@ class TimeQuestionReducer(private val timeConverterLongToString: ITimeConverterL
             timeList = modelState.timeList.map {
                 TimeQuestionUi(
                     time = timeConverterLongToString.convert(it.time),
-                    isSelected = it.isSelected
+                    isSelected = it.isSelected,
+                    color = it.color
                 )
             }
         )

@@ -79,6 +79,7 @@ class ResourceHelper(
         ColorResource.Main.Green -> color(R.color.colorDarkGreen)
         ColorResource.Main.Orange -> color(R.color.colorOrange)
         ColorResource.Main.White -> color(R.color.colorWhite)
+        ColorResource.Main.Black -> color(R.color.colorTextPrimary)
     }
 
     private fun extractMainColorResource(resource: ColorResource.MainLight) = when (resource) {
@@ -91,6 +92,7 @@ class ResourceHelper(
     private fun extractSecondaryColorResource(resource: ColorResource.Secondary) = when (resource) {
         ColorResource.Secondary.Gray1 -> color(R.color.colorGray_1)
         ColorResource.Secondary.ColorGrayBlueDisable -> color(R.color.colorGrayBlueDisabled)
+        ColorResource.Secondary.ColorDarkBlue -> color(R.color.colorDarkBlue)
     }
 
     private fun extractUpdateResource(resource: StringResource.Update) = when (resource) {

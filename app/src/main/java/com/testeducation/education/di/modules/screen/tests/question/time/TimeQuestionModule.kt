@@ -42,14 +42,16 @@ interface TimeQuestionModule {
             reducer: IReducer<TimeQuestionModelState, TimeQuestionState>,
             exceptionHandler: IExceptionHandler,
             navigationRouter: NavigationRouter,
-            dialog: TimeQuestionDialog
+            dialog: TimeQuestionDialog,
+            resourceHelper: IResourceHelper
         ): TimeQuestionViewModel {
             val screen = dialog.getScreen<NavigationScreen.QuestionCreation.TimeQuestion>()
             return TimeQuestionViewModel(
                 reducer = reducer,
                 errorHandler = exceptionHandler,
                 router = navigationRouter,
-                currentTimeQuestion = screen.time
+                currentTimeQuestion = screen.time,
+                resourceHelper = resourceHelper
             )
         }
     }
