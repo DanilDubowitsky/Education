@@ -7,8 +7,10 @@ import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionDrawableIconByType
 import com.testeducation.helper.question.IQuestionResourceHelper
+import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.helper.question.QuestionDrawableIconByType
 import com.testeducation.helper.question.QuestionResourceHelper
+import com.testeducation.helper.question.TimeConverterLongToString
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 import com.testeducation.navigation.core.NavigationRouter
@@ -32,6 +34,10 @@ interface TestEditorModule {
 
     companion object {
         @Provides
+        fun questionTimeConverter(resourceHelper: IResourceHelper): ITimeConverterLongToString {
+            return TimeConverterLongToString(resourceHelper)
+        }
+        @Provides
         fun questionDrawableIconByType(resourceHelper: IResourceHelper): IQuestionDrawableIconByType {
             return QuestionDrawableIconByType(
                 resourceHelper
@@ -49,8 +55,8 @@ interface TestEditorModule {
         }
 
         @Provides
-        fun provideReducer(resourceHelper: IResourceHelper,): IReducer<TestEditorModelState, TestEditorState> =
-            TestEditorReducer(resourceHelper)
+        fun provideReducer(timeConverterLongToString: ITimeConverterLongToString): IReducer<TestEditorModelState, TestEditorState> =
+            TestEditorReducer(timeConverterLongToString)
 
         @Provides
         fun provideViewModel(

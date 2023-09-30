@@ -63,7 +63,8 @@ class QuestionCreationViewModel(
             testId = testId,
             type = modelState.questionTypeItem.questionType,
             questionText = modelState.questionText,
-            answerItem = modelState.answerItem
+            answerItem = modelState.answerItem,
+            time = modelState.time
         )
         router.navigateTo(NavigationScreen.Tests.Details(testId))
         postSideEffect(
@@ -72,7 +73,19 @@ class QuestionCreationViewModel(
     }
 
     fun openTimeDialog() {
-        router.navigateTo(NavigationScreen.QuestionCreation.TimeQuestion(0))
+        router.setResultListener(NavigationScreen.QuestionCreation.OnTimeQuestionChanged) { time ->
+            intent {
+                updateModelState {
+                    copy(
+                        time = time
+                    )
+                }
+            }
+        }
+        intent {
+            val model = getModelState()
+            router.navigateTo(NavigationScreen.QuestionCreation.TimeQuestion(model.time))
+        }
     }
 
     fun updateQuestionText(textQuestion: String) = intent {

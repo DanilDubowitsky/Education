@@ -8,5 +8,6 @@ data class QuestionCreationState(
     val answerItemUiList: List<AnswerItemUi>,
     val questionTypeUiItem: QuestionTypeUiItem,
     val visibleIndicator: Boolean,
-    val answerIndicatorItems: List<AnswerIndicatorItemUi>
+    val answerIndicatorItems: List<AnswerIndicatorItemUi>,
+    val time: String
 )

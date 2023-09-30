@@ -9,6 +9,7 @@ import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.creation.question.creation.time.TimeQuestionSideEffect
 import com.testeducation.logic.screen.tests.creation.question.creation.time.TimeQuestionState
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.getColor
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -31,6 +32,18 @@ class TimeQuestionViewModel(
                     timeList = prepareTimeData()
                 )
             }
+        }
+    }
+
+    fun exit() = intent {
+        val modelState = getModelState()
+        val timeList = modelState.timeList
+        val currentTime = timeList.find { it.isSelected }
+        currentTime?.let { timeNotNull ->
+            router.sendResult(
+                NavigationScreen.QuestionCreation.OnTimeQuestionChanged,
+                timeNotNull.time
+            )
         }
     }
 

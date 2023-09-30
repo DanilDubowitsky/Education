@@ -8,12 +8,13 @@ class TimeConverterLongToString(val resourceHelper: IResourceHelper) : ITimeConv
         val minute = time / 60
         val seconds = time.mod(60)
 
-        return if (minute == 0L) {
+        val stringResource = if (minute == 0L) {
             StringResource.Question.TimeQuestionLess(seconds.toString())
+        } else if (seconds == 0) {
+            StringResource.Question.TimeQuestionOnlyMinutes(minute.toString())
         } else {
             StringResource.Question.TimeQuestionMore(minute.toString(), seconds.toString())
-        }.let {
-            resourceHelper.extractStringResource(it)
         }
+        return resourceHelper.extractStringResource(stringResource)
     }
 }

@@ -5,7 +5,6 @@ import com.testeducation.domain.model.question.AnswerItem
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.remote.client.retrofit.question.QuestionRetrofitClient
 import com.testeducation.remote.converter.question.mapToRequestAnswer
-import com.testeducation.remote.converter.question.mapToRequestTypeDefault
 import com.testeducation.remote.request.question.QuestionCreateRequest
 
 class QuestionRemoteClient(
@@ -15,12 +14,13 @@ class QuestionRemoteClient(
         testId: String,
         type: QuestionType,
         questionText: String,
-        answers: List<AnswerItem>
+        answers: List<AnswerItem>,
+        time: Long
     ) {
         val request = QuestionCreateRequest(
             title = questionText,
             type = type.typeName,
-            time = 0,
+            time = time,
             answers = answers.mapToRequestAnswer(type = type)
         )
         questionRetrofitClient.createQuestion(

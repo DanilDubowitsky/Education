@@ -19,6 +19,9 @@ class TimeQuestionDialog:  ViewModelHostBottomSheetDialog<DialogTimeQuestionBind
     DialogTimeQuestionBinding::inflate
 ) {
 
+    override val isHideAble: Boolean
+        get() = false
+
     private val timeQuestionAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(TimeQuestionUi::time),
@@ -33,6 +36,10 @@ class TimeQuestionDialog:  ViewModelHostBottomSheetDialog<DialogTimeQuestionBind
             adapter = timeQuestionAdapter
             layoutManager = LinearLayoutManager(requireContext())
             itemAnimator = null
+        }
+        binding.btnSave.setOnClickListener {
+            viewModel.exit()
+            dismiss()
         }
     }
 

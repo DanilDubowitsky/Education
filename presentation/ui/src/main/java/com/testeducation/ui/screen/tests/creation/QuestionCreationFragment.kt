@@ -130,6 +130,7 @@ class QuestionCreationFragment :
         answerIndicatorAdapter.items = questionCreationState.answerIndicatorItems
 
         rvIndicator.isVisible = questionCreationState.visibleIndicator
+        tvTime.text = questionCreationState.time
         when (questionCreationState.questionTypeUiItem.type) {
             QuestionTypeUi.MATCH -> {
                 imgIconQuestionType.setImageResource(R.drawable.ic_answer_match)

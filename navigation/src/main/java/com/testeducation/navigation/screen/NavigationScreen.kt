@@ -108,6 +108,7 @@ sealed interface NavigationScreen : Serializable {
         data class TimeQuestion(val time: Long) : QuestionCreation
 
         object OnSelectionQuestionTypeChanged : ResultKey<QuestionTypeUiItem>
+        object OnTimeQuestionChanged: ResultKey<Long>
     }
 
 }

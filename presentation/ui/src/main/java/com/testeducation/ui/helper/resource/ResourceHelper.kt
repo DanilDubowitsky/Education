@@ -110,6 +110,11 @@ class ResourceHelper(
             resource.minutes, resource.seconds
         )
 
+        is StringResource.Question.TimeQuestionOnlyMinutes -> context.getString(
+            R.string.question_time_only_minute,
+            resource.minutes
+        )
+
         is StringResource.Question.TimeQuestionLess -> context.getString(
             R.string.question_time_less_that_minute,
             resource.seconds

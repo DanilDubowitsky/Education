@@ -72,6 +72,7 @@ fun List<RemoteQuestion>.toModels() = map { item ->
         id = item.id,
         title = item.title,
         type = typeQuestion,
-        answers = item.answers.mapToModels(typeQuestion)
+        answers = item.answers.mapToModels(typeQuestion),
+        time = item.time.toLong()
     )
 }

@@ -5,6 +5,8 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.QuestionCreate
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.question.ITimeConverterLongToString
+import com.testeducation.helper.question.TimeConverterLongToString
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
 import com.testeducation.navigation.core.NavigationRouter
@@ -29,8 +31,13 @@ interface QuestionCreationModule {
 
     companion object {
         @Provides
-        fun provideReducerQuestionCreation(): IReducer<QuestionCreationModelState, QuestionCreationState> =
-            QuestionCreationReducer()
+        fun questionTimeConverter(resourceHelper: IResourceHelper): ITimeConverterLongToString {
+            return TimeConverterLongToString(resourceHelper)
+        }
+
+        @Provides
+        fun provideReducerQuestionCreation(timeConverterLongToString: ITimeConverterLongToString): IReducer<QuestionCreationModelState, QuestionCreationState> =
+            QuestionCreationReducer(timeConverterLongToString)
 
         @Provides
         fun provideViewModelQuestionCreation(

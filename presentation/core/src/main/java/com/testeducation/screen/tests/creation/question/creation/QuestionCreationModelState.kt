@@ -9,5 +9,6 @@ data class QuestionCreationModelState(
     val questionTypeItem: QuestionTypeItem,
     val questionText: String = "",
     val selectedDropElement: AnswerItem? = null,
-    val answerIndicatorItems: List<AnswerIndicatorItem> = emptyList()
+    val answerIndicatorItems: List<AnswerIndicatorItem> = emptyList(),
+    val time: Long = 0
 )

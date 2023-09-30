@@ -34,6 +34,7 @@ fun answersDisplayDelegateDefault(
                 itemQuestion.initAnswerWriteAnswer(context, this)
                 itemQuestion.initAnswerMatchAnswer(context, this)
             }
+            tvTime.text = item.question.time
         }
     }
 }

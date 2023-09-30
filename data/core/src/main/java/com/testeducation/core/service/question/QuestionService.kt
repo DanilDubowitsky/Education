@@ -12,8 +12,9 @@ class QuestionService(
         testId: String,
         type: QuestionType,
         questionText: String,
-        answers: List<AnswerItem>
+        answers: List<AnswerItem>,
+        time: Long
     ) {
-        questionRemoteClient.createQuestion(testId, type, questionText, answers)
+        questionRemoteClient.createQuestion(testId, type, questionText, answers, time)
     }
 }
