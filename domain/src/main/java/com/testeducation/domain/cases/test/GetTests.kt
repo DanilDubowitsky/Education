@@ -2,6 +2,7 @@ package com.testeducation.domain.cases.test
 
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.Page
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.repository.test.ITestRepository
@@ -15,13 +16,14 @@ class GetTests(
         themeId: String? = null,
         orderField: TestOrderField? = null,
         orderDirection: OrderDirection = OrderDirection.ASCENDING,
-        minTime: Int?,
-        maxTime: Int?,
-        hasLimit: Boolean,
-        minQuestions: Int?,
-        maxQuestions: Int?,
+        minTime: Int? = null,
+        maxTime: Int? = null,
+        hasLimit: Boolean = false,
+        minQuestions: Int? = null,
+        maxQuestions: Int? = null,
         limit: Int,
-        offset: Int
+        offset: Int,
+        getType: TestGetType
     ): Page<TestShort> = testRepository.getTests(
         query,
         themeId,
@@ -33,6 +35,7 @@ class GetTests(
         minQuestions,
         maxQuestions,
         limit,
-        offset
+        offset,
+        getType
     )
 }

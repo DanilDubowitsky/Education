@@ -8,6 +8,7 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.cases.user.GetCurrentUser
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestFiltersUI
@@ -119,7 +120,8 @@ class TestsViewModel(
             maxQuestions = modelState.questionsLimitTo.toIntOrNull(),
             minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
             limit = TestsDefaults.TESTS_PAGE_SIZE,
-            offset = modelState.tests.size
+            offset = modelState.tests.size,
+            getType = TestGetType.MAIN
         )
         updateModelState {
             copy(

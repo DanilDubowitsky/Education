@@ -1,7 +1,9 @@
 package com.testeducation.ui.screen.tests.liked
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
@@ -52,16 +54,13 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
 
     private var scrollListener: RecyclerView.OnScrollListener? = null
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         requireActivity().window.statusBarColor = requireContext().loadColor(R.color.colorRed)
-    }
-
-    override fun onDestroy() {
-        requireActivity().window.statusBarColor = requireContext().loadColor(
-            android.R.color.transparent
-        )
-        super.onDestroy()
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,7 +87,7 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
         themesRecycler.isInvisible = state.isThemesLoading
         themesShimmer.isShimmerHide = !state.isThemesLoading
 
-        globalProgress.isGone = !state.isTestsLoading
+        shimmerLoading.isShimmerHide = !state.isTestsLoading
         testsRecycler.isInvisible = state.isTestsLoading
     }
 

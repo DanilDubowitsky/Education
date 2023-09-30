@@ -6,12 +6,10 @@ import com.testeducation.converter.test.toUIModel
 import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
-import com.testeducation.domain.cases.test.GetLikedTests
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.model.test.TestFiltersUI
-import com.testeducation.logic.model.test.TestType
 import com.testeducation.logic.screen.tests.filters.TestsFiltersSideEffect
 import com.testeducation.logic.screen.tests.filters.TestsFiltersState
 import com.testeducation.navigation.core.NavigationRouter
@@ -26,7 +24,6 @@ class TestsFiltersViewModel(
     private val router: NavigationRouter,
     private val getThemes: GetThemes,
     private val getTests: GetTests,
-    private val getLikedTests: GetLikedTests,
     reducer: IReducer<TestsFiltersModelState, TestsFiltersState>,
     exceptionHandler: IExceptionHandler
 ) : BaseViewModel<TestsFiltersModelState, TestsFiltersState, TestsFiltersSideEffect>(
@@ -43,7 +40,7 @@ class TestsFiltersViewModel(
         timeLimitTo = filtersUI.maxTime,
         testOrderField = filtersUI.orderFieldUI.toModel(),
         filterResultCount = filtersUI.currentItemsCount,
-        testType = filtersUI.testType,
+        testGetTypeUI = filtersUI.testGetTypeUI,
         result = filtersUI.preLoadedTests.toModels()
     )
 
@@ -145,7 +142,7 @@ class TestsFiltersViewModel(
                 preLoadedTests = result.toUIModels(),
                 selectedTheme = selectedTheme,
                 currentItemsCount = filterResultCount ?: 0,
-                testType = testType
+                testGetTypeUI = testGetTypeUI
             )
             router.sendResult(NavigationScreen.Tests.Filters.OnFiltersChanged, filters)
             router.exit()
@@ -184,31 +181,18 @@ class TestsFiltersViewModel(
         }
         val modelState = getModelState()
 
-        val page = when (filtersUI.testType) {
-            TestType.LIKED -> getLikedTests(
-                themeId = modelState.selectedTheme,
-                orderField = modelState.testOrderField,
-                minTime = modelState.timeLimitFrom.toIntOrNull(),
-                maxTime = modelState.timeLimitTo.toIntOrNull(),
-                hasLimit = modelState.isTimeLimited,
-                maxQuestions = modelState.questionsLimitTo.toIntOrNull(),
-                minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
-                limit = TestsDefaults.TESTS_PAGE_SIZE,
-                offset = 0
-            )
-
-            TestType.DEFAULT -> getTests(
-                themeId = modelState.selectedTheme,
-                orderField = modelState.testOrderField,
-                minTime = modelState.timeLimitFrom.toIntOrNull(),
-                maxTime = modelState.timeLimitTo.toIntOrNull(),
-                hasLimit = modelState.isTimeLimited,
-                maxQuestions = modelState.questionsLimitTo.toIntOrNull(),
-                minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
-                limit = TestsDefaults.TESTS_PAGE_SIZE,
-                offset = 0
-            )
-        }
+        val page = getTests(
+            themeId = modelState.selectedTheme,
+            orderField = modelState.testOrderField,
+            minTime = modelState.timeLimitFrom.toIntOrNull(),
+            maxTime = modelState.timeLimitTo.toIntOrNull(),
+            hasLimit = modelState.isTimeLimited,
+            maxQuestions = modelState.questionsLimitTo.toIntOrNull(),
+            minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
+            limit = TestsDefaults.TESTS_PAGE_SIZE,
+            offset = 0,
+            getType = filtersUI.testGetTypeUI.toModel()
+        )
 
         updateModelState {
             copy(

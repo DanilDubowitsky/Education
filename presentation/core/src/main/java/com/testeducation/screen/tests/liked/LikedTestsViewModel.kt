@@ -5,13 +5,14 @@ import com.testeducation.converter.test.toUIModel
 import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
-import com.testeducation.domain.cases.test.GetLikedTests
+import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestFiltersUI
-import com.testeducation.logic.model.test.TestType
+import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.screen.tests.liked.LikedTestsSideEffect
 import com.testeducation.logic.screen.tests.liked.LikedTestsState
 import com.testeducation.navigation.core.Disposable
@@ -25,7 +26,7 @@ class LikedTestsViewModel(
     private val router: NavigationRouter,
     private val testShortHelper: ITestHelper,
     private val getThemes: GetThemes,
-    private val getLikedTests: GetLikedTests,
+    private val getLikedTests: GetTests,
     reducer: IReducer<LikedTestsModelState, LikedTestsState>,
     exceptionHandler: IExceptionHandler
 ) : BaseViewModel<LikedTestsModelState, LikedTestsState, LikedTestsSideEffect>(
@@ -79,7 +80,7 @@ class LikedTestsViewModel(
                 selectedOrderField.toUIModel(),
                 tests.toUIModels(),
                 tests.size,
-                TestType.LIKED
+                TestGetTypeUI.LIKED
             )
         }
 
@@ -149,7 +150,8 @@ class LikedTestsViewModel(
                 maxQuestions = questionsLimitTo.toIntOrNull(),
                 minQuestions = questionsLimitFrom.toIntOrNull(),
                 limit = TestsDefaults.TESTS_PAGE_SIZE,
-                offset = tests.size
+                offset = tests.size,
+                getType = TestGetType.LIKED
             )
         }
 

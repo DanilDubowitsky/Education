@@ -1,15 +1,14 @@
 package com.testeducation.converter.test
 
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestSettings
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.test.TestStyle
 import com.testeducation.logic.model.test.CardTestStyle
+import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
-import com.testeducation.utils.MainColor.tempColors
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 fun TestShort.toUI(): TestShortUI = TestShortUI.Test(
     id,
@@ -59,6 +58,20 @@ fun List<TestShortUI>.toModels() = this.mapNotNull { testShortUI ->
     else null
 }
 
+fun TestGetType.toUI() = when (this) {
+    TestGetType.MAIN -> TestGetTypeUI.MAIN
+    TestGetType.LIKED -> TestGetTypeUI.LIKED
+    TestGetType.CREATED -> TestGetTypeUI.CREATED
+    TestGetType.PASSED -> TestGetTypeUI.PASSED
+}
+
+fun TestGetTypeUI.toModel() = when (this) {
+    TestGetTypeUI.MAIN -> TestGetType.MAIN
+    TestGetTypeUI.LIKED -> TestGetType.LIKED
+    TestGetTypeUI.CREATED -> TestGetType.CREATED
+    TestGetTypeUI.PASSED -> TestGetType.PASSED
+}
+
 fun TestSettings.toUI() = TestShortUI.Test.Settings(
     availability.toUI(),
     previewQuestions
@@ -77,15 +90,4 @@ private fun TestSettings.Availability.toUI() = when (this) {
 private fun TestShortUI.Test.Settings.Availability.toModel() = when (this) {
     TestShortUI.Test.Settings.Availability.PUBLIC -> TestSettings.Availability.PUBLIC
     TestShortUI.Test.Settings.Availability.PRIVATE -> TestSettings.Availability.PRIVATE
-}
-
-// TODO: remove this when styles and colors added on back end
-private fun getColor(): String {
-    val rand = Random.nextInt(0..3)
-    return tempColors[rand]
-}
-
-private fun getStyle(): CardTestStyle {
-    val rand = Random.nextInt(0..3)
-    return CardTestStyle.values()[rand]
 }

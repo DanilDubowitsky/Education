@@ -3,6 +3,7 @@ package com.testeducation.core.repository.test
 import com.testeducation.core.source.remote.test.ITestRemoteSource
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.Page
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestDetails
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
@@ -23,7 +24,8 @@ class TestRepository(
         minQuestions: Int?,
         maxQuestions: Int?,
         limit: Int,
-        offset: Int
+        offset: Int,
+        getType: TestGetType
     ): Page<TestShort> =
         testRemoteSource.getTests(
             query,
@@ -36,34 +38,8 @@ class TestRepository(
             minQuestions,
             maxQuestions,
             limit,
-            offset
-        )
-
-    override suspend fun getLikedTests(
-        query: String?,
-        themeId: String?,
-        orderField: TestOrderField?,
-        orderDirection: OrderDirection,
-        minTime: Int?,
-        maxTime: Int?,
-        hasLimit: Boolean,
-        minQuestions: Int?,
-        maxQuestions: Int?,
-        limit: Int,
-        offset: Int
-    ): Page<TestShort> =
-        testRemoteSource.getLikedTests(
-            query,
-            themeId,
-            orderField,
-            orderDirection,
-            minTime,
-            maxTime,
-            hasLimit,
-            minQuestions,
-            maxQuestions,
-            limit,
-            offset
+            offset,
+            getType
         )
 
     override suspend fun getTestDetails(id: String): TestDetails {

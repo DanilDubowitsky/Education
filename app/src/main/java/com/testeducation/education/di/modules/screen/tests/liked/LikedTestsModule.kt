@@ -2,7 +2,6 @@ package com.testeducation.education.di.modules.screen.tests.liked
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
-import com.testeducation.domain.cases.test.GetLikedTests
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.cases.theme.GetThemes
@@ -15,7 +14,6 @@ import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.screen.tests.liked.LikedTestsModelState
 import com.testeducation.screen.tests.liked.LikedTestsReducer
 import com.testeducation.screen.tests.liked.LikedTestsViewModel
-import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -43,7 +41,7 @@ interface LikedTestsModule {
         fun provideViewModel(
             router: NavigationRouter,
             testShortHelper: ITestHelper,
-            getLikedTests: GetLikedTests,
+            getLikedTests: GetTests,
             getThemes: GetThemes,
             reducer: IReducer<LikedTestsModelState, LikedTestsState>,
             exceptionHandler: IExceptionHandler
