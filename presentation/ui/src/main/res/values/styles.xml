@@ -108,6 +108,18 @@
         <item name="android:stateListAnimator">@null</item>
     </style>
 
+    <style name="Button.Small.Blue" parent="Widget.AppCompat.Button">
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_width">204dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/mulish_medium</item>
+        <item name="android:background">@drawable/background_selectable_blue_rounded</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
     <style name="Button.Outline.Blue" parent="Button.Normal.Green">
         <item name="android:textColor">@color/colorBlue</item>
         <item name="android:background">@drawable/background_blue_border_oval</item>

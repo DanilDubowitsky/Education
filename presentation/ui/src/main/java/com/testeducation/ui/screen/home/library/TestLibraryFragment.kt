@@ -39,7 +39,9 @@ class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, Fragment
     private val testsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             TestShortDiffUtil(),
-            createTestShortAdapterDelegate(viewModel::toggleTestLike),
+            createTestShortAdapterDelegate(viewModel::toggleTestLike) {
+
+            },
             createTestLoadingDelegate()
         )
     }

@@ -95,4 +95,9 @@
     <string name="library_passed_title">Пройденные</string>
     <string name="library_draft_title">Черновики</string>
 
+    <string name="test_preview_about_test_label">О тесте</string>
+    <string name="test_preview_show_more">Показать полностью</string>
+    <string name="test_preview_show_questions">Показать список вопросов</string>
+    <string name="test_preview_pass_test">Пройти тест</string>
+
 </resources>

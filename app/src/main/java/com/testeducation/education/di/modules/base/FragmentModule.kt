@@ -12,6 +12,7 @@ import com.testeducation.education.di.modules.screen.tests.filters.TestsFiltersM
 import com.testeducation.education.di.modules.screen.tests.library.TestLibraryModule
 import com.testeducation.education.di.modules.screen.tests.liked.LikedTestsModule
 import com.testeducation.education.di.modules.screen.tests.list.TestsModule
+import com.testeducation.education.di.modules.screen.tests.preview.TestPreviewModule
 import com.testeducation.education.di.modules.screen.tests.question.QuestionCreationModule
 import com.testeducation.ui.screen.auth.confirmation.CodeConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
@@ -26,6 +27,7 @@ import com.testeducation.ui.screen.home.library.TestLibraryFragment
 import com.testeducation.ui.screen.tests.library.LibraryFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
+import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -70,5 +72,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [LibraryModule::class])
     fun libraryFragment(): LibraryFragment
+
+    @ContributesAndroidInjector(modules = [TestPreviewModule::class])
+    fun testPreviewFragment(): TestPreviewFragment
 
 }
