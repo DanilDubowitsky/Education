@@ -36,7 +36,9 @@ interface QuestionCreationModule {
         }
 
         @Provides
-        fun provideReducerQuestionCreation(timeConverterLongToString: ITimeConverterLongToString): IReducer<QuestionCreationModelState, QuestionCreationState> =
+        fun provideReducerQuestionCreation(
+            timeConverterLongToString: ITimeConverterLongToString
+        ): IReducer<QuestionCreationModelState, QuestionCreationState> =
             QuestionCreationReducer(timeConverterLongToString)
 
         @Provides

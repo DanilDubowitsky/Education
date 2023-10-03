@@ -42,7 +42,7 @@ class TestEditorViewModel(
         )
     }
 
-    private fun getTestDetails(testId: String) = singleIntent(getTestDetails.javaClass.name) {
+    private fun getTestDetails(testId: String) = singleIntent(getTest.javaClass.name) {
         val details = getTest.invoke(id = testId)
         val questionItems = questionResourceHelper.getQuestionItemPrepared(details.questions)
         val questionDetails : MutableList<QuestionDetails> = mutableListOf()

@@ -5,6 +5,9 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.question.ITimeConverterLongToString
+import com.testeducation.helper.question.TimeConverterLongToString
+import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
@@ -27,8 +30,13 @@ interface TestPreviewModule {
 
     companion object {
         @Provides
-        fun provideReducer(): IReducer<TestPreviewModelState, TestPreviewState> =
-            TestPreviewReducer()
+        fun questionTimeConverter(resourceHelper: IResourceHelper): ITimeConverterLongToString =
+            TimeConverterLongToString(resourceHelper)
+
+        @Provides
+        fun provideReducer(
+            timeConverter: ITimeConverterLongToString
+        ): IReducer<TestPreviewModelState, TestPreviewState> = TestPreviewReducer(timeConverter)
 
         @Provides
         fun provideViewModel(

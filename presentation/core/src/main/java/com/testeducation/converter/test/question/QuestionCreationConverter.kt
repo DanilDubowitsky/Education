@@ -2,7 +2,6 @@ package com.testeducation.converter.test.question
 
 import com.testeducation.domain.model.question.AnswerItem
 import com.testeducation.domain.model.question.Question
-import com.testeducation.domain.model.question.QuestionItem
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.logic.model.question.QuestionItemUi
 import com.testeducation.logic.model.test.AnswerItemUi
