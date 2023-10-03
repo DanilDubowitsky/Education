@@ -12,6 +12,5 @@ data class TestShort(
     val theme: ThemeShort,
     val liked: Boolean,
     val passed: Boolean,
-    val style: TestStyle,
-    val settings: TestSettings
+    val style: TestStyle
 )

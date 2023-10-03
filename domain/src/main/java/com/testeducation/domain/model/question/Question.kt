@@ -1,6 +1,6 @@
 package com.testeducation.domain.model.question
 
-data class QuestionItem(
+data class Question(
     val id: String,
     val title: String,
     val numberQuestion: String = "",

@@ -1,7 +1,7 @@
 package com.testeducation.converter.test.question
 
 import com.testeducation.domain.model.question.AnswerItem
-import com.testeducation.domain.model.question.QuestionItem
+import com.testeducation.domain.model.question.Question
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.logic.model.question.QuestionItemUi
 import com.testeducation.logic.model.test.AnswerItemUi
@@ -53,11 +53,11 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
     }
 }
 
-fun List<QuestionItem>.toUi(timeConverterLongToString: ITimeConverterLongToString) = map { question ->
+fun List<Question>.toUi(timeConverterLongToString: ITimeConverterLongToString) = map { question ->
     question.toUi(timeConverterLongToString)
 }
 
-fun QuestionItem.toUi(timeConverterLongToString: ITimeConverterLongToString) = QuestionItemUi(
+fun Question.toUi(timeConverterLongToString: ITimeConverterLongToString) = QuestionItemUi(
     id = id,
     title = title,
     icon = icon,

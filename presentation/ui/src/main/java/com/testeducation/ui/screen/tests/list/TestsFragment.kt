@@ -38,7 +38,8 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         AsyncListDifferDelegationAdapter(
             TestShortDiffUtil(),
             createTestShortAdapterDelegate(
-                viewModel::toggleTestLike
+                viewModel::toggleTestLike,
+                viewModel::onTestClick
             ),
             createTestLoadingDelegate()
         )

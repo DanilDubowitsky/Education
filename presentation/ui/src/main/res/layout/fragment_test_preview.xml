@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rootAppBar"
+        android:background="@color/colorDarkGreen"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_favorite_outline"
+            app:tint="@color/colorWhite" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btnFavorite"
+            android:layout_alignBottom="@+id/btnFavorite"
+            android:layout_toLeftOf="@+id/btnFavorite"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_upload"
+            app:tint="@color/colorWhite" />
+
+    </RelativeLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/rootAppBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:animateLayoutChanges="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/background_green_rounded_bottom"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/contentAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/txtTheme"
+                        style="@style/Text.Badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/background_shape_rounded_6"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="История" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtTestPassTime"
+                        style="@style/Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="25dp"
+                        android:background="@drawable/background_border_rounded"
+                        android:drawablePadding="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="6dp"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp"
+                        app:drawableStartCompat="@drawable/ic_timer"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txtTheme"
+                        tools:text="30 сек" />
+
+                    <TextView
+                        android:id="@+id/txtTitle"
+                        style="@style/Text.Label.SemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="25dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20sp"
+                        app:layout_constraintTop_toBottomOf="@+id/txtTheme"
+                        tools:text="История западной Европы XVII - XVIII веков" />
+
+                    <TextView
+                        android:id="@+id/txtDate"
+                        style="@style/Text.Label.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginEnd="25dp"
+                        android:layout_marginBottom="23dp"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+                        tools:text="27 мая 2023" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/rootScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <TextView
+                    android:id="@+id/txtLabelAboutTest"
+                    style="@style/Text.Label.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="27dp"
+                    android:text="@string/test_preview_about_test_label"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    style="@style/Text.Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="5dp"
+                    android:maxLines="6"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@+id/txtLabelAboutTest"
+                    tools:text="Тест посвящён событиям полуторастолетнего периода, с середины XVII до конца XVIII в., времени очень сложного, ознаменованного противоречивыми процессами развития капиталистической мануфактуры на Западе и закрепощения крестьянства на Востоке Европы, становления парламентского конституционализма в Англии и решительных успехов в утверждении бюрократизированных абсолютных монархий на континенте." />
+
+                <TextView
+                    android:id="@+id/txtShowMore"
+                    style="@style/Text.Label.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="25dp"
+                    android:text="@string/test_preview_show_more"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+                <TextView
+                    android:id="@+id/txtQuestionsCount"
+                    style="@style/Text.Label.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="36dp"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDescription"
+                    tools:text="60 вопросов" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnShowQuestions"
+                    style="@style/Button.Small.Blue"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/background_selectable_blue_rounded"
+                    android:text="@string/test_preview_show_questions"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtQuestionsCount" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnPassTest"
+                    style="@style/Button.Normal.Green"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginBottom="110dp"
+                    android:text="@string/test_preview_pass_test"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="55dp">
+
+            <include layout="@layout/layout_test_preview_shimmer" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

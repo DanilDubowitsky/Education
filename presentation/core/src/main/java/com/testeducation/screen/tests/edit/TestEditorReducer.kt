@@ -12,7 +12,7 @@ import com.testeducation.logic.screen.tests.edit.TestEditorState
 class TestEditorReducer(private val timeConverterLongToString: ITimeConverterLongToString) :
     IReducer<TestEditorModelState, TestEditorState> {
     override fun reduce(modelState: TestEditorModelState): TestEditorState {
-        val test = modelState.testDetails
+        val test = modelState.test
         return if (test == null) {
             TestEditorState.NoInit
         } else TestEditorState.Content(
@@ -25,7 +25,7 @@ class TestEditorReducer(private val timeConverterLongToString: ITimeConverterLon
                 ),
                 settings = test.settings.toUI(),
                 questions = test.questions.toUi(timeConverterLongToString),
-                status = test.status,
+                status = test.status.name,
                 likes = test.likes,
                 liked = test.liked,
                 passesUser = test.passesUser,

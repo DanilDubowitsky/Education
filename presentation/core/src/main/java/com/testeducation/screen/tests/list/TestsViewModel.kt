@@ -17,6 +17,7 @@ import com.testeducation.logic.screen.tests.list.TestsState
 import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.screen.home.HomeViewModel.Companion.HOME_NAVIGATOR_KEY
 import com.testeducation.screen.tests.base.TestsDefaults
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -107,6 +108,11 @@ class TestsViewModel(
         updateModelState {
             copy(tests = newTests)
         }
+    }
+
+    fun onTestClick(id: String) = intent {
+        val screen = NavigationScreen.Tests.Preview(id)
+        router.replace(screen, HOME_NAVIGATOR_KEY)
     }
 
     private fun loadTests() = singleIntent(getTests.javaClass.name) {

@@ -3,7 +3,7 @@ package com.testeducation.remote.model.test
 import com.google.gson.annotations.SerializedName
 import com.testeducation.remote.model.question.RemoteQuestion
 
-data class RemoteTestDetails(
+data class RemoteTest(
     @SerializedName("id")
     val id: String,
     @SerializedName("title")
@@ -15,7 +15,7 @@ data class RemoteTestDetails(
     @SerializedName("questions")
     val question: List<RemoteQuestion>,
     @SerializedName("status")
-    val status: String,
+    val status: Status,
     @SerializedName("likes")
     val likes: Long,
     @SerializedName("liked")
@@ -25,5 +25,15 @@ data class RemoteTestDetails(
     @SerializedName("passed")
     val passed: Boolean,
     @SerializedName("theme")
-    val theme: RemoteThemeShort
-)
+    val theme: RemoteThemeShort,
+    @SerializedName("date_created")
+    val creationDate: Long
+) {
+
+    enum class Status {
+        Draft,
+        Scheduled,
+        Published,
+        Locked
+    }
+}

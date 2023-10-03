@@ -39,6 +39,10 @@ class CardTest @JvmOverloads constructor(
         }
     }
 
+    fun setClickListener(listener: () -> Unit) {
+        binding.root.setClickListener(listener)
+    }
+
     fun setOnLikeClickListener(listener: () -> Unit) {
         binding.likesIcon.setClickListener {
             listener()

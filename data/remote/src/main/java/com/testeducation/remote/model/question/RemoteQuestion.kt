@@ -15,5 +15,4 @@ data class RemoteQuestion(
     val time: Int,
     @SerializedName("answers")
     val answers: List<RemoteAnswer>
-
 )
