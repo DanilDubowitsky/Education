@@ -9,5 +9,6 @@ data class QuestionItemUi(
     val icon: Int,
     val numberQuestion: String,
     val answerItemUiList: List<AnswerItemUi>,
-    val questionTypeUiItem: QuestionTypeUiItem
+    val questionTypeUiItem: QuestionTypeUiItem,
+    val time: String
 )

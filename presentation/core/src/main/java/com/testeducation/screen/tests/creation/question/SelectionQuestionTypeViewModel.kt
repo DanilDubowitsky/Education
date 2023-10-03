@@ -53,6 +53,9 @@ class SelectionQuestionTypeViewModel(
                         questionType = QuestionType.DEFAULT
                     ),
                     QuestionTypeItem(
+                        questionType = QuestionType.ORDER
+                    ),
+                    QuestionTypeItem(
                         questionType = QuestionType.MATCH
                     ),
                     QuestionTypeItem(

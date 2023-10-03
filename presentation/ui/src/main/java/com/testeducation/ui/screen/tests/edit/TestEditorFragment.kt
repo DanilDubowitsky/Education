@@ -27,7 +27,7 @@ class TestEditorFragment :
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(QuestionDetailsUi::id),
             answersDisplayDelegateDefault(),
-            footerQuestionDetailsPlusAddDelegate({})
+            footerQuestionDetailsPlusAddDelegate(viewModel::openCreateQuestion)
         )
     }
 

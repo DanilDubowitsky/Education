@@ -36,5 +36,8 @@ sealed interface StringResource {
 
     sealed interface Question : StringResource {
         data class NumberQuestion(val number: Int) : Question
+        data class TimeQuestionMore(val minutes: String, val seconds: String) : Question
+        data class TimeQuestionOnlyMinutes(val minutes: String) : Question
+        data class TimeQuestionLess(val seconds: String) : Question
     }
 }

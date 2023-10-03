@@ -11,8 +11,9 @@ class QuestionCreate(
         testId: String,
         type: QuestionType,
         questionText: String,
-        answerItem: List<AnswerItem>
+        answerItem: List<AnswerItem>,
+        time: Long
     ) = questionService.createQuestion(
-        testId, type, questionText, answerItem
+        testId, type, questionText, answerItem, time
     )
 }

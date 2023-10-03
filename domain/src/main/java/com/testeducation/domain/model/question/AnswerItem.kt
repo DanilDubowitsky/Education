@@ -31,5 +31,12 @@ sealed class AnswerItem {
         }
     }
 
-    data class FooterPlusAdd(override val id: String = "-1") : AnswerItem()
+    data class OrderAnswer(
+        override val id: String,
+        val answerText: String = "",
+        val order: Int,
+        val color: Int = 0
+    ) : AnswerItem()
+
+    data class FooterPlusAdd(override val id: String = "-1", val isOrderAnswer: Boolean = false) : AnswerItem()
 }

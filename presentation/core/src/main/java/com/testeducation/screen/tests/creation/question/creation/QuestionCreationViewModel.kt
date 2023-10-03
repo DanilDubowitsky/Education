@@ -4,6 +4,7 @@ import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.QuestionCreate
+import com.testeducation.domain.model.question.AnswerIndicatorItem
 import com.testeducation.domain.model.question.AnswerItem
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.helper.error.IExceptionHandler
@@ -17,6 +18,7 @@ import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.getColor
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import java.util.Collections
 
 class QuestionCreationViewModel(
     reducer: IReducer<QuestionCreationModelState, QuestionCreationState>,
@@ -61,7 +63,8 @@ class QuestionCreationViewModel(
             testId = testId,
             type = modelState.questionTypeItem.questionType,
             questionText = modelState.questionText,
-            answerItem = modelState.answerItem
+            answerItem = modelState.answerItem,
+            time = modelState.time
         )
         router.navigateTo(NavigationScreen.Tests.Details(testId))
         postSideEffect(
@@ -69,10 +72,45 @@ class QuestionCreationViewModel(
         )
     }
 
+    fun openTimeDialog() {
+        router.setResultListener(NavigationScreen.QuestionCreation.OnTimeQuestionChanged) { time ->
+            intent {
+                updateModelState {
+                    copy(
+                        time = time
+                    )
+                }
+            }
+        }
+        intent {
+            val model = getModelState()
+            router.navigateTo(NavigationScreen.QuestionCreation.TimeQuestion(model.time))
+        }
+    }
+
     fun updateQuestionText(textQuestion: String) = intent {
         updateModelState {
             copy(
                 questionText = textQuestion
+            )
+        }
+    }
+
+    fun updateSelectedDropElement(id: String) = intent {
+        val answerItems = getModelState().answerItem.toMutableList()
+
+        var currentAnswer = answerItems.find { it.id == id }
+        val position = answerItems.indexOf(currentAnswer)
+        if (currentAnswer is AnswerItem.OrderAnswer) {
+            currentAnswer = currentAnswer.copy(
+                color = ColorResource.Secondary.ColorGrayBlueDisable.getColor(resourceHelper)
+            )
+            answerItems[position] = currentAnswer
+        }
+        updateModelState {
+            copy(
+                selectedDropElement = currentAnswer,
+                answerItem = answerItems
             )
         }
     }
@@ -94,16 +132,24 @@ class QuestionCreationViewModel(
     }
 
     fun addAnswer() = intent {
-        val answerItems = getModelState().answerItem
+        val modelState = getModelState()
+        val answerItems = modelState.answerItem
         val index = answerItems.size - 1
         val answer = createAnswer(
             index, getModelState().questionTypeItem.questionType
         )
+        val answerIndicator = if (modelState.questionTypeItem.questionType == QuestionType.ORDER) {
+            val indicator = createAnswerIndicator(index)
+            modelState.answerIndicatorItems.toMutableList().apply {
+                add(indicator)
+            }
+        } else emptyList()
         updateModelState {
             copy(
                 answerItem = answerItems.toMutableList().apply {
                     add(index, answer)
-                }
+                },
+                answerIndicatorItems = answerIndicator
             )
         }
     }
@@ -127,16 +173,32 @@ class QuestionCreationViewModel(
     fun answerTextChanger(answerId: String, text: String) = intent {
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
-            if (answerItem.id == answerId && answerItem is AnswerItem.DefaultAnswer) {
-                answerItem.copy(
-                    answerText = text
-                )
-            } else if (answerItem.id == answerId && answerItem is AnswerItem.TextAnswer) {
-                answerItem.copy(
-                    text = text
-                )
+            if (answerItem.id != answerId) {
+                return@map answerItem
             }
-            else answerItem
+            when (answerItem) {
+                is AnswerItem.DefaultAnswer -> {
+                    answerItem.copy(
+                        answerText = text
+                    )
+                }
+
+                is AnswerItem.TextAnswer -> {
+                    answerItem.copy(
+                        text = text
+                    )
+                }
+
+                is AnswerItem.OrderAnswer -> {
+                    answerItem.copy(
+                        answerText = text
+                    )
+                }
+
+                else -> {
+                    answerItem
+                }
+            }
         }
         updateModelState {
             copy(
@@ -200,6 +262,46 @@ class QuestionCreationViewModel(
         }
     }
 
+    fun updatePosition(positionCurrent: Int, targetPosition: Int) = intent {
+        val modelState = getModelState()
+        val answerItems = modelState.answerItem.toMutableList()
+        val selectedElement = modelState.selectedDropElement
+
+        if (selectedElement == answerItems[targetPosition]) {
+            return@intent
+        }
+        if (positionCurrent + 1 == answerItems.size) {
+            return@intent
+        }
+        if (targetPosition + 1 == answerItems.size) {
+            return@intent
+        }
+        Collections.swap(answerItems, positionCurrent, targetPosition)
+        updateModelState {
+            copy(
+                answerItem = answerItems
+            )
+        }
+    }
+
+    fun clearSelectedDropElement() = intent {
+        val modelState = getModelState()
+        val answerItems = modelState.answerItem.toMutableList()
+        modelState.answerIndicatorItems.forEachIndexed { index, answerIndicatorItem ->
+            val answerItem = answerItems[index]
+            if (answerItem is AnswerItem.OrderAnswer) {
+                answerItems[index] = answerItem.copy(color = answerIndicatorItem.color)
+            }
+        }
+
+        updateModelState {
+            copy(
+                selectedDropElement = null,
+                answerItem = answerItems
+            )
+        }
+    }
+
     private suspend fun createAnswer(index: Int = 0, type: QuestionType): AnswerItem {
         val id = getModelState().answerItem.size + 1
         val color = getColorAnswer(index)
@@ -226,6 +328,14 @@ class QuestionCreationViewModel(
                     id = id.toString()
                 )
             }
+
+            QuestionType.ORDER -> {
+                AnswerItem.OrderAnswer(
+                    id = id.toString(),
+                    color = color,
+                    order = 1
+                )
+            }
         }
     }
 
@@ -242,6 +352,10 @@ class QuestionCreationViewModel(
 
                 QuestionType.WRITE_ANSWER -> {
                     initAnswerWriteText()
+                }
+
+                QuestionType.ORDER -> {
+                    initAnswerOrder()
                 }
             }
 
@@ -269,6 +383,25 @@ class QuestionCreationViewModel(
             )
         }
     }
+
+    private fun initAnswerOrder() = intent {
+        val answer = createAnswer(index = 0, type = QuestionType.ORDER)
+        val answerIndicator = createAnswerIndicator(index = 0)
+        updateModelState {
+            copy(
+                answerItem = listOf(
+                    answer,
+                    AnswerItem.FooterPlusAdd(isOrderAnswer = true)
+                ),
+                answerIndicatorItems = listOf(answerIndicator)
+            )
+        }
+    }
+
+    private fun createAnswerIndicator(index: Int) = AnswerIndicatorItem(
+        text = (index + 1).toString(),
+        color = getColorAnswer(index)
+    )
 
     private fun initAnswerDefault() = intent {
         val answer = createAnswer(

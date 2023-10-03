@@ -2,6 +2,8 @@ package com.testeducation.converter.test.question
 
 import com.testeducation.domain.model.question.AnswerItem
 import com.testeducation.domain.model.question.Question
+import com.testeducation.domain.model.question.QuestionItem
+import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.logic.model.question.QuestionItemUi
 import com.testeducation.logic.model.test.AnswerItemUi
 
@@ -20,7 +22,8 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
 
         is AnswerItem.TextAnswer -> {
             AnswerItemUi.TextAnswer(
-                id = answerItem.id
+                id = answerItem.id,
+                text = answerItem.text
             )
         }
 
@@ -33,23 +36,34 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
             )
         }
 
+        is AnswerItem.OrderAnswer -> {
+            AnswerItemUi.OrderAnswer(
+                id = answerItem.id,
+                answerText = answerItem.answerText,
+                order = answerItem.order,
+                color = answerItem.color
+            )
+        }
+
         is AnswerItem.FooterPlusAdd -> {
             AnswerItemUi.FooterPlusAdd(
-                id = answerItem.id
+                id = answerItem.id,
+                isOrderAnswer = answerItem.isOrderAnswer
             )
         }
     }
 }
 
-fun List<Question>.toUi() = map { question ->
-    question.toUi()
+fun List<Question>.toUi(timeConverterLongToString: ITimeConverterLongToString) = map { question ->
+    question.toUi(timeConverterLongToString)
 }
 
-fun Question.toUi() = QuestionItemUi(
+fun Question.toUi(timeConverterLongToString: ITimeConverterLongToString) = QuestionItemUi(
     id = id,
     title = title,
     icon = icon,
     questionTypeUiItem = type.toUiModel(),
     numberQuestion = numberQuestion,
-    answerItemUiList = answers.toModelUi()
+    answerItemUiList = answers.toModelUi(),
+    time = timeConverterLongToString.convert(time)
 )

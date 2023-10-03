@@ -4,12 +4,12 @@ import com.testeducation.converter.test.getTestStyle
 import com.testeducation.converter.test.question.toUi
 import com.testeducation.converter.test.toUI
 import com.testeducation.core.IReducer
-import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.logic.model.test.TestDetailsUi
 import com.testeducation.logic.model.test.TestStyleUi
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 
-class TestEditorReducer(resourceHelper: IResourceHelper) :
+class TestEditorReducer(private val timeConverterLongToString: ITimeConverterLongToString) :
     IReducer<TestEditorModelState, TestEditorState> {
     override fun reduce(modelState: TestEditorModelState): TestEditorState {
         val test = modelState.test
@@ -24,7 +24,7 @@ class TestEditorReducer(resourceHelper: IResourceHelper) :
                     background = getTestStyle(test.style.background)
                 ),
                 settings = test.settings.toUI(),
-                questions = test.questions.toUi(),
+                questions = test.questions.toUi(timeConverterLongToString),
                 status = test.status.name,
                 likes = test.likes,
                 liked = test.liked,
@@ -32,7 +32,7 @@ class TestEditorReducer(resourceHelper: IResourceHelper) :
                 passed = test.passed,
                 theme = test.theme.toUI()
             ),
-            questionDetailsUi = modelState.questionDetails.toUi()
+            questionDetailsUi = modelState.questionDetails.toUi(timeConverterLongToString)
         )
     }
 }

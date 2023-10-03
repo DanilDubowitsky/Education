@@ -49,6 +49,10 @@ class QuestionResourceHelper(
             this
         }
 
+        is AnswerItem.OrderAnswer -> {
+            this
+        }
+
         is AnswerItem.FooterPlusAdd -> {
             this
         }

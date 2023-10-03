@@ -29,4 +29,5 @@
     <color name="loaderBackground">#66FFFFFF</color>
     <color name="colorSmokyWhite">#F0F0F6</color>
     <color name="colorTextDark">#161E27</color>
+    <color name="colorTextGray">#9FA9B8</color>
 </resources>

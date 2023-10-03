@@ -3,6 +3,7 @@ package com.testeducation.education.di.modules.screen.tests.edit
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.cases.test.GetTestDetails
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionDrawableIconByType
@@ -31,6 +32,10 @@ interface TestEditorModule {
 
     companion object {
         @Provides
+        fun questionTimeConverter(resourceHelper: IResourceHelper): ITimeConverterLongToString {
+            return TimeConverterLongToString(resourceHelper)
+        }
+        @Provides
         fun questionDrawableIconByType(resourceHelper: IResourceHelper): IQuestionDrawableIconByType {
             return QuestionDrawableIconByType(
                 resourceHelper
@@ -48,8 +53,8 @@ interface TestEditorModule {
         }
 
         @Provides
-        fun provideReducer(resourceHelper: IResourceHelper,): IReducer<TestEditorModelState, TestEditorState> =
-            TestEditorReducer(resourceHelper)
+        fun provideReducer(timeConverterLongToString: ITimeConverterLongToString): IReducer<TestEditorModelState, TestEditorState> =
+            TestEditorReducer(timeConverterLongToString)
 
         @Provides
         fun provideViewModel(
@@ -58,7 +63,8 @@ interface TestEditorModule {
             exceptionHandler: IExceptionHandler,
             resourceHelper: IResourceHelper,
             getTest: GetTest,
-            questionResourceHelper: IQuestionResourceHelper
+            questionResourceHelper: IQuestionResourceHelper,
+            navigationRouter: NavigationRouter
         ): TestEditorViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Details>()
             return TestEditorViewModel(
@@ -67,7 +73,8 @@ interface TestEditorModule {
                 resourceHelper = resourceHelper,
                 testId = screen.testId,
                 getTest = getTest,
-                questionResourceHelper = questionResourceHelper
+                questionResourceHelper = questionResourceHelper,
+                router = navigationRouter
             )
         }
     }

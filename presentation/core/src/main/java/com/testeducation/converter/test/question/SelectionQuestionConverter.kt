@@ -18,6 +18,10 @@ fun List<QuestionTypeItem>.toUiModel() = this.map {
         QuestionType.WRITE_ANSWER -> {
             QuestionTypeUi.WRITE_ANSWER
         }
+
+        QuestionType.ORDER -> {
+            QuestionTypeUi.ORDER
+        }
     }.let { typeUi ->
         QuestionTypeUiItem(
             type = typeUi
@@ -35,6 +39,9 @@ fun QuestionTypeUiItem.toModel() = when (this.type) {
     QuestionTypeUi.WRITE_ANSWER -> {
         QuestionType.WRITE_ANSWER
     }
+    QuestionTypeUi.ORDER -> {
+        QuestionType.ORDER
+    }
 }.let {
     QuestionTypeItem(it)
 }
@@ -48,6 +55,9 @@ fun QuestionType.toUiModel() = when (this) {
     }
     QuestionType.WRITE_ANSWER -> {
         QuestionTypeUi.WRITE_ANSWER
+    }
+    QuestionType.ORDER -> {
+        QuestionTypeUi.ORDER
     }
 }.let {
     QuestionTypeUiItem(it)
