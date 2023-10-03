@@ -32,6 +32,7 @@ class ResourceHelper(
         DrawableResource.MatchIconQuestion -> R.drawable.ic_answer_match
         DrawableResource.DefaultIconQuestion -> R.drawable.ic_answer_choosing
         DrawableResource.WriteAnswerIconQuestion -> R.drawable.ic_answer_write
+        DrawableResource.OrderAnswerIconQuestion -> R.drawable.ic_answer_order
     }
 
 
@@ -78,6 +79,7 @@ class ResourceHelper(
         ColorResource.Main.Green -> color(R.color.colorDarkGreen)
         ColorResource.Main.Orange -> color(R.color.colorOrange)
         ColorResource.Main.White -> color(R.color.colorWhite)
+        ColorResource.Main.Black -> color(R.color.colorTextPrimary)
     }
 
     private fun extractMainColorResource(resource: ColorResource.MainLight) = when (resource) {
@@ -89,6 +91,8 @@ class ResourceHelper(
 
     private fun extractSecondaryColorResource(resource: ColorResource.Secondary) = when (resource) {
         ColorResource.Secondary.Gray1 -> color(R.color.colorGray_1)
+        ColorResource.Secondary.ColorGrayBlueDisable -> color(R.color.colorGrayBlueDisabled)
+        ColorResource.Secondary.ColorDarkBlue -> color(R.color.colorDarkBlue)
     }
 
     private fun extractUpdateResource(resource: StringResource.Update) = when (resource) {
@@ -99,6 +103,21 @@ class ResourceHelper(
         is StringResource.Question.NumberQuestion -> context.getString(
             R.string.question_number,
             resource.number.toString()
+        )
+
+        is StringResource.Question.TimeQuestionMore -> context.getString(
+            R.string.question_time_more_that_minute,
+            resource.minutes, resource.seconds
+        )
+
+        is StringResource.Question.TimeQuestionOnlyMinutes -> context.getString(
+            R.string.question_time_only_minute,
+            resource.minutes
+        )
+
+        is StringResource.Question.TimeQuestionLess -> context.getString(
+            R.string.question_time_less_that_minute,
+            resource.seconds
         )
     }
 

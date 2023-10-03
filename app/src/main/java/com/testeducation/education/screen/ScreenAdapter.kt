@@ -16,6 +16,7 @@ import com.testeducation.ui.screen.home.library.TestLibraryFragment
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
+import com.testeducation.ui.screen.tests.creation.time.TimeQuestionDialog
 import com.testeducation.ui.screen.tests.edit.TestEditorFragment
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
 import com.testeducation.ui.screen.tests.library.LibraryFragment
@@ -119,6 +120,9 @@ class ScreenAdapter : IScreenAdapter {
     private fun createPlatformScreen(screen: NavigationScreen.QuestionCreation) = when(screen) {
         is NavigationScreen.QuestionCreation.QuestionEditor -> Screen.FragmentScreen {
             QuestionCreationFragment().withScreen(screen)
+        }
+        is NavigationScreen.QuestionCreation.TimeQuestion -> Screen.DialogScreen {
+            TimeQuestionDialog().withScreen(screen)
         }
     }
 }

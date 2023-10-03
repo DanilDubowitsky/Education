@@ -1,15 +1,20 @@
 package com.testeducation.ui.delegates.tests.question
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
+import android.view.MotionEvent
 import androidx.core.widget.doOnTextChanged
 import com.testeducation.logic.model.test.AnswerItemUi
 import com.testeducation.ui.R
 import com.testeducation.ui.databinding.ViewHolderAnswerDefaultBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerFootPlusBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerMatchBinding
+import com.testeducation.ui.databinding.ViewHolderAnswerOrderBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerWriteBinding
+import com.testeducation.ui.listener.IDragStartListener
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
+
 
 fun answersDelegateDefault(
     onClickCheckTrue: (String) -> Unit,
@@ -89,6 +94,37 @@ fun answerDelegateMatch(
     }
 }
 
+@SuppressLint("ClickableViewAccessibility")
+fun answerDelegateOrder(
+    onAnswerTextChanger: (String, String) -> Unit,
+    mDragStartListener: IDragStartListener,
+    onSelectedElement: (String) -> Unit
+) =
+    simpleDelegateAdapter<AnswerItemUi.OrderAnswer,
+            AnswerItemUi,
+            ViewHolderAnswerOrderBinding>(
+        ViewHolderAnswerOrderBinding::inflate
+    ) {
+        binding {
+            etAnswer.doOnTextChanged { text, start, before, count ->
+                onAnswerTextChanger(item.id, text.toString())
+            }
+            root.setOnTouchListener { _, motionEvent ->
+                if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
+                    mDragStartListener.oDragStarted(viewHolder = this@simpleDelegateAdapter);
+                    onSelectedElement(item.id)
+                }
+                false
+            }
+            bind {
+                if (etAnswer.text.isEmpty()) {
+                    etAnswer.setText(item.answerText)
+                }
+                root.backgroundTintList = ColorStateList.valueOf(item.color)
+            }
+        }
+    }
+
 fun answerDelegateWrite(onAnswerTextChanger: (String, String) -> Unit) =
     simpleDelegateAdapter<AnswerItemUi.TextAnswer,
             AnswerItemUi,
@@ -104,7 +140,9 @@ fun answerDelegateWrite(onAnswerTextChanger: (String, String) -> Unit) =
         }
     }
 
-fun footerPlusAddDelegate(onClickAdd: () -> Unit) =
+fun footerPlusAddDelegate(
+    onClickAdd: () -> Unit
+) =
     simpleDelegateAdapter<AnswerItemUi.FooterPlusAdd,
             AnswerItemUi,
             ViewHolderAnswerFootPlusBinding>(
@@ -115,6 +153,18 @@ fun footerPlusAddDelegate(onClickAdd: () -> Unit) =
                 imgPlus.setOnClickListener {
                     onClickAdd()
                 }
+               /* val marginRight = if (item.isOrderAnswer) {
+                    46.dp
+                } else {
+                    0.dp
+                }
+                val params = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+                )
+                params.setMargins(0.dp, 0.dp, marginRight, 0.dp)
+                params.gravity = Gravity.CENTER
+                imgPlus.layoutParams = params*/
             }
         }
     }

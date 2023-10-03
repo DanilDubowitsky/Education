@@ -17,7 +17,14 @@ sealed class AnswerItemUi {
         )
     }
 
-    data class TextAnswer(override val id: String) : AnswerItemUi()
+    data class TextAnswer(override val id: String, val text: String) : AnswerItemUi()
+
+    data class OrderAnswer(
+        override val id: String,
+        val answerText: String,
+        val order: Int,
+        val color: Int
+    ) : AnswerItemUi()
 
     data class MatchAnswer(
         override val id: String,
@@ -31,6 +38,6 @@ sealed class AnswerItemUi {
         }
     }
 
-    data class FooterPlusAdd(override val id: String) : AnswerItemUi()
+    data class FooterPlusAdd(override val id: String, val isOrderAnswer: Boolean = false) : AnswerItemUi()
 
 }

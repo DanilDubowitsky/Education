@@ -105,8 +105,10 @@ sealed interface NavigationScreen : Serializable {
 
     sealed interface QuestionCreation : NavigationScreen {
         data class QuestionEditor(val questionTypeUiItem: QuestionTypeUiItem, val testId: String) : QuestionCreation
+        data class TimeQuestion(val time: Long) : QuestionCreation
 
         object OnSelectionQuestionTypeChanged : ResultKey<QuestionTypeUiItem>
+        object OnTimeQuestionChanged: ResultKey<Long>
     }
 
 }

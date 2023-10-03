@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -35,14 +34,17 @@ abstract class BaseBottomSheetDialog<VB : ViewBinding>(
 
     open val isFullScreen = false
 
+    open val isHideAble = true
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
         if (isFullScreen) {
-            val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             binding.root.layoutParams.height =
                 Resources.getSystem().displayMetrics.heightPixels
         }
+        bottomSheetBehavior.isHideable = isHideAble
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

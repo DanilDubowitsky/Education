@@ -8,6 +8,7 @@ interface IQuestionRemoteClient {
         testId: String,
         type: QuestionType,
         questionText: String,
-        answers: List<AnswerItem>
+        answers: List<AnswerItem>,
+        time: Long
     )
 }

@@ -8,8 +8,12 @@ import com.testeducation.domain.model.question.QuestionItem
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionResourceHelper
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.logic.model.test.QuestionTypeUi
+import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.edit.TestEditorSideEffect
 import com.testeducation.logic.screen.tests.edit.TestEditorState
+import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 
 class TestEditorViewModel(
     exceptionHandler: IExceptionHandler,
@@ -17,7 +21,8 @@ class TestEditorViewModel(
     private val resourceHelper: IResourceHelper,
     private val testId: String,
     private val getTestDetails: GetTestDetails,
-    private val questionResourceHelper: IQuestionResourceHelper
+    private val questionResourceHelper: IQuestionResourceHelper,
+    private val router: NavigationRouter,
 ) : BaseViewModel<TestEditorModelState, TestEditorState, TestEditorSideEffect>(
     reducer,
     exceptionHandler
@@ -26,6 +31,15 @@ class TestEditorViewModel(
 
     init {
         getTestDetails(testId = testId)
+    }
+
+    fun openCreateQuestion() {
+        router.navigateTo(
+            NavigationScreen.QuestionCreation.QuestionEditor(
+                QuestionTypeUiItem(QuestionTypeUi.DEFAULT),
+                testId
+            )
+        )
     }
 
     private fun getTestDetails(testId: String) = singleIntent(getTestDetails.javaClass.name) {
