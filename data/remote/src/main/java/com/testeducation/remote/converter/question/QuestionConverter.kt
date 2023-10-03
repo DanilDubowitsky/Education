@@ -1,7 +1,7 @@
 package com.testeducation.remote.converter.question
 
 import com.testeducation.domain.model.question.AnswerItem
-import com.testeducation.domain.model.question.QuestionItem
+import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.remote.model.answer.RemoteAnswer
 import com.testeducation.remote.model.question.RemoteQuestion
@@ -64,7 +64,7 @@ fun List<RemoteAnswer>.mapToModels(type: QuestionType) = map { answer ->
 
 fun List<RemoteQuestion>.toModels() = map { item ->
     val typeQuestion = QuestionType.getType(item.type)
-    QuestionItem(
+    Question(
         id = item.id,
         title = item.title,
         type = typeQuestion,

@@ -1,7 +1,7 @@
 package com.testeducation.education.di.modules.domain.usecase.test
 
 import com.testeducation.domain.cases.test.CreateTest
-import com.testeducation.domain.cases.test.GetTestDetails
+import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.repository.test.ITestRepository
@@ -35,6 +35,6 @@ object TestUseCaseModule {
     @Reusable
     fun provideGetTestDetails(
         testRepository: ITestRepository
-    ): GetTestDetails = GetTestDetails(testRepository)
+    ): GetTest = GetTest(testRepository)
 
 }

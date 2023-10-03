@@ -2,11 +2,11 @@ package com.testeducation.screen.tests.preview
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.preview.TestPreviewSideEffect
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.navigation.core.NavigationRouter
-import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestPreviewViewModel(
@@ -14,6 +14,7 @@ class TestPreviewViewModel(
     exceptionHandler: IExceptionHandler,
     private val router: NavigationRouter,
     private val testId: String,
+    private val getTest: GetTest
 ) : BaseViewModel<TestPreviewModelState,
         TestPreviewState, TestPreviewSideEffect>(reducer, exceptionHandler) {
 
@@ -24,9 +25,13 @@ class TestPreviewViewModel(
     }
 
     private fun loadData() = intent {
-        delay(2000)
+        val test = getTest(testId)
+
         updateModelState {
-            copy(loadingState = TestPreviewModelState.LoadingState.IDLE)
+            copy(
+                loadingState = TestPreviewModelState.LoadingState.IDLE,
+                test = test
+            )
         }
     }
 

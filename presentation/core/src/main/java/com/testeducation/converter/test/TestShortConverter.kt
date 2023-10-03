@@ -21,8 +21,7 @@ fun TestShort.toUI(): TestShortUI = TestShortUI.Test(
     style.color,
     CardTestStyle.ELLIPSE,
     liked,
-    passed,
-    settings.toUI()
+    passed
 )
 
 fun List<TestShort>.toUIModels(): List<TestShortUI> = this.map(TestShort::toUI)
@@ -49,8 +48,7 @@ fun TestShortUI.Test.toModel() = TestShort(
     theme.toModel(),
     liked,
     passed,
-    TestStyle(color, ""),
-    settings.toModel()
+    TestStyle(color, "")
 )
 
 fun List<TestShortUI>.toModels() = this.mapNotNull { testShortUI ->

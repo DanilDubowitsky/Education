@@ -1,7 +1,7 @@
 package com.testeducation.converter.test.question
 
 import com.testeducation.domain.model.question.AnswerItem
-import com.testeducation.domain.model.question.QuestionItem
+import com.testeducation.domain.model.question.Question
 import com.testeducation.logic.model.question.QuestionItemUi
 import com.testeducation.logic.model.test.AnswerItemUi
 
@@ -41,11 +41,11 @@ fun List<AnswerItem>.toModelUi() = this.map { answerItem ->
     }
 }
 
-fun List<QuestionItem>.toUi() = map { question ->
+fun List<Question>.toUi() = map { question ->
     question.toUi()
 }
 
-fun QuestionItem.toUi() = QuestionItemUi(
+fun Question.toUi() = QuestionItemUi(
     id = id,
     title = title,
     icon = icon,

@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.screen.tests.preview
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
@@ -34,14 +35,16 @@ interface TestPreviewModule {
             fragment: TestPreviewFragment,
             router: NavigationRouter,
             reducer: IReducer<TestPreviewModelState, TestPreviewState>,
-            exceptionHandler: IExceptionHandler
+            exceptionHandler: IExceptionHandler,
+            getTest: GetTest
         ): TestPreviewViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Preview>()
             return TestPreviewViewModel(
                 reducer,
                 exceptionHandler,
                 router,
-                screen.id
+                screen.id,
+                getTest
             )
         }
     }

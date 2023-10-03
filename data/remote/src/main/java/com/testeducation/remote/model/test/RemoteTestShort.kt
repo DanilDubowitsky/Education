@@ -19,8 +19,6 @@ data class RemoteTestShort(
     val theme: RemoteThemeShort,
     @SerializedName("style")
     val style: RemoteTestStyle,
-    @SerializedName("settings")
-    val testSettings: RemoteTestSettings,
     @SerializedName("liked")
     val liked: Boolean,
     @SerializedName("passed")

@@ -1,7 +1,7 @@
 package com.testeducation.helper.question
 
 import com.testeducation.domain.model.question.AnswerItem
-import com.testeducation.domain.model.question.QuestionItem
+import com.testeducation.domain.model.question.Question
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.resource.StringResource
@@ -9,15 +9,15 @@ import com.testeducation.utils.getColor
 import com.testeducation.utils.getString
 
 interface IQuestionResourceHelper {
-    fun getQuestionItemPrepared(questionItems: List<QuestionItem>): List<QuestionItem>
+    fun getQuestionItemPrepared(questions: List<Question>): List<Question>
 }
 
 class QuestionResourceHelper(
     private val resourceHelper: IResourceHelper,
     private val questionDrawableIconByType: IQuestionDrawableIconByType
 ) : IQuestionResourceHelper {
-    override fun getQuestionItemPrepared(questionItems: List<QuestionItem>): List<QuestionItem> {
-        return questionItems.mapIndexed { index, questionItem ->
+    override fun getQuestionItemPrepared(questions: List<Question>): List<Question> {
+        return questions.mapIndexed { index, questionItem ->
             questionItem.copy(
                 answers = questionItem.answers.map { answerItem ->
                     answerItem.prepareResource()

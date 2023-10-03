@@ -21,8 +21,6 @@ fun createTestShortAdapterDelegate(
     }
     bind {
         binding.cardTest.setContent(item)
-
-
     }
 }
 

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isGone
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.screen.tests.preview.TestPreviewViewModel
+import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestPreviewBinding
 import com.testeducation.ui.utils.invoke
@@ -27,6 +28,19 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         shimmerLayout.isShimmerHide = !state.isLoading
         contentAppBar.isGone = state.isLoading
         rootScroll.isGone = state.isLoading
+        renderTestDetails(state)
+    }
+
+    private fun FragmentTestPreviewBinding.renderTestDetails(state: TestPreviewState) {
+        txtTheme.text = state.theme
+        txtDate.text = state.createdDate
+        txtTitle.text = state.title
+        txtQuestionsCount.text = resources.getQuantityString(
+            R.plurals.questions_count_plurals,
+            state.questions.size,
+            state.questions.size
+        )
+        btnShowQuestions.isGone = !state.allowPreviewQuestions
     }
 
 }

@@ -14,8 +14,7 @@ sealed interface TestShortUI {
         val color: String,
         val style: CardTestStyle,
         val liked: Boolean,
-        val passed: Boolean,
-        val settings: Settings
+        val passed: Boolean
     ) : TestShortUI {
 
         data class Settings(

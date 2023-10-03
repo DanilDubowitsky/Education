@@ -2,7 +2,7 @@ package com.testeducation.education.di.modules.screen.tests.edit
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
-import com.testeducation.domain.cases.test.GetTestDetails
+import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionDrawableIconByType
@@ -57,7 +57,7 @@ interface TestEditorModule {
             reducer: IReducer<TestEditorModelState, TestEditorState>,
             exceptionHandler: IExceptionHandler,
             resourceHelper: IResourceHelper,
-            getTestDetails: GetTestDetails,
+            getTest: GetTest,
             questionResourceHelper: IQuestionResourceHelper
         ): TestEditorViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Details>()
@@ -66,7 +66,7 @@ interface TestEditorModule {
                 exceptionHandler = exceptionHandler,
                 resourceHelper = resourceHelper,
                 testId = screen.testId,
-                getTestDetails = getTestDetails,
+                getTest = getTest,
                 questionResourceHelper = questionResourceHelper
             )
         }

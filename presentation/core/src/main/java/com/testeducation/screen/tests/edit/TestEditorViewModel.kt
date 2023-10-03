@@ -2,9 +2,9 @@ package com.testeducation.screen.tests.edit
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
-import com.testeducation.domain.cases.test.GetTestDetails
+import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.model.question.QuestionDetails
-import com.testeducation.domain.model.question.QuestionItem
+import com.testeducation.domain.model.question.Question
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionResourceHelper
 import com.testeducation.helper.resource.IResourceHelper
@@ -16,7 +16,7 @@ class TestEditorViewModel(
     reducer: IReducer<TestEditorModelState, TestEditorState>,
     private val resourceHelper: IResourceHelper,
     private val testId: String,
-    private val getTestDetails: GetTestDetails,
+    private val getTest: GetTest,
     private val questionResourceHelper: IQuestionResourceHelper
 ) : BaseViewModel<TestEditorModelState, TestEditorState, TestEditorSideEffect>(
     reducer,
@@ -28,15 +28,15 @@ class TestEditorViewModel(
         getTestDetails(testId = testId)
     }
 
-    private fun getTestDetails(testId: String) = singleIntent(getTestDetails.javaClass.name) {
-        val details = getTestDetails.invoke(id = testId)
+    private fun getTestDetails(testId: String) = singleIntent(getTest.javaClass.name) {
+        val details = getTest.invoke(id = testId)
         val questionItems = questionResourceHelper.getQuestionItemPrepared(details.questions)
         val questionDetails : MutableList<QuestionDetails> = mutableListOf()
         questionDetails.addAll(questionItems.prepareQuestionDetailsItems())
         questionDetails.add(QuestionDetails.FooterAdd())
         updateModelState {
             copy(
-                testDetails = details.copy(
+                test = details.copy(
                     questions = questionItems
                 ),
                 questionDetails = questionDetails
@@ -44,7 +44,7 @@ class TestEditorViewModel(
         }
     }
 
-    private fun List<QuestionItem>.prepareQuestionDetailsItems() = map {
+    private fun List<Question>.prepareQuestionDetailsItems() = map {
         QuestionDetails.QuestionItemDetails(
             id = it.id,
             question = it

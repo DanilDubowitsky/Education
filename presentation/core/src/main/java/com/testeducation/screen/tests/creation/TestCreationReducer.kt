@@ -50,8 +50,7 @@ class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> 
         color = color,
         style = style,
         liked = false,
-        passed = false,
-        settings = settings
+        passed = false
     )
 
 }
