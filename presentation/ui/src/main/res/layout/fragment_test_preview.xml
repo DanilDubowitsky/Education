@@ -25,8 +25,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="24dp"
             android:layout_alignParentEnd="true"
@@ -102,6 +102,7 @@
                         android:paddingBottom="6dp"
                         android:textColor="@color/colorWhite"
                         android:textSize="12sp"
+                        app:drawableTint="@color/colorWhite"
                         app:drawableStartCompat="@drawable/ic_timer"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/txtTheme"
@@ -203,6 +204,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/txtDescription"
                     tools:text="60 вопросов" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerQuestions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@+id/txtQuestionsCount" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnShowQuestions"
                     style="@style/Button.Small.Blue"
@@ -211,7 +219,7 @@
                     android:background="@drawable/background_selectable_blue_rounded"
                     android:text="@string/test_preview_show_questions"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtQuestionsCount" />
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerQuestions" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnPassTest"

@@ -50,16 +50,16 @@ class SelectionQuestionTypeViewModel(
             copy(
                 questionTypeItems = listOf(
                     QuestionTypeItem(
-                        questionType = QuestionType.DEFAULT
+                        questionType = QuestionType.CHOICE
                     ),
                     QuestionTypeItem(
-                        questionType = QuestionType.ORDER
+                        questionType = QuestionType.REORDER
                     ),
                     QuestionTypeItem(
                         questionType = QuestionType.MATCH
                     ),
                     QuestionTypeItem(
-                        questionType = QuestionType.WRITE_ANSWER
+                        questionType = QuestionType.TEXT
                     )
                 )
             )

@@ -138,7 +138,7 @@ class QuestionCreationViewModel(
         val answer = createAnswer(
             index, getModelState().questionTypeItem.questionType
         )
-        val answerIndicator = if (modelState.questionTypeItem.questionType == QuestionType.ORDER) {
+        val answerIndicator = if (modelState.questionTypeItem.questionType == QuestionType.REORDER) {
             val indicator = createAnswerIndicator(index)
             modelState.answerIndicatorItems.toMutableList().apply {
                 add(indicator)
@@ -306,7 +306,7 @@ class QuestionCreationViewModel(
         val id = getModelState().answerItem.size + 1
         val color = getColorAnswer(index)
         return when (type) {
-            QuestionType.DEFAULT -> {
+            QuestionType.CHOICE -> {
                 AnswerItem.DefaultAnswer(
                     id = id.toString(),
                     color = color,
@@ -323,13 +323,13 @@ class QuestionCreationViewModel(
                 )
             }
 
-            QuestionType.WRITE_ANSWER -> {
+            QuestionType.TEXT -> {
                 AnswerItem.TextAnswer(
                     id = id.toString()
                 )
             }
 
-            QuestionType.ORDER -> {
+            QuestionType.REORDER -> {
                 AnswerItem.OrderAnswer(
                     id = id.toString(),
                     color = color,
@@ -346,15 +346,15 @@ class QuestionCreationViewModel(
                     initAnswerMatch()
                 }
 
-                QuestionType.DEFAULT -> {
+                QuestionType.CHOICE -> {
                     initAnswerDefault()
                 }
 
-                QuestionType.WRITE_ANSWER -> {
+                QuestionType.TEXT -> {
                     initAnswerWriteText()
                 }
 
-                QuestionType.ORDER -> {
+                QuestionType.REORDER -> {
                     initAnswerOrder()
                 }
             }
@@ -374,7 +374,7 @@ class QuestionCreationViewModel(
     }
 
     private fun initAnswerWriteText() = intent {
-        val answer = createAnswer(index = 0, type = QuestionType.WRITE_ANSWER)
+        val answer = createAnswer(index = 0, type = QuestionType.TEXT)
         updateModelState {
             copy(
                 answerItem = listOf(
@@ -385,7 +385,7 @@ class QuestionCreationViewModel(
     }
 
     private fun initAnswerOrder() = intent {
-        val answer = createAnswer(index = 0, type = QuestionType.ORDER)
+        val answer = createAnswer(index = 0, type = QuestionType.REORDER)
         val answerIndicator = createAnswerIndicator(index = 0)
         updateModelState {
             copy(
@@ -405,7 +405,7 @@ class QuestionCreationViewModel(
 
     private fun initAnswerDefault() = intent {
         val answer = createAnswer(
-            index = 0, type = QuestionType.DEFAULT
+            index = 0, type = QuestionType.CHOICE
         )
         updateModelState {
             copy(

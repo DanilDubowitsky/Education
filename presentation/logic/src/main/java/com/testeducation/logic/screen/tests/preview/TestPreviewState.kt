@@ -10,5 +10,6 @@ data class TestPreviewState(
     val isLiked: Boolean,
     val description: String,
     val questions: List<QuestionItemUi>,
-    val allowPreviewQuestions: Boolean
+    val allowPreviewQuestions: Boolean,
+    val isQuestionsShown: Boolean
 )

@@ -24,6 +24,12 @@ class TestPreviewViewModel(
         loadData()
     }
 
+    fun changeQuestionsVisibility() = intent {
+        updateModelState {
+            copy(isQuestionsShown = !isQuestionsShown)
+        }
+    }
+
     private fun loadData() = intent {
         val test = getTest(testId)
 
