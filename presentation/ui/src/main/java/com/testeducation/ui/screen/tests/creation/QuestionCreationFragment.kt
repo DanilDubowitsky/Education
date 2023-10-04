@@ -20,8 +20,8 @@ import com.testeducation.ui.delegates.tests.question.answerDelegateWrite
 import com.testeducation.ui.delegates.tests.question.answerIndicatorItemDelegate
 import com.testeducation.ui.delegates.tests.question.answersDelegateDefault
 import com.testeducation.ui.delegates.tests.question.footerPlusAddDelegate
-import com.testeducation.ui.listener.DragStartListener
-import com.testeducation.ui.listener.IDragStartListener
+import com.testeducation.ui.listener.drag.DragStartListener
+import com.testeducation.ui.listener.drag.IDragStartListener
 import com.testeducation.ui.listener.QuestionItemTouchHelperCallback
 import com.testeducation.ui.screen.LoaderDialog
 import com.testeducation.ui.utils.disableChangeAnimation

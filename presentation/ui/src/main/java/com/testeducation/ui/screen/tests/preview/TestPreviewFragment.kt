@@ -1,5 +1,6 @@
 package com.testeducation.ui.screen.tests.preview
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
@@ -11,8 +12,10 @@ import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestPreviewBinding
 import com.testeducation.ui.delegates.tests.question.createQuestionPreviewDelegate
+import com.testeducation.ui.listener.AppBarStateChangeListener
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.isEllipsized
 import com.testeducation.ui.utils.isShimmerHide
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
@@ -64,9 +67,32 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
             needDisable = false,
             viewModel::changeQuestionsVisibility
         )
+        txtShowMore.setClickListener(needDisable = false) {
+            txtDescription.maxLines = Int.MAX_VALUE
+        }
+        AppBarStateChangeListener { state ->
+            println("CURRENT_TOOLBAR_STATE: $state")
+            when (state) {
+                AppBarStateChangeListener.State.COLLAPSED -> {
+                    txtToolbarTitle.isGone = false
+                }
+
+                AppBarStateChangeListener.State.EXPANDED -> txtToolbarTitle.isGone = true
+                AppBarStateChangeListener.State.IDLE -> txtToolbarTitle.isGone = true
+            }
+        }
+        appBar.addOnOffsetChangedListener { appBar, verticalOffset ->
+            val rect = Rect()
+            txtTitle.getGlobalVisibleRect(rect)
+            txtToolbarTitle.isGone = rootAppBar.bottom < rect.bottom
+            println("TXT_TITLE_POSITION: ${txtTitle.bottom}::: VERTICAL_OFFSET: $verticalOffset")
+            //if (appBar.bottom + verticalOffset >= rect.bottom)
+        }
     }
 
     private fun FragmentTestPreviewBinding.renderTestDetails(state: TestPreviewState) {
+        txtToolbarTitle.text = state.title
+        txtDescription.text = state.description
         txtTheme.text = state.theme
         txtDate.text = state.createdDate
         txtTitle.text = state.title
@@ -81,6 +107,13 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         } else {
             btnFavorite.setImageResource(R.drawable.ic_favorite_outline)
         }
+        root.postDelayed({
+            txtShowMore.isGone = !txtDescription.isEllipsized()
+        }, 10)
+    }
+
+    private companion object {
+        const val MAX_DESCRIPTION_LINES = 6
     }
 
 }

@@ -1,4 +1,4 @@
-package com.testeducation.ui.listener
+package com.testeducation.ui.listener.drag
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rootAppBar"
         android:background="@color/colorDarkGreen"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnBack"
@@ -18,36 +18,54 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="15dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_marginBottom="15dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtToolbarTitle"
+            style="@style/Text.Label.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:visibility="gone"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+            app:layout_constraintEnd_toStartOf="@+id/btnShare"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="@+id/btnBack"
+            tools:text="История западной Европы XVII - XVIII веков" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnFavorite"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="24dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_favorite_outline"
+            app:layout_constraintBottom_toBottomOf="@+id/btnShare"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnShare"
             app:tint="@color/colorWhite" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/btnFavorite"
-            android:layout_alignBottom="@+id/btnFavorite"
-            android:layout_toLeftOf="@+id/btnFavorite"
-            android:layout_marginEnd="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_upload"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+            app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
+            app:layout_constraintTop_toTopOf="@+id/btnBack"
             app:tint="@color/colorWhite" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
