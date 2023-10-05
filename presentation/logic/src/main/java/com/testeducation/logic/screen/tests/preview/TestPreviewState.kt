@@ -11,5 +11,8 @@ data class TestPreviewState(
     val description: String,
     val questions: List<QuestionItemUi>,
     val allowPreviewQuestions: Boolean,
-    val isQuestionsShown: Boolean
+    val isQuestionsShown: Boolean,
+    val creatorName: String,
+    val isExpandButtonVisible: Boolean,
+    val isExpand: Boolean
 )

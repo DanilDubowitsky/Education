@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="15dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_back"
@@ -67,6 +67,12 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/rootAppBar"
+        android:background="@drawable/background_green_rounded_bottom"
+        android:layout_height="20dp" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -78,15 +84,15 @@
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorDarkGreen"
             android:animateLayoutChanges="true"
-            android:background="@drawable/background_green_rounded_bottom"
             android:orientation="vertical">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/contentAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -138,19 +144,43 @@
                         app:layout_constraintTop_toBottomOf="@+id/txtTheme"
                         tools:text="История западной Европы XVII - XVIII веков" />
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgAvatar"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/colorBlue"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="24dp"
+                        app:layout_constraintStart_toStartOf="@+id/txtTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                    <TextView
+                        android:id="@+id/txtUserDisplayName"
+                        style="@style/Text.Label.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+                        app:layout_constraintEnd_toStartOf="@+id/txtDate"
+                        app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                        app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+                        tools:text="Владимир" />
+
                     <TextView
                         android:id="@+id/txtDate"
                         style="@style/Text.Label.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
                         android:layout_marginEnd="25dp"
-                        android:layout_marginBottom="23dp"
                         android:textColor="@color/colorWhite"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtUserDisplayName"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+                        app:layout_constraintTop_toTopOf="@+id/txtUserDisplayName"
                         tools:text="27 мая 2023" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -163,13 +193,21 @@
             android:id="@+id/rootScroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="-20dp"
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:animateLayoutChanges="true"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/roundCornersBottomView"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_green_rounded_bottom"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txtLabelAboutTest"
@@ -177,7 +215,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="27dp"
+                    android:layout_marginTop="57dp"
                     android:text="@string/test_preview_about_test_label"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"

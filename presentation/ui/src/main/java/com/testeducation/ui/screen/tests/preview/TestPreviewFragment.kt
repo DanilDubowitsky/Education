@@ -16,6 +16,7 @@ import com.testeducation.ui.listener.AppBarStateChangeListener
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.isEllipsized
+import com.testeducation.ui.utils.isFadeGone
 import com.testeducation.ui.utils.isShimmerHide
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
@@ -59,6 +60,7 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
             getString(R.string.test_preview_show_questions)
         }
         questionsAdapter.items = state.questions
+        txtUserDisplayName.text = state.creatorName
         renderTestDetails(state)
     }
 
@@ -67,30 +69,20 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
             needDisable = false,
             viewModel::changeQuestionsVisibility
         )
-        txtShowMore.setClickListener(needDisable = false) {
-            txtDescription.maxLines = Int.MAX_VALUE
-        }
-        AppBarStateChangeListener { state ->
-            println("CURRENT_TOOLBAR_STATE: $state")
-            when (state) {
-                AppBarStateChangeListener.State.COLLAPSED -> {
-                    txtToolbarTitle.isGone = false
-                }
-
-                AppBarStateChangeListener.State.EXPANDED -> txtToolbarTitle.isGone = true
-                AppBarStateChangeListener.State.IDLE -> txtToolbarTitle.isGone = true
-            }
-        }
-        appBar.addOnOffsetChangedListener { appBar, verticalOffset ->
+        txtShowMore.setClickListener(needDisable = false, viewModel::toggleDescriptionExpand)
+        appBar.addOnOffsetChangedListener { _, _ ->
             val rect = Rect()
             txtTitle.getGlobalVisibleRect(rect)
-            txtToolbarTitle.isGone = rootAppBar.bottom < rect.bottom
-            println("TXT_TITLE_POSITION: ${txtTitle.bottom}::: VERTICAL_OFFSET: $verticalOffset")
-            //if (appBar.bottom + verticalOffset >= rect.bottom)
+            txtToolbarTitle.isFadeGone = rootAppBar.bottom < rect.bottom
         }
     }
 
     private fun FragmentTestPreviewBinding.renderTestDetails(state: TestPreviewState) {
+        if (state.isExpand) {
+            txtDescription.maxLines = Int.MAX_VALUE
+        } else {
+            txtDescription.maxLines = MAX_DESCRIPTION_LINES
+        }
         txtToolbarTitle.text = state.title
         txtDescription.text = state.description
         txtTheme.text = state.theme
@@ -107,9 +99,13 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         } else {
             btnFavorite.setImageResource(R.drawable.ic_favorite_outline)
         }
-        root.postDelayed({
-            txtShowMore.isGone = !txtDescription.isEllipsized()
-        }, 10)
+
+        txtShowMore.isGone = !state.isExpandButtonVisible
+        txtShowMore.text = if (state.isExpand) {
+            getString(R.string.test_preview_hide)
+        } else {
+            getString(R.string.test_preview_show_more)
+        }
     }
 
     private companion object {

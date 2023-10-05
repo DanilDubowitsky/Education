@@ -41,4 +41,10 @@ class TestPreviewViewModel(
         }
     }
 
+    fun toggleDescriptionExpand() = intent {
+        updateModelState {
+            copy(isDescriptionExpanded = !isDescriptionExpanded)
+        }
+    }
+
 }

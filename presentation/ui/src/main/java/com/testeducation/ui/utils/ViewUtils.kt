@@ -12,6 +12,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -173,3 +174,20 @@ fun TextView.isEllipsized(): Boolean {
     }
     return false
 }
+
+var View.isFadeGone: Boolean
+    get() = isGone
+    set(value) {
+        if (value) {
+            this.animate().alpha(0f)
+                .setDuration(200L)
+                .withEndAction {
+                    isGone = true
+                }.start()
+        } else {
+            isGone = false
+            this.animate().alpha(1f)
+                .setDuration(200L)
+                .start()
+        }
+    }

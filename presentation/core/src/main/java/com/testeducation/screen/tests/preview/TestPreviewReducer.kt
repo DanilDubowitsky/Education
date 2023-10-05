@@ -11,19 +11,27 @@ class TestPreviewReducer(
     private val timeConverter: ITimeConverterLongToString
 ) : IReducer<TestPreviewModelState, TestPreviewState> {
 
-    override fun reduce(modelState: TestPreviewModelState): TestPreviewState {
+    override fun reduce(modelState: TestPreviewModelState): TestPreviewState = modelState.run {
+        val tempDesc = "j ajksdk ajkdka jdkaj jaskjskjdaskdjskadjaskdjaskldajsdkajdasdkaldkasldkasldkasdajdkjadasdh jahdjashdajsdjasdas;ldkkflsdjfkjjahdjaksh ajdhajdhjfhsdfjjasdkajsdkjfshdfjkha" +
+                "jkhasjdhajkdas kjfskdhfjsdhfsjfhjasdjahdjkahf akdlasdk aksdaj akjdkajsdk jaskdjakld jakldjaiu aidjaklsdjaыkkakskallkda"
 
-        return TestPreviewState(
-            isLoading = modelState.loadingState == TestPreviewModelState.LoadingState.LOADING,
-            theme = modelState.test?.theme?.title.orEmpty(),
-            title = modelState.test?.title.orEmpty(),
-            formatDateInSeconds(DAY_MONTH_YEAR_FULL, modelState.test?.creationDate ?: 0L),
-            isLiked = modelState.test?.liked ?: false,
-            allowPreviewQuestions = modelState.test?.settings?.previewQuestions ?: false,
-            description = "j ajksdk ajkdka jdkaj jaskjskjdaskdjskadjaskdjaskldajsdkajdasdkaldkasldkasldkasdajdkjadasdh jahdjashdajsdjasdas;ldkkflsdjfkjjahdjaksh ajdhajdhjfhsdfjjasdkajsdkjfshdfjkha " +
-                    "jkhasjdhajkdas kjfskdhfjsdhfsjfhjasdjahdjkahf akdlasdk aksdaj akjdkajsdk jaskdjakld jakldjaiu aidjaklsdjakdjjkhjh jhagdhagd h ajdklajdjhgfjkh jahdyuaghd jh jahdja hgjhjghjagdhjagdakjhdsjk h",
-            questions = modelState.test?.questions?.toUi(timeConverter) ?: emptyList(),
-            isQuestionsShown = modelState.isQuestionsShown
+        TestPreviewState(
+            isLoading = loadingState == TestPreviewModelState.LoadingState.LOADING,
+            theme = test?.theme?.title.orEmpty(),
+            title = test?.title.orEmpty(),
+            formatDateInSeconds(DAY_MONTH_YEAR_FULL, test?.creationDate ?: 0L),
+            isLiked = test?.liked ?: false,
+            allowPreviewQuestions = test?.settings?.previewQuestions ?: false,
+            description = tempDesc,
+            questions = test?.questions?.toUi(timeConverter) ?: emptyList(),
+            isQuestionsShown = isQuestionsShown,
+            creatorName = test?.creator?.username.orEmpty(),
+            isExpandButtonVisible = tempDesc.length >= MAX_DESCRIPTION_LENGTH,
+            isExpand = isDescriptionExpanded
         )
+    }
+
+    private companion object {
+        const val MAX_DESCRIPTION_LENGTH = 250
     }
 }
