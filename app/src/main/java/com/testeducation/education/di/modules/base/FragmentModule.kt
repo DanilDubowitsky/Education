@@ -14,16 +14,18 @@ import com.testeducation.education.di.modules.screen.tests.liked.LikedTestsModul
 import com.testeducation.education.di.modules.screen.tests.list.TestsModule
 import com.testeducation.education.di.modules.screen.tests.preview.TestPreviewModule
 import com.testeducation.education.di.modules.screen.tests.question.QuestionCreationModule
+import com.testeducation.education.di.modules.screen.tests.settings.TestSettingsModule
 import com.testeducation.ui.screen.auth.confirmation.CodeConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
 import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
 import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
 import com.testeducation.ui.screen.home.FragmentHome
+import com.testeducation.ui.screen.home.library.TestLibraryFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.edit.TestEditorFragment
+import com.testeducation.ui.screen.tests.edit.TestSettingsFragment
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
-import com.testeducation.ui.screen.home.library.TestLibraryFragment
 import com.testeducation.ui.screen.tests.library.LibraryFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
@@ -65,7 +67,7 @@ interface FragmentModule {
     fun newPasswordFragment(): NewPasswordFragment
 
     @ContributesAndroidInjector(modules = [TestEditorModule::class])
-    fun testEditorFragment() : TestEditorFragment
+    fun testEditorFragment(): TestEditorFragment
 
     @ContributesAndroidInjector(modules = [TestLibraryModule::class])
     fun testLibraryFragment(): TestLibraryFragment
@@ -75,5 +77,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [TestPreviewModule::class])
     fun testPreviewFragment(): TestPreviewFragment
+
+    @ContributesAndroidInjector(modules = [TestSettingsModule::class])
+    fun testSettingsFragment(): TestSettingsFragment
 
 }

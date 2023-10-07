@@ -40,6 +40,9 @@ class TestEditorFragment :
                 layoutManager = LinearLayoutManager(requireContext())
                 itemAnimator = null
             }
+            imgEdit.setOnClickListener {
+                viewModel.openTestSettings()
+            }
         }
     }
 

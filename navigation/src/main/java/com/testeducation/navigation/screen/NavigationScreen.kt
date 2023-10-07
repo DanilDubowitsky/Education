@@ -102,6 +102,14 @@ sealed interface NavigationScreen : Serializable {
             val testId: String
         ) : Tests
 
+        data class Settings(
+            val testId: String,
+            val titleTest: String,
+            val colorTest: String,
+            val imageTest: String,
+            val idTheme: String,
+        ) : Tests
+
         data class Preview(
             val id: String
         ) : Tests

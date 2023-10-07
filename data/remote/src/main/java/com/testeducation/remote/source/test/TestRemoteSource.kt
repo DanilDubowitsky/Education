@@ -3,9 +3,10 @@ package com.testeducation.remote.source.test
 import com.testeducation.core.source.remote.test.ITestRemoteSource
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.Page
-import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.Test
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
+import com.testeducation.domain.model.test.TestSettingsItem
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.remote.client.retrofit.test.TestRetrofitClient
 import com.testeducation.remote.converter.global.toRemote
@@ -56,5 +57,9 @@ class TestRemoteSource(
 
     override suspend fun getTest(id: String): Test {
         return testRetrofitClient.getTest(id = id).getResult().data.toModels()
+    }
+
+    override suspend fun getTestSettings(id: String): TestSettingsItem {
+        return testRetrofitClient.getTestSettings(id = id).getResult().data.toModels()
     }
 }

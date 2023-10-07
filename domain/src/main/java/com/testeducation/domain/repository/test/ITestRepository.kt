@@ -5,6 +5,7 @@ import com.testeducation.domain.model.test.Page
 import com.testeducation.domain.model.test.Test
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
+import com.testeducation.domain.model.test.TestSettingsItem
 import com.testeducation.domain.model.test.TestShort
 
 interface ITestRepository {
@@ -24,5 +25,7 @@ interface ITestRepository {
         getType: TestGetType
     ): Page<TestShort>
 
-    suspend fun getTest(id: String) : Test
+    suspend fun getTest(id: String): Test
+
+    suspend fun getTestSettings(id: String): TestSettingsItem
 }
