@@ -2,48 +2,61 @@ package com.testeducation.ui.screen.tests.preview
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.View
 import androidx.core.view.isGone
+import androidx.viewpager2.widget.MarginPageTransformer
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import com.testeducation.logic.model.question.QuestionItemUi
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.screen.tests.preview.TestPreviewViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestPreviewBinding
-import com.testeducation.ui.delegates.tests.question.createQuestionPreviewDelegate
-import com.testeducation.ui.listener.AppBarStateChangeListener
-import com.testeducation.ui.utils.disableChangeAnimation
+import com.testeducation.ui.delegates.tests.createTestShortPagerDelegate
+import com.testeducation.ui.screen.tests.list.TestShortDiffUtil
+import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.invoke
-import com.testeducation.ui.utils.isEllipsized
 import com.testeducation.ui.utils.isFadeGone
 import com.testeducation.ui.utils.isShimmerHide
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
-import com.testeducation.ui.utils.simpleDiffUtil
 
 class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, FragmentTestPreviewBinding>(
     TestPreviewViewModel::class,
     FragmentTestPreviewBinding::inflate
 ) {
 
-    private val questionsAdapter by lazy {
+    private val authorTestsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
-            simpleDiffUtil(QuestionItemUi::id),
-            createQuestionPreviewDelegate()
+            TestShortDiffUtil(),
+            createTestShortPagerDelegate()
         )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.statusBarColor = requireContext().loadColor(R.color.colorDarkGreen)
         observeData()
         setupViews()
         setupListeners()
+        DateUtils.formatElapsedTime(1000L)
     }
 
     private fun setupViews() = binding {
-        recyclerQuestions.adapter = questionsAdapter
-        recyclerQuestions.disableChangeAnimation()
+        authorTestsPager.apply {
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 2
+            setPadding(
+                LEFT_PAGER_PADDING.dp,
+                0,
+                PAGES_PADDING.dp,
+                0
+            )
+            setPageTransformer(MarginPageTransformer(PAGE_MARGIN.dp))
+            adapter = authorTestsAdapter
+        }
     }
 
     private fun observeData() = viewModel.observe(this, ::render)
@@ -52,32 +65,30 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         shimmerLayout.isShimmerHide = !state.isLoading
         contentAppBar.isGone = state.isLoading
         rootScroll.isGone = state.isLoading
-
-        recyclerQuestions.isGone = !state.isQuestionsShown
-        btnShowQuestions.text = if (state.isQuestionsShown) {
-            getString(R.string.test_preview_hide_questions)
-        } else {
-            getString(R.string.test_preview_show_questions)
-        }
-        questionsAdapter.items = state.questions
         txtUserDisplayName.text = state.creatorName
+        btnShare.isGone = state.isLoading
+        btnFavorite.isGone = state.isLoading
+        authorTestsAdapter.items = state.authorTests
         renderTestDetails(state)
     }
 
     private fun setupListeners() = binding {
-        btnShowQuestions.setClickListener(
-            needDisable = false,
-            viewModel::changeQuestionsVisibility
-        )
+//        btnShowQuestions.setClickListener(
+//            needDisable = false,
+//            viewModel::changeQuestionsVisibility
+//        )
         txtShowMore.setClickListener(needDisable = false, viewModel::toggleDescriptionExpand)
         appBar.addOnOffsetChangedListener { _, _ ->
             val rect = Rect()
             txtTitle.getGlobalVisibleRect(rect)
             txtToolbarTitle.isFadeGone = rootAppBar.bottom < rect.bottom
         }
+        btnFavorite.setClickListener(viewModel::toggleFavorite)
     }
 
     private fun FragmentTestPreviewBinding.renderTestDetails(state: TestPreviewState) {
+        txtTestPassTime.isGone = state.hideTestTimeLimit
+        txtTestPassTime.text = state.timeLimit
         if (state.isExpand) {
             txtDescription.maxLines = Int.MAX_VALUE
         } else {
@@ -88,17 +99,21 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         txtTheme.text = state.theme
         txtDate.text = state.createdDate
         txtTitle.text = state.title
+        txtAuthorName.text = state.creatorName
         txtQuestionsCount.text = resources.getQuantityString(
             R.plurals.questions_count_plurals,
-            state.questions.size,
-            state.questions.size
+            state.questionsCount,
+            state.questionsCount
         )
         btnShowQuestions.isGone = !state.allowPreviewQuestions
         if (state.isLiked) {
-            btnFavorite.setImageResource(R.drawable.ic_fav_filled)
+            btnFavorite.setImageResource(R.drawable.ic_favorite_filled)
         } else {
             btnFavorite.setImageResource(R.drawable.ic_favorite_outline)
         }
+        authorTestsPager.isGone = state.authorTests.isEmpty()
+        txtAuthorTests.isGone = state.authorTests.isEmpty()
+        imgAuthorTests.isGone = state.authorTests.isEmpty()
 
         txtShowMore.isGone = !state.isExpandButtonVisible
         txtShowMore.text = if (state.isExpand) {
@@ -110,6 +125,10 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
 
     private companion object {
         const val MAX_DESCRIPTION_LINES = 6
+        const val LEFT_PAGER_PADDING = 24
+        const val PAGE_MARGIN = 12
+        const val PAGES_PADDING = 66
+
     }
 
 }

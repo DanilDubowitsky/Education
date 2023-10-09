@@ -86,7 +86,10 @@ private fun RemoteTestStyle.toModel() = TestStyle(
 
 private fun RemoteTestSettings.toModel() = TestSettings(
     availability.toTestAvailability(),
-    previewQuestions
+    previewQuestions,
+    minCorrectAnswers,
+    antiCheating,
+    timeLimit
 )
 
 private fun String.toTestAvailability() = when (this) {

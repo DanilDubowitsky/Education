@@ -3,6 +3,7 @@ package com.testeducation.screen.tests.preview
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.preview.TestPreviewSideEffect
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
@@ -14,7 +15,8 @@ class TestPreviewViewModel(
     exceptionHandler: IExceptionHandler,
     private val router: NavigationRouter,
     private val testId: String,
-    private val getTest: GetTest
+    private val getTest: GetTest,
+    private val likeTest: ToggleTestLike
 ) : BaseViewModel<TestPreviewModelState,
         TestPreviewState, TestPreviewSideEffect>(reducer, exceptionHandler) {
 
@@ -24,10 +26,20 @@ class TestPreviewViewModel(
         loadData()
     }
 
-    fun changeQuestionsVisibility() = intent {
+    fun toggleDescriptionExpand() = intent {
         updateModelState {
-            copy(isQuestionsShown = !isQuestionsShown)
+            copy(isDescriptionExpanded = !isDescriptionExpanded)
         }
+    }
+
+    fun toggleFavorite() = intent {
+        val modelState = getModelState()
+        val testId = modelState.test?.id ?: return@intent
+        val isLiked = modelState.test.liked
+        updateModelState {
+            copy(test = test?.copy(liked = !isLiked))
+        }
+        likeTest(testId, !isLiked)
     }
 
     private fun loadData() = intent {
@@ -38,12 +50,6 @@ class TestPreviewViewModel(
                 loadingState = TestPreviewModelState.LoadingState.IDLE,
                 test = test
             )
-        }
-    }
-
-    fun toggleDescriptionExpand() = intent {
-        updateModelState {
-            copy(isDescriptionExpanded = !isDescriptionExpanded)
         }
     }
 

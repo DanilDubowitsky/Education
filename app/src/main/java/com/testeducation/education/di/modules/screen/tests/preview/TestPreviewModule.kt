@@ -3,6 +3,7 @@ package com.testeducation.education.di.modules.screen.tests.preview
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.ITimeConverterLongToString
@@ -34,9 +35,8 @@ interface TestPreviewModule {
             TimeConverterLongToString(resourceHelper)
 
         @Provides
-        fun provideReducer(
-            timeConverter: ITimeConverterLongToString
-        ): IReducer<TestPreviewModelState, TestPreviewState> = TestPreviewReducer(timeConverter)
+        fun provideReducer(): IReducer<TestPreviewModelState, TestPreviewState> =
+            TestPreviewReducer()
 
         @Provides
         fun provideViewModel(
@@ -44,7 +44,8 @@ interface TestPreviewModule {
             router: NavigationRouter,
             reducer: IReducer<TestPreviewModelState, TestPreviewState>,
             exceptionHandler: IExceptionHandler,
-            getTest: GetTest
+            getTest: GetTest,
+            likeTest: ToggleTestLike
         ): TestPreviewViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Preview>()
             return TestPreviewViewModel(
@@ -52,7 +53,8 @@ interface TestPreviewModule {
                 exceptionHandler,
                 router,
                 screen.id,
-                getTest
+                getTest,
+                likeTest
             )
         }
     }

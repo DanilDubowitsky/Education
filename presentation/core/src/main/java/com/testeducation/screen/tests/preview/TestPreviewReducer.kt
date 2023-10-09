@@ -1,19 +1,19 @@
 package com.testeducation.screen.tests.preview
 
-import com.testeducation.converter.test.question.toUi
+import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.IReducer
-import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.utils.DAY_MONTH_YEAR_FULL
 import com.testeducation.utils.formatDateInSeconds
+import com.testeducation.utils.getElapsedTime
 
-class TestPreviewReducer(
-    private val timeConverter: ITimeConverterLongToString
-) : IReducer<TestPreviewModelState, TestPreviewState> {
+class TestPreviewReducer : IReducer<TestPreviewModelState, TestPreviewState> {
 
     override fun reduce(modelState: TestPreviewModelState): TestPreviewState = modelState.run {
         val tempDesc = "j ajksdk ajkdka jdkaj jaskjskjdaskdjskadjaskdjaskldajsdkajdasdkaldkasldkasldkasdajdkjadasdh jahdjashdajsdjasdas;ldkkflsdjfkjjahdjaksh ajdhajdhjfhsdfjjasdkajsdkjfshdfjkha" +
                 "jkhasjdhajkdas kjfskdhfjsdhfsjfhjasdjahdjkahf akdlasdk aksdaj akjdkajsdk jaskdjakld jakldjaiu aidjaklsdjaыkkakskallkda"
+
+        val timeLimit = test?.settings?.timeLimit ?: 0
 
         TestPreviewState(
             isLoading = loadingState == TestPreviewModelState.LoadingState.LOADING,
@@ -23,11 +23,13 @@ class TestPreviewReducer(
             isLiked = test?.liked ?: false,
             allowPreviewQuestions = test?.settings?.previewQuestions ?: false,
             description = tempDesc,
-            questions = test?.questions?.toUi(timeConverter) ?: emptyList(),
-            isQuestionsShown = isQuestionsShown,
+            questionsCount = test?.questions?.size ?: 0,
             creatorName = test?.creator?.username.orEmpty(),
             isExpandButtonVisible = tempDesc.length >= MAX_DESCRIPTION_LENGTH,
-            isExpand = isDescriptionExpanded
+            isExpand = isDescriptionExpanded,
+            timeLimit = getElapsedTime(timeLimit),
+            authorTests = authorTests.toUIModels(),
+            hideTestTimeLimit = timeLimit == 0
         )
     }
 

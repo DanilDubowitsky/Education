@@ -260,13 +260,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/txtDescription"
                     tools:text="60 вопросов" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerQuestions"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/txtQuestionsCount" />
-
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnShowQuestions"
                     style="@style/Button.Small.Blue"
@@ -275,7 +268,76 @@
                     android:background="@drawable/background_selectable_blue_rounded"
                     android:text="@string/test_preview_show_questions"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerQuestions" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtQuestionsCount" />
+
+                <TextView
+                    android:id="@+id/txtAuthor"
+                    style="@style/Text.Label.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/test_preview_author_label"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnShowQuestions" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgAvatar2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorBlue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtAuthor"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                <TextView
+                    android:id="@+id/txtAuthorName"
+                    style="@style/Text.Label.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:ellipsize="end"
+                    android:textColor="@color/colorTextGray"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatar2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatar2"
+                    app:layout_constraintTop_toTopOf="@+id/imgAvatar2"
+                    tools:text="Владимир" />
+
+                <TextView
+                    android:id="@+id/txtAuthorTests"
+                    style="@style/Text.Label.SemiBold"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/test_preview_author_tests_label"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgAuthorTests"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgAvatar2" />
+
+                <ImageView
+                    android:id="@+id/imgAuthorTests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtAuthorTests"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtAuthorTests" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/authorTestsPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txtAuthorTests" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnPassTest"
