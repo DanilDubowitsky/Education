@@ -24,7 +24,7 @@ class TestHelper(
         mutableList[position] = newTest
         if (removeFromList) mutableList.remove(newTest)
         startAsync {
-            toggleTestLike(selectedTest.id, selectedTest.liked)
+            toggleTestLike(selectedTest.id, !selectedTest.liked)
         }
         return mutableList
     }
