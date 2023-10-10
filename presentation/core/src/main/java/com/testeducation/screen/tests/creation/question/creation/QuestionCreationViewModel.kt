@@ -73,7 +73,7 @@ class QuestionCreationViewModel(
     }
 
     fun openTimeDialog() {
-        router.setResultListener(NavigationScreen.QuestionCreation.OnTimeQuestionChanged) { time ->
+        router.setResultListener(NavigationScreen.Questions.OnTimeQuestionChanged) { time ->
             intent {
                 updateModelState {
                     copy(
@@ -84,7 +84,7 @@ class QuestionCreationViewModel(
         }
         intent {
             val model = getModelState()
-            router.navigateTo(NavigationScreen.QuestionCreation.TimeQuestion(model.time))
+            router.navigateTo(NavigationScreen.Questions.TimeQuestion(model.time))
         }
     }
 
@@ -116,7 +116,7 @@ class QuestionCreationViewModel(
     }
 
     fun changeTypeQuestion() {
-        router.setResultListener(NavigationScreen.QuestionCreation.OnSelectionQuestionTypeChanged) { questionTypeUiItem ->
+        router.setResultListener(NavigationScreen.Questions.OnSelectionQuestionTypeChanged) { questionTypeUiItem ->
             intent {
                 val questionTypeItem = questionTypeUiItem.toModel()
                 updateModelState {

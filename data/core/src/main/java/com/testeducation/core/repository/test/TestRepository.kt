@@ -25,7 +25,8 @@ class TestRepository(
         maxQuestions: Int?,
         limit: Int,
         offset: Int,
-        getType: TestGetType
+        getType: TestGetType,
+        userId: String?
     ): Page<TestShort> =
         testRemoteSource.getTests(
             query,
@@ -39,7 +40,8 @@ class TestRepository(
             maxQuestions,
             limit,
             offset,
-            getType
+            getType,
+            userId
         )
 
     override suspend fun getTest(id: String): Test {

@@ -2,7 +2,6 @@ package com.testeducation.ui.screen.tests.preview
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.View
 import androidx.core.view.isGone
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -40,7 +39,6 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         observeData()
         setupViews()
         setupListeners()
-        DateUtils.formatElapsedTime(1000L)
     }
 
     private fun setupViews() = binding {
@@ -69,14 +67,15 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         btnShare.isGone = state.isLoading
         btnFavorite.isGone = state.isLoading
         authorTestsAdapter.items = state.authorTests
+        btnPassTest.isGone = state.isLoading
         renderTestDetails(state)
     }
 
     private fun setupListeners() = binding {
-//        btnShowQuestions.setClickListener(
-//            needDisable = false,
-//            viewModel::changeQuestionsVisibility
-//        )
+        btnShowQuestions.setClickListener(
+            needDisable = false,
+            viewModel::openQuestionsScreen
+        )
         txtShowMore.setClickListener(needDisable = false, viewModel::toggleDescriptionExpand)
         appBar.addOnOffsetChangedListener { _, _ ->
             val rect = Rect()
@@ -84,6 +83,7 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
             txtToolbarTitle.isFadeGone = rootAppBar.bottom < rect.bottom
         }
         btnFavorite.setClickListener(viewModel::toggleFavorite)
+        btnBack.setClickListener(viewModel::exit)
     }
 
     private fun FragmentTestPreviewBinding.renderTestDetails(state: TestPreviewState) {

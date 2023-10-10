@@ -23,7 +23,7 @@ import com.testeducation.ui.delegates.tests.question.footerPlusAddDelegate
 import com.testeducation.ui.listener.drag.DragStartListener
 import com.testeducation.ui.listener.drag.IDragStartListener
 import com.testeducation.ui.listener.QuestionItemTouchHelperCallback
-import com.testeducation.ui.screen.LoaderDialog
+import com.testeducation.ui.screen.common.LoaderDialog
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe

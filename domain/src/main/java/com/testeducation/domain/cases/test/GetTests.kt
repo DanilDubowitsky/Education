@@ -21,9 +21,10 @@ class GetTests(
         hasLimit: Boolean = false,
         minQuestions: Int? = null,
         maxQuestions: Int? = null,
+        userId: String? = null,
         limit: Int,
         offset: Int,
-        getType: TestGetType
+        getType: TestGetType,
     ): Page<TestShort> = testRepository.getTests(
         query,
         themeId,
@@ -36,6 +37,7 @@ class GetTests(
         maxQuestions,
         limit,
         offset,
-        getType
+        getType,
+        userId
     )
 }

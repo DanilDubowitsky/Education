@@ -41,7 +41,7 @@ class TimeQuestionViewModel(
         val currentTime = timeList.find { it.isSelected }
         currentTime?.let { timeNotNull ->
             router.sendResult(
-                NavigationScreen.QuestionCreation.OnTimeQuestionChanged,
+                NavigationScreen.Questions.OnTimeQuestionChanged,
                 timeNotNull.time
             )
         }

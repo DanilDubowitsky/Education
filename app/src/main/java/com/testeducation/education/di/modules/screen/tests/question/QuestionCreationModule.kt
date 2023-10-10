@@ -50,7 +50,7 @@ interface QuestionCreationModule {
             router: NavigationRouter,
             questionCreate: QuestionCreate
         ): QuestionCreationViewModel {
-            val screen = fragment.getScreen<NavigationScreen.QuestionCreation.QuestionEditor>()
+            val screen = fragment.getScreen<NavigationScreen.Questions.QuestionEditor>()
             return QuestionCreationViewModel(
                 reducer = reducer,
                 errorHandler = exceptionHandler,

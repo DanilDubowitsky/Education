@@ -3,11 +3,14 @@ package com.testeducation.screen.tests.preview
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.preview.TestPreviewSideEffect
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestPreviewViewModel(
@@ -16,7 +19,8 @@ class TestPreviewViewModel(
     private val router: NavigationRouter,
     private val testId: String,
     private val getTest: GetTest,
-    private val likeTest: ToggleTestLike
+    private val likeTest: ToggleTestLike,
+    private val getTests: GetTests
 ) : BaseViewModel<TestPreviewModelState,
         TestPreviewState, TestPreviewSideEffect>(reducer, exceptionHandler) {
 
@@ -32,6 +36,10 @@ class TestPreviewViewModel(
         }
     }
 
+    fun exit() = intent {
+        router.exit()
+    }
+
     fun toggleFavorite() = intent {
         val modelState = getModelState()
         val testId = modelState.test?.id ?: return@intent
@@ -42,15 +50,35 @@ class TestPreviewViewModel(
         likeTest(testId, !isLiked)
     }
 
+    fun openQuestionsScreen() = intent {
+        val modelState = getModelState()
+
+        val screen = NavigationScreen.Questions.QuestionsPreview(
+            modelState.test?.id.orEmpty()
+        )
+        router.navigateTo(screen)
+    }
+
+
     private fun loadData() = intent {
         val test = getTest(testId)
+        val testsPage = getTests(
+            limit = TESTS_PAGE_SIZE,
+            offset = 0,
+            getType = TestGetType.MAIN,
+            userId = test.creator.id
+        )
 
         updateModelState {
             copy(
                 loadingState = TestPreviewModelState.LoadingState.IDLE,
-                test = test
+                test = test,
+                authorTests = testsPage.tests
             )
         }
+    }
+    private companion object {
+        const val TESTS_PAGE_SIZE = 3
     }
 
 }

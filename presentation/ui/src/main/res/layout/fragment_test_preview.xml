@@ -215,11 +215,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="57dp"
                     android:text="@string/test_preview_about_test_label"
+                    android:layout_marginTop="27dp"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/roundCornersBottomView" />
 
                 <TextView
                     android:id="@+id/txtDescription"
@@ -339,15 +339,11 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/txtAuthorTests" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnPassTest"
-                    style="@style/Button.Normal.Green"
+                <View
+                    android:id="@+id/mockMarginView"
+                    app:layout_constraintTop_toBottomOf="@+id/authorTestsPager"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginBottom="110dp"
-                    android:text="@string/test_preview_pass_test"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    android:layout_height="200dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -364,6 +360,16 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnPassTest"
+        style="@style/Button.Normal.Green"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="115dp"
+        android:text="@string/test_preview_pass_test"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

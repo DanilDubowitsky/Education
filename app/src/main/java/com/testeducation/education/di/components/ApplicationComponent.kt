@@ -23,6 +23,7 @@ import com.testeducation.education.di.modules.remote.client.auth.AuthClientModul
 import com.testeducation.education.di.modules.remote.client.refresh.RefreshClientModule
 import com.testeducation.education.di.modules.remote.helper.RemoteHelperModule
 import com.testeducation.education.di.modules.remote.internal.ApplicationVersionRemoteSourceModule
+import com.testeducation.education.di.modules.remote.question.QuestionRemoteModule
 import com.testeducation.education.di.modules.remote.retrofit.category.ThemeRetrofitModule
 import com.testeducation.education.di.modules.remote.retrofit.global.RetrofitModule
 import com.testeducation.education.di.modules.remote.retrofit.internal.BackendRetrofitClientModule
@@ -89,6 +90,7 @@ import javax.inject.Singleton
         //Question
         QuestionUseCaseModule::class,
         QuestionCoreModule::class,
+        QuestionRemoteModule::class
     ]
 )
 @Singleton

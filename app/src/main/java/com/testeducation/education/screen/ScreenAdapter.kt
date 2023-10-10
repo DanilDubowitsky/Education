@@ -13,6 +13,7 @@ import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
@@ -33,7 +34,7 @@ class ScreenAdapter : IScreenAdapter {
             is NavigationScreen.Common -> createPlatformScreen(screen)
             is NavigationScreen.Main -> createPlatformScreen(screen)
             is NavigationScreen.Tests -> createPlatformScreen(screen)
-            is NavigationScreen.QuestionCreation -> createPlatformScreen(screen)
+            is NavigationScreen.Questions -> createPlatformScreen(screen)
         }
 
     private fun createPlatformScreen(screen: NavigationScreen.Auth): Screen =
@@ -122,12 +123,16 @@ class ScreenAdapter : IScreenAdapter {
         }
     }
 
-    private fun createPlatformScreen(screen: NavigationScreen.QuestionCreation) = when(screen) {
-        is NavigationScreen.QuestionCreation.QuestionEditor -> Screen.FragmentScreen {
+    private fun createPlatformScreen(screen: NavigationScreen.Questions) = when(screen) {
+        is NavigationScreen.Questions.QuestionEditor -> Screen.FragmentScreen {
             QuestionCreationFragment().withScreen(screen)
         }
-        is NavigationScreen.QuestionCreation.TimeQuestion -> Screen.DialogScreen {
+        is NavigationScreen.Questions.TimeQuestion -> Screen.DialogScreen {
             TimeQuestionDialog().withScreen(screen)
+        }
+
+        is NavigationScreen.Questions.QuestionsPreview -> Screen.DialogScreen {
+            QuestionsPreviewDialog().withScreen(screen)
         }
     }
 }
