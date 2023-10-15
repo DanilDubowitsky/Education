@@ -67,12 +67,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/rootAppBar"
-        android:background="@drawable/background_green_rounded_bottom"
-        android:layout_height="20dp" />
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -189,25 +183,25 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <View
+            android:id="@+id/roundCornersBottomView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/background_green_rounded_bottom"
+            app:layout_anchor="@id/appBar"
+            app:layout_anchorGravity="bottom" />
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/rootScroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="-20dp"
-            android:fillViewport="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:animateLayoutChanges="true"
                 android:layout_height="match_parent">
-
-                <View
-                    android:id="@+id/roundCornersBottomView"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_green_rounded_bottom"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txtLabelAboutTest"
@@ -216,10 +210,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:text="@string/test_preview_about_test_label"
-                    android:layout_marginTop="27dp"
+                    android:layout_marginTop="10dp"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/roundCornersBottomView" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txtDescription"

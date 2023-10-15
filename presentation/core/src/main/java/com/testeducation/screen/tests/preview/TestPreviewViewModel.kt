@@ -7,15 +7,19 @@ import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.screen.tests.preview.TestPreviewSideEffect
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.screen.home.HomeViewModel
+import com.testeducation.screen.home.HomeViewModel.Companion.HOME_NAVIGATOR_KEY
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestPreviewViewModel(
     reducer: IReducer<TestPreviewModelState, TestPreviewState>,
     exceptionHandler: IExceptionHandler,
+    private val testHelper: ITestHelper,
     private val router: NavigationRouter,
     private val testId: String,
     private val getTest: GetTest,
@@ -59,6 +63,18 @@ class TestPreviewViewModel(
         router.navigateTo(screen)
     }
 
+    fun onTestClick(id: String) = intent {
+        val screen = NavigationScreen.Tests.Preview(id)
+        router.navigateTo(screen, key = HOME_NAVIGATOR_KEY)
+    }
+
+    fun onLikeClick(position: Int) = intent {
+        val tests = getModelState().authorTests
+        val newList = testHelper.toggleTestLike(position, tests)
+        updateModelState {
+            copy(authorTests = newList)
+        }
+    }
 
     private fun loadData() = intent {
         val test = getTest(testId)

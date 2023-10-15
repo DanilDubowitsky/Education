@@ -10,6 +10,8 @@ import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.helper.question.TimeConverterLongToString
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.test.ITestHelper
+import com.testeducation.helper.test.TestHelper
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
@@ -31,6 +33,9 @@ interface TestPreviewModule {
     fun bindViewModel(viewModel: TestPreviewViewModel): ViewModel
 
     companion object {
+        @Provides
+        fun provideTestHelper(toggleTestLike: ToggleTestLike): ITestHelper =
+            TestHelper(toggleTestLike)
 
         @Provides
         fun provideReducer(): IReducer<TestPreviewModelState, TestPreviewState> =
@@ -44,12 +49,14 @@ interface TestPreviewModule {
             exceptionHandler: IExceptionHandler,
             getTest: GetTest,
             likeTest: ToggleTestLike,
-            getTests: GetTests
+            getTests: GetTests,
+            testHelper: ITestHelper
         ): TestPreviewViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Preview>()
             return TestPreviewViewModel(
                 reducer,
                 exceptionHandler,
+                testHelper,
                 router,
                 screen.id,
                 getTest,

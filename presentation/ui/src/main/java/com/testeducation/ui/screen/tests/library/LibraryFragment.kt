@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.screen.tests.library.LibraryState
 import com.testeducation.screen.tests.library.LibraryViewModel
 import com.testeducation.ui.R
@@ -29,21 +30,27 @@ class LibraryFragment : ViewModelHostFragment<LibraryViewModel, FragmentLibraryB
     private val publishedTestsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             TestShortDiffUtil(),
-            createTestShortPagerDelegate()
+            createTestShortPagerDelegate(viewModel::openTestPreview) { position ->
+                viewModel.toggleTestLike(position, TestGetTypeUI.CREATED)
+            }
         )
     }
 
     private val passedTestsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             TestShortDiffUtil(),
-            createTestShortPagerDelegate()
+            createTestShortPagerDelegate(viewModel::openTestPreview) { position ->
+                viewModel.toggleTestLike(position, TestGetTypeUI.PASSED)
+            }
         )
     }
 
     private val draftsTestsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             TestShortDiffUtil(),
-            createTestShortPagerDelegate()
+            createTestShortPagerDelegate(viewModel::openTestPreview) { position ->
+                viewModel.toggleTestLike(position, TestGetTypeUI.MAIN)
+            }
         )
     }
 

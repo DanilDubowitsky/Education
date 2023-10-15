@@ -29,7 +29,10 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
     private val authorTestsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             TestShortDiffUtil(),
-            createTestShortPagerDelegate()
+            createTestShortPagerDelegate(
+                viewModel::onTestClick,
+                viewModel::onLikeClick
+            )
         )
     }
 

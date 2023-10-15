@@ -30,7 +30,7 @@ class QuestionsPreviewDialog :
         )
     }
 
-    override val isFullScreen: Boolean = true
+    override val isFullScreen: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
