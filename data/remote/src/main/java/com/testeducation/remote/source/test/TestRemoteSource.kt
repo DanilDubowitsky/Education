@@ -62,4 +62,8 @@ class TestRemoteSource(
     override suspend fun getTestSettings(id: String): TestSettingsItem {
         return testRetrofitClient.getTestSettings(id = id).getResult().data.toModels()
     }
+
+    override suspend fun updateTestSettings(id: String ,testSettingsItem: TestSettingsItem) {
+        testRetrofitClient.updateTestSettings(id = id, testSettingsItem.toRemote())
+    }
 }

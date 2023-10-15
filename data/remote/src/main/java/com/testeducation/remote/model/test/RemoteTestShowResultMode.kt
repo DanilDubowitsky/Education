@@ -4,5 +4,5 @@ enum class RemoteTestShowResultMode {
     /** Сразу */
     Immediately,
     /** после прохождения теста */
-    AterPass,
+    AfterPass,
 }

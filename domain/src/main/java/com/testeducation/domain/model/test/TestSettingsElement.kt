@@ -36,8 +36,14 @@ sealed class TestSettingsElement {
     ) : TestSettingsElement() {
         data class Item(
             val title: String,
+            val value: String,
             val isSelected: Boolean
         )
+
+        object Position {
+            const val FIRST = 1
+            const val SECOND = 2
+        }
     }
 
     data class Selectable(

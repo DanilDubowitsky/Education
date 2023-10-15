@@ -85,7 +85,7 @@ fun testSettingsHorizontalScroll() =
         }
     }
 
-fun testSettingsChoice() =
+fun testSettingsChoice(update: (Int, Int) -> Unit) =
     simpleDelegateAdapter<TestSettingsElementUi.Choice,
             TestSettingsElementUi,
             ViewHolderSettingsChoiceBinding>(
@@ -98,11 +98,21 @@ fun testSettingsChoice() =
                 chipFirst.isChecked = item.itemFirst.isSelected
                 chipSecond.text = item.itemSecond.title
                 chipSecond.isChecked = item.itemSecond.isSelected
+                chipFirst.setOnClickListener {
+                    update(
+                        item.id, 1
+                    )
+                }
+                chipSecond.setOnClickListener {
+                    update(
+                        item.id, 2
+                    )
+                }
             }
         }
     }
 
-fun testSettingsSelectable() =
+fun testSettingsSelectable(update: (Int) -> Unit) =
     simpleDelegateAdapter<TestSettingsElementUi.Selectable,
             TestSettingsElementUi,
             ViewHolderSettingsSelectableBinding>(
@@ -112,6 +122,9 @@ fun testSettingsSelectable() =
             bind {
                 tvTitle.text = item.title
                 checkbox.isChecked = item.isSelected
+                checkbox.setOnClickListener {
+                    update(item.id)
+                }
             }
         }
     }

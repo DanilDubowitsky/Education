@@ -47,5 +47,9 @@ class TestRepository(
         return testRemoteSource.getTest(id)
     }
 
-    override suspend fun getTestSettings(id: String): TestSettingsItem = testRemoteSource.getTestSettings(id)
+    override suspend fun getTestSettings(id: String): TestSettingsItem =
+        testRemoteSource.getTestSettings(id)
+
+    override suspend fun updateTestSettings(id: String, testSettings: TestSettingsItem) =
+        testRemoteSource.updateTestSettings(id, testSettings)
 }

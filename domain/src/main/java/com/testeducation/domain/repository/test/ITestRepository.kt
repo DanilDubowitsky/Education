@@ -28,4 +28,6 @@ interface ITestRepository {
     suspend fun getTest(id: String): Test
 
     suspend fun getTestSettings(id: String): TestSettingsItem
+
+    suspend fun updateTestSettings(id: String, testSettings: TestSettingsItem)
 }

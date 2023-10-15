@@ -3,6 +3,7 @@ package com.testeducation.education.di.modules.screen.tests.settings
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTestSettings
+import com.testeducation.domain.cases.test.UpdateTestSettings
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
@@ -40,6 +41,7 @@ interface TestSettingsModule {
             resourceHelper: IResourceHelper,
             navigationRouter: NavigationRouter,
             getTestSettings: GetTestSettings,
+            updateTestSettings: UpdateTestSettings,
             getThemes: GetThemes
         ): TestSettingsViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Settings>()
@@ -50,6 +52,7 @@ interface TestSettingsModule {
                 testId = screen.testId,
                 router = navigationRouter,
                 getTestSettings = getTestSettings,
+                updateTestSettings = updateTestSettings,
                 titleTest = screen.titleTest,
                 colorTest = screen.colorTest,
                 imageTest = screen.imageTest,

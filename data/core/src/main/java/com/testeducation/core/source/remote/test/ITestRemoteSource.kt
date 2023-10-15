@@ -29,4 +29,6 @@ interface ITestRemoteSource {
 
     suspend fun getTestSettings(id: String): TestSettingsItem
 
+    suspend fun updateTestSettings(id: String,testSettingsItem: TestSettingsItem)
+
 }
