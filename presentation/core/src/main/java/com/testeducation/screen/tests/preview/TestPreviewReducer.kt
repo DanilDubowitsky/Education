@@ -10,8 +10,7 @@ import com.testeducation.utils.getElapsedTime
 class TestPreviewReducer : IReducer<TestPreviewModelState, TestPreviewState> {
 
     override fun reduce(modelState: TestPreviewModelState): TestPreviewState = modelState.run {
-        val tempDesc = "j ajksdk ajkdka jdkaj jaskjskjdaskdjskadjaskdjaskldajsdkajdasdkaldkasldkasldkasdajdkjadasdh jahdjashdajsdjasdas;ldkkflsdjfkjjahdjaksh ajdhajdhjfhsdfjjasdkajsdkjfshdfjkha" +
-                "jkhasjdhajkdas kjfskdhfjsdhfsjfhjasdjahdjkahf akdlasdk aksdaj akjdkajsdk jaskdjakld jakldjaiu aidjaklsdjaыkkakskallkda"
+        val tempDesc = ""
 
         val timeLimit = test?.settings?.timeLimit ?: 0
 
