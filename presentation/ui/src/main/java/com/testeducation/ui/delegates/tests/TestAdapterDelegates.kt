@@ -29,10 +29,21 @@ fun createTestLoadingDelegate() =
         ViewHolderSimpleLoaderBinding::inflate
     ) {}
 
-fun createTestShortPagerDelegate() = simpleDelegateAdapter<TestShortUI.Test, TestShortUI,
+fun createTestShortPagerDelegate(
+    onClick: (String) -> Unit,
+    onLikeClick: (position: Int) -> Unit
+) = simpleDelegateAdapter<TestShortUI.Test, TestShortUI,
         ViewHolderTestShortPagerBinding>(
     ViewHolderTestShortPagerBinding::inflate
 ) {
+
+    binding.root.setClickListener {
+        onClick(item.id)
+    }
+
+    binding.cardTest.setOnLikeClickListener {
+        onLikeClick(absoluteAdapterPosition)
+    }
 
     bind {
         binding.cardTest.setContent(item)

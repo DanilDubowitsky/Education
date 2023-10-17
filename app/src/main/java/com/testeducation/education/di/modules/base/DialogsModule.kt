@@ -1,11 +1,13 @@
 package com.testeducation.education.di.modules.base
 
+import com.testeducation.education.di.modules.screen.question.QuestionsPreviewModule
 import com.testeducation.education.di.modules.screen.tests.creation.TestCreationModule
 import com.testeducation.education.di.modules.screen.tests.question.QuestionModule
 import com.testeducation.education.di.modules.screen.tests.question.time.TimeQuestionModule
 import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
+import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
 import com.testeducation.ui.screen.tests.creation.time.TimeQuestionDialog
@@ -32,4 +34,7 @@ interface DialogsModule {
 
     @ContributesAndroidInjector(modules = [TimeQuestionModule::class])
     fun timeQuestionDialog(): TimeQuestionDialog
+
+    @ContributesAndroidInjector(modules = [QuestionsPreviewModule::class])
+    fun questionsPreviewDialog(): QuestionsPreviewDialog
 }

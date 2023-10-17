@@ -2,6 +2,7 @@ package com.testeducation.remote.model.test
 
 import com.google.gson.annotations.SerializedName
 import com.testeducation.remote.model.question.RemoteQuestion
+import com.testeducation.remote.model.user.RemoteUserInfo
 
 data class RemoteTest(
     @SerializedName("id")
@@ -27,7 +28,9 @@ data class RemoteTest(
     @SerializedName("theme")
     val theme: RemoteThemeShort,
     @SerializedName("date_created")
-    val creationDate: Long
+    val creationDate: Long,
+    @SerializedName("owner")
+    val creator: RemoteUserInfo
 ) {
 
     enum class Status {

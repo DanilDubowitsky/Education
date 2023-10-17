@@ -10,9 +10,19 @@ data class RemoteQuestion(
     @SerializedName("title")
     val title: String,
     @SerializedName("type")
-    val type: String,
+    val type: Type,
     @SerializedName("time")
     val time: Int,
     @SerializedName("answers")
-    val answers: List<RemoteAnswer>
-)
+    val answers: List<RemoteAnswer>,
+    @SerializedName("order")
+    val questionNumber: String
+) {
+
+    enum class Type {
+        Match,
+        Choice,
+        Text,
+        Reorder
+    }
+}

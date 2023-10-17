@@ -11,15 +11,15 @@ fun List<QuestionTypeItem>.toUiModel() = this.map {
             QuestionTypeUi.MATCH
         }
 
-        QuestionType.DEFAULT -> {
+        QuestionType.CHOICE -> {
             QuestionTypeUi.DEFAULT
         }
 
-        QuestionType.WRITE_ANSWER -> {
+        QuestionType.TEXT -> {
             QuestionTypeUi.WRITE_ANSWER
         }
 
-        QuestionType.ORDER -> {
+        QuestionType.REORDER -> {
             QuestionTypeUi.ORDER
         }
     }.let { typeUi ->
@@ -34,13 +34,13 @@ fun QuestionTypeUiItem.toModel() = when (this.type) {
         QuestionType.MATCH
     }
     QuestionTypeUi.DEFAULT -> {
-        QuestionType.DEFAULT
+        QuestionType.CHOICE
     }
     QuestionTypeUi.WRITE_ANSWER -> {
-        QuestionType.WRITE_ANSWER
+        QuestionType.TEXT
     }
     QuestionTypeUi.ORDER -> {
-        QuestionType.ORDER
+        QuestionType.REORDER
     }
 }.let {
     QuestionTypeItem(it)
@@ -50,13 +50,13 @@ fun QuestionType.toUiModel() = when (this) {
     QuestionType.MATCH -> {
         QuestionTypeUi.MATCH
     }
-    QuestionType.DEFAULT -> {
+    QuestionType.CHOICE -> {
         QuestionTypeUi.DEFAULT
     }
-    QuestionType.WRITE_ANSWER -> {
+    QuestionType.TEXT -> {
         QuestionTypeUi.WRITE_ANSWER
     }
-    QuestionType.ORDER -> {
+    QuestionType.REORDER -> {
         QuestionTypeUi.ORDER
     }
 }.let {

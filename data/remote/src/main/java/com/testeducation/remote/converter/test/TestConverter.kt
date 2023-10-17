@@ -8,6 +8,7 @@ import com.testeducation.domain.model.test.TestSettings
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.test.TestStyle
 import com.testeducation.remote.converter.question.toModels
+import com.testeducation.remote.converter.user.toModel
 import com.testeducation.remote.model.test.RemoteCreationTest
 import com.testeducation.remote.model.test.RemotePage
 import com.testeducation.remote.model.test.RemoteTest
@@ -66,7 +67,8 @@ fun RemoteTest.toModels(): Test {
         passesUser = passesUser,
         passed = passed,
         theme = theme.toModel(),
-        creationDate = creationDate
+        creationDate = creationDate,
+        creator = creator.toModel()
     )
 }
 
@@ -84,7 +86,10 @@ private fun RemoteTestStyle.toModel() = TestStyle(
 
 private fun RemoteTestSettings.toModel() = TestSettings(
     availability.toTestAvailability(),
-    previewQuestions
+    previewQuestions,
+    minCorrectAnswers,
+    antiCheating,
+    timeLimit
 )
 
 private fun String.toTestAvailability() = when (this) {

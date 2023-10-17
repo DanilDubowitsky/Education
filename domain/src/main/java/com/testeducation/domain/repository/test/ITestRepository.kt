@@ -21,7 +21,8 @@ interface ITestRepository {
         maxQuestions: Int?,
         limit: Int,
         offset: Int,
-        getType: TestGetType
+        getType: TestGetType,
+        userId: String?
     ): Page<TestShort>
 
     suspend fun getTest(id: String) : Test

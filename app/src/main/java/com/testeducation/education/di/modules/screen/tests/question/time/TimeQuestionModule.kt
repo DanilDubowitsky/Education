@@ -45,7 +45,7 @@ interface TimeQuestionModule {
             dialog: TimeQuestionDialog,
             resourceHelper: IResourceHelper
         ): TimeQuestionViewModel {
-            val screen = dialog.getScreen<NavigationScreen.QuestionCreation.TimeQuestion>()
+            val screen = dialog.getScreen<NavigationScreen.Questions.TimeQuestion>()
             return TimeQuestionViewModel(
                 reducer = reducer,
                 errorHandler = exceptionHandler,

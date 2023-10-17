@@ -34,13 +34,13 @@ class SelectionQuestionTypeViewModel(
         if (idTest.isNotEmpty()) {
             router.exit()
             router.navigateTo(
-                NavigationScreen.QuestionCreation.QuestionEditor(
+                NavigationScreen.Questions.QuestionEditor(
                     questionTypeUiItem,
                     idTest
                 )
             )
         } else {
-            router.sendResult(NavigationScreen.QuestionCreation.OnSelectionQuestionTypeChanged, questionTypeUiItem)
+            router.sendResult(NavigationScreen.Questions.OnSelectionQuestionTypeChanged, questionTypeUiItem)
             router.exit()
         }
     }
@@ -50,16 +50,16 @@ class SelectionQuestionTypeViewModel(
             copy(
                 questionTypeItems = listOf(
                     QuestionTypeItem(
-                        questionType = QuestionType.DEFAULT
+                        questionType = QuestionType.CHOICE
                     ),
                     QuestionTypeItem(
-                        questionType = QuestionType.ORDER
+                        questionType = QuestionType.REORDER
                     ),
                     QuestionTypeItem(
                         questionType = QuestionType.MATCH
                     ),
                     QuestionTypeItem(
-                        questionType = QuestionType.WRITE_ANSWER
+                        questionType = QuestionType.TEXT
                     )
                 )
             )

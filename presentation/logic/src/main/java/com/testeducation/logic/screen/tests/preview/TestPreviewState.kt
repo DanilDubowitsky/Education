@@ -1,6 +1,6 @@
 package com.testeducation.logic.screen.tests.preview
 
-import com.testeducation.logic.model.question.QuestionItemUi
+import com.testeducation.logic.model.test.TestShortUI
 
 data class TestPreviewState(
     val isLoading: Boolean,
@@ -9,6 +9,12 @@ data class TestPreviewState(
     val createdDate: String,
     val isLiked: Boolean,
     val description: String,
-    val questions: List<QuestionItemUi>,
-    val allowPreviewQuestions: Boolean
+    val questionsCount: Int,
+    val allowPreviewQuestions: Boolean,
+    val creatorName: String,
+    val isExpandButtonVisible: Boolean,
+    val isExpand: Boolean,
+    val timeLimit: String,
+    val authorTests: List<TestShortUI>,
+    val hideTestTimeLimit: Boolean
 )

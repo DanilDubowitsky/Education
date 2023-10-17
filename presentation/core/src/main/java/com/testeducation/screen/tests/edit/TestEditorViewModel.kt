@@ -35,7 +35,7 @@ class TestEditorViewModel(
 
     fun openCreateQuestion() {
         router.navigateTo(
-            NavigationScreen.QuestionCreation.QuestionEditor(
+            NavigationScreen.Questions.QuestionEditor(
                 QuestionTypeUiItem(QuestionTypeUi.DEFAULT),
                 testId
             )

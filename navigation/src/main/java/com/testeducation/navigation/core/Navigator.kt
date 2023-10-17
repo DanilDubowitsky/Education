@@ -20,7 +20,6 @@ class Navigator(
     private var currentVisibleScreen: Screen? = null
 
     override fun executeCommand(command: Command) {
-        // TODO: add support for dialog back press
         when (command) {
             is Command.Back -> handleBackCommand()
             is Command.Forward -> executeForwardCommand(command)

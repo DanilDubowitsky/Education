@@ -50,9 +50,6 @@ abstract class BaseBottomSheetDialog<VB : ViewBinding>(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).apply {
             setOnShowListener(::onDialogShow)
-            if (isFullScreen) {
-                dialog?.window?.setDimAmount(0f)
-            }
         }
     }
 

@@ -14,7 +14,7 @@ class QuestionCreationReducer(private val timeConverterLongToString: ITimeConver
         return QuestionCreationState(
             answerItemUiList = modelState.answerItem.toModelUi(),
             questionTypeUiItem = modelState.questionTypeItem.questionType.toUiModel(),
-            visibleIndicator = modelState.questionTypeItem.questionType == QuestionType.ORDER,
+            visibleIndicator = modelState.questionTypeItem.questionType == QuestionType.REORDER,
             answerIndicatorItems = modelState.answerIndicatorItems.toListUi(),
             time = timeConverterLongToString.convert(modelState.time)
         )

@@ -1,4 +1,4 @@
-package com.testeducation.ui.screen
+package com.testeducation.ui.screen.common
 
 import android.app.Dialog
 import android.content.Context
