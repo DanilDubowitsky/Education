@@ -53,7 +53,9 @@ fun List<RemoteAnswer>.mapToModels(type: QuestionType) = map { answer ->
             id = answer.id.orEmpty(),
             answerText = answer.title.orEmpty(),
             isTrue = answer.current,
-            isUrl = false, color = 0
+            isUrl = false,
+            color = 0,
+            resource = AnswerItem.DefaultAnswer.Resource(0)
         )
 
         QuestionType.TEXT -> AnswerItem.TextAnswer(
@@ -61,7 +63,10 @@ fun List<RemoteAnswer>.mapToModels(type: QuestionType) = map { answer ->
         )
 
         QuestionType.REORDER -> AnswerItem.OrderAnswer(
-            id = answer.id.orEmpty(), answerText = answer.title.orEmpty(), order = answer.order
+            id = answer.id.orEmpty(),
+            answerText = answer.title.orEmpty(),
+            order = answer.order,
+            color = 0
         )
     }
 }
