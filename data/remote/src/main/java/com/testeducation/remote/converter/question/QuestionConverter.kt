@@ -1,15 +1,17 @@
 package com.testeducation.remote.converter.question
 
-import com.testeducation.domain.model.question.AnswerItem
+import com.testeducation.domain.model.question.Answer
 import com.testeducation.domain.model.question.Question
+import com.testeducation.domain.model.question.input.InputAnswer
+import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.remote.model.answer.RemoteAnswer
 import com.testeducation.remote.model.question.RemoteQuestion
 import com.testeducation.remote.request.question.AnswerCreateRequest
 import com.testeducation.remote.request.question.AnswerMatch
 
-fun List<AnswerItem>.mapToRequestTypeDefault() = mapNotNull { answer ->
-    if (answer is AnswerItem.DefaultAnswer) {
+fun List<InputAnswer>.mapToRequestTypeDefault() = mapNotNull { answer ->
+    if (answer is InputAnswer.DefaultAnswer) {
         AnswerCreateRequest(
             title = answer.answerText,
             current = answer.isTrue
@@ -17,8 +19,8 @@ fun List<AnswerItem>.mapToRequestTypeDefault() = mapNotNull { answer ->
     } else null
 }
 
-fun List<AnswerItem>.mapToRequestTypeMatch() = mapNotNull { answer ->
-    if (answer is AnswerItem.MatchAnswer) {
+fun List<InputAnswer>.mapToRequestTypeMatch() = mapNotNull { answer ->
+    if (answer is InputAnswer.MatchAnswer) {
         AnswerCreateRequest(
             title = answer.firstAnswer,
             match = AnswerMatch(title = answer.secondAnswer)
@@ -26,49 +28,19 @@ fun List<AnswerItem>.mapToRequestTypeMatch() = mapNotNull { answer ->
     } else null
 }
 
-fun List<AnswerItem>.mapToRequestTypeWriteAnswer() = mapNotNull { answer ->
-    if (answer is AnswerItem.TextAnswer) {
+fun List<InputAnswer>.mapToRequestTypeWriteAnswer() = mapNotNull { answer ->
+    if (answer is InputAnswer.TextAnswer) {
         AnswerCreateRequest(
             text = answer.text
         )
     } else null
 }
 
-fun List<AnswerItem>.mapToRequestAnswer(type: QuestionType) = when (type) {
+fun List<InputAnswer>.mapToRequestAnswer(type: QuestionType) = when (type) {
     QuestionType.CHOICE -> this.mapToRequestTypeDefault()
     QuestionType.MATCH -> this.mapToRequestTypeMatch()
     QuestionType.TEXT -> this.mapToRequestTypeWriteAnswer()
     else -> emptyList()
-}
-
-fun List<RemoteAnswer>.mapToModels(type: QuestionType) = map { answer ->
-    when (type) {
-        QuestionType.MATCH -> AnswerItem.MatchAnswer(
-            id = answer.id.orEmpty(),
-            firstAnswer = answer.title.orEmpty(),
-            secondAnswer = answer.match?.title.orEmpty(), color = 0
-        )
-
-        QuestionType.CHOICE -> AnswerItem.DefaultAnswer(
-            id = answer.id.orEmpty(),
-            answerText = answer.title.orEmpty(),
-            isTrue = answer.current,
-            isUrl = false,
-            color = 0,
-            resource = AnswerItem.DefaultAnswer.Resource(0)
-        )
-
-        QuestionType.TEXT -> AnswerItem.TextAnswer(
-            id = answer.id.orEmpty(), text = answer.text.orEmpty()
-        )
-
-        QuestionType.REORDER -> AnswerItem.OrderAnswer(
-            id = answer.id.orEmpty(),
-            answerText = answer.title.orEmpty(),
-            order = answer.order,
-            color = 0
-        )
-    }
 }
 
 fun RemoteQuestion.toModel(): Question {
@@ -80,11 +52,25 @@ fun RemoteQuestion.toModel(): Question {
         numberQuestion = questionNumber,
         time = time.toLong(),
         type = questionType,
-        answers = answers.mapToModels(questionType)
+        answers = answers.toModels(questionType)
     )
 }
 
-fun List<RemoteQuestion>.toModels() = map(RemoteQuestion::toModel)
+fun List<RemoteAnswer>.toModels(questionType: QuestionType) = map { answer ->
+    answer.toModel(answer.id, questionType)
+}
+
+fun RemoteAnswer.toModel(
+    questionId: String,
+    questionType: QuestionType
+) = when (questionType) {
+    QuestionType.MATCH -> toMatch(questionId)
+    QuestionType.CHOICE -> toChoice(questionId)
+    QuestionType.TEXT -> toText(questionId)
+    QuestionType.REORDER -> toReorder(questionId)
+}
+
+fun List<RemoteQuestion>.toModels(): List<Question> = map(RemoteQuestion::toModel)
 
 fun QuestionType.toRemote() = when (this) {
     QuestionType.MATCH -> RemoteQuestion.Type.Match
@@ -92,6 +78,31 @@ fun QuestionType.toRemote() = when (this) {
     QuestionType.TEXT -> RemoteQuestion.Type.Text
     QuestionType.REORDER -> RemoteQuestion.Type.Reorder
 }
+
+private fun RemoteAnswer.toMatch(questionId: String) = Answer.MatchAnswer(
+    id,
+    questionId,
+    match!!.title
+)
+
+private fun RemoteAnswer.toChoice(questionId: String) = Answer.ChoiceAnswer(
+    id,
+    questionId,
+    title!!,
+    current!!
+)
+
+private fun RemoteAnswer.toText(questionId: String) = Answer.TextAnswer(
+    id,
+    questionId
+)
+
+private fun RemoteAnswer.toReorder(questionId: String) = Answer.OrderAnswer(
+    id,
+    questionId,
+    title!!,
+    order
+)
 
 private fun RemoteQuestion.Type.toModel() = when (this) {
     RemoteQuestion.Type.Match -> QuestionType.MATCH

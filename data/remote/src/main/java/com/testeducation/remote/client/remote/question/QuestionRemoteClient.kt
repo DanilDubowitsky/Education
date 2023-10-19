@@ -1,7 +1,7 @@
 package com.testeducation.remote.client.remote.question
 
 import com.testeducation.core.client.remote.question.IQuestionRemoteClient
-import com.testeducation.domain.model.question.AnswerItem
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.remote.client.retrofit.question.QuestionRetrofitClient
 import com.testeducation.remote.converter.question.mapToRequestAnswer
@@ -15,7 +15,7 @@ class QuestionRemoteClient(
         testId: String,
         type: QuestionType,
         questionText: String,
-        answers: List<AnswerItem>,
+        answers: List<InputAnswer>,
         time: Long
     ) {
         val request = QuestionCreateRequest(

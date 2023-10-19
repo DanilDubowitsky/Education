@@ -4,7 +4,7 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.model.question.QuestionDetails
-import com.testeducation.domain.model.question.Question
+import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionResourceHelper
 import com.testeducation.helper.resource.IResourceHelper
@@ -58,7 +58,7 @@ class TestEditorViewModel(
         }
     }
 
-    private fun List<Question>.prepareQuestionDetailsItems() = map {
+    private fun List<InputQuestion>.prepareQuestionDetailsItems() = map {
         QuestionDetails.QuestionItemDetails(
             id = it.id,
             question = it

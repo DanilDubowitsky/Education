@@ -1,6 +1,6 @@
 package com.testeducation.core.client.remote.question
 
-import com.testeducation.domain.model.question.AnswerItem
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.QuestionType
 
 interface IQuestionRemoteClient {
@@ -8,7 +8,7 @@ interface IQuestionRemoteClient {
         testId: String,
         type: QuestionType,
         questionText: String,
-        answers: List<AnswerItem>,
+        answers: List<InputAnswer>,
         time: Long
     )
 }

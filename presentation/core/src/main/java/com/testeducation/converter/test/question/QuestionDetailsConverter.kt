@@ -8,7 +8,9 @@ fun List<QuestionDetails>.toUi(timeConverterLongToString: ITimeConverterLongToSt
     it.toUi(timeConverterLongToString)
 }
 
-fun QuestionDetails.toUi(timeConverterLongToString: ITimeConverterLongToString) = if (this is QuestionDetails.QuestionItemDetails) {
+fun QuestionDetails.toUi(timeConverterLongToString: ITimeConverterLongToString) = if (
+    this is QuestionDetails.QuestionItemDetails
+) {
     QuestionDetailsUi.QuestionItemDetails(
         id = id,
         question = question.toUi(timeConverterLongToString)

@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.education.di.viewmodel.ViewModelKey
+import com.testeducation.helper.answer.AnswerColorExtractor
+import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.helper.question.TimeConverterLongToString
@@ -35,10 +37,15 @@ interface QuestionsPreviewModule {
             TimeConverterLongToString(resourceHelper)
 
         @Provides
+        fun provideAnswerColorExtractor(resourceHelper: IResourceHelper): IAnswerColorExtractor =
+            AnswerColorExtractor(resourceHelper)
+
+        @Provides
         fun provideReducer(
-            timeConverter: ITimeConverterLongToString
+            timeConverter: ITimeConverterLongToString,
+            colorExtractor: IAnswerColorExtractor
         ): IReducer<QuestionsPreviewModelState, QuestionsPreviewState> =
-            QuestionsPreviewReducer(timeConverter)
+            QuestionsPreviewReducer(timeConverter, colorExtractor)
 
         @Provides
         fun provideViewModel(

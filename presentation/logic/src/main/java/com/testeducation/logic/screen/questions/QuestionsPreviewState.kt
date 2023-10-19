@@ -1,8 +1,8 @@
 package com.testeducation.logic.screen.questions
 
-import com.testeducation.logic.model.question.QuestionItemUi
+import com.testeducation.logic.model.question.QuestionUI
 
 data class QuestionsPreviewState(
-    val questions: List<QuestionItemUi>,
+    val questions: List<QuestionUI>,
     val isLoading: Boolean
 )

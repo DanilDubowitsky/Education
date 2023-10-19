@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import com.testeducation.helper.resource.AnswerColorResource
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.DrawableResource
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.ui.R
+import com.testeducation.ui.helper.extractor.extractResourceId
 
 class ResourceHelper(
     private val context: Context
@@ -26,6 +28,7 @@ class ResourceHelper(
         is ColorResource.Main -> extractMainColorResource(resource)
         is ColorResource.MainLight -> extractMainColorResource(resource)
         is ColorResource.Secondary -> extractSecondaryColorResource(resource)
+        is AnswerColorResource -> color(resource.extractResourceId())
     }
 
     override fun extractDrawableResource(resource: DrawableResource): Int = when (resource) {

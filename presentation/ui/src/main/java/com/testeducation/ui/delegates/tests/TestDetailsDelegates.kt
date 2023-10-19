@@ -5,8 +5,8 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.testeducation.logic.model.question.QuestionDetailsUi
-import com.testeducation.logic.model.question.QuestionItemUi
-import com.testeducation.logic.model.test.AnswerItemUi
+import com.testeducation.logic.model.question.InputQuestionUI
+import com.testeducation.logic.model.test.AnswerCreationUI
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.ui.databinding.ViewHolderAnswerDefaultDisplayBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerFootPlusBinding
@@ -54,10 +54,10 @@ fun footerQuestionDetailsPlusAddDelegate(onClickAdd: () -> Unit) =
         }
     }
 
-private fun QuestionItemUi.initAnswerDefault(context: Context, linearLayout: LinearLayout) {
+private fun InputQuestionUI.initAnswerDefault(context: Context, linearLayout: LinearLayout) {
     if (questionTypeUiItem.type == QuestionTypeUi.DEFAULT) {
         for (itemAnswer in answerItemUiList) {
-            if (itemAnswer is AnswerItemUi.DefaultAnswer) {
+            if (itemAnswer is AnswerCreationUI.DefaultAnswer) {
                 val inflate = ViewHolderAnswerDefaultDisplayBinding.inflate(LayoutInflater.from(context), linearLayout, true)
                 inflate.tvText.text = itemAnswer.answerText
                 inflate.imgIndicator.backgroundTintList = ColorStateList.valueOf(
@@ -68,10 +68,10 @@ private fun QuestionItemUi.initAnswerDefault(context: Context, linearLayout: Lin
     }
 }
 
-private fun QuestionItemUi.initAnswerWriteAnswer(context: Context, linearLayout: LinearLayout) {
+private fun InputQuestionUI.initAnswerWriteAnswer(context: Context, linearLayout: LinearLayout) {
     if (questionTypeUiItem.type == QuestionTypeUi.WRITE_ANSWER) {
         for (itemAnswer in answerItemUiList) {
-            if (itemAnswer is AnswerItemUi.TextAnswer) {
+            if (itemAnswer is AnswerCreationUI.TextAnswer) {
                 val inflate = ViewHolderAnswerWriteAnswerDisplayBinding.inflate(LayoutInflater.from(context), linearLayout, true)
                 inflate.tvText.text = itemAnswer.text
             }
@@ -79,10 +79,10 @@ private fun QuestionItemUi.initAnswerWriteAnswer(context: Context, linearLayout:
     }
 }
 
-private fun QuestionItemUi.initAnswerMatchAnswer(context: Context, linearLayout: LinearLayout) {
+private fun InputQuestionUI.initAnswerMatchAnswer(context: Context, linearLayout: LinearLayout) {
     if (questionTypeUiItem.type == QuestionTypeUi.MATCH) {
         for (itemAnswer in answerItemUiList) {
-            if (itemAnswer is AnswerItemUi.MatchAnswer) {
+            if (itemAnswer is AnswerCreationUI.MatchAnswer) {
                 val inflate = ViewHolderAnswerMatchDisplayBinding.inflate(LayoutInflater.from(context), linearLayout, true)
                 inflate.tvText.text = itemAnswer.firstAnswer
                 inflate.tvTextMatch.text = itemAnswer.secondAnswer

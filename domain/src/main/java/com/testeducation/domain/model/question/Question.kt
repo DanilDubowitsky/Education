@@ -7,5 +7,5 @@ data class Question(
     val time: Long,
     val icon: Int = 0,
     val type: QuestionType,
-    val answers: List<AnswerItem>
+    val answers: List<Answer>
 )

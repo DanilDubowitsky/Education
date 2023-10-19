@@ -1,6 +1,6 @@
 package com.testeducation.logic.model.test
 
-sealed class AnswerItemUi {
+sealed class AnswerCreationUI {
 
     abstract val id: String
 
@@ -11,33 +11,36 @@ sealed class AnswerItemUi {
         val isUrl: Boolean,
         val color: Int,
         val resource: Resource = Resource()
-    ) : AnswerItemUi() {
+    ) : AnswerCreationUI() {
         data class Resource(
             val isTrueColor: Int = 0
         )
     }
 
-    data class TextAnswer(override val id: String, val text: String) : AnswerItemUi()
+    data class TextAnswer(override val id: String, val text: String) : AnswerCreationUI()
 
     data class OrderAnswer(
         override val id: String,
         val answerText: String,
         val order: Int,
         val color: Int
-    ) : AnswerItemUi()
+    ) : AnswerCreationUI()
 
     data class MatchAnswer(
         override val id: String,
         val firstAnswer: String,
         val secondAnswer: String,
         val color: Int
-    ) : AnswerItemUi() {
+    ) : AnswerCreationUI() {
         companion object {
             const val FIRST_ANSWER_MATCH = 1
             const val SECOND_ANSWER_MATCH = 2
         }
     }
 
-    data class FooterPlusAdd(override val id: String, val isOrderAnswer: Boolean = false) : AnswerItemUi()
+    data class FooterPlusAdd(
+        override val id: String,
+        val isOrderAnswer: Boolean = false
+    ) : AnswerCreationUI()
 
 }

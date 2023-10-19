@@ -5,7 +5,7 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.QuestionCreate
 import com.testeducation.domain.model.question.AnswerIndicatorItem
-import com.testeducation.domain.model.question.AnswerItem
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
@@ -101,7 +101,7 @@ class QuestionCreationViewModel(
 
         var currentAnswer = answerItems.find { it.id == id }
         val position = answerItems.indexOf(currentAnswer)
-        if (currentAnswer is AnswerItem.OrderAnswer) {
+        if (currentAnswer is InputAnswer.OrderAnswer) {
             currentAnswer = currentAnswer.copy(
                 color = ColorResource.Secondary.ColorGrayBlueDisable.getColor(resourceHelper)
             )
@@ -177,19 +177,19 @@ class QuestionCreationViewModel(
                 return@map answerItem
             }
             when (answerItem) {
-                is AnswerItem.DefaultAnswer -> {
+                is InputAnswer.DefaultAnswer -> {
                     answerItem.copy(
                         answerText = text
                     )
                 }
 
-                is AnswerItem.TextAnswer -> {
+                is InputAnswer.TextAnswer -> {
                     answerItem.copy(
                         text = text
                     )
                 }
 
-                is AnswerItem.OrderAnswer -> {
+                is InputAnswer.OrderAnswer -> {
                     answerItem.copy(
                         answerText = text
                     )
@@ -213,16 +213,16 @@ class QuestionCreationViewModel(
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
             if (answerItem.id == answerId &&
-                number == AnswerItem.MatchAnswer.FIRST_ANSWER_MATCH &&
-                answerItem is AnswerItem.MatchAnswer
+                number == InputAnswer.MatchAnswer.FIRST_ANSWER_MATCH &&
+                answerItem is InputAnswer.MatchAnswer
             ) {
                 answerItem.copy(
                     firstAnswer = text
                 )
             } else if (
                 answerItem.id == answerId &&
-                number == AnswerItem.MatchAnswer.SECOND_ANSWER_MATCH &&
-                answerItem is AnswerItem.MatchAnswer
+                number == InputAnswer.MatchAnswer.SECOND_ANSWER_MATCH &&
+                answerItem is InputAnswer.MatchAnswer
             ) {
                 answerItem.copy(
                     secondAnswer = text
@@ -240,7 +240,7 @@ class QuestionCreationViewModel(
     fun changeCheckedAnswer(selectedId: String) = intent {
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
-            if (answerItem.id == selectedId && answerItem is AnswerItem.DefaultAnswer) {
+            if (answerItem.id == selectedId && answerItem is InputAnswer.DefaultAnswer) {
                 val newStateIsTrue = !answerItem.isTrue
                 val isTrueColor = if (newStateIsTrue) {
                     ColorResource.Secondary.Gray1.getColor(resourceHelper)
@@ -289,7 +289,7 @@ class QuestionCreationViewModel(
         val answerItems = modelState.answerItem.toMutableList()
         modelState.answerIndicatorItems.forEachIndexed { index, answerIndicatorItem ->
             val answerItem = answerItems[index]
-            if (answerItem is AnswerItem.OrderAnswer) {
+            if (answerItem is InputAnswer.OrderAnswer) {
                 answerItems[index] = answerItem.copy(color = answerIndicatorItem.color)
             }
         }
@@ -302,35 +302,35 @@ class QuestionCreationViewModel(
         }
     }
 
-    private suspend fun createAnswer(index: Int = 0, type: QuestionType): AnswerItem {
+    private suspend fun createAnswer(index: Int = 0, type: QuestionType): InputAnswer {
         val id = getModelState().answerItem.size + 1
         val color = getColorAnswer(index)
         return when (type) {
             QuestionType.CHOICE -> {
-                AnswerItem.DefaultAnswer(
+                InputAnswer.DefaultAnswer(
                     id = id.toString(),
                     color = color,
-                    resource = AnswerItem.DefaultAnswer.Resource(
+                    resource = InputAnswer.DefaultAnswer.Resource(
                         isTrueColor = ColorResource.Main.White.getColor(resourceHelper)
                     )
                 )
             }
 
             QuestionType.MATCH -> {
-                AnswerItem.MatchAnswer(
+                InputAnswer.MatchAnswer(
                     id = id.toString(),
                     color = color
                 )
             }
 
             QuestionType.TEXT -> {
-                AnswerItem.TextAnswer(
+                InputAnswer.TextAnswer(
                     id = id.toString()
                 )
             }
 
             QuestionType.REORDER -> {
-                AnswerItem.OrderAnswer(
+                InputAnswer.OrderAnswer(
                     id = id.toString(),
                     color = color,
                     order = 1
@@ -367,7 +367,7 @@ class QuestionCreationViewModel(
             copy(
                 answerItem = listOf(
                     answer,
-                    AnswerItem.FooterPlusAdd()
+                    InputAnswer.FooterPlusAdd()
                 )
             )
         }
@@ -391,7 +391,7 @@ class QuestionCreationViewModel(
             copy(
                 answerItem = listOf(
                     answer,
-                    AnswerItem.FooterPlusAdd(isOrderAnswer = true)
+                    InputAnswer.FooterPlusAdd(isOrderAnswer = true)
                 ),
                 answerIndicatorItems = listOf(answerIndicator)
             )
@@ -411,7 +411,7 @@ class QuestionCreationViewModel(
             copy(
                 answerItem = listOf(
                     answer,
-                    AnswerItem.FooterPlusAdd()
+                    InputAnswer.FooterPlusAdd()
                 )
             )
         }
