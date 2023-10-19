@@ -1,5 +1,6 @@
 package com.testeducation.screen.tests.edit.settings
 
+import androidx.lifecycle.viewModelScope
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTestSettings
@@ -15,6 +16,7 @@ import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.settings.TestSettingsSideEffect
 import com.testeducation.logic.screen.tests.settings.TestSettingsState
 import com.testeducation.navigation.core.NavigationRouter
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestSettingsViewModel(
@@ -41,22 +43,39 @@ class TestSettingsViewModel(
         private const val ORDER_ID = 2
         private const val PREVIEW_SELECTABLE_ID = 3
         private const val ANTI_CHEAT_SELECTABLE_ID = 4
+        private const val TITLE_MIN_CURRENT_ANSWER_ID = 5
+        private const val THEME_ID = 6
     }
 
     override val initialModelState: TestSettingsModelState = TestSettingsModelState()
 
     init {
-        intent {
-            val response = getTestSettings(
-                testId
-            )
-            updateModelState {
-                copy(
-                    testElementList = prepareTestElement(
-                        response, listOf()
-                    ),
-                    originalTestSettings = response
-                )
+        viewModelScope.launch {
+            getThemes().collect { themes ->
+                intent {
+                    val modelState = getModelState()
+                    if (modelState.testElementList.isEmpty()) {
+                        val response = getTestSettings(
+                            testId
+                        )
+                        updateModelState {
+                            copy(
+                                testElementList = prepareTestElement(
+                                    response, themes
+                                ),
+                                originalTestSettings = response
+                            )
+                        }
+                    } else {
+                        updateModelState {
+                            copy(
+                                testElementList = prepareTestElement(
+                                    modelState.originalTestSettings, themes
+                                )
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -104,15 +123,37 @@ class TestSettingsViewModel(
                 is TestSettingsElement.Selectable -> {
                     testSettingsItem = when (itemSettings.id) {
                         PREVIEW_SELECTABLE_ID -> {
-                            testSettingsItem.copy(
-                                allowPreviewQuestions = itemSettings.isSelected
-                            )
+                            if (itemSettings.isSelected != original.allowPreviewQuestions) {
+                                testSettingsItem.copy(
+                                    allowPreviewQuestions = itemSettings.isSelected
+                                )
+                            } else testSettingsItem
                         }
 
                         else -> {
-                            testSettingsItem.copy(
-                                antiCheating = itemSettings.isSelected
-                            )
+                            if (itemSettings.isSelected != original.antiCheating) {
+                                testSettingsItem.copy(
+                                    antiCheating = itemSettings.isSelected
+                                )
+                            } else testSettingsItem
+                        }
+                    }
+                }
+
+                is TestSettingsElement.TestInput -> {
+                    when (itemSettings.id) {
+                        TITLE_TEST_NAME_POSITION -> {
+                            if (itemSettings.valueInput != original.title) {
+                                testSettingsItem =
+                                    testSettingsItem.copy(title = itemSettings.valueInput)
+                            }
+                        }
+
+                        else -> {
+                            if (itemSettings.valueInput != original.minCorrectAnswer.toString()) {
+                                testSettingsItem =
+                                    testSettingsItem.copy(minCorrectAnswer = itemSettings.valueInput.toInt())
+                            }
                         }
                     }
                 }
@@ -135,7 +176,7 @@ class TestSettingsViewModel(
                     textInput.copy(
                         valueInput = newText
                     )
-                } else textInput
+                } else it
             }
             updateModelState {
                 copy(
@@ -193,6 +234,31 @@ class TestSettingsViewModel(
         }
     }
 
+    fun updateHorizontal(currentId: Int, elementId: String) = intent {
+        val modelState = getModelState()
+        val list = modelState.testElementList
+        val selectableItem = list.find { it.id == currentId }
+        if (selectableItem is TestSettingsElement.HorizontalScroll) {
+            val newList = list.map {
+                if (selectableItem == it) {
+                    selectableItem.copy(
+                        list = selectableItem.list.map { horizontalItem ->
+                            horizontalItem.copy(
+                                isSelected = elementId == horizontalItem.id
+                            )
+                        }.sortedBy { sort -> !sort.isSelected }
+                    )
+                } else it
+            }
+            updateModelState {
+                copy(
+                    testElementList = newList,
+                    changedIdList = modelState.changedIdList.plus(currentId)
+                )
+            }
+        }
+    }
+
     private fun prepareTestElement(
         testSettingsItem: TestSettingsItem,
         listTheme: List<ThemeShort>
@@ -210,11 +276,10 @@ class TestSettingsViewModel(
             color = colorTest,
             image = imageTest
         )
-        currentId++
         val horizontalScroll = TestSettingsElement.HorizontalScroll(
-            id = currentId,
+            id = THEME_ID,
             title = "Тема",
-            list = listTheme.getHorizontalScrollThemes()
+            list = listTheme.getHorizontalScrollThemes().sortedBy { !it.isSelected }
         )
         val choice = TestSettingsElement.Choice(
             id = AVAILABILITY_ID,
@@ -244,9 +309,8 @@ class TestSettingsViewModel(
                 isSelected = false
             )
         )
-        currentId++
         val textInputMinAnswer = TestSettingsElement.TestInput(
-            id = currentId,
+            id = TITLE_MIN_CURRENT_ANSWER_ID,
             title = "Минимум правильных ответов для успешного прохождения теста",
             valueInput = testSettingsItem.minCorrectAnswer.toString()
         )

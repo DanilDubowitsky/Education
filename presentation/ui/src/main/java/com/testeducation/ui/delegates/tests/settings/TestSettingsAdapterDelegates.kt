@@ -1,5 +1,6 @@
 package com.testeducation.ui.delegates.tests.settings
 
+import androidx.core.widget.doOnTextChanged
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.TestSettingsElementUi
@@ -18,13 +19,16 @@ import com.testeducation.ui.utils.simpleDelegateAdapter
 import com.testeducation.ui.utils.simpleDiffUtil
 import com.testeducation.utils.MainColor
 
-fun testSettingsInputTest() =
+fun testSettingsInputTest(update: (Int, String) -> Unit) =
     simpleDelegateAdapter<TestSettingsElementUi.TestInput,
             TestSettingsElementUi,
             ViewHolderSettingsInputTextBinding>(
         ViewHolderSettingsInputTextBinding::inflate
     ) {
         binding {
+            edText.doOnTextChanged { text, start, before, count ->
+                update(item.id, text.toString())
+            }
             bind {
                 tvTitle.text = item.title
                 edText.setText(item.valueInput)
@@ -41,46 +45,49 @@ fun testSettingsDesign() =
         binding {
             bind {
                 tvTitle.text = item.title
-                cardTest.setContent(TestShortUI.Test(
-                    id = "",
-                    title = "",
-                    questionsCount = 0,
-                    isPublic = false,
-                    likes = 0,
-                    passesCount = 0,
-                    theme = ThemeShortUI("", "", false),
-                    color = MainColor.colorOrange,
-                    style = CardTestStyle.DOTTED,
-                    liked = false,
-                    passed = false
-                ))
+                cardTest.setContent(
+                    TestShortUI.Test(
+                        id = "",
+                        title = "",
+                        questionsCount = 0,
+                        isPublic = false,
+                        likes = 0,
+                        passesCount = 0,
+                        theme = ThemeShortUI("", "", false),
+                        color = MainColor.colorOrange,
+                        style = CardTestStyle.DOTTED,
+                        liked = false,
+                        passed = false
+                    )
+                )
             }
         }
     }
 
-private val themesAdapter by lazy {
-    AsyncListDifferDelegationAdapter(
-        simpleDiffUtil(TestSettingsElementUi.HorizontalScroll.Item::id),
-        createThemeShortSettingsAdapterDelegate(
-            R.color.selector_color_chip_white,
-            onClick = {}
-        )
-    )
-}
-
-fun testSettingsHorizontalScroll() =
+fun testSettingsHorizontalScroll(update: (Int, String) -> Unit) =
     simpleDelegateAdapter<TestSettingsElementUi.HorizontalScroll,
             TestSettingsElementUi,
             ViewHolderSettingsHorizontalScrollBinding>(
         ViewHolderSettingsHorizontalScrollBinding::inflate
     ) {
+        val themesAdapter by lazy {
+            AsyncListDifferDelegationAdapter(
+                simpleDiffUtil(TestSettingsElementUi.HorizontalScroll.Item::id),
+                createThemeShortSettingsAdapterDelegate(
+                    R.color.selector_color_chip_white,
+                    onClick = { selectedId -> update(item.id, selectedId) }
+                )
+            )
+        }
         binding {
             bind {
                 tvTitle.text = item.title
                 rvHorizontalScroll.apply {
                     adapter = themesAdapter
+                    itemAnimator = null
                 }
                 themesAdapter.items = item.list
+                rvHorizontalScroll.smoothScrollToPosition(0)
             }
         }
     }

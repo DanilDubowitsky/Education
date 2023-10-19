@@ -28,11 +28,11 @@ class TestSettingsFragment :
     private val settingsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(TestSettingsElementUi::id),
-            testSettingsInputTest(),
+            testSettingsInputTest(viewModel::updateTextInput),
             testSettingsDesign(),
-            testSettingsHorizontalScroll(),
-            testSettingsChoice(),
-            testSettingsSelectable(),
+            testSettingsHorizontalScroll(viewModel::updateHorizontal),
+            testSettingsChoice(viewModel::updateChoice),
+            testSettingsSelectable(viewModel::updateSelectable),
             footerEmpty()
         )
     }
@@ -45,6 +45,9 @@ class TestSettingsFragment :
                 adapter = settingsAdapter
                 layoutManager = LinearLayoutManager(requireContext())
                 itemAnimator = null
+            }
+            btnSave.setOnClickListener {
+                viewModel.saveSettings()
             }
         }
     }

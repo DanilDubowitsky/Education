@@ -1,6 +1,8 @@
 package com.testeducation.domain.model.test
 
 data class TestSettingsItem(
+    val title: String? = null,
+    val themeId: String? = null,
     val availability: TestAvailability? = null,
     val testQuestionOrder: TestQuestionOrder? = null,
     val showResultMode: TestShowResultMode? = null,
