@@ -43,19 +43,19 @@ class TestEditorViewModel(
     }
 
     private fun getTestDetails(testId: String) = singleIntent(getTest.javaClass.name) {
-        val details = getTest.invoke(id = testId)
-        val questionItems = questionResourceHelper.getQuestionItemPrepared(details.questions)
-        val questionDetails : MutableList<QuestionDetails> = mutableListOf()
-        questionDetails.addAll(questionItems.prepareQuestionDetailsItems())
-        questionDetails.add(QuestionDetails.FooterAdd())
-        updateModelState {
-            copy(
-                test = details.copy(
-                    questions = questionItems
-                ),
-                questionDetails = questionDetails
-            )
-        }
+//        val details = getTest.invoke(id = testId)
+//        val questionItems = questionResourceHelper.getQuestionItemPrepared(details.questions)
+//        val questionDetails : MutableList<QuestionDetails> = mutableListOf()
+//        questionDetails.addAll(questionItems.prepareQuestionDetailsItems())
+//        questionDetails.add(QuestionDetails.FooterAdd())
+//        updateModelState {
+//            copy(
+//                test = details.copy(
+//                    questions = questionItems
+//                ),
+//                questionDetails = questionDetails
+//            )
+//        }
     }
 
     private fun List<InputQuestion>.prepareQuestionDetailsItems() = map {

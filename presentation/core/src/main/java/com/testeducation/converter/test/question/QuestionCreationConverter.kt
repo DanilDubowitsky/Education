@@ -83,7 +83,6 @@ fun Question.toUI(
 ) = QuestionUI(
     id,
     title,
-    icon,
     numberQuestion,
     answers.toUIModels(answerColorExtractor),
     timeConverterLongToString.convert(time)

@@ -71,7 +71,7 @@ class TestRemoteSource(
     }
 
     override suspend fun getTest(id: String): Test {
-        return testRetrofitClient.getTest(id = id).getResult().data.toModels()
+        return testRetrofitClient.getTest(id = id).getResult().data.toModel()
     }
 
     private suspend fun getMainTests(

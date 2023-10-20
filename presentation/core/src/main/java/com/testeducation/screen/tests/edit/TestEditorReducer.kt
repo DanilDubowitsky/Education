@@ -25,7 +25,7 @@ class TestEditorReducer(private val timeConverterLongToString: ITimeConverterLon
                     background = getTestStyle(test.style.background)
                 ),
                 settings = test.settings.toUI(),
-                questions = test.questions.toUI(timeConverterLongToString),
+                questions = emptyList(),
                 status = test.status.name,
                 likes = test.likes,
                 liked = test.liked,
