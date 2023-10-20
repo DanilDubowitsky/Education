@@ -1,7 +1,7 @@
 package com.testeducation.core.service.question
 
 import com.testeducation.core.client.remote.question.IQuestionRemoteClient
-import com.testeducation.domain.model.question.AnswerItem
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.domain.service.question.IQuestionService
 
@@ -12,7 +12,7 @@ class QuestionService(
         testId: String,
         type: QuestionType,
         questionText: String,
-        answers: List<AnswerItem>,
+        answers: List<InputAnswer>,
         time: Long
     ) {
         questionRemoteClient.createQuestion(testId, type, questionText, answers, time)

@@ -1,6 +1,6 @@
-package com.testeducation.domain.model.question
+package com.testeducation.domain.model.question.input
 
-sealed class AnswerItem {
+sealed class InputAnswer {
     abstract val id: String
 
     data class DefaultAnswer(
@@ -10,21 +10,21 @@ sealed class AnswerItem {
         val isUrl: Boolean = false,
         val color: Int = 0,
         val resource: Resource = Resource()
-    ) : AnswerItem() {
+    ) : InputAnswer() {
         data class Resource(
             /* Обозначает цвет при различных состояния параметра isTrue */
             val isTrueColor: Int = 0
         )
     }
 
-    data class TextAnswer(override val id: String, val text: String = "") : AnswerItem()
+    data class TextAnswer(override val id: String, val text: String = "") : InputAnswer()
 
     data class MatchAnswer(
         override val id: String,
         val firstAnswer: String = "",
         val secondAnswer: String = "",
         val color: Int = 0
-    ) : AnswerItem() {
+    ) : InputAnswer() {
         companion object {
             const val FIRST_ANSWER_MATCH = 1
             const val SECOND_ANSWER_MATCH = 2
@@ -36,7 +36,7 @@ sealed class AnswerItem {
         val answerText: String = "",
         val order: Int,
         val color: Int = 0
-    ) : AnswerItem()
+    ) : InputAnswer()
 
-    data class FooterPlusAdd(override val id: String = "-1", val isOrderAnswer: Boolean = false) : AnswerItem()
+    data class FooterPlusAdd(override val id: String = "-1", val isOrderAnswer: Boolean = false) : InputAnswer()
 }

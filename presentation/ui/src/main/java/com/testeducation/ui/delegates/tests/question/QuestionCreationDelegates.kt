@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.view.MotionEvent
 import androidx.core.widget.doOnTextChanged
-import com.testeducation.logic.model.test.AnswerItemUi
+import com.testeducation.logic.model.test.AnswerCreationUI
 import com.testeducation.ui.R
 import com.testeducation.ui.databinding.ViewHolderAnswerDefaultBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerFootPlusBinding
@@ -20,8 +20,8 @@ fun answersDelegateDefault(
     onClickCheckTrue: (String) -> Unit,
     onClickDelete: (String) -> Unit,
     onAnswerTextChanger: (String, String) -> Unit
-) = simpleDelegateAdapter<AnswerItemUi.DefaultAnswer,
-        AnswerItemUi,
+) = simpleDelegateAdapter<AnswerCreationUI.DefaultAnswer,
+        AnswerCreationUI,
         ViewHolderAnswerDefaultBinding>(
     ViewHolderAnswerDefaultBinding::inflate
 ) {
@@ -52,15 +52,15 @@ fun answersDelegateDefault(
 fun answerDelegateMatch(
     onClickDelete: (String) -> Unit,
     onAnswerTextChanger: (String, Int, String) -> Unit
-) = simpleDelegateAdapter<AnswerItemUi.MatchAnswer,
-        AnswerItemUi,
+) = simpleDelegateAdapter<AnswerCreationUI.MatchAnswer,
+        AnswerCreationUI,
         ViewHolderAnswerMatchBinding>(
     ViewHolderAnswerMatchBinding::inflate
 ) {
     binding.etAnswerFirst.doOnTextChanged { text, start, before, count ->
         onAnswerTextChanger(
             item.id,
-            AnswerItemUi.MatchAnswer.FIRST_ANSWER_MATCH,
+            AnswerCreationUI.MatchAnswer.FIRST_ANSWER_MATCH,
             text.toString()
         )
     }
@@ -68,7 +68,7 @@ fun answerDelegateMatch(
     binding.etAnswerSecond.doOnTextChanged { text, start, before, count ->
         onAnswerTextChanger(
             item.id,
-            AnswerItemUi.MatchAnswer.SECOND_ANSWER_MATCH,
+            AnswerCreationUI.MatchAnswer.SECOND_ANSWER_MATCH,
             text.toString()
         )
     }
@@ -100,8 +100,8 @@ fun answerDelegateOrder(
     mDragStartListener: IDragStartListener,
     onSelectedElement: (String) -> Unit
 ) =
-    simpleDelegateAdapter<AnswerItemUi.OrderAnswer,
-            AnswerItemUi,
+    simpleDelegateAdapter<AnswerCreationUI.OrderAnswer,
+            AnswerCreationUI,
             ViewHolderAnswerOrderBinding>(
         ViewHolderAnswerOrderBinding::inflate
     ) {
@@ -126,8 +126,8 @@ fun answerDelegateOrder(
     }
 
 fun answerDelegateWrite(onAnswerTextChanger: (String, String) -> Unit) =
-    simpleDelegateAdapter<AnswerItemUi.TextAnswer,
-            AnswerItemUi,
+    simpleDelegateAdapter<AnswerCreationUI.TextAnswer,
+            AnswerCreationUI,
             ViewHolderAnswerWriteBinding>(
         ViewHolderAnswerWriteBinding::inflate
     ) {
@@ -143,8 +143,8 @@ fun answerDelegateWrite(onAnswerTextChanger: (String, String) -> Unit) =
 fun footerPlusAddDelegate(
     onClickAdd: () -> Unit
 ) =
-    simpleDelegateAdapter<AnswerItemUi.FooterPlusAdd,
-            AnswerItemUi,
+    simpleDelegateAdapter<AnswerCreationUI.FooterPlusAdd,
+            AnswerCreationUI,
             ViewHolderAnswerFootPlusBinding>(
         ViewHolderAnswerFootPlusBinding::inflate
     ) {

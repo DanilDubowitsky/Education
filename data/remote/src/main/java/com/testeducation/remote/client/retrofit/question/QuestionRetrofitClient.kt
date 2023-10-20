@@ -1,9 +1,7 @@
 package com.testeducation.remote.client.retrofit.question
 
-import com.testeducation.domain.model.question.Question
 import com.testeducation.remote.model.global.RemoteResponse
 import com.testeducation.remote.model.question.RemoteQuestion
-import com.testeducation.remote.request.auth.RefreshRequest
 import com.testeducation.remote.request.question.QuestionCreateRequest
 import retrofit2.http.Body
 import retrofit2.http.GET

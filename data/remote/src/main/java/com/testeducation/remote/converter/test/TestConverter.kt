@@ -54,7 +54,7 @@ fun RemotePage<RemoteTestShort>.toModel() = Page(
     tests.toModels()
 )
 
-fun RemoteTest.toModels(): Test {
+fun RemoteTest.toModel(): Test {
     return Test(
         id = id,
         title = title,
