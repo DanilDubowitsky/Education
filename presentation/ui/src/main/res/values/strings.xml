@@ -111,4 +111,7 @@
 
     <string name="questions_preview_title">Вопросы</string>
 
+    <string name="test_pass_test_time_remaining">Всего осталось:</string>
+    <string name="test_pass_answer_label">Ответить</string>
+
 </resources>
