@@ -7,6 +7,7 @@ import com.testeducation.core.source.local.question.IQuestionLocalSource
 import com.testeducation.core.source.remote.question.IQuestionRemoteSource
 import com.testeducation.domain.repository.question.IQuestionRepository
 import com.testeducation.domain.service.question.IQuestionService
+import com.testeducation.local.database.EducationDataBase
 import com.testeducation.local.source.question.QuestionLocalSource
 import com.testeducation.remote.client.remote.question.QuestionRemoteClient
 import com.testeducation.remote.client.retrofit.question.QuestionRetrofitClient
@@ -31,7 +32,12 @@ object QuestionCoreModule {
 
     @Provides
     @Reusable
-    fun provideQuestionLocalSource(): IQuestionLocalSource = QuestionLocalSource()
+    fun provideQuestionLocalSource(
+        dataBase: EducationDataBase
+    ): IQuestionLocalSource = QuestionLocalSource(
+        dataBase.questionDao,
+        dataBase.testLocalLiveTimeDao
+    )
 
     @Provides
     @Reusable

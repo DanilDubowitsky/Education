@@ -4,6 +4,7 @@ import com.testeducation.core.source.local.question.IQuestionLocalSource
 import com.testeducation.core.source.remote.question.IQuestionRemoteSource
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.repository.question.IQuestionRepository
+import com.testeducation.domain.utils.MINUTE_IN_MILLIS
 
 class QuestionRepository(
     private val remoteSource: IQuestionRemoteSource,
@@ -12,7 +13,10 @@ class QuestionRepository(
 
     override suspend fun getQuestions(testId: String): List<Question> {
         val hasEntries = localSource.hasEntries(testId)
-        if (!hasEntries) {
+        val lastCacheTime = localSource.getLastCacheTime(testId) ?: 0
+        val currentTime = System.currentTimeMillis()
+        val isCacheTimeExpired = currentTime - lastCacheTime > TEST_QUESTIONS_CACHE_TIME
+        if (!hasEntries || isCacheTimeExpired) {
             syncQuestions(testId)
         }
         return localSource.getQuestions(testId)
@@ -20,6 +24,10 @@ class QuestionRepository(
 
     private suspend fun syncQuestions(testId: String) {
         val questions = remoteSource.getQuestions(testId)
-        localSource.deleteAndAddQuestions(testId, questions)
+        localSource.addQuestions(testId, questions)
+    }
+
+    private companion object {
+        const val TEST_QUESTIONS_CACHE_TIME = 10 * MINUTE_IN_MILLIS
     }
 }

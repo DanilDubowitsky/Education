@@ -25,19 +25,12 @@ class AppVersionConfig(
     }
 
     private fun checkAppUpdateAvailable(minAppVersion: String): Boolean {
-        val currentVersionNumber = parseAppVersionToNumber(buildConfigHelper.getAppVersion())
-        val minVersionNumber = parseAppVersionToNumber(minAppVersion)
-        return currentVersionNumber < minVersionNumber
-    }
-
-    private fun parseAppVersionToNumber(version: String): Int {
-        var appVersionNumber = 0
-        version.forEach { char ->
-            if (char.isDigit()) {
-                appVersionNumber += char.digitToInt()
-            }
-        }
-        return appVersionNumber
+        val currentVersionNumber = buildConfigHelper.getAppVersion()
+        val (x, y, z) = minAppVersion.split(".")
+        val (x1, y1, z1) = currentVersionNumber.split(".")
+        return if (x.toInt() > x1.toInt()) true
+        else if (y.toInt() > y1.toInt()) true
+        else z.toInt() > z1.toInt()
     }
 
     companion object {
