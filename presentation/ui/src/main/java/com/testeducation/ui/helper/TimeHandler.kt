@@ -10,7 +10,7 @@ class TimeHandler {
     private val onExpireListeners: HashMap<Any?, () -> Unit> = HashMap()
 
     fun start(time: Long, interval: Long, key: Any?) {
-        startInternal(key, time, interval)
+        startInternal(key, time - interval, interval)
     }
 
     fun stop(key: Any?) {
@@ -27,6 +27,12 @@ class TimeHandler {
 
     fun release(key: Any? = null) {
         handler.removeCallbacksAndMessages(key)
+        onExpireListeners.clear()
+        onUpdateListeners.clear()
+    }
+
+    fun releaseAll(vararg keys: Any?) {
+        keys.forEach(handler::removeCallbacksAndMessages)
         onExpireListeners.clear()
         onUpdateListeners.clear()
     }

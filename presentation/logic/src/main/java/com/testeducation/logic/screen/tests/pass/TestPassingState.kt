@@ -1,4 +1,7 @@
 package com.testeducation.logic.screen.tests.pass
 
-class TestPassingState {
-}
+import com.testeducation.logic.model.question.QuestionPreviewUI
+
+data class TestPassingState(
+    val currentQuestion: QuestionPreviewUI
+)

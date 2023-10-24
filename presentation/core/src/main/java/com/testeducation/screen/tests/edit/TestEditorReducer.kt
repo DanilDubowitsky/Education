@@ -1,7 +1,6 @@
 package com.testeducation.screen.tests.edit
 
 import com.testeducation.converter.test.getTestStyle
-import com.testeducation.converter.test.question.toUIModels
 import com.testeducation.converter.test.question.toUi
 import com.testeducation.converter.test.toUI
 import com.testeducation.core.IReducer

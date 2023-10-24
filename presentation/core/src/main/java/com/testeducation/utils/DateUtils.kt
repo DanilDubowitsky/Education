@@ -20,6 +20,7 @@ fun formatDateInSeconds(
     locale: Locale = Locale.getDefault()
 ) = formatDate(format, dateInSeconds * SECOND_IN_MILLIS, locale)
 
+// TODO: localize this
 fun getElapsedTime(timeInSeconds: Int): String {
     val formattedString = StringBuilder()
 

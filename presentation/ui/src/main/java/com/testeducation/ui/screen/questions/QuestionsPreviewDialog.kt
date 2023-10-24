@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import com.testeducation.logic.model.question.QuestionUI
+import com.testeducation.logic.model.question.QuestionPreviewUI
 import com.testeducation.logic.screen.questions.QuestionsPreviewState
 import com.testeducation.screen.questions.QuestionsPreviewViewModel
 import com.testeducation.ui.R
@@ -25,7 +25,7 @@ class QuestionsPreviewDialog :
 
     private val questionsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
-            simpleDiffUtil(QuestionUI::id),
+            simpleDiffUtil(QuestionPreviewUI::id),
             createQuestionPreviewDelegate()
         )
     }

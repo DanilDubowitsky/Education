@@ -1,4 +1,4 @@
-package com.testeducation.converter.test.question
+package com.testeducation.converter.test.answer
 
 import com.testeducation.domain.model.question.Answer
 import com.testeducation.helper.answer.IAnswerColorExtractor
@@ -20,7 +20,8 @@ fun Answer.toUI(color: Int) = when (this) {
             id = id,
             title = title,
             isTrue = isTrue,
-            color = color
+            color = color,
+            isSelected = false
         )
     }
 
