@@ -3,6 +3,10 @@ package com.testeducation.remote.model.test
 import com.google.gson.annotations.SerializedName
 
 data class RemoteTestSettingsItem(
+    @SerializedName("title")
+    val title: String? = null,
+    @SerializedName("theme")
+    val themeId: String? = null,
     @SerializedName("availability")
     val availability: RemoteTestAvailability? = null,
     @SerializedName("questions_order")

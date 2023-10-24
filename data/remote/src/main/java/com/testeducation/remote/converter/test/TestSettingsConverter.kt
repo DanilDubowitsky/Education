@@ -11,6 +11,8 @@ import com.testeducation.remote.model.test.RemoteTestShowResultMode
 
 fun RemoteTestSettingsItem.toModels(): TestSettingsItem {
     return TestSettingsItem(
+        title = this.title.orEmpty(),
+        themeId = this.themeId.orEmpty(),
         availability = this.availability?.toModels(),
         testQuestionOrder = this.testQuestionOrder?.toModels(),
         showResultMode = this.showResultMode?.toModels(),

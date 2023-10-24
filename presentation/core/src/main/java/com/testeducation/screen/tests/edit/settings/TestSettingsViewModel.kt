@@ -158,6 +158,15 @@ class TestSettingsViewModel(
                     }
                 }
 
+                is TestSettingsElement.HorizontalScroll -> {
+                    if (itemSettings.id == THEME_ID) {
+                        itemSettings.list.find { it.isSelected }?.let { theme ->
+                            testSettingsItem =
+                                testSettingsItem.copy(themeId = theme.id)
+                        }
+                    }
+                }
+
                 else -> {
 
                 }
@@ -279,7 +288,8 @@ class TestSettingsViewModel(
         val horizontalScroll = TestSettingsElement.HorizontalScroll(
             id = THEME_ID,
             title = "Тема",
-            list = listTheme.getHorizontalScrollThemes().sortedBy { !it.isSelected }
+            list = listTheme.getHorizontalScrollThemes()
+                .sortedBy { !it.isSelected }
         )
         val choice = TestSettingsElement.Choice(
             id = AVAILABILITY_ID,
@@ -287,12 +297,12 @@ class TestSettingsViewModel(
             itemFirst = TestSettingsElement.Choice.Item(
                 title = "Всем",
                 value = TestAvailability.Public.toString(),
-                isSelected = true
+                isSelected = testSettingsItem.availability == TestAvailability.Public
             ),
             itemSecond = TestSettingsElement.Choice.Item(
                 title = "По всем",
                 value = TestAvailability.Private.toString(),
-                isSelected = false
+                isSelected = testSettingsItem.availability == TestAvailability.Private
             )
         )
         val choiceOrder = TestSettingsElement.Choice(
@@ -301,12 +311,12 @@ class TestSettingsViewModel(
             itemFirst = TestSettingsElement.Choice.Item(
                 title = "Последовательно",
                 value = TestQuestionOrder.Sequencial.toString(),
-                isSelected = true
+                isSelected = testSettingsItem.testQuestionOrder == TestQuestionOrder.Sequencial
             ),
             itemSecond = TestSettingsElement.Choice.Item(
                 title = "Перемешать",
                 value = TestQuestionOrder.Shuffled.toString(),
-                isSelected = false
+                isSelected = testSettingsItem.testQuestionOrder == TestQuestionOrder.Shuffled
             )
         )
         val textInputMinAnswer = TestSettingsElement.TestInput(
