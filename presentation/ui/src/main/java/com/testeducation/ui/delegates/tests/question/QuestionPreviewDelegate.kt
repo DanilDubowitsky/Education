@@ -15,6 +15,6 @@ fun createQuestionPreviewDelegate() =
 
 private fun ViewHolderQuestionPreviewBinding.bind(item: QuestionPreviewUI) {
     txtQuestion.text = item.title
-    txtQuestionNumber.text = item.numberQuestion
+    txtQuestionNumber.text = item.numberQuestion.toString()
     txtTime.text = item.time
 }

@@ -10,7 +10,7 @@ class TimeHandler {
     private val onExpireListeners: HashMap<Any?, () -> Unit> = HashMap()
 
     fun start(time: Long, interval: Long, key: Any?) {
-        startInternal(key, time - interval, interval)
+        startInternal(key, time, interval)
     }
 
     fun stop(key: Any?) {
@@ -38,7 +38,7 @@ class TimeHandler {
     }
 
     private fun startInternal(key: Any?, time: Long, interval: Long) {
-        if (time <= 0L) {
+        if (time < 0L) {
             onExpireListeners[key]?.invoke()
             return
         }

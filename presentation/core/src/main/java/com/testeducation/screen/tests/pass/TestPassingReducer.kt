@@ -1,6 +1,6 @@
 package com.testeducation.screen.tests.pass
 
-import com.testeducation.converter.test.answer.toUI
+import com.testeducation.converter.test.question.toUI
 import com.testeducation.core.IReducer
 import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.helper.question.ITimeConverterLongToString
@@ -12,8 +12,12 @@ class TestPassingReducer(
 ) : IReducer<TestPassingModelState, TestPassingState> {
 
     override fun reduce(modelState: TestPassingModelState): TestPassingState {
-
-        return TestPassingState()
+        return TestPassingState(
+            modelState.currentQuestion?.toUI(
+                answerColorExtractor,
+                timeConverterLongToString
+            )
+        )
     }
 
 

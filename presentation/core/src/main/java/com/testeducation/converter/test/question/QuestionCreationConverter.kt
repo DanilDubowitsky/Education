@@ -1,13 +1,9 @@
 package com.testeducation.converter.test.question
 
-import com.testeducation.converter.test.answer.toUIModels
-import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.input.InputQuestion
-import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.logic.model.question.InputQuestionUI
-import com.testeducation.logic.model.question.QuestionPreviewUI
 import com.testeducation.logic.model.test.AnswerCreationUI
 
 fun List<InputAnswer>.toModelUi() = this.map { answerItem ->

@@ -2,9 +2,8 @@ package com.testeducation.remote.converter.question
 
 import com.testeducation.domain.model.question.Answer
 import com.testeducation.domain.model.question.Question
-import com.testeducation.domain.model.question.input.InputAnswer
-import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.domain.model.question.QuestionType
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.remote.model.answer.RemoteAnswer
 import com.testeducation.remote.model.question.RemoteQuestion
 import com.testeducation.remote.request.question.AnswerCreateRequest
@@ -46,14 +45,38 @@ fun List<InputAnswer>.mapToRequestAnswer(type: QuestionType) = when (type) {
 fun RemoteQuestion.toModel(): Question {
     val questionType = type.toModel()
 
-    return Question(
-        id = id,
-        title = title,
-        numberQuestion = questionNumber,
-        time = time.toLong(),
-        type = questionType,
-        answers = answers.toModels(questionType)
-    )
+    return when (type) {
+        RemoteQuestion.Type.Match -> Question.Match(
+            id,
+            title,
+            questionNumber.toInt(),
+            time.toLong(),
+            answers.toModels(questionType) as List<Answer.MatchAnswer>
+        )
+
+        RemoteQuestion.Type.Choice -> Question.Choice(
+            id,
+            title,
+            questionNumber.toInt(),
+            time.toLong(),
+            answers.toModels(questionType) as List<Answer.ChoiceAnswer>
+        )
+
+        RemoteQuestion.Type.Text -> Question.Text(
+            id,
+            title,
+            questionNumber.toInt(),
+            time.toLong()
+        )
+
+        RemoteQuestion.Type.Reorder -> Question.Order(
+            id,
+            title,
+            questionNumber.toInt(),
+            time.toLong(),
+            answers.toModels(questionType) as List<Answer.OrderAnswer>
+        )
+    }
 }
 
 fun List<RemoteAnswer>.toModels(questionType: QuestionType) = map { answer ->

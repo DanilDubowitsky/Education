@@ -10,7 +10,7 @@ data class QuestionEntity(
     @PrimaryKey
     val id: String,
     val title: String,
-    val numberQuestion: String,
+    val numberQuestion: Int,
     val time: Long,
     val type: String,
     val testId: String

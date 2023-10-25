@@ -105,6 +105,10 @@ sealed interface NavigationScreen : Serializable {
         data class Preview(
             val id: String
         ) : Tests
+
+        data class Passing(
+            val id: String
+        ) : Tests
     }
 
     sealed interface Questions : NavigationScreen {

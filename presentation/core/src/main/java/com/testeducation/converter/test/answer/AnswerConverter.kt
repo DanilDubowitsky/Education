@@ -5,11 +5,18 @@ import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.logic.model.test.AnswerUI
 
 fun List<Answer>.toUIModels(
-    answerColorExtractor: IAnswerColorExtractor
+    answerColorExtractor: IAnswerColorExtractor,
+    isAnswered: Boolean
 ): List<AnswerUI> {
-    val colors = answerColorExtractor.extractAnswersColors()
+    val simpleColors = answerColorExtractor.extractAnswersColors()
+    val alphaColors = answerColorExtractor.extractAnswersColors(withAlpha = true)
     return mapIndexed { index, answer ->
-        val color = colors[index]
+        val color = if (answer is Answer.ChoiceAnswer && isAnswered) {
+            if (answer.isTrue) simpleColors[index]
+            else alphaColors[index]
+        } else {
+            simpleColors[index]
+        }
         answer.toUI(color)
     }
 }

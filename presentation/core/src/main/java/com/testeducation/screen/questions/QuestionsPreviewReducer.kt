@@ -1,6 +1,6 @@
 package com.testeducation.screen.questions
 
-import com.testeducation.converter.test.answer.toUIModels
+import com.testeducation.converter.test.question.toPreviewUIs
 import com.testeducation.core.IReducer
 import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.helper.question.ITimeConverterLongToString
@@ -14,7 +14,7 @@ class QuestionsPreviewReducer(
     override fun reduce(modelState: QuestionsPreviewModelState): QuestionsPreviewState {
 
         return QuestionsPreviewState(
-            questions = modelState.questions.toUIModels(
+            questions = modelState.questions.toPreviewUIs(
                 answerColorExtractor,
                 timeConverterLongToString
             ),
