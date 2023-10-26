@@ -5,6 +5,7 @@ import com.testeducation.domain.model.question.Question
 import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.logic.model.question.QuestionPreviewUI
+import com.testeducation.screen.tests.pass.TestPassingModelState
 
 fun List<Question>.toPreviewUIs(
     answerColorExtractor: IAnswerColorExtractor,
@@ -32,7 +33,7 @@ private fun Question.Choice.toUI(
     id,
     title,
     numberQuestion,
-    answers.toUIModels(answerColorExtractor, false),
+    answers.toUIModels(answerColorExtractor, TestPassingModelState.PassingQuestion.AnswerState.NONE),
     timeConverterLongToString.convert(time)
 )
 
@@ -43,7 +44,7 @@ private fun Question.Match.toUI(
     id,
     title,
     numberQuestion,
-    answers.toUIModels(answerColorExtractor, false),
+    answers.toUIModels(answerColorExtractor, TestPassingModelState.PassingQuestion.AnswerState.NONE),
     timeConverterLongToString.convert(time)
 )
 
@@ -54,7 +55,7 @@ private fun Question.Order.toUI(
     id,
     title,
     numberQuestion,
-    answers.toUIModels(answerColorExtractor, false),
+    answers.toUIModels(answerColorExtractor, TestPassingModelState.PassingQuestion.AnswerState.NONE),
     timeConverterLongToString.convert(time)
 )
 

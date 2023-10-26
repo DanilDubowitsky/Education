@@ -12,14 +12,14 @@ class TestPassingReducer(
 ) : IReducer<TestPassingModelState, TestPassingState> {
 
     override fun reduce(modelState: TestPassingModelState): TestPassingState {
+        val questionUI = modelState.currentQuestion?.toUI(
+            answerColorExtractor,
+            timeConverterLongToString
+        )
+
         return TestPassingState(
-            modelState.currentQuestion?.toUI(
-                answerColorExtractor,
-                timeConverterLongToString
-            )
+            currentQuestion = questionUI
         )
     }
-
-
 
 }

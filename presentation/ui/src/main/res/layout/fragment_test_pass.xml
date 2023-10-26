@@ -134,6 +134,58 @@
 
     </ScrollView>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/answerStatusLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_dialog_drawable"
+        android:backgroundTint="@color/colorBackground"
+        android:minHeight="160dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imgCorrectIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_incorrect_answer" />
+
+        <TextView
+            android:id="@+id/txtAnswerStatus"
+            style="@style/Text.Label.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorRed"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgCorrectIndicator"
+            app:layout_constraintStart_toEndOf="@+id/imgCorrectIndicator"
+            app:layout_constraintTop_toTopOf="@+id/imgCorrectIndicator"
+            tools:text="Неверно" />
+
+        <TextView
+            android:id="@+id/txtCorrectAnswer"
+            style="@style/Text.Label.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/colorRed"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imgCorrectIndicator"
+            app:layout_constraintTop_toBottomOf="@+id/imgCorrectIndicator"
+            tools:text="Правильный ответ: 22 июня 1945" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAnswer"
         style="@style/Button.Normal.Green"

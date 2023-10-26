@@ -113,5 +113,8 @@
 
     <string name="test_pass_test_time_remaining">Всего осталось:</string>
     <string name="test_pass_answer_label">Ответить</string>
+    <string name="test_pass_next_label">Далее</string>
+    <string name="test_pass_incorrect_label">Неверно</string>
+    <string name="test_pass_correct_label">Верно</string>
 
 </resources>

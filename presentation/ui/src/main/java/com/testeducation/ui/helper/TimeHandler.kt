@@ -8,14 +8,18 @@ class TimeHandler {
     private val handler = Handler(Looper.getMainLooper())
     private val onUpdateListeners: HashMap<Any?, (Long) -> Unit> = HashMap()
     private val onExpireListeners: HashMap<Any?, () -> Unit> = HashMap()
+    private val currentTimes: HashMap<Any?, Long> = HashMap()
 
     fun start(time: Long, interval: Long, key: Any?) {
+        currentTimes[key] = time
         startInternal(key, time, interval)
     }
 
     fun stop(key: Any?) {
         handler.removeCallbacksAndMessages(key)
     }
+
+    fun getRemainingTime(key: Any?): Long = currentTimes[key] ?: 0L
 
     fun setOnUpdateListener(key: Any?, listener: (Long) -> Unit) {
         onUpdateListeners[key] = listener
@@ -44,6 +48,7 @@ class TimeHandler {
         }
         handler.postDelayed({
             val remainingTime = time - interval
+            currentTimes[key] = remainingTime
             onUpdateListeners[key]?.invoke(time)
             startInternal(key, remainingTime, interval)
         }, interval)

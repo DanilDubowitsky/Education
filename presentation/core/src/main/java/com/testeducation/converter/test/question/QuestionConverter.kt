@@ -12,61 +12,72 @@ fun TestPassingModelState.PassingQuestion.toUI(
     colorExtractor: IAnswerColorExtractor,
     timeConverterLongToString: ITimeConverterLongToString
 ): QuestionUI {
-    val isAnswered =
-        state != TestPassingModelState.PassingQuestion.AnswerState.NONE
     return when (val question = question) {
         is Question.Choice -> question.toChoiceUI(
             colorExtractor,
             timeConverterLongToString,
-            isAnswered
+            state,
         )
 
-        is Question.Match -> question.toMatchUI(colorExtractor, timeConverterLongToString)
-        is Question.Order -> question.toOrderUI(colorExtractor, timeConverterLongToString)
-        is Question.Text -> question.toTextUI(timeConverterLongToString)
+        is Question.Match -> question.toMatchUI(colorExtractor, timeConverterLongToString, state)
+        is Question.Order -> question.toOrderUI(colorExtractor, timeConverterLongToString, state)
+        is Question.Text -> question.toTextUI(timeConverterLongToString, state)
     }
 }
 
-fun Question.Order.toOrderUI(
+private fun Question.Order.toOrderUI(
     colorExtractor: IAnswerColorExtractor,
-    timeConverterLongToString: ITimeConverterLongToString
+    timeConverterLongToString: ITimeConverterLongToString,
+    state: TestPassingModelState.PassingQuestion.AnswerState
 ) = QuestionUI.Order(
     id,
     title,
     numberQuestion,
     timeConverterLongToString.convert(time),
-    answers.toUIModels(colorExtractor, false) as List<AnswerUI.OrderAnswer>
+    state.toUI(),
+    answers.toUIModels(colorExtractor, state) as List<AnswerUI.OrderAnswer>,
 )
 
-fun Question.Match.toMatchUI(
+private fun Question.Match.toMatchUI(
     colorExtractor: IAnswerColorExtractor,
-    timeConverterLongToString: ITimeConverterLongToString
+    timeConverterLongToString: ITimeConverterLongToString,
+    state: TestPassingModelState.PassingQuestion.AnswerState
 ) = QuestionUI.Match(
     id,
     title,
     numberQuestion,
     timeConverterLongToString.convert(time),
-    answers.toUIModels(colorExtractor, false) as List<AnswerUI.MatchAnswer>
+    state.toUI(),
+    answers.toUIModels(colorExtractor, state) as List<AnswerUI.MatchAnswer>
 )
 
-fun Question.Text.toTextUI(
-    timeConverterLongToString: ITimeConverterLongToString
+private fun Question.Text.toTextUI(
+    timeConverterLongToString: ITimeConverterLongToString,
+    state: TestPassingModelState.PassingQuestion.AnswerState
 ) = QuestionUI.Text(
     id,
     title,
     numberQuestion,
+    state.toUI(),
     timeConverterLongToString.convert(time)
 )
 
-fun Question.Choice.toChoiceUI(
+private fun Question.Choice.toChoiceUI(
     colorExtractor: IAnswerColorExtractor,
     timeConverterLongToString: ITimeConverterLongToString,
-    isAnswered: Boolean
+    state: TestPassingModelState.PassingQuestion.AnswerState
 ) = QuestionUI.Choice(
     id,
     title,
     numberQuestion,
     timeConverterLongToString.convert(time),
-    answers.toUIModels(colorExtractor, isAnswered) as List<AnswerUI.ChoiceAnswer>
+    state.toUI(),
+    answers.toUIModels(colorExtractor, state) as List<AnswerUI.ChoiceAnswer>
 )
+
+private fun TestPassingModelState.PassingQuestion.AnswerState.toUI() = when (this) {
+    TestPassingModelState.PassingQuestion.AnswerState.CORRECT -> QuestionUI.AnswerState.CORRECT
+    TestPassingModelState.PassingQuestion.AnswerState.INCORRECT -> QuestionUI.AnswerState.INCORRECT
+    TestPassingModelState.PassingQuestion.AnswerState.NONE -> QuestionUI.AnswerState.NONE
+}
 

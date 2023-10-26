@@ -1,6 +1,6 @@
 package com.testeducation.screen.tests.pass
 
-import com.testeducation.domain.model.question.Answer
+import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.Question
 
 data class TestPassingModelState(
@@ -12,6 +12,8 @@ data class TestPassingModelState(
 
     data class PassingQuestion(
         val state: AnswerState = AnswerState.NONE,
+        val answers: List<String> = emptyList(),
+        val timeSpent: Long = 0L,
         val question: Question
     ) {
         enum class AnswerState {

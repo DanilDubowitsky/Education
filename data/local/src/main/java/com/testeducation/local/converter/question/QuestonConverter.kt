@@ -1,6 +1,6 @@
 package com.testeducation.local.converter.question
 
-import com.testeducation.domain.model.question.Answer
+import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.local.converter.answer.toEntities

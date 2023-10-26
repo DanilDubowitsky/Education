@@ -1,4 +1,4 @@
-package com.testeducation.domain.model.question
+package com.testeducation.domain.model.answer
 
 sealed interface Answer {
     val id: String

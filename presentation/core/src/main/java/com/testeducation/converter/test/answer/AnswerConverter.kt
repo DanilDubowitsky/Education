@@ -1,17 +1,20 @@
 package com.testeducation.converter.test.answer
 
-import com.testeducation.domain.model.question.Answer
+import com.testeducation.domain.model.answer.Answer
 import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.logic.model.test.AnswerUI
+import com.testeducation.screen.tests.pass.TestPassingModelState
 
 fun List<Answer>.toUIModels(
     answerColorExtractor: IAnswerColorExtractor,
-    isAnswered: Boolean
+    state: TestPassingModelState.PassingQuestion.AnswerState
 ): List<AnswerUI> {
     val simpleColors = answerColorExtractor.extractAnswersColors()
     val alphaColors = answerColorExtractor.extractAnswersColors(withAlpha = true)
     return mapIndexed { index, answer ->
-        val color = if (answer is Answer.ChoiceAnswer && isAnswered) {
+        val color = if (answer is Answer.ChoiceAnswer &&
+            state != TestPassingModelState.PassingQuestion.AnswerState.NONE
+        ) {
             if (answer.isTrue) simpleColors[index]
             else alphaColors[index]
         } else {
