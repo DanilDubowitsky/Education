@@ -1,10 +1,13 @@
 package com.testeducation.ui.screen.tests.pass
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.testeducation.logic.model.question.QuestionUI
 import com.testeducation.logic.model.test.AnswerUI
 import com.testeducation.logic.screen.tests.pass.TestPassingSideEffect
@@ -14,7 +17,13 @@ import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestPassBinding
 import com.testeducation.ui.delegates.tests.answer.createChoiceAnswerDelegate
+import com.testeducation.ui.delegates.tests.answer.createMatchDataDelegate
+import com.testeducation.ui.delegates.tests.answer.createOrderAnswerDelegate
 import com.testeducation.ui.helper.TimeHandler
+import com.testeducation.ui.listener.QuestionItemTouchHelperCallback
+import com.testeducation.ui.listener.drag.DragStartListener
+import com.testeducation.ui.listener.drag.IDragStartListener
+import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.loadDrawable
@@ -31,19 +40,27 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
 
     private val timer = TimeHandler()
 
-    private val timeFormatter by lazy {
-        SimpleDateFormat()
-    }
-
     private val answersAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(AnswerUI::id),
-            createChoiceAnswerDelegate(viewModel::selectChoiceAnswer)
+            createChoiceAnswerDelegate(viewModel::selectChoiceAnswer),
+            createOrderAnswerDelegate()
         )
     }
 
-    private val answersMatchAdapter by lazy {
+    val dragStartListener: IDragStartListener = DragStartListener()
 
+    private val answersMatchAdapter by lazy {
+        ListDelegationAdapter(createMatchDataDelegate())
+    }
+
+    private val questionItemTouchHelperCallback by lazy {
+        QuestionItemTouchHelperCallback(
+            updateResultMove = viewModel::swapAnswers,
+            onClearView = {
+
+            }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,8 +78,12 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     }
 
     private fun setupViews() = binding {
+        answersRecycler.disableChangeAnimation()
+        answersOrderingRecycler.disableChangeAnimation()
         answersRecycler.adapter = answersAdapter
-
+        answersOrderingRecycler.adapter = answersMatchAdapter
+        val itemTouchHelper = ItemTouchHelper(questionItemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(answersRecycler)
     }
 
     private fun setupListeners() = binding {
@@ -73,8 +94,15 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun render(state: TestPassingState) = binding {
         txtQuestion.text = state.currentQuestion?.title
+        answersOrderingRecycler.isGone = state.matchData.isEmpty()
+
+        if (answersMatchAdapter.items != state.matchData) {
+            answersMatchAdapter.items = state.matchData
+            answersMatchAdapter.notifyDataSetChanged()
+        }
 
         if (state.currentQuestion != null) {
             renderAnswers(state.currentQuestion!!)

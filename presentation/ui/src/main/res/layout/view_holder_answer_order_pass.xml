@@ -10,6 +10,7 @@
     android:minHeight="68dp">
 
     <TextView
+        android:id="@+id/txtAnswer"
         style="@style/Text.Label.SemiBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

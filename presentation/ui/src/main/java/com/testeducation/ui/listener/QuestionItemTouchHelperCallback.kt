@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 class QuestionItemTouchHelperCallback(
     private val updateResultMove: (Int, Int) -> Unit,
     private val onClearView: () -> Unit
-) :
-    ItemTouchHelper.Callback() {
+) : ItemTouchHelper.Callback() {
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         onClearView()

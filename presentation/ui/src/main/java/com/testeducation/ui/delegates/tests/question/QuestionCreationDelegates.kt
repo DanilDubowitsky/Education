@@ -99,8 +99,7 @@ fun answerDelegateOrder(
     onAnswerTextChanger: (String, String) -> Unit,
     mDragStartListener: IDragStartListener,
     onSelectedElement: (String) -> Unit
-) =
-    simpleDelegateAdapter<AnswerCreationUI.OrderAnswer,
+) = simpleDelegateAdapter<AnswerCreationUI.OrderAnswer,
             AnswerCreationUI,
             ViewHolderAnswerOrderBinding>(
         ViewHolderAnswerOrderBinding::inflate
@@ -142,8 +141,7 @@ fun answerDelegateWrite(onAnswerTextChanger: (String, String) -> Unit) =
 
 fun footerPlusAddDelegate(
     onClickAdd: () -> Unit
-) =
-    simpleDelegateAdapter<AnswerCreationUI.FooterPlusAdd,
+) = simpleDelegateAdapter<AnswerCreationUI.FooterPlusAdd,
             AnswerCreationUI,
             ViewHolderAnswerFootPlusBinding>(
         ViewHolderAnswerFootPlusBinding::inflate

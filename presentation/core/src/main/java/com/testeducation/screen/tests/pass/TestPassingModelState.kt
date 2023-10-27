@@ -1,6 +1,5 @@
 package com.testeducation.screen.tests.pass
 
-import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.Question
 
 data class TestPassingModelState(
@@ -24,15 +23,28 @@ data class TestPassingModelState(
     }
 
     sealed interface SelectedQuestionState {
+        val question: Question?
+
         data class Choice(
             val selectedAnswerIndex: Int? = null,
-            val answers: List<Answer.ChoiceAnswer> = emptyList()
+            override val question: Question.Choice? = null
         ) : SelectedQuestionState
 
-        class Text() : SelectedQuestionState
+        data class Text(
+            override val question: Question.Text? = null
+        ) : SelectedQuestionState
 
-        class Match : SelectedQuestionState
+        data class Match(
+            val matchData: List<MatchData> = emptyList(),
+            override val question: Question.Match? = null
+        ) : SelectedQuestionState
 
-        class Order : SelectedQuestionState
+        data class Order(
+            override val question: Question.Order? = null
+        ) : SelectedQuestionState
     }
+
+    data class MatchData(
+        val text: String
+    )
 }

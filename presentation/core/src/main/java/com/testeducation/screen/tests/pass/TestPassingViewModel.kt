@@ -14,6 +14,7 @@ import com.testeducation.logic.screen.tests.pass.TestPassingState
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import java.util.Collections
 
 private typealias Syntax = SimpleSyntax<TestPassingState, TestPassingSideEffect>
 
@@ -48,11 +49,48 @@ class TestPassingViewModel(
             when (currentQuestion.question) {
                 is Question.Choice -> checkChoiceAnswer(questionRemainingTime)
                 is Question.Match -> TODO()
-                is Question.Order -> TODO()
+                is Question.Order -> checkOrderAnswers(questionRemainingTime)
                 is Question.Text -> TODO()
             }
         } else {
             moveToNextQuestion()
+        }
+    }
+
+    fun swapAnswers(fromPosition: Int, toPosition: Int) = intent {
+        val testPassingState = getModelState().selectedQuestionState.toOrder()
+        val answers = testPassingState.question?.answers ?: return@intent
+        Collections.swap(answers, fromPosition, toPosition)
+        val newQuestion = testPassingState.question.copy(answers = answers)
+        updateModelState {
+            copy(selectedQuestionState = testPassingState.copy(question = newQuestion))
+        }
+    }
+
+    private fun checkOrderAnswers(questionRemainingTime: Long) = intent {
+        val modelState = getModelState()
+        val questionState = modelState.selectedQuestionState.toOrder()
+        val answers = questionState.question?.answers ?: return@intent
+        var isCorrect = true
+        answers.forEachIndexed { index, orderAnswer ->
+            if (index != orderAnswer.order) {
+                isCorrect = false
+                return@forEachIndexed
+            }
+        }
+        val state = if (isCorrect) {
+            TestPassingModelState.PassingQuestion.AnswerState.CORRECT
+        } else {
+            TestPassingModelState.PassingQuestion.AnswerState.INCORRECT
+        }
+        val spentTime = modelState.currentQuestion!!.question.time - questionRemainingTime
+        val newQuestion = modelState.currentQuestion.copy(
+            state = state,
+            answers = answers.map(Answer::id),
+            timeSpent = spentTime
+        )
+        updateModelState {
+            copy(currentQuestion = newQuestion)
         }
     }
 
@@ -80,7 +118,7 @@ class TestPassingViewModel(
         val modelState = getModelState()
         val questionState = modelState.selectedQuestionState.toChoice()
         val index = questionState.selectedAnswerIndex ?: return
-        val selectedAnswer = questionState.answers[index]
+        val selectedAnswer = questionState.question?.answers?.get(index) ?: return
         val state = if (selectedAnswer.isTrue) {
             TestPassingModelState.PassingQuestion.AnswerState.CORRECT
         } else {
@@ -125,11 +163,13 @@ class TestPassingViewModel(
         return when (question.question) {
             is Question.Match -> TestPassingModelState.SelectedQuestionState.Match()
             is Question.Choice -> TestPassingModelState.SelectedQuestionState.Choice(
-                answers = question.question.answers
+                question = question.question
             )
 
             is Question.Text -> TestPassingModelState.SelectedQuestionState.Text()
-            is Question.Order -> TestPassingModelState.SelectedQuestionState.Order()
+            is Question.Order -> TestPassingModelState.SelectedQuestionState.Order(
+                question = question.question
+            )
         }
     }
 
@@ -142,7 +182,7 @@ class TestPassingViewModel(
     private fun TestPassingModelState.SelectedQuestionState.toText(): TestPassingModelState.SelectedQuestionState.Text =
         this as TestPassingModelState.SelectedQuestionState.Text
 
-    private fun TestPassingModelState.SelectedQuestionState.Order(): TestPassingModelState.SelectedQuestionState.Order =
+    private fun TestPassingModelState.SelectedQuestionState.toOrder(): TestPassingModelState.SelectedQuestionState.Order =
         this as TestPassingModelState.SelectedQuestionState.Order
 
     private companion object {
