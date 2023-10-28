@@ -75,6 +75,7 @@ class ResourceHelper(
             StringResource.Error.EmailIsEmptyString -> context.getString(R.string.error_email_empty)
             StringResource.Error.PasswordIsEmptyString -> context.getString(R.string.error_password_empty)
             StringResource.Error.TitleCreationTestEmpty -> string(R.string.error_title_creation_test_empty)
+            StringResource.Error.TitleCreationTestMaxLine -> string(R.string.error_title_creation_max_line)
         }
 
     private fun extractMainColorResource(resource: ColorResource.Main) = when (resource) {

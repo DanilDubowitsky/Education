@@ -27,6 +27,8 @@ sealed interface StringResource {
 
         object TitleCreationTestEmpty : Error
 
+        object TitleCreationTestMaxLine : Error
+
     }
 
     sealed interface Update : StringResource {
@@ -48,12 +50,12 @@ sealed interface StringResource {
         object TestAvailabilityTitle : StringSettings
         object QuestionOrderTitle : StringSettings
         object MinCorrectAnswerTitle : StringSettings
-        object PreShowQuestionTitle: StringSettings
+        object PreShowQuestionTitle : StringSettings
         object AntiCheatTitle : StringSettings
-        object AntiCheatDescription: StringSettings
-        object AvailabilityValueAll: StringSettings
-        object AvailabilityValueLink: StringSettings
-        object OrderValueOrder: StringSettings
-        object OrderValueRandom: StringSettings
+        object AntiCheatDescription : StringSettings
+        object AvailabilityValueAll : StringSettings
+        object AvailabilityValueLink : StringSettings
+        object OrderValueOrder : StringSettings
+        object OrderValueRandom : StringSettings
     }
 }

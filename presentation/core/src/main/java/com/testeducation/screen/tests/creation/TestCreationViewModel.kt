@@ -34,6 +34,10 @@ class TestCreationViewModel(
     reducer,
     exceptionHandler
 ) {
+    companion object {
+        private const val MAX_VALUE_TITLE = 64
+    }
+
     override val initialModelState: TestCreationModelState = TestCreationModelState()
 
     init {
@@ -66,6 +70,11 @@ class TestCreationViewModel(
         val currentStepState = modelState.stepState
         if (modelState.title.isEmpty()) {
             val errorText = StringResource.Error.TitleCreationTestEmpty.getString(resourceHelper)
+            postSideEffect(TestCreationSideEffect.TitleInputError(errorText))
+            return@intent
+        }
+        if (modelState.title.length > MAX_VALUE_TITLE) {
+            val errorText = StringResource.Error.TitleCreationTestMaxLine.getString(resourceHelper)
             postSideEffect(TestCreationSideEffect.TitleInputError(errorText))
             return@intent
         }
