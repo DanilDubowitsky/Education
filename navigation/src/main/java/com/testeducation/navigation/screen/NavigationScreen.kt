@@ -110,7 +110,9 @@ sealed interface NavigationScreen : Serializable {
             val imageTest: String,
             val idTheme: String,
             val themeName: String
-        ) : Tests
+        ) : Tests {
+            object OnTestSettingsResult : ResultKey<Unit>
+        }
 
         data class Preview(
             val id: String

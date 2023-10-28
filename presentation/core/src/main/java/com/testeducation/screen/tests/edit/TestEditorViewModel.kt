@@ -31,7 +31,7 @@ class TestEditorViewModel(
     override val initialModelState: TestEditorModelState = TestEditorModelState()
 
     init {
-        getTestDetails(testId = testId)
+        initData()
     }
 
     fun openCreateQuestion() {
@@ -45,6 +45,9 @@ class TestEditorViewModel(
 
     fun openTestSettings() = intent {
         val modelState = getModelState()
+        router.setResultListener(NavigationScreen.Tests.Settings.OnTestSettingsResult) { testSettings ->
+            initData()
+        }
         modelState.test?.let { testItem ->
             router.navigateTo(
                 NavigationScreen.Tests.Settings(
@@ -58,6 +61,8 @@ class TestEditorViewModel(
             )
         }
     }
+
+    private fun initData() = getTestDetails(testId = testId)
 
     private fun getTestDetails(testId: String) = singleIntent(getTest.javaClass.name) {
         val details = getTest.invoke(id = testId)

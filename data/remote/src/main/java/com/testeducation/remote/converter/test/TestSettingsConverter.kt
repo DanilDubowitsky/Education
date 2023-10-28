@@ -24,6 +24,8 @@ fun RemoteTestSettingsItem.toModels(): TestSettingsItem {
 
 fun TestSettingsItem.toRemote(): RemoteTestSettingsItem {
     return RemoteTestSettingsItem(
+        title = this.title,
+        themeId = this.themeId,
         availability = this.availability?.toRemote(),
         testQuestionOrder = this.testQuestionOrder?.toRemote(),
         showResultMode = this.showResultMode?.toRemote(),

@@ -198,8 +198,10 @@ class TestSettingsViewModel(
                 is TestSettingsElement.HorizontalScroll -> {
                     if (itemSettings.id == THEME_ID) {
                         itemSettings.list.find { it.isSelected }?.let { theme ->
-                            testSettingsItem =
-                                testSettingsItem.copy(themeId = theme.id)
+                            if (theme.id != idTheme) {
+                                testSettingsItem =
+                                    testSettingsItem.copy(themeId = theme.id)
+                            }
                         }
                     }
                 }
@@ -210,6 +212,8 @@ class TestSettingsViewModel(
             }
         }
         updateTestSettings(testId, testSettingsItem)
+        router.sendResult(NavigationScreen.Tests.Settings.OnTestSettingsResult, Unit)
+        router.exit()
     }
 
     fun updateTextInput(currentId: Int, newText: String) = intent {
