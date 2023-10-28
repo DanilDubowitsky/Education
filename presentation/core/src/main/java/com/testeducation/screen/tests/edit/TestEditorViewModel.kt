@@ -52,7 +52,8 @@ class TestEditorViewModel(
                     titleTest = testItem.title,
                     colorTest = testItem.style.color,
                     imageTest = testItem.style.background,
-                    idTheme = testItem.theme.id
+                    idTheme = testItem.theme.id,
+                    themeName = testItem.theme.title
                 )
             )
         }

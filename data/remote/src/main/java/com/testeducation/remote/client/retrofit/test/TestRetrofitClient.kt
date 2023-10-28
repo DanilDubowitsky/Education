@@ -7,6 +7,7 @@ import com.testeducation.remote.model.test.RemoteTest
 import com.testeducation.remote.model.test.RemoteTestSettingsItem
 import com.testeducation.remote.model.test.RemoteTestShort
 import com.testeducation.remote.request.test.TestCreationRequest
+import com.testeducation.remote.request.test.TestStyleRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -94,4 +95,7 @@ interface TestRetrofitClient {
 
     @PUT("/api/app/content/tests/{id}")
     suspend fun updateTestSettings(@Path("id") id: String, @Body testSettingsItem: RemoteTestSettingsItem)
+
+    @PUT("/api/app/content/tests/{id}/style")
+    suspend fun updateTestStyle(@Path("id") id: String, @Body remoteTestStyle: TestStyleRequest)
 }

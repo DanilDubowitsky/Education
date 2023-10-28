@@ -1,6 +1,7 @@
 package com.testeducation.navigation.screen
 
 import com.testeducation.logic.model.auth.ConfirmationType
+import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.model.test.TestGetTypeUI
@@ -108,19 +109,38 @@ sealed interface NavigationScreen : Serializable {
             val colorTest: String,
             val imageTest: String,
             val idTheme: String,
+            val themeName: String
         ) : Tests
 
         data class Preview(
             val id: String
         ) : Tests
+
+        data class TestStyleChangerData(
+            val testId: String,
+            val testName: String,
+            val themeName: String,
+            val color: String,
+            val background: String
+        ) : Tests {
+            object OnTestStyleChanger : ResultKey<OnTestStyleChanger.TestStyleChangerResult> {
+
+                data class TestStyleChangerResult(
+                    val color: String,
+                    val styleCurrent: CardTestStyle
+                )
+            }
+        }
     }
 
     sealed interface QuestionCreation : NavigationScreen {
-        data class QuestionEditor(val questionTypeUiItem: QuestionTypeUiItem, val testId: String) : QuestionCreation
+        data class QuestionEditor(val questionTypeUiItem: QuestionTypeUiItem, val testId: String) :
+            QuestionCreation
+
         data class TimeQuestion(val time: Long) : QuestionCreation
 
         object OnSelectionQuestionTypeChanged : ResultKey<QuestionTypeUiItem>
-        object OnTimeQuestionChanged: ResultKey<Long>
+        object OnTimeQuestionChanged : ResultKey<Long>
     }
 
 }

@@ -7,6 +7,7 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestSettingsElementUi
 import com.testeducation.logic.screen.tests.settings.TestSettingsState
 import com.testeducation.screen.tests.edit.settings.TestSettingsViewModel
+import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestSettingsBinding
 import com.testeducation.ui.delegates.tests.settings.footerEmpty
@@ -29,7 +30,7 @@ class TestSettingsFragment :
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(TestSettingsElementUi::id),
             testSettingsInputTest(viewModel::updateTextInput),
-            testSettingsDesign(),
+            testSettingsDesign(viewModel::openTestStyleChanger),
             testSettingsHorizontalScroll(viewModel::updateHorizontal),
             testSettingsChoice(viewModel::updateChoice),
             testSettingsSelectable(viewModel::updateSelectable),
@@ -40,6 +41,7 @@ class TestSettingsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+        requireActivity().window.statusBarColor = requireContext().getColor(R.color.colorBackground)
         binding {
             rvSettings.apply {
                 adapter = settingsAdapter
@@ -48,6 +50,9 @@ class TestSettingsFragment :
             }
             btnSave.setOnClickListener {
                 viewModel.saveSettings()
+            }
+            toolbar.setNavigationOnClickListener {
+                viewModel.exit()
             }
         }
     }

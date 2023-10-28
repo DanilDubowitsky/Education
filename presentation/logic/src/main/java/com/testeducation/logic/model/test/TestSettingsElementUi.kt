@@ -13,7 +13,8 @@ sealed class TestSettingsElementUi {
         override val id: Int,
         val title: String,
         val color: String,
-        val image: String
+        val image: CardTestStyle,
+        val themeName: String
     ) : TestSettingsElementUi()
 
     data class HorizontalScroll(

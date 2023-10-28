@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.IconDesignItem
 import com.testeducation.logic.screen.tests.settings.TestStyleChangerState
+import com.testeducation.screen.tests.edit.style.TestStyleChangerModelState
 import com.testeducation.screen.tests.edit.style.TestStyleChangerViewModel
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentStyleChangerBinding
 import com.testeducation.ui.delegates.tests.testCreationBackgroundIconDelegates
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
+import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
 
 class TestStyleChangerFragment :
@@ -36,6 +38,24 @@ class TestStyleChangerFragment :
                 layoutManager = GridLayoutManager(requireContext(), 3)
                 itemAnimator = null
             }
+            firstColor.setClickListener {
+                viewModel.changeColor(colorState = TestStyleChangerModelState.ColorState.GREEN)
+            }
+            secondColor.setClickListener {
+                viewModel.changeColor(colorState = TestStyleChangerModelState.ColorState.BLUE)
+            }
+            threeColor.setClickListener {
+                viewModel.changeColor(colorState = TestStyleChangerModelState.ColorState.RED)
+            }
+            fourColor.setClickListener {
+                viewModel.changeColor(colorState = TestStyleChangerModelState.ColorState.ORANGE)
+            }
+            btnSave.setOnClickListener {
+                viewModel.update()
+            }
+            toolbar.setNavigationOnClickListener {
+                viewModel.exit()
+            }
         }
     }
 
@@ -43,6 +63,7 @@ class TestStyleChangerFragment :
 
     private fun render(state: TestStyleChangerState) = binding {
         iconDesignAdapter.items = state.iconDesignList
+        cardTest.setContent(state.testShortUI)
     }
 
 }

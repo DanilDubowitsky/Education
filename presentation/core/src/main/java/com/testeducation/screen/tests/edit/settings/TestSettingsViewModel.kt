@@ -16,6 +16,7 @@ import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.tests.settings.TestSettingsSideEffect
 import com.testeducation.logic.screen.tests.settings.TestSettingsState
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -28,6 +29,7 @@ class TestSettingsViewModel(
     private val colorTest: String,
     private val imageTest: String,
     private val idTheme: String,
+    private val themeName: String,
     private val router: NavigationRouter,
     private val getTestSettings: GetTestSettings,
     private val updateTestSettings: UpdateTestSettings,
@@ -45,6 +47,7 @@ class TestSettingsViewModel(
         private const val ANTI_CHEAT_SELECTABLE_ID = 4
         private const val TITLE_MIN_CURRENT_ANSWER_ID = 5
         private const val THEME_ID = 6
+        private const val DESIGN_ID = 7
     }
 
     override val initialModelState: TestSettingsModelState = TestSettingsModelState()
@@ -78,6 +81,40 @@ class TestSettingsViewModel(
                 }
             }
         }
+    }
+
+    fun openTestStyleChanger() = intent {
+        router.setResultListener(NavigationScreen.Tests.TestStyleChangerData.OnTestStyleChanger) { testStyle ->
+            intent {
+                val modelState = getModelState()
+                val newDesign = modelState.testElementList.map {
+                    if (it.id == DESIGN_ID && it is TestSettingsElement.Design) {
+                        it.copy(
+                            color = testStyle.color,
+                            image = testStyle.styleCurrent.toString()
+                        )
+                    } else it
+                }
+                updateModelState {
+                    copy(
+                        testElementList = newDesign
+                    )
+                }
+            }
+        }
+        router.navigateTo(
+            NavigationScreen.Tests.TestStyleChangerData(
+                testName = titleTest,
+                themeName = themeName,
+                testId = testId,
+                color = colorTest,
+                background = imageTest
+            )
+        )
+    }
+
+    fun exit() {
+        router.exit()
     }
 
     fun saveSettings() = intent {
@@ -272,18 +309,17 @@ class TestSettingsViewModel(
         testSettingsItem: TestSettingsItem,
         listTheme: List<ThemeShort>
     ): List<TestSettingsElement> {
-        var currentId = 1000
         val textInputSettings = TestSettingsElement.TestInput(
             id = TITLE_TEST_NAME_POSITION,
             title = "Название теста",
             valueInput = titleTest
         )
-        currentId++
         val designTest = TestSettingsElement.Design(
-            id = currentId,
+            id = DESIGN_ID,
             title = "Обложка",
             color = colorTest,
-            image = imageTest
+            image = imageTest,
+            themeName = themeName
         )
         val horizontalScroll = TestSettingsElement.HorizontalScroll(
             id = THEME_ID,

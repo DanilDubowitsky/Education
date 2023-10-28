@@ -2,7 +2,6 @@ package com.testeducation.ui.delegates.tests.settings
 
 import androidx.core.widget.doOnTextChanged
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.TestSettingsElementUi
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.logic.model.theme.ThemeShortUI
@@ -17,7 +16,6 @@ import com.testeducation.ui.delegates.tests.createThemeShortSettingsAdapterDeleg
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 import com.testeducation.ui.utils.simpleDiffUtil
-import com.testeducation.utils.MainColor
 
 fun testSettingsInputTest(update: (Int, String) -> Unit) =
     simpleDelegateAdapter<TestSettingsElementUi.TestInput,
@@ -36,13 +34,16 @@ fun testSettingsInputTest(update: (Int, String) -> Unit) =
         }
     }
 
-fun testSettingsDesign() =
+fun testSettingsDesign(openTestStyleChanger: () -> Unit) =
     simpleDelegateAdapter<TestSettingsElementUi.Design,
             TestSettingsElementUi,
             ViewHolderSettingsTestDesignBinding>(
         ViewHolderSettingsTestDesignBinding::inflate
     ) {
         binding {
+            root.setOnClickListener {
+                openTestStyleChanger()
+            }
             bind {
                 tvTitle.text = item.title
                 cardTest.setContent(
@@ -53,9 +54,9 @@ fun testSettingsDesign() =
                         isPublic = false,
                         likes = 0,
                         passesCount = 0,
-                        theme = ThemeShortUI("", "", false),
-                        color = MainColor.colorOrange,
-                        style = CardTestStyle.DOTTED,
+                        theme = ThemeShortUI("", item.themeName, false),
+                        color = item.color,
+                        style = item.image,
                         liked = false,
                         passed = false
                     )

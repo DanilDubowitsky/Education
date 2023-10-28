@@ -13,6 +13,7 @@ import com.testeducation.remote.converter.global.toRemote
 import com.testeducation.remote.converter.test.toModel
 import com.testeducation.remote.converter.test.toModels
 import com.testeducation.remote.converter.test.toRemote
+import com.testeducation.remote.request.test.TestStyleRequest
 import com.testeducation.remote.utils.getResult
 
 class TestRemoteSource(
@@ -63,7 +64,16 @@ class TestRemoteSource(
         return testRetrofitClient.getTestSettings(id = id).getResult().data.toModels()
     }
 
-    override suspend fun updateTestSettings(id: String ,testSettingsItem: TestSettingsItem) {
+    override suspend fun updateTestSettings(id: String, testSettingsItem: TestSettingsItem) {
         testRetrofitClient.updateTestSettings(id = id, testSettingsItem.toRemote())
+    }
+
+    override suspend fun updateTestStyle(id: String, color: String, background: String) {
+        testRetrofitClient.updateTestStyle(
+            id = id,
+            remoteTestStyle = TestStyleRequest(
+                color, background
+            )
+        )
     }
 }

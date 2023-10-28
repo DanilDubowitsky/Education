@@ -1,6 +1,7 @@
 package com.testeducation.converter.test
 
 import com.testeducation.domain.model.test.TestSettingsElement
+import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.TestSettingsElementUi
 
 fun List<TestSettingsElement>.toUi() = map {
@@ -18,7 +19,8 @@ fun List<TestSettingsElement>.toUi() = map {
                 id = it.id,
                 title = it.title,
                 color = it.color,
-                image = it.image
+                image = CardTestStyle.valueOf(it.image),
+                themeName = it.themeName
             )
         }
 
