@@ -2,9 +2,8 @@ package com.testeducation.remote.converter.question
 
 import com.testeducation.domain.model.question.Answer
 import com.testeducation.domain.model.question.Question
-import com.testeducation.domain.model.question.input.InputAnswer
-import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.domain.model.question.QuestionType
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.remote.model.answer.RemoteAnswer
 import com.testeducation.remote.model.question.RemoteQuestion
 import com.testeducation.remote.request.question.AnswerCreateRequest
@@ -80,9 +79,10 @@ fun QuestionType.toRemote() = when (this) {
 }
 
 private fun RemoteAnswer.toMatch(questionId: String) = Answer.MatchAnswer(
-    id,
-    questionId,
-    match!!.title
+    id = id,
+    questionId = questionId,
+    matchedCorrectText = match!!.title,
+    title = title!!
 )
 
 private fun RemoteAnswer.toChoice(questionId: String) = Answer.ChoiceAnswer(

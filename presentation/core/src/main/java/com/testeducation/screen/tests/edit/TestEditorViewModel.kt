@@ -3,7 +3,10 @@ package com.testeducation.screen.tests.edit
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.model.question.Answer
+import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionDetails
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionResourceHelper
@@ -65,19 +68,65 @@ class TestEditorViewModel(
     private fun initData() = getTestDetails(testId = testId)
 
     private fun getTestDetails(testId: String) = singleIntent(getTest.javaClass.name) {
-//        val details = getTest.invoke(id = testId)
-//        val questionItems = questionResourceHelper.getQuestionItemPrepared(details.questions)
-//        val questionDetails: MutableList<QuestionDetails> = mutableListOf()
-//        questionDetails.addAll(questionItems.prepareQuestionDetailsItems())
-//        questionDetails.add(QuestionDetails.FooterAdd())
-//        updateModelState {
-//            copy(
-//                test = details.copy(
-//                    questions = questionItems
-//                ),
-//                questionDetails = questionDetails
-//            )
-//        }
+        val details = getTest.invoke(id = testId)
+        val questionItems = questionResourceHelper.getQuestionItemPrepared(details.questions.convertToQuestionDomain())
+        val questionDetails: MutableList<QuestionDetails> = mutableListOf()
+        questionDetails.addAll(questionItems.prepareQuestionDetailsItems())
+        questionDetails.add(QuestionDetails.FooterAdd())
+        updateModelState {
+            copy(
+                test = details,
+                questionDetails = questionDetails
+            )
+        }
+    }
+
+    private fun List<Question>.convertToQuestionDomain() = map { itemQuestion ->
+        InputQuestion(
+            id = itemQuestion.id,
+            title = itemQuestion.title,
+            numberQuestion = itemQuestion.numberQuestion,
+            time = itemQuestion.time,
+            icon = 0,
+            type = itemQuestion.type,
+            answers = itemQuestion.answers.convertToDomain()
+        )
+    }
+
+    private fun List<Answer>.convertToDomain() = map { itemAnswer ->
+        when (itemAnswer) {
+            is Answer.ChoiceAnswer -> {
+                InputAnswer.DefaultAnswer(
+                    id = itemAnswer.id,
+                    answerText = itemAnswer.title,
+                    isTrue = itemAnswer.isTrue
+                )
+            }
+
+            is Answer.MatchAnswer -> {
+                InputAnswer.MatchAnswer(
+                    id = itemAnswer.id,
+                    firstAnswer = itemAnswer.title,
+                    secondAnswer = itemAnswer.matchedCorrectText
+                )
+            }
+
+            is Answer.OrderAnswer -> {
+                InputAnswer.OrderAnswer(
+                    id = itemAnswer.id,
+                    answerText = itemAnswer.title,
+                    order = itemAnswer.order
+                )
+            }
+
+            is Answer.TextAnswer -> {
+                InputAnswer.TextAnswer(
+                    id = itemAnswer.id,
+                    text = itemAnswer.questionId
+                )
+            }
+        }
+
     }
 
     private fun List<InputQuestion>.prepareQuestionDetailsItems() = map {

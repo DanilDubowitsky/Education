@@ -20,7 +20,7 @@ class TestStyleChangerReducer : IReducer<TestStyleChangerModelState, TestStyleCh
                 modelState.styleCurrent,
                 // TODO: use another model for test creation
                 // TODO: add with creation
-                TestShortUI.Test.Settings(TestShortUI.Test.Settings.Availability.PUBLIC, true)
+                TestShortUI.Test.Settings(TestShortUI.Test.Settings.Availability.PUBLIC, true, 0, true, 0)
             ),
         )
     }

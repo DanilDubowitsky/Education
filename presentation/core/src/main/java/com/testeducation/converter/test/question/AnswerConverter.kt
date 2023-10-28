@@ -32,6 +32,7 @@ fun Answer.toUI(color: Int) = when (this) {
     }
 
     is Answer.MatchAnswer -> {
+        //TODO добавить второй ответ val title: String
         AnswerUI.MatchAnswer(
             id = id,
             matchedCorrectText = matchedCorrectText,

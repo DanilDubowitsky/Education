@@ -19,7 +19,8 @@ sealed interface Answer {
     data class MatchAnswer(
         override val id: String,
         override val questionId: String,
-        val matchedCorrectText: String
+        val matchedCorrectText: String,
+        val title: String
     ) : Answer
 
     data class OrderAnswer(
