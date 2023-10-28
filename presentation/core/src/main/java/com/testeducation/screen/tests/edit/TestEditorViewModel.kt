@@ -38,12 +38,16 @@ class TestEditorViewModel(
     }
 
     fun openCreateQuestion() {
-        router.navigateTo(
-            NavigationScreen.Questions.QuestionEditor(
-                QuestionTypeUiItem(QuestionTypeUi.DEFAULT),
-                testId
+        intent {
+            val modelState = getModelState()
+            router.navigateTo(
+                NavigationScreen.Questions.QuestionEditor(
+                    QuestionTypeUiItem(QuestionTypeUi.DEFAULT),
+                    testId,
+                    modelState.questionDetails.size
+                )
             )
-        )
+        }
     }
 
     fun openTestSettings() = intent {
@@ -69,7 +73,8 @@ class TestEditorViewModel(
 
     private fun getTestDetails(testId: String) = singleIntent(getTest.javaClass.name) {
         val details = getTest.invoke(id = testId)
-        val questionItems = questionResourceHelper.getQuestionItemPrepared(details.questions.convertToQuestionDomain())
+        val questionItems =
+            questionResourceHelper.getQuestionItemPrepared(details.questions.convertToQuestionDomain())
         val questionDetails: MutableList<QuestionDetails> = mutableListOf()
         questionDetails.addAll(questionItems.prepareQuestionDetailsItems())
         questionDetails.add(QuestionDetails.FooterAdd())
@@ -82,6 +87,10 @@ class TestEditorViewModel(
     }
 
     private fun List<Question>.convertToQuestionDomain() = map { itemQuestion ->
+        var answers = itemQuestion.answers.convertToDomain()
+        if (answers.all { it is InputAnswer.OrderAnswer }) {
+            answers = (answers as List<InputAnswer.OrderAnswer>).sortCompleted()
+        }
         InputQuestion(
             id = itemQuestion.id,
             title = itemQuestion.title,
@@ -89,8 +98,12 @@ class TestEditorViewModel(
             time = itemQuestion.time,
             icon = 0,
             type = itemQuestion.type,
-            answers = itemQuestion.answers.convertToDomain()
+            answers = answers
         )
+    }
+
+    private fun List<InputAnswer.OrderAnswer>.sortCompleted() = this.sortedBy {
+        it.order
     }
 
     private fun List<Answer>.convertToDomain() = map { itemAnswer ->

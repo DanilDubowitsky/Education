@@ -58,7 +58,8 @@ interface QuestionCreationModule {
                 questionTypeItem = screen.questionTypeUiItem,
                 router = router,
                 questionCreate = questionCreate,
-                testId = screen.testId
+                testId = screen.testId,
+                orderQuestion = screen.orderQuestion
             )
         }
     }

@@ -144,7 +144,8 @@ sealed interface NavigationScreen : Serializable {
 
         data class QuestionEditor(
             val questionTypeUiItem: QuestionTypeUiItem,
-            val testId: String
+            val testId: String,
+            val orderQuestion: Int = 1
         ) : Questions
 
         data class TimeQuestion(val time: Long) : Questions

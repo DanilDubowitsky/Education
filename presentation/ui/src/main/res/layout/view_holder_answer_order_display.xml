@@ -6,17 +6,25 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp">
 
-    <ImageView
-        android:id="@+id/imgIndicator"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/order"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="@drawable/background_circle"
-        android:backgroundTint="@color/colorGrayBlue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:backgroundTint="@color/colorGrayBlue">
+
+        <TextView
+            android:id="@+id/tvOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text.Label.Mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tvText"
@@ -24,11 +32,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgIndicator"
+        app:layout_constraintStart_toEndOf="@+id/order"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="22 июня 1941 г." />
 

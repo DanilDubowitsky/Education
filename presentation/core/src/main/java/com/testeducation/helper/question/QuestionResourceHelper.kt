@@ -19,8 +19,8 @@ class QuestionResourceHelper(
     override fun getQuestionItemPrepared(questions: List<InputQuestion>): List<InputQuestion> {
         return questions.mapIndexed { index, questionItem ->
             questionItem.copy(
-                answers = questionItem.answers.map { answerItem ->
-                    answerItem.prepareResource()
+                answers = questionItem.answers.mapIndexed { indexAnswer, answerItem ->
+                    answerItem.prepareResource(indexAnswer)
                 },
                 numberQuestion = StringResource.Question.NumberQuestion(index + 1)
                     .getString(resourceHelper),
@@ -29,7 +29,7 @@ class QuestionResourceHelper(
         }
     }
 
-    private fun InputAnswer.prepareResource() = when (this) {
+    private fun InputAnswer.prepareResource(index: Int) = when (this) {
         is InputAnswer.DefaultAnswer -> {
             val isTrueColor = if (isTrue) {
                 ColorResource.Main.Green.getColor(resourceHelper)
@@ -50,11 +50,38 @@ class QuestionResourceHelper(
         }
 
         is InputAnswer.OrderAnswer -> {
-            this
+            copy(
+                color = getColorAnswer(index)
+            )
         }
 
         is InputAnswer.FooterPlusAdd -> {
             this
+        }
+    }
+
+    //TODO Убрать когда появится общий класс
+    private fun getColorAnswer(index: Int): Int {
+        return when (index) {
+            0 -> {
+                ColorResource.MainLight.Blue.getColor(resourceHelper)
+            }
+
+            1 -> {
+                ColorResource.MainLight.Green.getColor(resourceHelper)
+            }
+
+            2 -> {
+                ColorResource.MainLight.Orange.getColor(resourceHelper)
+            }
+
+            3 -> {
+                ColorResource.MainLight.Red.getColor(resourceHelper)
+            }
+
+            else -> {
+                getColorAnswer(index - 4)
+            }
         }
     }
 }

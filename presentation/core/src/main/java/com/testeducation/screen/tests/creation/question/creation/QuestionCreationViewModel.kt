@@ -5,8 +5,8 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.QuestionCreate
 import com.testeducation.domain.model.question.AnswerIndicatorItem
-import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.QuestionType
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
@@ -27,7 +27,8 @@ class QuestionCreationViewModel(
     questionTypeItem: QuestionTypeUiItem,
     private val router: NavigationRouter,
     private val questionCreate: QuestionCreate,
-    private val testId: String
+    private val testId: String,
+    private val orderQuestion: Int,
 ) : BaseViewModel<QuestionCreationModelState, QuestionCreationState, QuestionCreationSideEffect>(
     reducer,
     errorHandler
@@ -64,7 +65,8 @@ class QuestionCreationViewModel(
             type = modelState.questionTypeItem.questionType,
             questionText = modelState.questionText,
             answerItem = modelState.answerItem,
-            time = modelState.time
+            time = modelState.time,
+            orderQuestion = orderQuestion
         )
         router.navigateTo(NavigationScreen.Tests.Details(testId))
         postSideEffect(
@@ -138,12 +140,13 @@ class QuestionCreationViewModel(
         val answer = createAnswer(
             index, getModelState().questionTypeItem.questionType
         )
-        val answerIndicator = if (modelState.questionTypeItem.questionType == QuestionType.REORDER) {
-            val indicator = createAnswerIndicator(index)
-            modelState.answerIndicatorItems.toMutableList().apply {
-                add(indicator)
-            }
-        } else emptyList()
+        val answerIndicator =
+            if (modelState.questionTypeItem.questionType == QuestionType.REORDER) {
+                val indicator = createAnswerIndicator(index)
+                modelState.answerIndicatorItems.toMutableList().apply {
+                    add(indicator)
+                }
+            } else emptyList()
         updateModelState {
             copy(
                 answerItem = answerItems.toMutableList().apply {
@@ -277,9 +280,16 @@ class QuestionCreationViewModel(
             return@intent
         }
         Collections.swap(answerItems, positionCurrent, targetPosition)
+        val answerItemsUpdatedPosition = answerItems.mapIndexed { index, inputAnswer ->
+            if (inputAnswer is InputAnswer.OrderAnswer) {
+                inputAnswer.copy(
+                    order = index + 1
+                )
+            } else inputAnswer
+        }
         updateModelState {
             copy(
-                answerItem = answerItems
+                answerItem = answerItemsUpdatedPosition
             )
         }
     }
@@ -333,7 +343,7 @@ class QuestionCreationViewModel(
                 InputAnswer.OrderAnswer(
                     id = id.toString(),
                     color = color,
-                    order = 1
+                    order = index + 1
                 )
             }
         }

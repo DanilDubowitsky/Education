@@ -27,6 +27,15 @@ fun List<InputAnswer>.mapToRequestTypeMatch() = mapNotNull { answer ->
     } else null
 }
 
+fun List<InputAnswer>.mapToRequestTypeOrder() = mapNotNull { answer ->
+    if (answer is InputAnswer.OrderAnswer) {
+        AnswerCreateRequest(
+            title = answer.answerText,
+            order = answer.order
+        )
+    } else null
+}
+
 fun List<InputAnswer>.mapToRequestTypeWriteAnswer() = mapNotNull { answer ->
     if (answer is InputAnswer.TextAnswer) {
         AnswerCreateRequest(
@@ -39,7 +48,7 @@ fun List<InputAnswer>.mapToRequestAnswer(type: QuestionType) = when (type) {
     QuestionType.CHOICE -> this.mapToRequestTypeDefault()
     QuestionType.MATCH -> this.mapToRequestTypeMatch()
     QuestionType.TEXT -> this.mapToRequestTypeWriteAnswer()
-    else -> emptyList()
+    QuestionType.REORDER -> this.mapToRequestTypeOrder()
 }
 
 fun RemoteQuestion.toModel(): Question {

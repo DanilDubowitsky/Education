@@ -1,7 +1,7 @@
 package com.testeducation.core.client.remote.question
 
-import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.QuestionType
+import com.testeducation.domain.model.question.input.InputAnswer
 
 interface IQuestionRemoteClient {
     suspend fun createQuestion(
@@ -9,6 +9,7 @@ interface IQuestionRemoteClient {
         type: QuestionType,
         questionText: String,
         answers: List<InputAnswer>,
-        time: Long
+        time: Long,
+        orderQuestion: Int
     )
 }
