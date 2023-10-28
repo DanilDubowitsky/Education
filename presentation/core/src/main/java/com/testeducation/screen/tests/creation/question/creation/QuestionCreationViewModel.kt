@@ -16,6 +16,7 @@ import com.testeducation.logic.screen.tests.creation.question.creation.QuestionC
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.getColor
+import com.testeducation.utils.isEmptyOrBlank
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import java.util.Collections
@@ -56,22 +57,26 @@ class QuestionCreationViewModel(
     }
 
     fun saveQuestion() = intent {
-        postSideEffect(
-            QuestionCreationSideEffect.LoaderVisible
-        )
         val modelState = getModelState()
-        questionCreate(
-            testId = testId,
-            type = modelState.questionTypeItem.questionType,
-            questionText = modelState.questionText,
-            answerItem = modelState.answerItem,
-            time = modelState.time,
-            orderQuestion = orderQuestion
-        )
-        router.navigateTo(NavigationScreen.Tests.Details(testId))
-        postSideEffect(
-            QuestionCreationSideEffect.LoaderInvisible
-        )
+        doIfValidQuestion(modelState) {
+            intent {
+                postSideEffect(
+                    QuestionCreationSideEffect.LoaderVisible
+                )
+                questionCreate(
+                    testId = testId,
+                    type = modelState.questionTypeItem.questionType,
+                    questionText = modelState.questionText,
+                    answerItem = modelState.answerItem,
+                    time = modelState.time,
+                    orderQuestion = orderQuestion
+                )
+                router.navigateTo(NavigationScreen.Tests.Details(testId))
+                postSideEffect(
+                    QuestionCreationSideEffect.LoaderInvisible
+                )
+            }
+        }
     }
 
     fun openTimeDialog() {
@@ -310,6 +315,116 @@ class QuestionCreationViewModel(
                 answerItem = answerItems
             )
         }
+    }
+
+    //TODO Перенести все в ресурсы
+    private fun doIfValidQuestion(state: QuestionCreationModelState, action: () -> Unit) = intent {
+        if (state.questionText.isEmptyOrBlank()) {
+            val screen = NavigationScreen.Common.Information(
+                titleText = "Ошибка при создании вопроса",
+                description = "Содержание вопроса не может быть пустым",
+                btnText = "Закрыть"
+            )
+            router.navigateTo(screen)
+            return@intent
+        }
+        if (state.answerItem.isEmpty()) {
+            val screen = NavigationScreen.Common.Information(
+                titleText = "Ошибка при создании вопроса",
+                description = "Вопрос должен иметь хотя бы один ответ",
+                btnText = "Закрыть"
+            )
+            router.navigateTo(screen)
+            return@intent
+        }
+        when (state.questionTypeItem.questionType) {
+            QuestionType.CHOICE -> {
+                if (state.answerItem.size - 1 < 2) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = "Ошибка при создании вопроса",
+                        description = "Минимальное количество ответов на вопрос должно быть равно 2-м",
+                        btnText = "Закрыть"
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+                if (state.answerItem.find { it is InputAnswer.DefaultAnswer && it.isTrue } == null) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = "Ошибка при создании вопроса",
+                        description = "Необходимо выбрать хотя бы один правильный ответ",
+                        btnText = "Закрыть"
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+                if (state.answerItem.find { it is InputAnswer.DefaultAnswer && it.answerText.isEmptyOrBlank() } != null) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = "Ошибка при создании вопроса",
+                        description = "В вопросе не должны присуствовать ответы с пустым содержанием",
+                        btnText = "Закрыть"
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+            }
+
+            QuestionType.REORDER -> {
+                if (state.answerItem.size - 1 < 3) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = "Ошибка при создании вопроса",
+                        description = "Минимальное количество ответов на вопрос должно быть равно 3-м",
+                        btnText = "Закрыть"
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+                if (state.answerItem.find { it is InputAnswer.OrderAnswer && it.answerText.isEmptyOrBlank() } != null) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = "Ошибка при создании вопроса",
+                        description = "В вопросе не должны присуствовать ответы с пустым содержанием",
+                        btnText = "Закрыть"
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+            }
+
+            QuestionType.MATCH -> {
+                if (state.answerItem.size - 1 < 3) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = "Ошибка при создании вопроса",
+                        description = "Минимальное количество ответов на вопрос должно быть равно 3-м",
+                        btnText = "Закрыть"
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+                if (state.answerItem.find { it is InputAnswer.MatchAnswer && it.firstAnswer.isEmptyOrBlank() ||
+                            it is InputAnswer.MatchAnswer && it.secondAnswer.isEmptyOrBlank() } != null) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = "Ошибка при создании вопроса",
+                        description = "В вопросе не должны присуствовать ответы с пустым содержанием",
+                        btnText = "Закрыть"
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+            }
+
+            QuestionType.TEXT -> {
+                val textAnswer = state.answerItem.first()
+                if (textAnswer is InputAnswer.TextAnswer && textAnswer.text.isEmptyOrBlank()) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = "Ошибка при создании вопроса",
+                        description = "Ответ не может быть пустым",
+                        btnText = "Закрыть"
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+            }
+        }
+        action()
     }
 
     private suspend fun createAnswer(index: Int = 0, type: QuestionType): InputAnswer {
