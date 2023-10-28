@@ -108,4 +108,17 @@
     <string name="test_settings_title">Настройки теста</string>
     <string name="test_settings_test_design">Обложка</string>
     <string name="test_style_color">Выберите цвет</string>
+
+    <string name="test_settings_test_title">Название теста</string>
+    <string name="test_settings_theme_title">Тема</string>
+    <string name="test_settings_availability_title">Доступ к тесту</string>
+    <string name="test_settings_order_title">Порядок вопросов</string>
+    <string name="test_settings_min_correct_answer_title">Минимум правильных ответов для успешного прохождения теста</string>
+    <string name="test_settings_show_question_title">Предварительный просмотр вопросов</string>
+    <string name="test_settings_anti_cheat_title">Антисписывание</string>
+    <string name="test_settings_anti_cheat_description">Включенный режим “Антисписывание” позволяет фиксировать факт выхода приложения в фоновый режим. В таком режиме прохождение теста будет автоматически завершено.</string>
+    <string name="test_settings_order_value_order">Последовательно</string>
+    <string name="test_settings_order_value_random">Перемешать</string>
+    <string name="test_settings_availability_all">Всем</string>
+    <string name="test_settings_availability_link">По ссылке</string>
 </resources>

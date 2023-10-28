@@ -1,12 +1,12 @@
 package com.testeducation.ui.delegates.tests.settings
 
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestSettingsElementUi
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.ui.R
-import com.testeducation.ui.databinding.ViewHolderFooterEmptyBinding
 import com.testeducation.ui.databinding.ViewHolderSettingsChoiceBinding
 import com.testeducation.ui.databinding.ViewHolderSettingsHorizontalScrollBinding
 import com.testeducation.ui.databinding.ViewHolderSettingsInputTextBinding
@@ -131,19 +131,12 @@ fun testSettingsSelectable(update: (Int) -> Unit) =
         binding {
             bind {
                 tvTitle.text = item.title
+                tvDescription.text = item.description
+                tvDescription.isVisible = item.description.isNotEmpty()
                 checkbox.isChecked = item.isSelected
                 checkbox.setOnClickListener {
                     update(item.id)
                 }
             }
         }
-    }
-
-fun footerEmpty() =
-    simpleDelegateAdapter<TestSettingsElementUi.FooterEmpty,
-            TestSettingsElementUi,
-            ViewHolderFooterEmptyBinding>(
-        ViewHolderFooterEmptyBinding::inflate
-    ) {
-
     }

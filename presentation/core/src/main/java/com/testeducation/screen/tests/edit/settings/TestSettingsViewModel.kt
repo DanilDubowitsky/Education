@@ -13,10 +13,12 @@ import com.testeducation.domain.model.test.TestSettingsItem
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.screen.tests.settings.TestSettingsSideEffect
 import com.testeducation.logic.screen.tests.settings.TestSettingsState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.utils.getString
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -315,65 +317,65 @@ class TestSettingsViewModel(
     ): List<TestSettingsElement> {
         val textInputSettings = TestSettingsElement.TestInput(
             id = TITLE_TEST_NAME_POSITION,
-            title = "Название теста",
+            title = StringResource.StringSettings.TestTitle.getString(resourceHelper),
             valueInput = titleTest
         )
         val designTest = TestSettingsElement.Design(
             id = DESIGN_ID,
-            title = "Обложка",
+            title = StringResource.StringSettings.DesignTitle.getString(resourceHelper),
             color = colorTest,
             image = imageTest,
             themeName = themeName
         )
         val horizontalScroll = TestSettingsElement.HorizontalScroll(
             id = THEME_ID,
-            title = "Тема",
+            title = StringResource.StringSettings.ThemeTitle.getString(resourceHelper),
             list = listTheme.getHorizontalScrollThemes()
                 .sortedBy { !it.isSelected }
         )
         val choice = TestSettingsElement.Choice(
             id = AVAILABILITY_ID,
-            title = "Доступ к тесту",
+            title = StringResource.StringSettings.TestAvailabilityTitle.getString(resourceHelper),
             itemFirst = TestSettingsElement.Choice.Item(
-                title = "Всем",
+                title = StringResource.StringSettings.AvailabilityValueAll.getString(resourceHelper),
                 value = TestAvailability.Public.toString(),
                 isSelected = testSettingsItem.availability == TestAvailability.Public
             ),
             itemSecond = TestSettingsElement.Choice.Item(
-                title = "По всем",
+                title = StringResource.StringSettings.AvailabilityValueLink.getString(resourceHelper),
                 value = TestAvailability.Private.toString(),
                 isSelected = testSettingsItem.availability == TestAvailability.Private
             )
         )
         val choiceOrder = TestSettingsElement.Choice(
             id = ORDER_ID,
-            title = "Порядок вопросов",
+            title = StringResource.StringSettings.QuestionOrderTitle.getString(resourceHelper),
             itemFirst = TestSettingsElement.Choice.Item(
-                title = "Последовательно",
+                title = StringResource.StringSettings.OrderValueOrder.getString(resourceHelper),
                 value = TestQuestionOrder.Sequencial.toString(),
                 isSelected = testSettingsItem.testQuestionOrder == TestQuestionOrder.Sequencial
             ),
             itemSecond = TestSettingsElement.Choice.Item(
-                title = "Перемешать",
+                title = StringResource.StringSettings.OrderValueRandom.getString(resourceHelper),
                 value = TestQuestionOrder.Shuffled.toString(),
                 isSelected = testSettingsItem.testQuestionOrder == TestQuestionOrder.Shuffled
             )
         )
         val textInputMinAnswer = TestSettingsElement.TestInput(
             id = TITLE_MIN_CURRENT_ANSWER_ID,
-            title = "Минимум правильных ответов для успешного прохождения теста",
+            title = StringResource.StringSettings.MinCorrectAnswerTitle.getString(resourceHelper),
             valueInput = testSettingsItem.minCorrectAnswer.toString()
         )
         val selectableShow = TestSettingsElement.Selectable(
             id = PREVIEW_SELECTABLE_ID,
-            title = "Предварительный просмотр вопросов",
+            title =StringResource.StringSettings.PreShowQuestionTitle.getString(resourceHelper),
             description = "",
             isSelected = testSettingsItem.allowPreviewQuestions ?: false
         )
         val selectableAntiCheat = TestSettingsElement.Selectable(
             id = ANTI_CHEAT_SELECTABLE_ID,
-            title = "Антисписывание",
-            description = "",
+            title = StringResource.StringSettings.AntiCheatTitle.getString(resourceHelper),
+            description = StringResource.StringSettings.AntiCheatDescription.getString(resourceHelper),
             isSelected = testSettingsItem.antiCheating ?: false
         )
         return listOf(

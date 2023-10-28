@@ -10,7 +10,6 @@ import com.testeducation.screen.tests.edit.settings.TestSettingsViewModel
 import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestSettingsBinding
-import com.testeducation.ui.delegates.tests.settings.footerEmpty
 import com.testeducation.ui.delegates.tests.settings.testSettingsChoice
 import com.testeducation.ui.delegates.tests.settings.testSettingsDesign
 import com.testeducation.ui.delegates.tests.settings.testSettingsHorizontalScroll
@@ -33,8 +32,7 @@ class TestSettingsFragment :
             testSettingsDesign(viewModel::openTestStyleChanger),
             testSettingsHorizontalScroll(viewModel::updateHorizontal),
             testSettingsChoice(viewModel::updateChoice),
-            testSettingsSelectable(viewModel::updateSelectable),
-            footerEmpty()
+            testSettingsSelectable(viewModel::updateSelectable)
         )
     }
 

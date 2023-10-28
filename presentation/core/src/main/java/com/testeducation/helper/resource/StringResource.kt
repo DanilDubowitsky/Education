@@ -40,4 +40,20 @@ sealed interface StringResource {
         data class TimeQuestionOnlyMinutes(val minutes: String) : Question
         data class TimeQuestionLess(val seconds: String) : Question
     }
+
+    sealed interface StringSettings : StringResource {
+        object TestTitle : StringSettings
+        object DesignTitle : StringSettings
+        object ThemeTitle : StringSettings
+        object TestAvailabilityTitle : StringSettings
+        object QuestionOrderTitle : StringSettings
+        object MinCorrectAnswerTitle : StringSettings
+        object PreShowQuestionTitle: StringSettings
+        object AntiCheatTitle : StringSettings
+        object AntiCheatDescription: StringSettings
+        object AvailabilityValueAll: StringSettings
+        object AvailabilityValueLink: StringSettings
+        object OrderValueOrder: StringSettings
+        object OrderValueRandom: StringSettings
+    }
 }

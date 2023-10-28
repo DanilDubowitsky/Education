@@ -47,6 +47,4 @@ sealed class TestSettingsElementUi {
         val description: String,
         val isSelected: Boolean
     ) : TestSettingsElementUi()
-
-    data class FooterEmpty(override val id: Int = -1): TestSettingsElementUi()
 }

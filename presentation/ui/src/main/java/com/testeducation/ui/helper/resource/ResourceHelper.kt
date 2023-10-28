@@ -20,6 +20,7 @@ class ResourceHelper(
         is StringResource.Error -> extractErrorStringResource(resource)
         is StringResource.Update -> extractUpdateResource(resource)
         is StringResource.Question -> extractQuestionResource(resource)
+        is StringResource.StringSettings -> extractStringSettingResource(resource)
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {
@@ -120,6 +121,23 @@ class ResourceHelper(
             resource.seconds
         )
     }
+
+    private fun extractStringSettingResource(resource: StringResource.StringSettings) =
+        when (resource) {
+            is StringResource.StringSettings.TestTitle -> string(R.string.test_settings_test_title)
+            is StringResource.StringSettings.DesignTitle -> string(R.string.test_settings_test_design)
+            is StringResource.StringSettings.ThemeTitle -> string(R.string.test_settings_theme_title)
+            is StringResource.StringSettings.AntiCheatTitle -> string(R.string.test_settings_anti_cheat_title)
+            is StringResource.StringSettings.AntiCheatDescription -> string(R.string.test_settings_anti_cheat_description)
+            is StringResource.StringSettings.MinCorrectAnswerTitle -> string(R.string.test_settings_min_correct_answer_title)
+            is StringResource.StringSettings.PreShowQuestionTitle -> string(R.string.test_settings_show_question_title)
+            is StringResource.StringSettings.QuestionOrderTitle -> string(R.string.test_settings_order_title)
+            is StringResource.StringSettings.TestAvailabilityTitle -> string(R.string.test_settings_availability_title)
+            is StringResource.StringSettings.OrderValueOrder -> string(R.string.test_settings_order_value_order)
+            is StringResource.StringSettings.OrderValueRandom -> string(R.string.test_settings_order_value_random)
+            is StringResource.StringSettings.AvailabilityValueAll -> string(R.string.test_settings_availability_all)
+            is StringResource.StringSettings.AvailabilityValueLink -> string(R.string.test_settings_availability_link)
+        }
 
     private fun color(@ColorRes id: Int) = ContextCompat.getColor(context, id)
 
