@@ -1,6 +1,7 @@
 package com.testeducation.screen.tests.edit
 
 import com.testeducation.converter.test.getTestStyle
+import com.testeducation.converter.test.question.toUIModels
 import com.testeducation.converter.test.question.toUi
 import com.testeducation.converter.test.toUI
 import com.testeducation.core.IReducer
@@ -24,7 +25,7 @@ class TestEditorReducer(private val timeConverterLongToString: ITimeConverterLon
                     background = getTestStyle(test.style.background)
                 ),
                 settings = test.settings.toUI(),
-                questions = test.questions.toUi(timeConverterLongToString),
+                questions = emptyList(),
                 status = test.status.name,
                 likes = test.likes,
                 liked = test.liked,

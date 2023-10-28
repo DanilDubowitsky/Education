@@ -135,13 +135,24 @@ sealed interface NavigationScreen : Serializable {
         }
     }
 
-    sealed interface QuestionCreation : NavigationScreen {
-        data class QuestionEditor(val questionTypeUiItem: QuestionTypeUiItem, val testId: String) :
-            QuestionCreation
+    sealed interface Questions : NavigationScreen {
 
-        data class TimeQuestion(val time: Long) : QuestionCreation
+        data class QuestionsPreview(
+            val testId: String
 
+        ) : Questions
+
+        data class QuestionEditor(
+            val questionTypeUiItem: QuestionTypeUiItem,
+            val testId: String
+        ) : Questions
+
+        data class TimeQuestion(val time: Long) : Questions
+
+        // TODO: move to class
         object OnSelectionQuestionTypeChanged : ResultKey<QuestionTypeUiItem>
+
+        // TODO: move to class
         object OnTimeQuestionChanged : ResultKey<Long>
     }
 

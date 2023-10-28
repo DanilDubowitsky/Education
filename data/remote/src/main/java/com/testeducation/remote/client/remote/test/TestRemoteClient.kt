@@ -13,8 +13,8 @@ class TestRemoteClient(
 ) : ITestRemoteClient {
 
     override suspend fun toggleTestLike(id: String, liked: Boolean) {
-        return if (liked) testRetrofitClient.unlikeTest(id).getResult()
-        else testRetrofitClient.likeTest(id).getResult()
+        return if (liked) testRetrofitClient.likeTest(id).getResult()
+        else testRetrofitClient.unlikeTest(id).getResult()
     }
 
     override suspend fun createTest(

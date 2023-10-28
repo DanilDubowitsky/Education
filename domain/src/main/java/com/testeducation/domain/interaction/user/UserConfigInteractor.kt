@@ -7,5 +7,6 @@ class UserConfigInteractor(
 ) {
 
     fun isRefreshTokenExpired() = userConfig.isRefreshTokenExpired()
+    fun setRefreshTokenExpired() = userConfig.setLastRefreshTokenUpdateTime(0L)
 
 }

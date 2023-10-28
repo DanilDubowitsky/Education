@@ -5,49 +5,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rootAppBar"
         android:background="@color/colorDarkGreen"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="15dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtToolbarTitle"
+            style="@style/Text.Label.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:visibility="gone"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+            app:layout_constraintEnd_toStartOf="@+id/btnShare"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="@+id/btnBack"
+            tools:text="История западной Европы XVII - XVIII веков" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="24dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_favorite_outline"
+            app:layout_constraintBottom_toBottomOf="@+id/btnShare"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnShare"
             app:tint="@color/colorWhite" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/btnFavorite"
-            android:layout_alignBottom="@+id/btnFavorite"
-            android:layout_toLeftOf="@+id/btnFavorite"
-            android:layout_marginEnd="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_upload"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+            app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
+            app:layout_constraintTop_toTopOf="@+id/btnBack"
             app:tint="@color/colorWhite" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -60,15 +78,15 @@
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorDarkGreen"
             android:animateLayoutChanges="true"
-            android:background="@drawable/background_green_rounded_bottom"
             android:orientation="vertical">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/contentAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -102,6 +120,7 @@
                         android:paddingBottom="6dp"
                         android:textColor="@color/colorWhite"
                         android:textSize="12sp"
+                        app:drawableTint="@color/colorWhite"
                         app:drawableStartCompat="@drawable/ic_timer"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/txtTheme"
@@ -119,19 +138,43 @@
                         app:layout_constraintTop_toBottomOf="@+id/txtTheme"
                         tools:text="История западной Европы XVII - XVIII веков" />
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgAvatar"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/colorBlue"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="24dp"
+                        app:layout_constraintStart_toStartOf="@+id/txtTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                    <TextView
+                        android:id="@+id/txtUserDisplayName"
+                        style="@style/Text.Label.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+                        app:layout_constraintEnd_toStartOf="@+id/txtDate"
+                        app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                        app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+                        tools:text="Владимир" />
+
                     <TextView
                         android:id="@+id/txtDate"
                         style="@style/Text.Label.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
                         android:layout_marginEnd="25dp"
-                        android:layout_marginBottom="23dp"
                         android:textColor="@color/colorWhite"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtUserDisplayName"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+                        app:layout_constraintTop_toTopOf="@+id/txtUserDisplayName"
                         tools:text="27 мая 2023" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -140,17 +183,25 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <View
+            android:id="@+id/roundCornersBottomView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/background_green_rounded_bottom"
+            app:layout_anchor="@id/appBar"
+            app:layout_anchorGravity="bottom" />
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/rootScroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:animateLayoutChanges="true"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/txtLabelAboutTest"
@@ -158,8 +209,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="27dp"
                     android:text="@string/test_preview_about_test_label"
+                    android:layout_marginTop="10dp"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -213,15 +264,80 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtQuestionsCount" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnPassTest"
-                    style="@style/Button.Normal.Green"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/txtAuthor"
+                    style="@style/Text.Label.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/test_preview_author_label"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnShowQuestions" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgAvatar2"
+                    android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginBottom="110dp"
-                    android:text="@string/test_preview_pass_test"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorBlue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtAuthor"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                <TextView
+                    android:id="@+id/txtAuthorName"
+                    style="@style/Text.Label.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:ellipsize="end"
+                    android:textColor="@color/colorTextGray"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatar2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatar2"
+                    app:layout_constraintTop_toTopOf="@+id/imgAvatar2"
+                    tools:text="Владимир" />
+
+                <TextView
+                    android:id="@+id/txtAuthorTests"
+                    style="@style/Text.Label.SemiBold"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/test_preview_author_tests_label"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgAuthorTests"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgAvatar2" />
+
+                <ImageView
+                    android:id="@+id/imgAuthorTests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtAuthorTests"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtAuthorTests" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/authorTestsPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txtAuthorTests" />
+
+                <View
+                    android:id="@+id/mockMarginView"
+                    app:layout_constraintTop_toBottomOf="@+id/authorTestsPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -238,6 +354,16 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnPassTest"
+        style="@style/Button.Normal.Green"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="115dp"
+        android:text="@string/test_preview_pass_test"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

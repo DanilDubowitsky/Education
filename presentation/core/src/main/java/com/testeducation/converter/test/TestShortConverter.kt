@@ -72,12 +72,18 @@ fun TestGetTypeUI.toModel() = when (this) {
 
 fun TestSettings.toUI() = TestShortUI.Test.Settings(
     availability.toUI(),
-    previewQuestions
+    previewQuestions,
+    minCorrectAnswers,
+    antiCheating,
+    timeLimit
 )
 
 private fun TestShortUI.Test.Settings.toModel() = TestSettings(
     availability.toModel(),
-    previewQuestions
+    previewQuestions,
+    minCorrectAnswers,
+    antiCheating,
+    timeLimit
 )
 
 private fun TestSettings.Availability.toUI() = when (this) {

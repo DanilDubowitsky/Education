@@ -16,15 +16,15 @@ class QuestionDrawableIconByType(private val resourceHelper: IResourceHelper) :
             DrawableResource.MatchIconQuestion.getDrawable(resourceHelper)
         }
 
-        QuestionType.DEFAULT -> {
+        QuestionType.CHOICE -> {
             DrawableResource.DefaultIconQuestion.getDrawable(resourceHelper)
         }
 
-        QuestionType.WRITE_ANSWER -> {
+        QuestionType.TEXT -> {
             DrawableResource.WriteAnswerIconQuestion.getDrawable(resourceHelper)
         }
 
-        QuestionType.ORDER -> {
+        QuestionType.REORDER -> {
             DrawableResource.OrderAnswerIconQuestion.getDrawable(resourceHelper)
         }
     }

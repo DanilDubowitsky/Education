@@ -5,7 +5,7 @@ sealed class QuestionDetailsUi {
 
     data class QuestionItemDetails(
         override val id: String,
-        val question: QuestionItemUi,
+        val question: InputQuestionUI,
     ) : QuestionDetailsUi()
 
     data class FooterAdd(override val id: String = "-1"): QuestionDetailsUi()

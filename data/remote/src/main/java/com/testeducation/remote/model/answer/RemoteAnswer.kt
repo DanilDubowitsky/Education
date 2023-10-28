@@ -5,11 +5,11 @@ import com.testeducation.remote.request.question.AnswerMatch
 
 data class RemoteAnswer(
     @SerializedName("id")
-    val id: String?,
+    val id: String,
     @SerializedName("title")
     val title: String? = null,
     @SerializedName("current")
-    val current: Boolean = false,
+    val current: Boolean? = false,
     @SerializedName("order")
     val order: Int = 0,
     @SerializedName("match")

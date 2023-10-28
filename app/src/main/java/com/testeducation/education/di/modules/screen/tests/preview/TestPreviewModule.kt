@@ -3,11 +3,15 @@ package com.testeducation.education.di.modules.screen.tests.preview
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.cases.test.GetTests
+import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.helper.question.TimeConverterLongToString
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.test.ITestHelper
+import com.testeducation.helper.test.TestHelper
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
@@ -30,13 +34,12 @@ interface TestPreviewModule {
 
     companion object {
         @Provides
-        fun questionTimeConverter(resourceHelper: IResourceHelper): ITimeConverterLongToString =
-            TimeConverterLongToString(resourceHelper)
+        fun provideTestHelper(toggleTestLike: ToggleTestLike): ITestHelper =
+            TestHelper(toggleTestLike)
 
         @Provides
-        fun provideReducer(
-            timeConverter: ITimeConverterLongToString
-        ): IReducer<TestPreviewModelState, TestPreviewState> = TestPreviewReducer(timeConverter)
+        fun provideReducer(): IReducer<TestPreviewModelState, TestPreviewState> =
+            TestPreviewReducer()
 
         @Provides
         fun provideViewModel(
@@ -44,15 +47,21 @@ interface TestPreviewModule {
             router: NavigationRouter,
             reducer: IReducer<TestPreviewModelState, TestPreviewState>,
             exceptionHandler: IExceptionHandler,
-            getTest: GetTest
+            getTest: GetTest,
+            likeTest: ToggleTestLike,
+            getTests: GetTests,
+            testHelper: ITestHelper
         ): TestPreviewViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Preview>()
             return TestPreviewViewModel(
                 reducer,
                 exceptionHandler,
+                testHelper,
                 router,
                 screen.id,
-                getTest
+                getTest,
+                likeTest,
+                getTests
             )
         }
     }

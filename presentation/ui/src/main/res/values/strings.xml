@@ -102,8 +102,14 @@
 
     <string name="test_preview_about_test_label">О тесте</string>
     <string name="test_preview_show_more">Показать полностью</string>
+    <string name="test_preview_hide">Скрыть</string>
     <string name="test_preview_show_questions">Показать список вопросов</string>
+    <string name="test_preview_hide_questions">Скрыть список вопросов</string>
     <string name="test_preview_pass_test">Пройти тест</string>
+    <string name="test_preview_author_label">Автор</string>
+    <string name="test_preview_author_tests_label">Другие тесты автора</string>
+
+    <string name="questions_preview_title">Вопросы</string>
 
     <string name="test_settings_title">Настройки теста</string>
     <string name="test_settings_test_design">Обложка</string>

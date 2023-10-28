@@ -112,7 +112,7 @@ class TestsViewModel(
 
     fun onTestClick(id: String) = intent {
         val screen = NavigationScreen.Tests.Preview(id)
-        router.replace(screen, HOME_NAVIGATOR_KEY)
+        router.navigateTo(screen, key = HOME_NAVIGATOR_KEY)
     }
 
     private fun loadTests() = singleIntent(getTests.javaClass.name) {

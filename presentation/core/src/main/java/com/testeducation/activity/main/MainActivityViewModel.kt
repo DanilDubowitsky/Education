@@ -51,7 +51,8 @@ class MainActivityViewModel(
         getTokenExpiration().collect(::handleTokenExpired)
     }
 
-    private fun handleTokenExpired(unit: Unit) {
+    private fun handleTokenExpired(unit: Unit) = intent {
+        userConfigInteractor.setRefreshTokenExpired()
         val screen = NavigationScreen.Auth.Login
         router.replace(screen)
     }

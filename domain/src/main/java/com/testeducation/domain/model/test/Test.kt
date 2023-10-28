@@ -2,6 +2,7 @@ package com.testeducation.domain.model.test
 
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.theme.ThemeShort
+import com.testeducation.domain.model.user.UserInfo
 
 data class Test(
     val id: String,
@@ -15,7 +16,8 @@ data class Test(
     val passesUser: Long,
     val passed: Boolean,
     val theme: ThemeShort,
-    val creationDate: Long
+    val creationDate: Long,
+    val creator: UserInfo
 ) {
 
     enum class Status {

@@ -44,6 +44,7 @@ class CodeConfirmationView(
 
     private var onCodeChangeListener: ((String) -> Unit)? = null
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         binding.etInput.showKeyboard()
         return true

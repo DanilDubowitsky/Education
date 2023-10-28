@@ -32,13 +32,29 @@ class TestRemoteSource(
         maxQuestions: Int?,
         limit: Int,
         offset: Int,
-        getType: TestGetType
+        getType: TestGetType,
+        userId: String?
     ): Page<TestShort> {
         val method = when (getType) {
-            TestGetType.MAIN -> testRetrofitClient::getTests
             TestGetType.LIKED -> testRetrofitClient::getLikedTests
             TestGetType.CREATED -> testRetrofitClient::getCreatedTests
             TestGetType.PASSED -> testRetrofitClient::getPassedTests
+            TestGetType.MAIN -> {
+                return getMainTests(
+                    query,
+                    themeId,
+                    orderField,
+                    orderDirection,
+                    minTime,
+                    maxTime,
+                    hasLimit,
+                    minQuestions,
+                    maxQuestions,
+                    limit,
+                    offset,
+                    userId
+                )
+            }
         }
 
         return method.invoke(
@@ -57,8 +73,37 @@ class TestRemoteSource(
     }
 
     override suspend fun getTest(id: String): Test {
-        return testRetrofitClient.getTest(id = id).getResult().data.toModels()
+        return testRetrofitClient.getTest(id = id).getResult().data.toModel()
     }
+
+    private suspend fun getMainTests(
+        query: String?,
+        themeId: String?,
+        orderField: TestOrderField?,
+        orderDirection: OrderDirection?,
+        minTime: Int?,
+        maxTime: Int?,
+        hasLimit: Boolean,
+        minQuestions: Int?,
+        maxQuestions: Int?,
+        limit: Int,
+        offset: Int,
+        userId: String?
+    ): Page<TestShort> =
+        testRetrofitClient.getTests(
+            query,
+            themeId,
+            orderField?.toRemote(),
+            orderDirection?.toRemote(),
+            minTime,
+            maxTime,
+            hasLimit,
+            minQuestions,
+            maxQuestions,
+            offset,
+            limit,
+            userId
+        ).getResult().data.toModel()
 
     override suspend fun getTestSettings(id: String): TestSettingsItem {
         return testRetrofitClient.getTestSettings(id = id).getResult().data.toModels()

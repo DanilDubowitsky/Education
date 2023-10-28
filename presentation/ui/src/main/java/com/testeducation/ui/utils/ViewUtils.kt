@@ -9,8 +9,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -163,3 +165,29 @@ fun View.hideKeyboard() {
     ) as InputMethodManager
     inputMethodService.hideSoftInputFromWindow(windowToken, InputMethodManager.SHOW_IMPLICIT)
 }
+
+fun TextView.isEllipsized(): Boolean {
+    val lineCount = layout?.lineCount ?: return false
+    if (lineCount == 0) return false
+    for (i in 0 until lineCount) {
+        if (layout.getEllipsisCount(i) > 0) return true
+    }
+    return false
+}
+
+var View.isFadeGone: Boolean
+    get() = isGone
+    set(value) {
+        if (value) {
+            this.animate().alpha(0f)
+                .setDuration(200L)
+                .withEndAction {
+                    isGone = true
+                }.start()
+        } else {
+            isGone = false
+            this.animate().alpha(1f)
+                .setDuration(200L)
+                .start()
+        }
+    }

@@ -31,6 +31,7 @@ interface TestRetrofitClient {
         @Query("max_questions") maxQuestions: Int?,
         @Query("offset") offset: Int,
         @Query("page_size") limit: Int,
+        @Query("owner") userId: String?
     ): RemoteResponse<RemotePage<RemoteTestShort>>
 
     @PUT("/api/app/account/tests/likes/{id}")

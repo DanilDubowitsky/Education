@@ -24,7 +24,13 @@ class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> 
                 modelState.styleCurrent,
                 // TODO: use another model for test creation
                 // TODO: add with creation
-                TestShortUI.Test.Settings(TestShortUI.Test.Settings.Availability.PUBLIC, true)
+                TestShortUI.Test.Settings(
+                    TestShortUI.Test.Settings.Availability.PUBLIC,
+                    true,
+                    0,
+                    false,
+                    0
+                )
             ),
             btnCancelText = modelState.backBtnText,
             btnNextText = modelState.nextBtnText,

@@ -19,7 +19,10 @@ sealed interface TestShortUI {
 
         data class Settings(
             val availability: Availability,
-            val previewQuestions: Boolean
+            val previewQuestions: Boolean,
+            val minCorrectAnswers: Int,
+            val antiCheating: Boolean,
+            val timeLimit: Int
         ) {
 
             enum class Availability {
