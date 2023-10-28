@@ -180,7 +180,7 @@ class TestSettingsViewModel(
                 is TestSettingsElement.TestInput -> {
                     when (itemSettings.id) {
                         TITLE_TEST_NAME_POSITION -> {
-                            if (itemSettings.valueInput != original.title) {
+                            if (itemSettings.valueInput != titleTest) {
                                 testSettingsItem =
                                     testSettingsItem.copy(title = itemSettings.valueInput)
                             }

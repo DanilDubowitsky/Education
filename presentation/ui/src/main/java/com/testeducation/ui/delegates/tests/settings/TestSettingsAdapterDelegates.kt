@@ -29,7 +29,9 @@ fun testSettingsInputTest(update: (Int, String) -> Unit) =
             }
             bind {
                 tvTitle.text = item.title
-                edText.setText(item.valueInput)
+                if (edText.text.isEmpty()) {
+                    edText.setText(item.valueInput)
+                }
             }
         }
     }
