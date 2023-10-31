@@ -35,7 +35,7 @@ data class TestPassingModelState(
         ) : SelectedQuestionState
 
         data class Match(
-            val matchData: List<MatchData> = emptyList(),
+            val matchData: List<String> = emptyList(),
             override val question: Question.Match? = null
         ) : SelectedQuestionState
 
@@ -43,8 +43,4 @@ data class TestPassingModelState(
             override val question: Question.Order? = null
         ) : SelectedQuestionState
     }
-
-    data class MatchData(
-        val text: String
-    )
 }

@@ -10,7 +10,7 @@ class TimeHandler {
     private val onExpireListeners: HashMap<Any?, () -> Unit> = HashMap()
     private val currentTimes: HashMap<Any?, Long> = HashMap()
 
-    fun start(time: Long, interval: Long, key: Any?) {
+    fun start(time: Long, interval: Long, key: Any? = null) {
         currentTimes[key] = time
         startInternal(key, time, interval)
     }
@@ -19,9 +19,9 @@ class TimeHandler {
         handler.removeCallbacksAndMessages(key)
     }
 
-    fun getRemainingTime(key: Any?): Long = currentTimes[key] ?: 0L
+    fun getRemainingTime(key: Any? = null): Long = currentTimes[key] ?: 0L
 
-    fun setOnUpdateListener(key: Any?, listener: (Long) -> Unit) {
+    fun setOnUpdateListener(key: Any? = null, listener: (Long) -> Unit) {
         onUpdateListeners[key] = listener
     }
 

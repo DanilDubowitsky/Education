@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
@@ -17,6 +18,7 @@ import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestPassBinding
 import com.testeducation.ui.delegates.tests.answer.createChoiceAnswerDelegate
+import com.testeducation.ui.delegates.tests.answer.createMatchAnswerDelegate
 import com.testeducation.ui.delegates.tests.answer.createMatchDataDelegate
 import com.testeducation.ui.delegates.tests.answer.createOrderAnswerDelegate
 import com.testeducation.ui.helper.TimeHandler
@@ -38,17 +40,19 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     FragmentTestPassBinding::inflate
 ) {
 
-    private val timer = TimeHandler()
+    private val questionTimer = TimeHandler()
+    private val testTimer = TimeHandler()
 
     private val answersAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(AnswerUI::id),
             createChoiceAnswerDelegate(viewModel::selectChoiceAnswer),
-            createOrderAnswerDelegate()
+            createOrderAnswerDelegate(dragStartListener),
+            createMatchAnswerDelegate()
         )
     }
 
-    val dragStartListener: IDragStartListener = DragStartListener()
+    private val dragStartListener: IDragStartListener = DragStartListener()
 
     private val answersMatchAdapter by lazy {
         ListDelegationAdapter(createMatchDataDelegate())
@@ -57,9 +61,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private val questionItemTouchHelperCallback by lazy {
         QuestionItemTouchHelperCallback(
             updateResultMove = viewModel::swapAnswers,
-            onClearView = {
-
-            }
+            onClearView = {}
         )
     }
 
@@ -83,13 +85,14 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         answersRecycler.adapter = answersAdapter
         answersOrderingRecycler.adapter = answersMatchAdapter
         val itemTouchHelper = ItemTouchHelper(questionItemTouchHelperCallback)
+        dragStartListener.itemTouchHelper = itemTouchHelper
         itemTouchHelper.attachToRecyclerView(answersRecycler)
     }
 
     private fun setupListeners() = binding {
         btnAnswer.setClickListener {
-            val time = timer.getRemainingTime(QUESTION_TIMER_KEY)
-            timer.release(QUESTION_TIMER_KEY)
+            val time = questionTimer.getRemainingTime()
+            questionTimer.release()
             viewModel.submitAnswer(time)
         }
     }
@@ -98,6 +101,8 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private fun render(state: TestPassingState) = binding {
         txtQuestion.text = state.currentQuestion?.title
         answersOrderingRecycler.isGone = state.matchData.isEmpty()
+
+        println("CURRENT_QUESTION: ${state.currentQuestion}")
 
         if (answersMatchAdapter.items != state.matchData) {
             answersMatchAdapter.items = state.matchData
@@ -112,13 +117,18 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
             } else {
                 getString(R.string.test_pass_answer_label)
             }
+            txtQuestionProgress.text = getString(
+                R.string.test_pass_question_count,
+                state.currentQuestionPosition.toString(),
+                state.questionsCount.toString()
+            )
         }
         answerStatusLayout.isGone =
             state.currentQuestion?.answerState == QuestionUI.AnswerState.NONE
     }
 
     private fun FragmentTestPassBinding.bindQuestionAnswerStatus(questionUI: QuestionUI) {
-        txtCorrectAnswer.isGone = false
+        txtCorrectAnswer.isGone = true
         val statusImage: Drawable?
         val textColor: Int
         val statusText: String
@@ -135,10 +145,12 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         txtAnswerStatus.setTextColor(textColor)
         imgCorrectIndicator.setImageDrawable(statusImage)
         if (questionUI is QuestionUI.Choice) {
-            txtCorrectAnswer.isGone = false
-            txtCorrectAnswer.text = questionUI.answers.first { choiceAnswer ->
+            txtCorrectAnswer.isVisible = questionUI.answerState == QuestionUI.AnswerState.INCORRECT
+            val correctText = questionUI.answers.first { choiceAnswer ->
                 choiceAnswer.isTrue
             }.title
+            val displayCorrectText = getString(R.string.test_pass_true_answer_label, correctText)
+            txtCorrectAnswer.text = displayCorrectText
         }
     }
 
@@ -148,38 +160,37 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
 
         when (question) {
             is QuestionUI.Choice -> answersAdapter.items = question.answers
-            is QuestionUI.Match -> TODO()
-            is QuestionUI.Order -> TODO()
+            is QuestionUI.Match -> answersAdapter.items = question.answers
+            is QuestionUI.Order -> answersAdapter.items = question.answers
             is QuestionUI.Text -> TODO()
         }
     }
 
     private fun FragmentTestPassBinding.startTest(time: Long) {
         val dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
-        timer.setOnUpdateListener(TEST_TIMER_KEY) { remainingTime ->
+        testTimer.setOnUpdateListener { remainingTime ->
             binding.txtTotalTime.text = dateFormatter.format(remainingTime)
         }
-        timer.start(time, TIME_INTERVAL, TEST_TIMER_KEY)
+        testTimer.start(time, TIME_INTERVAL)
     }
 
     private fun FragmentTestPassBinding.startQuestion(time: Long) {
         val dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
-        timer.setOnUpdateListener(QUESTION_TIMER_KEY) { remainingTime ->
+        questionTimer.setOnUpdateListener { remainingTime ->
             binding.txtQuestionTime.text = dateFormatter.format(remainingTime)
         }
-        timer.start(time, TIME_INTERVAL, QUESTION_TIMER_KEY)
+        questionTimer.start(time, TIME_INTERVAL)
     }
 
     private fun QuestionUI.isAnswered() = answerState != QuestionUI.AnswerState.NONE
 
     override fun onDestroy() {
-        timer.releaseAll(QUESTION_TIMER_KEY, TEST_TIMER_KEY)
+        questionTimer.release()
+        testTimer.release()
         super.onDestroy()
     }
 
     private companion object {
-        const val QUESTION_TIMER_KEY = "QUESTION_TIMER"
-        const val TEST_TIMER_KEY = "TEST_TIMER"
         const val TIME_INTERVAL = 1000L
     }
 

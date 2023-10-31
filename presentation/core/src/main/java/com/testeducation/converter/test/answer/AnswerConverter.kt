@@ -7,7 +7,8 @@ import com.testeducation.screen.tests.pass.TestPassingModelState
 
 fun List<Answer>.toUIModels(
     answerColorExtractor: IAnswerColorExtractor,
-    state: TestPassingModelState.PassingQuestion.AnswerState
+    state: TestPassingModelState.PassingQuestion.AnswerState,
+    selectedId: String? = null
 ): List<AnswerUI> {
     val simpleColors = answerColorExtractor.extractAnswersColors()
     val alphaColors = answerColorExtractor.extractAnswersColors(withAlpha = true)
@@ -20,18 +21,18 @@ fun List<Answer>.toUIModels(
         } else {
             simpleColors[index]
         }
-        answer.toUI(color)
+        answer.toUI(color, selectedId)
     }
 }
 
-fun Answer.toUI(color: Int) = when (this) {
+fun Answer.toUI(color: Int, selectedId: String?) = when (this) {
     is Answer.ChoiceAnswer -> {
         AnswerUI.ChoiceAnswer(
             id = id,
             title = title,
             isTrue = isTrue,
             color = color,
-            isSelected = false
+            isSelected = selectedId == id
         )
     }
 
@@ -46,6 +47,7 @@ fun Answer.toUI(color: Int) = when (this) {
         AnswerUI.MatchAnswer(
             id = id,
             matchedCorrectText = matchedCorrectText,
+            title = title,
             color = color
         )
     }

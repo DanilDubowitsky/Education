@@ -99,9 +99,9 @@ fun List<Question>.toQuestionsWithAnswers(testId: String) = map { question ->
 
 fun Question.toQuestionWithAnswers(testId: String): QuestionWithAnswers {
     val answers = when (this) {
-        is Question.Choice -> answers.toEntities(id)
-        is Question.Match -> answers.toEntities(id)
-        is Question.Order -> answers.toEntities(id)
+        is Question.Choice -> answers.toEntities()
+        is Question.Match -> answers.toEntities()
+        is Question.Order -> answers.toEntities()
         is Question.Text -> emptyList()
     }
     return QuestionWithAnswers(

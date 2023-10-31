@@ -4,7 +4,9 @@ import com.testeducation.logic.model.question.QuestionUI
 
 data class TestPassingState(
     val currentQuestion: QuestionUI?,
-    val matchData: List<MatchDataUI>
+    val matchData: List<MatchDataUI>,
+    val currentQuestionPosition: Int,
+    val questionsCount: Int
 ) {
     data class MatchDataUI(
         val text: String,

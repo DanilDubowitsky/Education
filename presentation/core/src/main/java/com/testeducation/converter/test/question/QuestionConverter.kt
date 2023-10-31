@@ -10,13 +10,15 @@ import com.testeducation.screen.tests.pass.TestPassingModelState
 
 fun TestPassingModelState.PassingQuestion.toUI(
     colorExtractor: IAnswerColorExtractor,
-    timeConverterLongToString: ITimeConverterLongToString
+    timeConverterLongToString: ITimeConverterLongToString,
+    selectedAnswerId: String? = null
 ): QuestionUI {
     return when (val question = question) {
         is Question.Choice -> question.toChoiceUI(
             colorExtractor,
             timeConverterLongToString,
             state,
+            selectedAnswerId
         )
 
         is Question.Match -> question.toMatchUI(colorExtractor, timeConverterLongToString, state)
@@ -65,14 +67,15 @@ private fun Question.Text.toTextUI(
 private fun Question.Choice.toChoiceUI(
     colorExtractor: IAnswerColorExtractor,
     timeConverterLongToString: ITimeConverterLongToString,
-    state: TestPassingModelState.PassingQuestion.AnswerState
+    state: TestPassingModelState.PassingQuestion.AnswerState,
+    selectedAnswerId: String?
 ) = QuestionUI.Choice(
     id,
     title,
     numberQuestion,
     timeConverterLongToString.convert(time),
     state.toUI(),
-    answers.toUIModels(colorExtractor, state) as List<AnswerUI.ChoiceAnswer>
+    answers.toUIModels(colorExtractor, state, selectedAnswerId) as List<AnswerUI.ChoiceAnswer>
 )
 
 private fun TestPassingModelState.PassingQuestion.AnswerState.toUI() = when (this) {

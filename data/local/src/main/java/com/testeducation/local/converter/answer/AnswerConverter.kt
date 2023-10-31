@@ -16,11 +16,11 @@ fun AnswerEntity.toModel(questionType: QuestionType) =
         QuestionType.REORDER -> toOrder()
     }
 
-fun List<Answer>.toEntities(questionId: String) = map { answer ->
-    answer.toEntity(questionId)
+fun List<Answer>.toEntities() = map { answer ->
+    answer.toEntity()
 }
 
-fun Answer.toEntity(questionId: String) = when (this) {
+fun Answer.toEntity() = when (this) {
     is Answer.ChoiceAnswer -> toChoiceEntity()
     is Answer.MatchAnswer -> toMatchEntity()
     is Answer.OrderAnswer -> toOrderEntity()
@@ -39,7 +39,7 @@ private fun Answer.ChoiceAnswer.toChoiceEntity() = AnswerEntity(
 private fun Answer.MatchAnswer.toMatchEntity() = AnswerEntity(
     id,
     questionId,
-    "",
+    title,
     matchedCorrectText = matchedCorrectText
 )
 
@@ -65,6 +65,7 @@ private fun AnswerEntity.toText() = Answer.TextAnswer(
 private fun AnswerEntity.toMatch() = Answer.MatchAnswer(
     id,
     questionId,
+    title,
     matchedCorrectText!!
 )
 

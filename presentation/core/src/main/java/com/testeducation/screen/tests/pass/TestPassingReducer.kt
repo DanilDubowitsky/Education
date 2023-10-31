@@ -15,15 +15,26 @@ class TestPassingReducer(
 
     override fun reduce(modelState: TestPassingModelState): TestPassingState {
         val currentState = modelState.selectedQuestionState
-        val questionUI = currentState.question?.toPassingQuestion()
-            ?.toUI(answerColorExtractor, timeConverterLongToString)
+        val state = modelState.currentQuestion?.state
+            ?: TestPassingModelState.PassingQuestion.AnswerState.NONE
+        val answers = modelState.currentQuestion?.answers ?: emptyList()
+        val timeSpent = modelState.currentQuestion?.timeSpent ?: 0L
+        val choiceState = currentState as? TestPassingModelState.SelectedQuestionState.Choice
+        val selectedAnswer =
+            choiceState?.selectedAnswerIndex?.let { choiceState.question?.answers?.get(it) }
+
+        val questionUI = currentState.question?.toPassingQuestion(
+            spentTime = timeSpent,
+            state = state,
+            answers = answers
+        )?.toUI(answerColorExtractor, timeConverterLongToString, selectedAnswer?.id)
 
         val matchDataUI = when {
             currentState is TestPassingModelState.SelectedQuestionState.Match &&
                     questionUI is QuestionUI.Match -> {
                 questionUI.answers.mapIndexed { index, matchAnswer ->
                     TestPassingState.MatchDataUI(
-                        currentState.matchData[index].text,
+                        currentState.matchData[index],
                         matchAnswer.color
                     )
                 }
@@ -31,7 +42,10 @@ class TestPassingReducer(
 
             questionUI is QuestionUI.Order -> {
                 questionUI.answers.mapIndexed { index, matchAnswer ->
-                    TestPassingState.MatchDataUI(index.toString(), matchAnswer.color)
+                    TestPassingState.MatchDataUI(
+                        (index + 1).toString(),
+                        matchAnswer.color
+                    )
                 }
             }
 
@@ -40,7 +54,9 @@ class TestPassingReducer(
 
         return TestPassingState(
             currentQuestion = questionUI,
-            matchData = matchDataUI
+            matchData = matchDataUI,
+            currentQuestionPosition = modelState.currentQuestionIndex + 1,
+            questionsCount = modelState.questions.size
         )
     }
 }

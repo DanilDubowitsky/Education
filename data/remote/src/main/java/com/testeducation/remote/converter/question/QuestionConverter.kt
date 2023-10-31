@@ -105,7 +105,8 @@ fun QuestionType.toRemote() = when (this) {
 private fun RemoteAnswer.toMatch(questionId: String) = Answer.MatchAnswer(
     id,
     questionId,
-    match!!.title
+    title.orEmpty(),
+    match?.title.orEmpty()
 )
 
 private fun RemoteAnswer.toChoice(questionId: String) = Answer.ChoiceAnswer(

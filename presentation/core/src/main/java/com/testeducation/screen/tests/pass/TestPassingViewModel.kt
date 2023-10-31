@@ -58,12 +58,14 @@ class TestPassingViewModel(
     }
 
     fun swapAnswers(fromPosition: Int, toPosition: Int) = intent {
+        if (fromPosition == toPosition) return@intent
         val testPassingState = getModelState().selectedQuestionState.toOrder()
-        val answers = testPassingState.question?.answers ?: return@intent
+        val answers = testPassingState.question?.answers?.toMutableList() ?: return@intent
         Collections.swap(answers, fromPosition, toPosition)
         val newQuestion = testPassingState.question.copy(answers = answers)
+        val newState = testPassingState.copy(question = newQuestion)
         updateModelState {
-            copy(selectedQuestionState = testPassingState.copy(question = newQuestion))
+            copy(selectedQuestionState = newState)
         }
     }
 
@@ -95,21 +97,25 @@ class TestPassingViewModel(
     }
 
     private fun moveToNextQuestion() = intent {
+        val modelState = getModelState()
+        val questionIndex = modelState.currentQuestionIndex + 1
+        val currentQuestion = modelState.questions[questionIndex]
         updateModelState {
             copy(
-                currentQuestionIndex = currentQuestionIndex + 1
+                currentQuestionIndex = questionIndex,
+                currentQuestion = currentQuestion
             )
         }
-        val question = getModelState().currentQuestion
         val selectedQuestionState = extractQuestionState()
-
         updateModelState {
-            copy(selectedQuestionState = selectedQuestionState)
+            copy(
+                selectedQuestionState = selectedQuestionState
+            )
         }
 
         postSideEffect(
             TestPassingSideEffect.StartQuestionTimer(
-                question?.question?.time ?: 0L
+                currentQuestion.question.time
             )
         )
     }
@@ -161,7 +167,11 @@ class TestPassingViewModel(
         val modelState = getModelState()
         val question = modelState.currentQuestion!!
         return when (question.question) {
-            is Question.Match -> TestPassingModelState.SelectedQuestionState.Match()
+            is Question.Match -> TestPassingModelState.SelectedQuestionState.Match(
+                question = question.question,
+                matchData = question.question.answers.extractMatchData()
+            )
+
             is Question.Choice -> TestPassingModelState.SelectedQuestionState.Choice(
                 question = question.question
             )
@@ -172,6 +182,9 @@ class TestPassingViewModel(
             )
         }
     }
+
+    private fun List<Answer.MatchAnswer>.extractMatchData() =
+        map(Answer.MatchAnswer::matchedCorrectText)
 
     private fun TestPassingModelState.SelectedQuestionState.toChoice(): TestPassingModelState.SelectedQuestionState.Choice =
         this as TestPassingModelState.SelectedQuestionState.Choice
@@ -199,22 +212,16 @@ class TestPassingViewModel(
                     Answer.ChoiceAnswer("4", "12332", "Ответ 4", false),
                 )
             ),
-            Question.Text(
-                "12",
-                "Вопрос со свободным ответом",
-                3,
-                60 * SECOND_IN_MILLIS
-            ),
             Question.Order(
                 "13",
                 "Вопрос с реордером",
                 4,
                 60 * SECOND_IN_MILLIS,
                 answers = listOf(
-                    Answer.OrderAnswer("1", "13", "Третий", 3),
-                    Answer.OrderAnswer("2", "13", "Второй", 2),
-                    Answer.OrderAnswer("3", "13", "Первый", 1),
-                    Answer.OrderAnswer("4", "13", "Четвертый", 4),
+                    Answer.OrderAnswer("1", "13", "Третий", 2),
+                    Answer.OrderAnswer("2", "13", "Второй", 1),
+                    Answer.OrderAnswer("3", "13", "Первый", 0),
+                    Answer.OrderAnswer("4", "13", "Четвертый", 3),
                 )
             ),
             Question.Match(
@@ -223,11 +230,17 @@ class TestPassingViewModel(
                 5,
                 60 * SECOND_IN_MILLIS,
                 answers = listOf(
-                    Answer.MatchAnswer("1", "14", "Текст для матча с 1"),
-                    Answer.MatchAnswer("2", "14", "Текст для матча с 4"),
-                    Answer.MatchAnswer("3", "14", "Текст для матча с 3"),
-                    Answer.MatchAnswer("4", "14", "Текст для матча с 2"),
+                    Answer.MatchAnswer("1", "14", "Ответ 1", "Текст для матча с 1"),
+                    Answer.MatchAnswer("2", "14", "Ответ 2", "Текст для матча с 4"),
+                    Answer.MatchAnswer("3", "14", "Ответ 3", "Текст для матча с 3"),
+                    Answer.MatchAnswer("4", "14", "Ответ 4", "Текст для матча с 2"),
                 )
+            ),
+            Question.Text(
+                "12",
+                "Вопрос со свободным ответом",
+                3,
+                60 * SECOND_IN_MILLIS
             ),
         )
     }
