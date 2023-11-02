@@ -11,10 +11,14 @@ import com.testeducation.helper.answer.toPassingQuestions
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.pass.TestPassingSideEffect
 import com.testeducation.logic.screen.tests.pass.TestPassingState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import java.util.Collections
+
 
 private typealias Syntax = SimpleSyntax<TestPassingState, TestPassingSideEffect>
 
@@ -29,6 +33,8 @@ class TestPassingViewModel(
 ) {
 
     override val initialModelState: TestPassingModelState = TestPassingModelState()
+
+    private val mutex = Mutex()
 
     init {
         loadData()
@@ -48,7 +54,7 @@ class TestPassingViewModel(
         if (!isAnswered) {
             when (currentQuestion.question) {
                 is Question.Choice -> checkChoiceAnswer(questionRemainingTime)
-                is Question.Match -> TODO()
+                is Question.Match -> checkMatchAnswers(questionRemainingTime)
                 is Question.Order -> checkOrderAnswers(questionRemainingTime)
                 is Question.Text -> TODO()
             }
@@ -58,14 +64,68 @@ class TestPassingViewModel(
     }
 
     fun swapAnswers(fromPosition: Int, toPosition: Int) = intent {
-        if (fromPosition == toPosition) return@intent
-        val testPassingState = getModelState().selectedQuestionState.toOrder()
-        val answers = testPassingState.question?.answers?.toMutableList() ?: return@intent
-        Collections.swap(answers, fromPosition, toPosition)
-        val newQuestion = testPassingState.question.copy(answers = answers)
-        val newState = testPassingState.copy(question = newQuestion)
+        withContext(Dispatchers.Main) {
+            if (fromPosition == toPosition) return@withContext
+            val modelState = getModelState()
+
+            when (val state = modelState.selectedQuestionState) {
+                is TestPassingModelState.SelectedQuestionState.Match -> {
+                    val answers = state.question?.answers?.toMutableList() ?: return@withContext
+                    Collections.swap(answers, fromPosition, toPosition)
+                    val newQuestion = state.question.copy(answers = answers)
+                    val newState = state.copy(question = newQuestion)
+                    updateModelState {
+                        copy(selectedQuestionState = newState)
+                    }
+                }
+
+                is TestPassingModelState.SelectedQuestionState.Order -> {
+                    val answers = state.question?.answers?.toMutableList() ?: return@withContext
+                    Collections.swap(answers, fromPosition, toPosition)
+                    val newQuestion = state.question.copy(answers = answers)
+                    val newState = state.copy(question = newQuestion)
+                    updateModelState {
+                        copy(selectedQuestionState = newState)
+                    }
+                }
+
+                is TestPassingModelState.SelectedQuestionState.Choice,
+                is TestPassingModelState.SelectedQuestionState.Text -> return@withContext
+            }
+        }
+    }
+
+    fun onAnswerTextChanged(text: String) = intent {
+        val state = getModelState().selectedQuestionState.toText()
+        if (text == state.answeredText) return@intent
         updateModelState {
-            copy(selectedQuestionState = newState)
+            copy(selectedQuestionState = state.copy(answeredText = text))
+        }
+    }
+
+    private fun checkMatchAnswers(questionRemainingTime: Long) = intent {
+        val modelState = getModelState()
+        val state = modelState.selectedQuestionState.toMatch()
+        var isCorrect = true
+        state.question?.answers?.forEachIndexed { index, matchAnswer ->
+            if (state.matchData[index] != matchAnswer.matchedCorrectText) {
+                isCorrect = false
+                return@forEachIndexed
+            }
+        }
+        val answerState = if (isCorrect) {
+            TestPassingModelState.PassingQuestion.AnswerState.CORRECT
+        } else {
+            TestPassingModelState.PassingQuestion.AnswerState.INCORRECT
+        }
+        val spentTime = modelState.currentQuestion!!.question.time - questionRemainingTime
+        val newQuestion = modelState.currentQuestion.copy(
+            state = answerState,
+            answers = state.question!!.answers.map(Answer::id),
+            timeSpent = spentTime
+        )
+        updateModelState {
+            copy(currentQuestion = newQuestion)
         }
     }
 
@@ -176,7 +236,9 @@ class TestPassingViewModel(
                 question = question.question
             )
 
-            is Question.Text -> TestPassingModelState.SelectedQuestionState.Text()
+            is Question.Text -> TestPassingModelState.SelectedQuestionState.Text(
+                question = question.question
+            )
             is Question.Order -> TestPassingModelState.SelectedQuestionState.Order(
                 question = question.question
             )
@@ -197,6 +259,8 @@ class TestPassingViewModel(
 
     private fun TestPassingModelState.SelectedQuestionState.toOrder(): TestPassingModelState.SelectedQuestionState.Order =
         this as TestPassingModelState.SelectedQuestionState.Order
+
+
 
     private companion object {
         fun getMockQuestions() = listOf(

@@ -9,6 +9,7 @@ import com.testeducation.ui.databinding.ViewHolderAnswerChoiceBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerMatchPassBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerOrderIndicatorBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerOrderPassBinding
+import com.testeducation.ui.databinding.ViewHolderMatchDataBinding
 import com.testeducation.ui.listener.drag.IDragStartListener
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDelegateAdapter
@@ -43,27 +44,36 @@ fun createOrderAnswerDelegate(
     }
 }
 
-fun createMatchAnswerDelegate() = simpleDelegateAdapter<AnswerUI.MatchAnswer, AnswerUI,
+@SuppressLint("ClickableViewAccessibility")
+fun createMatchAnswerDelegate(
+    onDragListener: IDragStartListener
+) = simpleDelegateAdapter<AnswerUI.MatchAnswer, AnswerUI,
         ViewHolderAnswerMatchPassBinding>(
     ViewHolderAnswerMatchPassBinding::inflate
 ) {
     bind {
+        binding.root.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                onDragListener.oDragStarted(this)
+            }
+            false
+        }
         binding.bindMatchAnswer(item)
     }
 }
 
 fun createMatchDataDelegate() =
     simpleDelegateAdapter<TestPassingState.MatchDataUI, TestPassingState.MatchDataUI,
-            ViewHolderAnswerOrderIndicatorBinding>(
-        ViewHolderAnswerOrderIndicatorBinding::inflate
+            ViewHolderMatchDataBinding>(
+        ViewHolderMatchDataBinding::inflate
     ) {
         bind {
             binding.bind(item)
         }
     }
 
-private fun ViewHolderAnswerOrderIndicatorBinding.bind(item: TestPassingState.MatchDataUI) {
-    tvNumber.text = item.text
+private fun ViewHolderMatchDataBinding.bind(item: TestPassingState.MatchDataUI) {
+    txtMatchData.text = item.text
     root.backgroundTintList = ColorStateList.valueOf(item.color)
 }
 

@@ -31,6 +31,7 @@ data class TestPassingModelState(
         ) : SelectedQuestionState
 
         data class Text(
+            val answeredText: String = "",
             override val question: Question.Text? = null
         ) : SelectedQuestionState
 

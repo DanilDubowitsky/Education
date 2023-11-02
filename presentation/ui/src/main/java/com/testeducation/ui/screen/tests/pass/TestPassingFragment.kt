@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
@@ -32,6 +33,7 @@ import com.testeducation.ui.utils.loadDrawable
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
+import com.testeducation.ui.utils.trimmedTextOrEmpty
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -47,12 +49,12 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(AnswerUI::id),
             createChoiceAnswerDelegate(viewModel::selectChoiceAnswer),
-            createOrderAnswerDelegate(dragStartListener),
-            createMatchAnswerDelegate()
+            createOrderAnswerDelegate(orderDragListener),
+            createMatchAnswerDelegate(orderDragListener)
         )
     }
 
-    private val dragStartListener: IDragStartListener = DragStartListener()
+    private val orderDragListener: IDragStartListener = DragStartListener()
 
     private val answersMatchAdapter by lazy {
         ListDelegationAdapter(createMatchDataDelegate())
@@ -85,7 +87,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         answersRecycler.adapter = answersAdapter
         answersOrderingRecycler.adapter = answersMatchAdapter
         val itemTouchHelper = ItemTouchHelper(questionItemTouchHelperCallback)
-        dragStartListener.itemTouchHelper = itemTouchHelper
+        orderDragListener.itemTouchHelper = itemTouchHelper
         itemTouchHelper.attachToRecyclerView(answersRecycler)
     }
 
@@ -94,6 +96,9 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
             val time = questionTimer.getRemainingTime()
             questionTimer.release()
             viewModel.submitAnswer(time)
+        }
+        answerText.addTextChangedListener {
+            viewModel.onAnswerTextChanged(answerText.trimmedTextOrEmpty)
         }
     }
 
@@ -157,12 +162,14 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private fun renderAnswers(question: QuestionUI) = binding {
         answersOrderingRecycler.isGone =
             question !is QuestionUI.Order && question !is QuestionUI.Match
+        answersRecycler.isGone = question is QuestionUI.Text
+        answerText.isVisible = question is QuestionUI.Text
 
         when (question) {
             is QuestionUI.Choice -> answersAdapter.items = question.answers
             is QuestionUI.Match -> answersAdapter.items = question.answers
             is QuestionUI.Order -> answersAdapter.items = question.answers
-            is QuestionUI.Text -> TODO()
+            is QuestionUI.Text -> {}
         }
     }
 

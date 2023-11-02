@@ -9,6 +9,8 @@ class QuestionItemTouchHelperCallback(
     private val onClearView: () -> Unit
 ) : ItemTouchHelper.Callback() {
 
+
+
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         onClearView()
         super.clearView(recyclerView, viewHolder)
