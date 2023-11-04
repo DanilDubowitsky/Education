@@ -56,7 +56,7 @@ class TestPassingViewModel(
                 is Question.Choice -> checkChoiceAnswer(questionRemainingTime)
                 is Question.Match -> checkMatchAnswers(questionRemainingTime)
                 is Question.Order -> checkOrderAnswers(questionRemainingTime)
-                is Question.Text -> TODO()
+                is Question.Text -> applyTextAnswer(questionRemainingTime)
             }
         } else {
             moveToNextQuestion()
@@ -101,6 +101,10 @@ class TestPassingViewModel(
         updateModelState {
             copy(selectedQuestionState = state.copy(answeredText = text))
         }
+    }
+
+    private fun applyTextAnswer(questionRemainingTime: Long) = intent {
+
     }
 
     private fun checkMatchAnswers(questionRemainingTime: Long) = intent {
