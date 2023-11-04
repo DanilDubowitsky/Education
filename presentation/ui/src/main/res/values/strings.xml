@@ -96,6 +96,7 @@
     <string name="question_time_more_that_minute">%sм %sсек</string>
     <string name="question_time_only_minute">%sм</string>
     <string name="question_time_less_that_minute">%s сек</string>
+    <string name="question_answer_max_length">Осталось символов: %s</string>
 
     <string name="library_published_title">Опубликованные</string>
     <string name="library_passed_title">Пройденные</string>

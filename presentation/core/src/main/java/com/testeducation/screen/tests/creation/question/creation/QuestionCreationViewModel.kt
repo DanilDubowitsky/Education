@@ -41,6 +41,7 @@ class QuestionCreationViewModel(
 
     companion object {
         private const val ERROR_NUMBER_TEXT = "The number cannot be more than 2"
+        private const val MAX_ANSWER = 7
     }
 
     override val initialModelState: QuestionCreationModelState = QuestionCreationModelState(
@@ -78,7 +79,7 @@ class QuestionCreationViewModel(
 
                 updateModelState {
                     copy(
-                        answerItem = result.answers.convertToDomain(),
+                        answerItem = result.answers.convertToDomain(::getColorAnswer, ::getTrueColor),
                         questionText = result.title,
                         answerIndicatorItems = answerIndicator
                     )
@@ -127,6 +128,8 @@ class QuestionCreationViewModel(
     }
 
     fun updateQuestionText(textQuestion: String) = intent {
+        val questionText = getModelState().questionText
+        if (questionText == textQuestion) return@intent
         updateModelState {
             copy(
                 questionText = textQuestion
@@ -183,12 +186,14 @@ class QuestionCreationViewModel(
                     add(indicator)
                 }
             } else emptyList()
+        val newAnswerItems = answerItems.toMutableList().apply {
+            add(index, answer)
+        }
         updateModelState {
             copy(
-                answerItem = answerItems.toMutableList().apply {
-                    add(index, answer)
-                },
-                answerIndicatorItems = answerIndicator
+                answerItem = newAnswerItems,
+                answerIndicatorItems = answerIndicator,
+                visibleAddFooter = newAnswerItems.size < MAX_ANSWER
             )
         }
     }
@@ -199,59 +204,82 @@ class QuestionCreationViewModel(
             item.id == selectedId
         }
         answerForDelete?.let { answerItemNotNull ->
+            val newAnswerItems = answerItems.apply {
+                remove(answerItemNotNull)
+            }
             updateModelState {
                 copy(
-                    answerItem = answerItems.apply {
-                        remove(answerItemNotNull)
-                    }
+                    answerItem = newAnswerItems,
+                    visibleAddFooter = newAnswerItems.size < MAX_ANSWER
                 )
             }
         }
     }
 
-    fun answerTextChanger(answerId: String, text: String) = intent {
-        var answerItems = getModelState().answerItem
-        answerItems = answerItems.map { answerItem ->
-            if (answerItem.id != answerId) {
-                return@map answerItem
-            }
-            when (answerItem) {
-                is InputAnswer.DefaultAnswer -> {
-                    if (answerItem.answerText == text) {
-                        return@intent
+    fun openAnswerInput(answerId: String, firstAnswer: Boolean = true) {
+        router.setResultListener(NavigationScreen.Questions.AnswerInput.OnAnswerInput) { result ->
+            intent {
+                var answerItems = getModelState().answerItem
+                answerItems = answerItems.map { answerItem ->
+                    if (answerItem.id != answerId) {
+                        return@map answerItem
                     }
-                    answerItem.copy(
-                        answerText = text
-                    )
-                }
+                    when (answerItem) {
+                        is InputAnswer.DefaultAnswer -> {
+                            answerItem.copy(
+                                answerText = result.answerText
+                            )
+                        }
 
-                is InputAnswer.TextAnswer -> {
-                    if (answerItem.text == text) {
-                        return@intent
+                        is InputAnswer.TextAnswer -> {
+                            answerItem.copy(
+                                text = result.answerText
+                            )
+                        }
+
+                        is InputAnswer.OrderAnswer -> {
+                            answerItem.copy(
+                                answerText = result.answerText
+                            )
+                        }
+
+                        is InputAnswer.MatchAnswer -> {
+                            answerItem.copy(
+                                firstAnswer = if (result.firstAnswer) result.answerText else answerItem.firstAnswer,
+                                secondAnswer = if (!result.firstAnswer) result.answerText else answerItem.secondAnswer
+                            )
+                        }
+
+                        else -> {
+                            answerItem
+                        }
                     }
-                    answerItem.copy(
-                        text = text
-                    )
                 }
-
-                is InputAnswer.OrderAnswer -> {
-                    if (answerItem.answerText == text) {
-                        return@intent
-                    }
-                    answerItem.copy(
-                        answerText = text
+                updateModelState {
+                    copy(
+                        answerItem = answerItems
                     )
-                }
-
-                else -> {
-                    answerItem
                 }
             }
         }
-        updateModelState {
-            copy(
-                answerItem = answerItems
-            )
+        intent {
+            getModelState().answerItem.find { it.id == answerId }?.let { itemAnswer ->
+                if (itemAnswer is InputAnswer.FooterPlusAdd) {
+                    return@intent
+                }
+                val textAndColorPair = when (itemAnswer) {
+                    is InputAnswer.DefaultAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
+                    is InputAnswer.OrderAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
+                    is InputAnswer.MatchAnswer -> Pair(itemAnswer.firstAnswer, itemAnswer.color)
+                    is InputAnswer.TextAnswer -> Pair(itemAnswer.text, ColorResource.MainLight.Green.getColor(resourceHelper))
+                    else -> Pair("", 0)
+                }
+                router.navigateTo(NavigationScreen.Questions.AnswerInput(
+                    textAndColorPair.first,
+                    textAndColorPair.second,
+                    firstAnswer
+                ))
+            }
         }
     }
 
@@ -290,11 +318,7 @@ class QuestionCreationViewModel(
         answerItems = answerItems.map { answerItem ->
             if (answerItem.id == selectedId && answerItem is InputAnswer.DefaultAnswer) {
                 val newStateIsTrue = !answerItem.isTrue
-                val isTrueColor = if (newStateIsTrue) {
-                    ColorResource.Secondary.Gray1.getColor(resourceHelper)
-                } else {
-                    ColorResource.Main.White.getColor(resourceHelper)
-                }
+                val isTrueColor = getTrueColor(newStateIsTrue)
                 answerItem.copy(
                     isTrue = newStateIsTrue,
                     resource = answerItem.resource.copy(
@@ -606,5 +630,11 @@ class QuestionCreationViewModel(
                 getColorAnswer(index - 4)
             }
         }
+    }
+
+    private fun getTrueColor(isTrue: Boolean) = if (isTrue) {
+        ColorResource.Secondary.Gray1.getColor(resourceHelper)
+    } else {
+        ColorResource.Main.White.getColor(resourceHelper)
     }
 }

@@ -124,6 +124,11 @@ class ResourceHelper(
             R.string.question_time_less_that_minute,
             resource.seconds
         )
+
+        is StringResource.Question.MaxLengthAnswer -> context.getString(
+            R.string.question_answer_max_length,
+            resource.count.toString()
+        )
     }
 
     private fun extractStringSettingResource(resource: StringResource.StringSettings) =

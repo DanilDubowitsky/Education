@@ -11,5 +11,6 @@ data class QuestionCreationModelState(
     val selectedDropElement: InputAnswer? = null,
     //Исключительно для Order вопроса
     val answerIndicatorItems: List<AnswerIndicatorItem> = emptyList(),
+    val visibleAddFooter: Boolean = true,
     val time: Long = 0
 )

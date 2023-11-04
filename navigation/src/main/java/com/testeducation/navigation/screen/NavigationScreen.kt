@@ -156,6 +156,15 @@ sealed interface NavigationScreen : Serializable {
 
         // TODO: move to class
         object OnTimeQuestionChanged : ResultKey<Long>
+
+        data class AnswerInput(val answerText: String, val color: Int, val firstAnswer: Boolean) : Questions {
+            object OnAnswerInput : ResultKey<OnAnswerInput.Result> {
+                data class Result(
+                    val answerText: String,
+                    val firstAnswer: Boolean
+                )
+            }
+        }
     }
 
 }
