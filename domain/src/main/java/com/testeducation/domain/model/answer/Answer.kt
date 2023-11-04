@@ -1,5 +1,7 @@
 package com.testeducation.domain.model.answer
 
+import com.testeducation.domain.model.question.input.InputAnswer
+
 sealed interface Answer {
     val id: String
     val questionId: String

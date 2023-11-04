@@ -163,6 +163,11 @@ class TestPassingViewModel(
     private fun moveToNextQuestion() = intent {
         val modelState = getModelState()
         val questionIndex = modelState.currentQuestionIndex + 1
+
+        if (questionIndex >= modelState.questions.size) {
+
+        }
+
         val currentQuestion = modelState.questions[questionIndex]
         updateModelState {
             copy(
@@ -219,12 +224,17 @@ class TestPassingViewModel(
         updateModelState {
             copy(selectedQuestionState = selectedQuestionState)
         }
-        val effect =
-            TestPassingSideEffect.StartTestTimer(60 * MINUTE_IN_MILLIS)
+        if (test.settings.timeLimit != 0) {
+            val testEffect =
+                TestPassingSideEffect.StartTestTimer(60 * MINUTE_IN_MILLIS)
+            postSideEffect(testEffect)
+        }
+
         val questionTime = currentQuestion.question.time
-        val questionEffect = TestPassingSideEffect.StartQuestionTimer(questionTime)
-        postSideEffect(effect)
-        postSideEffect(questionEffect)
+        if (questionTime != 0L) {
+            val questionEffect = TestPassingSideEffect.StartQuestionTimer(questionTime)
+            postSideEffect(questionEffect)
+        }
     }
 
     private suspend fun Syntax.extractQuestionState(): TestPassingModelState.SelectedQuestionState {

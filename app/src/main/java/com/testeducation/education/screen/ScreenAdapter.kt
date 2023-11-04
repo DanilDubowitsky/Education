@@ -27,6 +27,7 @@ import com.testeducation.ui.screen.tests.library.LibraryFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.screen.tests.pass.TestPassingFragment
+import com.testeducation.ui.screen.tests.pass.result.TestPassResultDialog
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
 import com.testeducation.ui.utils.withScreen
 
@@ -136,6 +137,10 @@ class ScreenAdapter : IScreenAdapter {
 
         is NavigationScreen.Tests.Passing -> Screen.FragmentScreen {
             TestPassingFragment().withScreen(screen)
+        }
+
+        is NavigationScreen.Tests.Result -> Screen.DialogScreen {
+            TestPassResultDialog().withScreen(screen)
         }
     }
 

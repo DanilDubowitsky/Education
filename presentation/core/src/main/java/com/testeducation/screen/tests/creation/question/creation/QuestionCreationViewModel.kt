@@ -5,9 +5,10 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.GetQuestionDetails
 import com.testeducation.domain.cases.question.QuestionCreate
+import com.testeducation.domain.model.answer.convertToDomain
 import com.testeducation.domain.model.question.AnswerIndicatorItem
+import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
-import com.testeducation.domain.model.question.convertToDomain
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
@@ -71,17 +72,26 @@ class QuestionCreationViewModel(
         intent {
             val answerIndicator = mutableListOf<AnswerIndicatorItem>()
             getQuestionDetails.invoke(testId, questionId).also { result ->
-                if (result.type == QuestionType.REORDER) {
+                if (result is Question.Order) {
                     repeat(result.answers.size) { index ->
                         answerIndicator.apply {
                             add(createAnswerIndicator(index))
                         }
                     }
                 }
+                val answers = when (result) {
+                    is Question.Choice -> result.answers
+                    is Question.Match -> result.answers
+                    is Question.Order -> result.answers
+                    is Question.Text -> emptyList()
+                }
 
                 updateModelState {
                     copy(
-                        answerItem = result.answers.convertToDomain(::getColorAnswer, ::getTrueColor),
+                        answerItem = answers.convertToDomain(
+                            ::getColorAnswer,
+                            ::getTrueColor
+                        ),
                         questionText = result.title,
                         answerIndicatorItems = answerIndicator
                     )

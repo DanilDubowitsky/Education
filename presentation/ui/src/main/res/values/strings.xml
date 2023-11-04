@@ -150,5 +150,9 @@
     <string name="test_pass_correct_label">Верно</string>
     <string name="test_pass_question_count">%1$s / %2$s</string>
     <string name="test_pass_true_answer_label">Верный ответ: %1$s</string>
+    <string name="test_pass_congratulations">Поздравляем!</string>
+    <string name="test_pass_congratulations_description">Вы успешно прошли тест</string>
+    <string name="test_pass_show_full_statistic">Показать полную статистику</string>
+    <string name="test_pass_return_to_main_page">Вернуться на главную</string>
 
 </resources>

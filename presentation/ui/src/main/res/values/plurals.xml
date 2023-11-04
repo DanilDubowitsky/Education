@@ -15,4 +15,21 @@
         <item quantity="few">Показать %1$s тестов</item>
         <item quantity="many">Показать %1$s тестов</item>
     </plurals>
+
+    <plurals name="mistakes">
+        <item quantity="one">Ошибка</item>
+        <item quantity="zero">Ошибок</item>
+        <item quantity="few">Ошибок</item>
+        <item quantity="many">Ошибок</item>
+        <item quantity="two">Ошибки</item>
+    </plurals>
+
+    <plurals name="correct_answers">
+        <item quantity="one">Верный ответ</item>
+        <item quantity="zero">Верных ответов</item>
+        <item quantity="few">Верных ответов</item>
+        <item quantity="many">Верных ответов</item>
+        <item quantity="two">Верных ответа</item>
+    </plurals>
+
 </resources>

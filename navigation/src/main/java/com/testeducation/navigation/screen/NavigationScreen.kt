@@ -137,6 +137,11 @@ sealed interface NavigationScreen : Serializable {
                 )
             }
         }
+
+        data class Result(
+            val correctAnswers: Int,
+            val incorrectAnswers: Int
+        ) : Tests
     }
 
     sealed interface Questions : NavigationScreen {
