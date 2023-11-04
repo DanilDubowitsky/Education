@@ -1,6 +1,7 @@
 package com.testeducation.ui.delegates.tests
 
 import androidx.annotation.ColorRes
+import com.testeducation.logic.model.test.TestSettingsElementUi
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.ui.R
 import com.testeducation.ui.databinding.ViewHolderThemeBinding
@@ -27,3 +28,24 @@ fun createThemeShortAdapterDelegate(
         }
     }
 }
+
+fun createThemeShortSettingsAdapterDelegate(
+    @ColorRes backgroundColorRes: Int = R.color.selector_color_chip,
+    onClick: (String) -> Unit
+) = simpleDelegateAdapter<TestSettingsElementUi.HorizontalScroll.Item,
+        TestSettingsElementUi.HorizontalScroll.Item,
+        ViewHolderThemeBinding>(
+    ViewHolderThemeBinding::inflate
+) {
+    binding.root.setClickListener {
+        onClick(item.id)
+    }
+    bind {
+        binding {
+            root.setChipBackgroundColorResource(backgroundColorRes)
+            root.text = item.title
+            root.isChecked = item.isSelected
+        }
+    }
+}
+

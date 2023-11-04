@@ -2,9 +2,8 @@ package com.testeducation.remote.converter.question
 
 import com.testeducation.domain.model.question.Answer
 import com.testeducation.domain.model.question.Question
-import com.testeducation.domain.model.question.input.InputAnswer
-import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.domain.model.question.QuestionType
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.remote.model.answer.RemoteAnswer
 import com.testeducation.remote.model.question.RemoteQuestion
 import com.testeducation.remote.request.question.AnswerCreateRequest
@@ -28,6 +27,15 @@ fun List<InputAnswer>.mapToRequestTypeMatch() = mapNotNull { answer ->
     } else null
 }
 
+fun List<InputAnswer>.mapToRequestTypeOrder() = mapNotNull { answer ->
+    if (answer is InputAnswer.OrderAnswer) {
+        AnswerCreateRequest(
+            title = answer.answerText,
+            order = answer.order
+        )
+    } else null
+}
+
 fun List<InputAnswer>.mapToRequestTypeWriteAnswer() = mapNotNull { answer ->
     if (answer is InputAnswer.TextAnswer) {
         AnswerCreateRequest(
@@ -40,7 +48,7 @@ fun List<InputAnswer>.mapToRequestAnswer(type: QuestionType) = when (type) {
     QuestionType.CHOICE -> this.mapToRequestTypeDefault()
     QuestionType.MATCH -> this.mapToRequestTypeMatch()
     QuestionType.TEXT -> this.mapToRequestTypeWriteAnswer()
-    else -> emptyList()
+    QuestionType.REORDER -> this.mapToRequestTypeOrder()
 }
 
 fun RemoteQuestion.toModel(): Question {
@@ -80,9 +88,10 @@ fun QuestionType.toRemote() = when (this) {
 }
 
 private fun RemoteAnswer.toMatch(questionId: String) = Answer.MatchAnswer(
-    id,
-    questionId,
-    match!!.title
+    id = id,
+    questionId = questionId,
+    matchedCorrectText = match!!.title,
+    title = title!!
 )
 
 private fun RemoteAnswer.toChoice(questionId: String) = Answer.ChoiceAnswer(

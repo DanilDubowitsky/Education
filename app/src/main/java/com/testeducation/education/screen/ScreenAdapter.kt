@@ -17,8 +17,11 @@ import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
+import com.testeducation.ui.screen.tests.creation.input.AnswerInputDialog
 import com.testeducation.ui.screen.tests.creation.time.TimeQuestionDialog
 import com.testeducation.ui.screen.tests.edit.TestEditorFragment
+import com.testeducation.ui.screen.tests.edit.TestSettingsFragment
+import com.testeducation.ui.screen.tests.edit.TestStyleChangerFragment
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
 import com.testeducation.ui.screen.tests.library.LibraryFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
@@ -121,6 +124,14 @@ class ScreenAdapter : IScreenAdapter {
         is NavigationScreen.Tests.Preview -> Screen.FragmentScreen {
             TestPreviewFragment().withScreen(screen)
         }
+
+        is NavigationScreen.Tests.Settings -> Screen.FragmentScreen {
+            TestSettingsFragment().withScreen(screen)
+        }
+
+        is NavigationScreen.Tests.TestStyleChangerData -> Screen.FragmentScreen {
+            TestStyleChangerFragment().withScreen(screen)
+        }
     }
 
     private fun createPlatformScreen(screen: NavigationScreen.Questions) = when(screen) {
@@ -133,6 +144,10 @@ class ScreenAdapter : IScreenAdapter {
 
         is NavigationScreen.Questions.QuestionsPreview -> Screen.DialogScreen {
             QuestionsPreviewDialog().withScreen(screen)
+        }
+
+        is NavigationScreen.Questions.AnswerInput -> Screen.DialogScreen {
+            AnswerInputDialog().withScreen(screen)
         }
     }
 }

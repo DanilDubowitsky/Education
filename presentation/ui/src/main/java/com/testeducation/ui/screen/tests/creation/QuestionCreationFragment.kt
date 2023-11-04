@@ -20,9 +20,9 @@ import com.testeducation.ui.delegates.tests.question.answerDelegateWrite
 import com.testeducation.ui.delegates.tests.question.answerIndicatorItemDelegate
 import com.testeducation.ui.delegates.tests.question.answersDelegateDefault
 import com.testeducation.ui.delegates.tests.question.footerPlusAddDelegate
+import com.testeducation.ui.listener.QuestionItemTouchHelperCallback
 import com.testeducation.ui.listener.drag.DragStartListener
 import com.testeducation.ui.listener.drag.IDragStartListener
-import com.testeducation.ui.listener.QuestionItemTouchHelperCallback
 import com.testeducation.ui.screen.common.LoaderDialog
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
@@ -54,15 +54,15 @@ class QuestionCreationFragment :
             answersDelegateDefault(
                 onClickCheckTrue = viewModel::changeCheckedAnswer,
                 onClickDelete = viewModel::deleteAnswer,
-                onAnswerTextChanger = viewModel::answerTextChanger
+                onAnswerTextChanger = viewModel::openAnswerInput
             ),
-            answerDelegateWrite(onAnswerTextChanger = viewModel::answerTextChanger),
+            answerDelegateWrite(onAnswerTextChanger = viewModel::openAnswerInput),
             answerDelegateMatch(
                 onClickDelete = viewModel::deleteAnswer,
-                onAnswerTextChanger = viewModel::answerMatchChanger
+                onAnswerTextChanger = viewModel::openAnswerInput
             ),
             answerDelegateOrder(
-                onAnswerTextChanger = viewModel::answerTextChanger,
+                onAnswerTextChanger = viewModel::openAnswerInput,
                 mDragStartListener = dragStartListener,
                 onSelectedElement = viewModel::updateSelectedDropElement
             ),
@@ -131,6 +131,9 @@ class QuestionCreationFragment :
 
         rvIndicator.isVisible = questionCreationState.visibleIndicator
         tvTime.text = questionCreationState.time
+        if (etQuestion.text.toString().isEmpty()) {
+            etQuestion.setText(questionCreationState.questionText)
+        }
         when (questionCreationState.questionTypeUiItem.type) {
             QuestionTypeUi.MATCH -> {
                 imgIconQuestionType.setImageResource(R.drawable.ic_answer_match)

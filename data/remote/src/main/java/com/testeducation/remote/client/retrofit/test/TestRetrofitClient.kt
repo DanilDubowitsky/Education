@@ -4,8 +4,10 @@ import com.testeducation.remote.model.global.RemoteResponse
 import com.testeducation.remote.model.test.RemoteCreationTest
 import com.testeducation.remote.model.test.RemotePage
 import com.testeducation.remote.model.test.RemoteTest
+import com.testeducation.remote.model.test.RemoteTestSettingsItem
 import com.testeducation.remote.model.test.RemoteTestShort
 import com.testeducation.remote.request.test.TestCreationRequest
+import com.testeducation.remote.request.test.TestStyleRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -88,4 +90,19 @@ interface TestRetrofitClient {
 
     @GET("/api/app/content/tests/{id}")
     suspend fun getTest(@Path("id") id: String) : RemoteResponse<RemoteTest>
+
+    @GET("/api/app/content/tests/{id}/settings")
+    suspend fun getTestSettings(@Path("id") id: String) : RemoteResponse<RemoteTestSettingsItem>
+
+    @PUT("/api/app/content/tests/{id}")
+    suspend fun updateTestSettings(@Path("id") id: String, @Body testSettingsItem: RemoteTestSettingsItem) : RemoteResponse<Unit>
+
+    @PUT("/api/app/content/tests/{id}/style")
+    suspend fun updateTestStyle(@Path("id") id: String, @Body remoteTestStyle: TestStyleRequest) : RemoteResponse<Unit>
+
+    @POST("/api/app/content/tests/{testId}/publish")
+    suspend fun publish(@Path("testId") id: String) : RemoteResponse<Unit>
+
+    @POST("/api/app/content/tests/{testId}/unpublish")
+    suspend fun draft(@Path("testId") id: String) : RemoteResponse<Unit>
 }

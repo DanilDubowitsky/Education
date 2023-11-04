@@ -54,6 +54,7 @@
     <string name="error_email_empty">Поле email не может быть пустым</string>
     <string name="error_password_empty">Поле password не может быть пустым</string>
     <string name="error_title_creation_test_empty">Название теста не может быть пустым</string>
+    <string name="error_title_creation_max_line">Максимальное число символов 64</string>
 
     <string name="app_update_required">Для продолжения работы необходимо обновить приложение до последней версии</string>
 
@@ -95,6 +96,7 @@
     <string name="question_time_more_that_minute">%sм %sсек</string>
     <string name="question_time_only_minute">%sм</string>
     <string name="question_time_less_that_minute">%s сек</string>
+    <string name="question_answer_max_length">Осталось символов: %s</string>
 
     <string name="library_published_title">Опубликованные</string>
     <string name="library_passed_title">Пройденные</string>
@@ -111,4 +113,33 @@
 
     <string name="questions_preview_title">Вопросы</string>
 
+    <string name="test_settings_title">Настройки теста</string>
+    <string name="test_settings_test_design">Обложка</string>
+    <string name="test_style_color">Выберите цвет</string>
+
+    <string name="test_settings_test_title">Название теста</string>
+    <string name="test_settings_theme_title">Тема</string>
+    <string name="test_settings_availability_title">Доступ к тесту</string>
+    <string name="test_settings_order_title">Порядок вопросов</string>
+    <string name="test_settings_min_correct_answer_title">Минимум правильных ответов для успешного прохождения теста</string>
+    <string name="test_settings_show_question_title">Предварительный просмотр вопросов</string>
+    <string name="test_settings_anti_cheat_title">Антисписывание</string>
+    <string name="test_settings_anti_cheat_description">Включенный режим “Антисписывание” позволяет фиксировать факт выхода приложения в фоновый режим. В таком режиме прохождение теста будет автоматически завершено.</string>
+    <string name="test_settings_order_value_order">Последовательно</string>
+    <string name="test_settings_order_value_random">Перемешать</string>
+    <string name="test_settings_availability_all">Всем</string>
+    <string name="test_settings_availability_link">По ссылке</string>
+
+    <string name="test_draft">В черновик</string>
+    <string name="test_publish">Опубликовать</string>
+    
+    <!--Validate-->
+    <string name="test_edit_error_title">Ошибка при создании теста</string>
+    <string name="question_creation_error_title">Ошибка при создании вопроса</string>
+    <string name="test_edit_max_value_question">Количество вопросов не должно быть меньше %s</string>
+    <string name="question_creation_validate_empty">Содержание вопроса не может быть пустым</string>
+    <string name="question_creation_validate_one_answer">Вопрос должен иметь хотя бы один ответ</string>
+    <string name="question_creation_validate_min_count_answer">Минимальное количество ответов на вопрос должно быть равно %s-м</string>
+    <string name="question_creation_validate_min_one_true_answer">Необходимо выбрать хотя бы один правильный ответ</string>
+    <string name="question_creation_validate_answer_is_empty">В вопросе не должны присуствовать ответы с пустым содержанием</string>
 </resources>

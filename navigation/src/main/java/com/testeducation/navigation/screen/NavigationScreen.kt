@@ -1,6 +1,7 @@
 package com.testeducation.navigation.screen
 
 import com.testeducation.logic.model.auth.ConfirmationType
+import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.model.test.TestGetTypeUI
@@ -102,20 +103,50 @@ sealed interface NavigationScreen : Serializable {
             val testId: String
         ) : Tests
 
+        data class Settings(
+            val testId: String,
+            val titleTest: String,
+            val colorTest: String,
+            val imageTest: String,
+            val idTheme: String,
+            val themeName: String
+        ) : Tests {
+            object OnTestSettingsResult : ResultKey<Unit>
+        }
+
         data class Preview(
             val id: String
         ) : Tests
+
+        data class TestStyleChangerData(
+            val testId: String,
+            val testName: String,
+            val themeName: String,
+            val color: String,
+            val background: String
+        ) : Tests {
+            object OnTestStyleChanger : ResultKey<OnTestStyleChanger.TestStyleChangerResult> {
+
+                data class TestStyleChangerResult(
+                    val color: String,
+                    val styleCurrent: CardTestStyle
+                )
+            }
+        }
     }
 
     sealed interface Questions : NavigationScreen {
 
         data class QuestionsPreview(
             val testId: String
+
         ) : Questions
 
         data class QuestionEditor(
             val questionTypeUiItem: QuestionTypeUiItem,
-            val testId: String
+            val testId: String,
+            val orderQuestion: Int = 1,
+            val questionId: String = ""
         ) : Questions
 
         data class TimeQuestion(val time: Long) : Questions
@@ -126,6 +157,14 @@ sealed interface NavigationScreen : Serializable {
         // TODO: move to class
         object OnTimeQuestionChanged : ResultKey<Long>
 
+        data class AnswerInput(val answerText: String, val color: Int, val firstAnswer: Boolean) : Questions {
+            object OnAnswerInput : ResultKey<OnAnswerInput.Result> {
+                data class Result(
+                    val answerText: String,
+                    val firstAnswer: Boolean
+                )
+            }
+        }
     }
 
 }

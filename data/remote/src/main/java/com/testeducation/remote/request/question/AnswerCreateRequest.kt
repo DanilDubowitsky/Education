@@ -10,7 +10,7 @@ data class AnswerCreateRequest(
     @SerializedName("current")
     val current: Boolean = false,
     @SerializedName("order")
-    val order: Int = 0,
+    val order: Int? = null,
     @SerializedName("match")
     val match: AnswerMatch? = null,
     @SerializedName("text")

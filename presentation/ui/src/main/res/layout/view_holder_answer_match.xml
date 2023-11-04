@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <EditText
+        <TextView
             android:id="@+id/etAnswerFirst"
             style="@style/Text.Default"
             android:layout_width="0dp"
@@ -31,6 +31,8 @@
             android:layout_marginBottom="24dp"
             android:background="@null"
             android:textColor="@color/colorWhite"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textColorHint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +59,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <EditText
+        <TextView
             android:id="@+id/etAnswerSecond"
             style="@style/Text.Default"
             android:layout_width="0dp"
@@ -68,6 +70,8 @@
             android:layout_marginBottom="24dp"
             android:background="@null"
             android:hint="@string/question_match_hint"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"

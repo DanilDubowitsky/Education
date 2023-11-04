@@ -6,12 +6,14 @@ import com.testeducation.domain.model.test.Page
 import com.testeducation.domain.model.test.Test
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
+import com.testeducation.domain.model.test.TestSettingsItem
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.remote.client.retrofit.test.TestRetrofitClient
 import com.testeducation.remote.converter.global.toRemote
 import com.testeducation.remote.converter.test.toModel
 import com.testeducation.remote.converter.test.toModels
 import com.testeducation.remote.converter.test.toRemote
+import com.testeducation.remote.request.test.TestStyleRequest
 import com.testeducation.remote.utils.getResult
 
 class TestRemoteSource(
@@ -102,4 +104,29 @@ class TestRemoteSource(
             limit,
             userId
         ).getResult().data.toModel()
+
+    override suspend fun getTestSettings(id: String): TestSettingsItem {
+        return testRetrofitClient.getTestSettings(id = id).getResult().data.toModels()
+    }
+
+    override suspend fun updateTestSettings(id: String, testSettingsItem: TestSettingsItem) {
+        testRetrofitClient.updateTestSettings(id = id, testSettingsItem.toRemote())
+    }
+
+    override suspend fun updateTestStyle(id: String, color: String, background: String) {
+        testRetrofitClient.updateTestStyle(
+            id = id,
+            remoteTestStyle = TestStyleRequest(
+                color, background
+            )
+        )
+    }
+
+    override suspend fun changeTest(id: String, status: Test.Status) {
+        if (status == Test.Status.DRAFT) {
+            testRetrofitClient.draft(id)
+        } else {
+            testRetrofitClient.publish(id)
+        }
+    }
 }

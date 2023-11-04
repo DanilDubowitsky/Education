@@ -8,7 +8,7 @@
     android:backgroundTint="@color/colorMainGreenLight"
     android:minHeight="68dp">
 
-    <EditText
+    <TextView
         android:id="@+id/etAnswer"
         style="@style/Text.Default"
         android:layout_width="0dp"
