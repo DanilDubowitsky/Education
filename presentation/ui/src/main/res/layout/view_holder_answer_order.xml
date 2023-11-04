@@ -17,6 +17,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="@null"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:hint="@string/question_creation_answer_hint"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
