@@ -1,12 +1,15 @@
 package com.testeducation.remote.client.remote.question
 
 import com.testeducation.core.client.remote.question.IQuestionRemoteClient
+import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.remote.client.retrofit.question.QuestionRetrofitClient
 import com.testeducation.remote.converter.question.mapToRequestAnswer
+import com.testeducation.remote.converter.question.toModel
 import com.testeducation.remote.converter.question.toRemote
 import com.testeducation.remote.request.question.QuestionCreateRequest
+import com.testeducation.remote.utils.getResult
 
 class QuestionRemoteClient(
     private val questionRetrofitClient: QuestionRetrofitClient
@@ -29,5 +32,14 @@ class QuestionRemoteClient(
             id = testId,
             request = request
         )
+    }
+
+    override suspend fun deleteQuestion(testId: String, questionId: String) {
+        questionRetrofitClient.deleteQuestion(testId = testId, questionId = questionId)
+    }
+
+    override suspend fun getQuestion(testId: String, questionId: String): Question {
+        return questionRetrofitClient.getQuestions(testId = testId, questionId = questionId)
+            .getResult().data.toModel()
     }
 }

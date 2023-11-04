@@ -2,10 +2,11 @@ package com.testeducation.screen.tests.edit
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.question.DeleteQuestion
 import com.testeducation.domain.cases.test.GetTest
-import com.testeducation.domain.model.question.Answer
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionDetails
+import com.testeducation.domain.model.question.convertToDomain
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.helper.error.IExceptionHandler
@@ -25,6 +26,7 @@ class TestEditorViewModel(
     private val resourceHelper: IResourceHelper,
     private val testId: String,
     private val getTest: GetTest,
+    private val deleteQuestion: DeleteQuestion,
     private val questionResourceHelper: IQuestionResourceHelper,
     private val router: NavigationRouter,
 ) : BaseViewModel<TestEditorModelState, TestEditorState, TestEditorSideEffect>(
@@ -35,6 +37,30 @@ class TestEditorViewModel(
 
     init {
         initData()
+    }
+
+    fun deleteQuestion(questionId: String) = intent {
+        val modelState = getModelState()
+        modelState.test?.id?.let { idNotNull ->
+            deleteQuestion.invoke(testId = idNotNull, questionId = questionId)
+            getTestDetails(idNotNull)
+        }
+    }
+
+    fun openEditQuestion(questionId: String) {
+        intent {
+            val modelState = getModelState()
+            modelState.test?.id?.let { idNotNull ->
+                router.navigateTo(
+                    NavigationScreen.Questions.QuestionEditor(
+                        questionTypeUiItem = QuestionTypeUiItem(QuestionTypeUi.DEFAULT),
+                        testId = testId,
+                        orderQuestion = modelState.questionDetails.size,
+                        questionId = questionId
+                    )
+                )
+            }
+        }
     }
 
     fun openCreateQuestion() {
@@ -104,42 +130,6 @@ class TestEditorViewModel(
 
     private fun List<InputAnswer.OrderAnswer>.sortCompleted() = this.sortedBy {
         it.order
-    }
-
-    private fun List<Answer>.convertToDomain() = map { itemAnswer ->
-        when (itemAnswer) {
-            is Answer.ChoiceAnswer -> {
-                InputAnswer.DefaultAnswer(
-                    id = itemAnswer.id,
-                    answerText = itemAnswer.title,
-                    isTrue = itemAnswer.isTrue
-                )
-            }
-
-            is Answer.MatchAnswer -> {
-                InputAnswer.MatchAnswer(
-                    id = itemAnswer.id,
-                    firstAnswer = itemAnswer.title,
-                    secondAnswer = itemAnswer.matchedCorrectText
-                )
-            }
-
-            is Answer.OrderAnswer -> {
-                InputAnswer.OrderAnswer(
-                    id = itemAnswer.id,
-                    answerText = itemAnswer.title,
-                    order = itemAnswer.order
-                )
-            }
-
-            is Answer.TextAnswer -> {
-                InputAnswer.TextAnswer(
-                    id = itemAnswer.id,
-                    text = itemAnswer.questionId
-                )
-            }
-        }
-
     }
 
     private fun List<InputQuestion>.prepareQuestionDetailsItems() = map {

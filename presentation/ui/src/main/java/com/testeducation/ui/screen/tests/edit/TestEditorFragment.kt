@@ -26,7 +26,7 @@ class TestEditorFragment :
     private val questionAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(QuestionDetailsUi::id),
-            answersDisplayDelegateDefault(),
+            answersDisplayDelegateDefault(viewModel::deleteQuestion, viewModel::openEditQuestion),
             footerQuestionDetailsPlusAddDelegate(viewModel::openCreateQuestion)
         )
     }

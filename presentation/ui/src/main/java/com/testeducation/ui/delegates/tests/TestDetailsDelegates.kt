@@ -18,6 +18,8 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 
 fun answersDisplayDelegateDefault(
+    onClickDelete: (String) -> Unit,
+    onClickEdit: (String) -> Unit
 ) = simpleDelegateAdapter<QuestionDetailsUi.QuestionItemDetails,
         QuestionDetailsUi,
         ViewHolderQuestionBinding>(
@@ -35,6 +37,12 @@ fun answersDisplayDelegateDefault(
                 itemQuestion.initAnswerWriteAnswer(context, this)
                 itemQuestion.initAnswerMatchAnswer(context, this)
                 itemQuestion.initAnswerOrderAnswer(context, this)
+            }
+            containerDelete.setOnClickListener {
+                onClickDelete(item.id)
+            }
+            containerEdit.setOnClickListener {
+                onClickEdit(item.id)
             }
             tvTime.text = item.question.time
         }

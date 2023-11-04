@@ -154,6 +154,7 @@
         android:id="@+id/imgChevron"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:background="@drawable/ic_chevron_down"
         app:layout_constraintBottom_toBottomOf="@+id/imgCircle"
         app:layout_constraintEnd_toEndOf="@+id/imgCircle"

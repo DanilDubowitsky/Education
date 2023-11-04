@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.screen.tests.edit
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.question.DeleteQuestion
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
@@ -37,6 +38,7 @@ interface TestEditorModule {
         fun questionTimeConverter(resourceHelper: IResourceHelper): ITimeConverterLongToString {
             return TimeConverterLongToString(resourceHelper)
         }
+
         @Provides
         fun questionDrawableIconByType(resourceHelper: IResourceHelper): IQuestionDrawableIconByType {
             return QuestionDrawableIconByType(
@@ -66,7 +68,8 @@ interface TestEditorModule {
             resourceHelper: IResourceHelper,
             getTest: GetTest,
             questionResourceHelper: IQuestionResourceHelper,
-            navigationRouter: NavigationRouter
+            navigationRouter: NavigationRouter,
+            deleteQuestion: DeleteQuestion
         ): TestEditorViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Details>()
             return TestEditorViewModel(
@@ -76,7 +79,8 @@ interface TestEditorModule {
                 testId = screen.testId,
                 getTest = getTest,
                 questionResourceHelper = questionResourceHelper,
-                router = navigationRouter
+                router = navigationRouter,
+                deleteQuestion = deleteQuestion
             )
         }
     }

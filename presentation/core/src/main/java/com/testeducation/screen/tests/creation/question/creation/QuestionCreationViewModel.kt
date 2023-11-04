@@ -3,9 +3,11 @@ package com.testeducation.screen.tests.creation.question.creation
 import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.question.GetQuestionDetails
 import com.testeducation.domain.cases.question.QuestionCreate
 import com.testeducation.domain.model.question.AnswerIndicatorItem
 import com.testeducation.domain.model.question.QuestionType
+import com.testeducation.domain.model.question.convertToDomain
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
@@ -30,6 +32,8 @@ class QuestionCreationViewModel(
     private val questionCreate: QuestionCreate,
     private val testId: String,
     private val orderQuestion: Int,
+    private val questionId: String,
+    private val getQuestionDetails: GetQuestionDetails
 ) : BaseViewModel<QuestionCreationModelState, QuestionCreationState, QuestionCreationSideEffect>(
     reducer,
     errorHandler
@@ -44,7 +48,11 @@ class QuestionCreationViewModel(
     )
 
     init {
-        initQuestionType()
+        if (questionId.isNotEmpty()) {
+            getQuestionDetails()
+        } else {
+            initQuestionType()
+        }
     }
 
     override fun handleThrowable(throwable: Throwable) {
@@ -54,6 +62,29 @@ class QuestionCreationViewModel(
             )
         }
         super.handleThrowable(throwable)
+    }
+
+    private fun getQuestionDetails() {
+        intent {
+            val answerIndicator = mutableListOf<AnswerIndicatorItem>()
+            getQuestionDetails.invoke(testId, questionId).also { result ->
+                if (result.type == QuestionType.REORDER) {
+                    repeat(result.answers.size) { index ->
+                        answerIndicator.apply {
+                            add(createAnswerIndicator(index))
+                        }
+                    }
+                }
+
+                updateModelState {
+                    copy(
+                        answerItem = result.answers.convertToDomain(),
+                        questionText = result.title,
+                        answerIndicatorItems = answerIndicator
+                    )
+                }
+            }
+        }
     }
 
     fun saveQuestion() = intent {
@@ -399,8 +430,10 @@ class QuestionCreationViewModel(
                     router.navigateTo(screen)
                     return@intent
                 }
-                if (state.answerItem.find { it is InputAnswer.MatchAnswer && it.firstAnswer.isEmptyOrBlank() ||
-                            it is InputAnswer.MatchAnswer && it.secondAnswer.isEmptyOrBlank() } != null) {
+                if (state.answerItem.find {
+                        it is InputAnswer.MatchAnswer && it.firstAnswer.isEmptyOrBlank() ||
+                                it is InputAnswer.MatchAnswer && it.secondAnswer.isEmptyOrBlank()
+                    } != null) {
                     val screen = NavigationScreen.Common.Information(
                         titleText = "Ошибка при создании вопроса",
                         description = "В вопросе не должны присуствовать ответы с пустым содержанием",
