@@ -103,7 +103,7 @@ class QuestionCreationViewModel(
                     time = modelState.time,
                     orderQuestion = orderQuestion
                 )
-                router.navigateTo(NavigationScreen.Tests.Details(testId))
+                router.navigateTo(NavigationScreen.Tests.Details(testId), false)
                 postSideEffect(
                     QuestionCreationSideEffect.LoaderInvisible
                 )

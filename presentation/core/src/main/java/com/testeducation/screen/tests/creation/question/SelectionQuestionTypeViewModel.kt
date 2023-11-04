@@ -37,7 +37,8 @@ class SelectionQuestionTypeViewModel(
                 NavigationScreen.Questions.QuestionEditor(
                     questionTypeUiItem,
                     idTest
-                )
+                ),
+                false
             )
         } else {
             router.sendResult(NavigationScreen.Questions.OnSelectionQuestionTypeChanged, questionTypeUiItem)

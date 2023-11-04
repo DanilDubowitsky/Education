@@ -3,21 +3,25 @@ package com.testeducation.screen.tests.edit
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.DeleteQuestion
+import com.testeducation.domain.cases.test.ChangeStatusTest
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionDetails
 import com.testeducation.domain.model.question.convertToDomain
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.input.InputQuestion
+import com.testeducation.domain.model.test.Test
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionResourceHelper
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.edit.TestEditorSideEffect
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.utils.getString
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestEditorViewModel(
@@ -29,14 +33,31 @@ class TestEditorViewModel(
     private val deleteQuestion: DeleteQuestion,
     private val questionResourceHelper: IQuestionResourceHelper,
     private val router: NavigationRouter,
+    private val changeStatusTest: ChangeStatusTest
 ) : BaseViewModel<TestEditorModelState, TestEditorState, TestEditorSideEffect>(
     reducer,
     exceptionHandler
 ) {
+
+    companion object {
+        private const val MIN_QUESTION = 2
+    }
+
     override val initialModelState: TestEditorModelState = TestEditorModelState()
 
     init {
         initData()
+    }
+
+    override fun handleThrowable(throwable: Throwable) {
+        super.handleThrowable(throwable)
+        intent {
+            updateModelState {
+                copy(
+                    loadingPublish = true
+                )
+            }
+        }
     }
 
     fun deleteQuestion(questionId: String) = intent {
@@ -93,6 +114,54 @@ class TestEditorViewModel(
                 )
             )
         }
+    }
+
+    fun publish() {
+        intent {
+            if (validate()) {
+                updateModelState {
+                    copy(
+                        loadingPublish = true
+                    )
+                }
+                changeStatusTest.invoke(
+                    testId,
+                    Test.Status.PUBLISHED
+                )
+                router.navigateTo(NavigationScreen.Main.Home, false)
+            }
+        }
+    }
+
+    fun draft() {
+        intent {
+            if (validate()) {
+                updateModelState {
+                    copy(
+                        loadingPublish = true
+                    )
+                }
+                changeStatusTest.invoke(
+                    testId,
+                    Test.Status.DRAFT
+                )
+                router.navigateTo(NavigationScreen.Main.Home, false)
+            }
+        }
+    }
+
+    private suspend fun validate() : Boolean {
+        val modelState = getModelState()
+        if (modelState.questionDetails.size < MIN_QUESTION) {
+            val screen = NavigationScreen.Common.Information(
+                titleText = StringResource.Validate.TestEditErrorTitle.getString(resourceHelper),
+                description = StringResource.Validate.MaxQuestionValue(MIN_QUESTION).getString(resourceHelper),
+                btnText = StringResource.Common.CommonNext.getString(resourceHelper)
+            )
+            router.navigateTo(screen)
+            return false
+        }
+        return true
     }
 
     private fun initData() = getTestDetails(testId = testId)

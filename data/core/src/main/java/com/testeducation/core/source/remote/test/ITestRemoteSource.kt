@@ -34,4 +34,6 @@ interface ITestRemoteSource {
 
     suspend fun updateTestStyle(id: String, color: String, background: String)
 
+    suspend fun changeTest(id: String, status: Test.Status)
+
 }

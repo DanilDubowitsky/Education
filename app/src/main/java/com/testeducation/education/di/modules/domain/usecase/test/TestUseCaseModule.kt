@@ -1,5 +1,6 @@
 package com.testeducation.education.di.modules.domain.usecase.test
 
+import com.testeducation.domain.cases.test.ChangeStatusTest
 import com.testeducation.domain.cases.test.CreateTest
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTestSettings
@@ -57,5 +58,11 @@ object TestUseCaseModule {
     fun provideUpdateTestStyle(
         testRepository: ITestRepository
     ): UpdateTestStyle = UpdateTestStyle(testRepository)
+
+    @Provides
+    @Reusable
+    fun provideChangeStatusTest(
+        testRepository: ITestRepository
+    ): ChangeStatusTest = ChangeStatusTest(testRepository)
 
 }

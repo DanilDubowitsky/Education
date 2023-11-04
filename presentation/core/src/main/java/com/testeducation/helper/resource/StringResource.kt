@@ -59,4 +59,9 @@ sealed interface StringResource {
         object OrderValueOrder : StringSettings
         object OrderValueRandom : StringSettings
     }
+
+    sealed interface Validate: StringResource {
+        object TestEditErrorTitle: Validate
+        data class MaxQuestionValue(val count: Int) : Validate
+    }
 }

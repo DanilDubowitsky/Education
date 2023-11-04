@@ -121,4 +121,12 @@ class TestRemoteSource(
             )
         )
     }
+
+    override suspend fun changeTest(id: String, status: Test.Status) {
+        if (status == Test.Status.DRAFT) {
+            testRetrofitClient.draft(id)
+        } else {
+            testRetrofitClient.publish(id)
+        }
+    }
 }

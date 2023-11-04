@@ -23,6 +23,7 @@ class ResourceHelper(
         is StringResource.Update -> extractUpdateResource(resource)
         is StringResource.Question -> extractQuestionResource(resource)
         is StringResource.StringSettings -> extractStringSettingResource(resource)
+        is StringResource.Validate -> extractValidateStringResource(resource)
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {
@@ -147,6 +148,11 @@ class ResourceHelper(
             is StringResource.StringSettings.AvailabilityValueAll -> string(R.string.test_settings_availability_all)
             is StringResource.StringSettings.AvailabilityValueLink -> string(R.string.test_settings_availability_link)
         }
+
+    private fun extractValidateStringResource(resource: StringResource.Validate) = when (resource) {
+        is StringResource.Validate.TestEditErrorTitle -> string(R.string.test_edit_error_title)
+        is StringResource.Validate.MaxQuestionValue -> context.getString(R.string.test_edit_max_value_question, resource.count.toString())
+    }
 
     private fun color(@ColorRes id: Int) = ContextCompat.getColor(context, id)
 

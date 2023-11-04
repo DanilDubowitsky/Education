@@ -129,4 +129,11 @@
     <string name="test_settings_order_value_random">Перемешать</string>
     <string name="test_settings_availability_all">Всем</string>
     <string name="test_settings_availability_link">По ссылке</string>
+
+    <string name="test_draft">В черновик</string>
+    <string name="test_publish">Опубликовать</string>
+    
+    <!--Validate-->
+    <string name="test_edit_error_title">Ошибка при создании теста</string>
+    <string name="test_edit_max_value_question">Количество вопросов не должно быть меньше %s</string>
 </resources>

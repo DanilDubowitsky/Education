@@ -95,8 +95,14 @@ interface TestRetrofitClient {
     suspend fun getTestSettings(@Path("id") id: String) : RemoteResponse<RemoteTestSettingsItem>
 
     @PUT("/api/app/content/tests/{id}")
-    suspend fun updateTestSettings(@Path("id") id: String, @Body testSettingsItem: RemoteTestSettingsItem)
+    suspend fun updateTestSettings(@Path("id") id: String, @Body testSettingsItem: RemoteTestSettingsItem) : RemoteResponse<Unit>
 
     @PUT("/api/app/content/tests/{id}/style")
-    suspend fun updateTestStyle(@Path("id") id: String, @Body remoteTestStyle: TestStyleRequest)
+    suspend fun updateTestStyle(@Path("id") id: String, @Body remoteTestStyle: TestStyleRequest) : RemoteResponse<Unit>
+
+    @POST("/api/app/content/tests/{testId}/publish")
+    suspend fun publish(@Path("testId") id: String) : RemoteResponse<Unit>
+
+    @POST("/api/app/content/tests/{testId}/unpublish")
+    suspend fun draft(@Path("testId") id: String) : RemoteResponse<Unit>
 }

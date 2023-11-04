@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.question.QuestionDetailsUi
@@ -43,6 +44,12 @@ class TestEditorFragment :
             imgEdit.setOnClickListener {
                 viewModel.openTestSettings()
             }
+            btnCreate.setOnClickListener {
+                viewModel.publish()
+            }
+            btnDraft.setOnClickListener {
+                viewModel.draft()
+            }
         }
     }
 
@@ -58,9 +65,13 @@ class TestEditorFragment :
                 toolbar.backgroundTintList = ColorStateList.valueOf(colorTest)
                 btnCreate.backgroundTintList = ColorStateList.valueOf(colorTest)
                 requireActivity().window.statusBarColor = colorTest
+                rootGroup.isVisible = !state.visibleLoadingPublish
+                loadingShimmer.isVisible = false
+                loadingProgress.isVisible = state.visibleLoadingPublish
             }
             is TestEditorState.NoInit -> {
-
+                loadingShimmer.isVisible = true
+                rootGroup.isVisible = false
             }
         }
     }
