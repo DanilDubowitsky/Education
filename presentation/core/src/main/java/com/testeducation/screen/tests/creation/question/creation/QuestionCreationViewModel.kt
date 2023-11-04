@@ -12,12 +12,14 @@ import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.getColor
+import com.testeducation.utils.getString
 import com.testeducation.utils.isEmptyOrBlank
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -381,22 +383,21 @@ class QuestionCreationViewModel(
         }
     }
 
-    //TODO Перенести все в ресурсы
     private fun doIfValidQuestion(state: QuestionCreationModelState, action: () -> Unit) = intent {
         if (state.questionText.isEmptyOrBlank()) {
             val screen = NavigationScreen.Common.Information(
-                titleText = "Ошибка при создании вопроса",
-                description = "Содержание вопроса не может быть пустым",
-                btnText = "Закрыть"
+                titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                description = StringResource.Validate.EmptyQuestionCreation.getString(resourceHelper),
+                btnText = StringResource.Common.CommonNext.getString(resourceHelper),
             )
             router.navigateTo(screen)
             return@intent
         }
         if (state.answerItem.isEmpty()) {
             val screen = NavigationScreen.Common.Information(
-                titleText = "Ошибка при создании вопроса",
-                description = "Вопрос должен иметь хотя бы один ответ",
-                btnText = "Закрыть"
+                titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                description = StringResource.Validate.OneAnswerQuestionCreation.getString(resourceHelper),
+                btnText = StringResource.Common.CommonNext.getString(resourceHelper),
             )
             router.navigateTo(screen)
             return@intent
@@ -405,27 +406,27 @@ class QuestionCreationViewModel(
             QuestionType.CHOICE -> {
                 if (state.answerItem.size - 1 < 2) {
                     val screen = NavigationScreen.Common.Information(
-                        titleText = "Ошибка при создании вопроса",
-                        description = "Минимальное количество ответов на вопрос должно быть равно 2-м",
-                        btnText = "Закрыть"
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.MinCountAnswer(2).getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
                     )
                     router.navigateTo(screen)
                     return@intent
                 }
                 if (state.answerItem.find { it is InputAnswer.DefaultAnswer && it.isTrue } == null) {
                     val screen = NavigationScreen.Common.Information(
-                        titleText = "Ошибка при создании вопроса",
-                        description = "Необходимо выбрать хотя бы один правильный ответ",
-                        btnText = "Закрыть"
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.MinOneTrueAnswer.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
                     )
                     router.navigateTo(screen)
                     return@intent
                 }
                 if (state.answerItem.find { it is InputAnswer.DefaultAnswer && it.answerText.isEmptyOrBlank() } != null) {
                     val screen = NavigationScreen.Common.Information(
-                        titleText = "Ошибка при создании вопроса",
-                        description = "В вопросе не должны присуствовать ответы с пустым содержанием",
-                        btnText = "Закрыть"
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.AnswerIsEmpty.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
                     )
                     router.navigateTo(screen)
                     return@intent
@@ -435,18 +436,18 @@ class QuestionCreationViewModel(
             QuestionType.REORDER -> {
                 if (state.answerItem.size - 1 < 3) {
                     val screen = NavigationScreen.Common.Information(
-                        titleText = "Ошибка при создании вопроса",
-                        description = "Минимальное количество ответов на вопрос должно быть равно 3-м",
-                        btnText = "Закрыть"
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.MinCountAnswer(3).getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
                     )
                     router.navigateTo(screen)
                     return@intent
                 }
                 if (state.answerItem.find { it is InputAnswer.OrderAnswer && it.answerText.isEmptyOrBlank() } != null) {
                     val screen = NavigationScreen.Common.Information(
-                        titleText = "Ошибка при создании вопроса",
-                        description = "В вопросе не должны присуствовать ответы с пустым содержанием",
-                        btnText = "Закрыть"
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.AnswerIsEmpty.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
                     )
                     router.navigateTo(screen)
                     return@intent
@@ -456,9 +457,9 @@ class QuestionCreationViewModel(
             QuestionType.MATCH -> {
                 if (state.answerItem.size - 1 < 3) {
                     val screen = NavigationScreen.Common.Information(
-                        titleText = "Ошибка при создании вопроса",
-                        description = "Минимальное количество ответов на вопрос должно быть равно 3-м",
-                        btnText = "Закрыть"
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.MinCountAnswer(3).getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
                     )
                     router.navigateTo(screen)
                     return@intent
@@ -468,9 +469,9 @@ class QuestionCreationViewModel(
                                 it is InputAnswer.MatchAnswer && it.secondAnswer.isEmptyOrBlank()
                     } != null) {
                     val screen = NavigationScreen.Common.Information(
-                        titleText = "Ошибка при создании вопроса",
-                        description = "В вопросе не должны присуствовать ответы с пустым содержанием",
-                        btnText = "Закрыть"
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.AnswerIsEmpty.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
                     )
                     router.navigateTo(screen)
                     return@intent
@@ -481,9 +482,9 @@ class QuestionCreationViewModel(
                 val textAnswer = state.answerItem.first()
                 if (textAnswer is InputAnswer.TextAnswer && textAnswer.text.isEmptyOrBlank()) {
                     val screen = NavigationScreen.Common.Information(
-                        titleText = "Ошибка при создании вопроса",
-                        description = "Ответ не может быть пустым",
-                        btnText = "Закрыть"
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.AnswerIsEmpty.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
                     )
                     router.navigateTo(screen)
                     return@intent

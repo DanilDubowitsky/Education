@@ -151,7 +151,13 @@ class ResourceHelper(
 
     private fun extractValidateStringResource(resource: StringResource.Validate) = when (resource) {
         is StringResource.Validate.TestEditErrorTitle -> string(R.string.test_edit_error_title)
+        is StringResource.Validate.QuestionCreationErrorTitle -> string(R.string.question_creation_error_title)
+        is StringResource.Validate.EmptyQuestionCreation -> string(R.string.question_creation_validate_empty)
         is StringResource.Validate.MaxQuestionValue -> context.getString(R.string.test_edit_max_value_question, resource.count.toString())
+        is StringResource.Validate.OneAnswerQuestionCreation -> string(R.string.question_creation_validate_one_answer)
+        is StringResource.Validate.MinOneTrueAnswer -> string(R.string.question_creation_validate_min_one_true_answer)
+        is StringResource.Validate.AnswerIsEmpty -> string(R.string.question_creation_validate_answer_is_empty)
+        is StringResource.Validate.MinCountAnswer -> context.getString(R.string.question_creation_validate_min_count_answer, resource.count.toString())
     }
 
     private fun color(@ColorRes id: Int) = ContextCompat.getColor(context, id)

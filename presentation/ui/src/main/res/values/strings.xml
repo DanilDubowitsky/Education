@@ -135,5 +135,11 @@
     
     <!--Validate-->
     <string name="test_edit_error_title">Ошибка при создании теста</string>
+    <string name="question_creation_error_title">Ошибка при создании вопроса</string>
     <string name="test_edit_max_value_question">Количество вопросов не должно быть меньше %s</string>
+    <string name="question_creation_validate_empty">Содержание вопроса не может быть пустым</string>
+    <string name="question_creation_validate_one_answer">Вопрос должен иметь хотя бы один ответ</string>
+    <string name="question_creation_validate_min_count_answer">Минимальное количество ответов на вопрос должно быть равно %s-м</string>
+    <string name="question_creation_validate_min_one_true_answer">Необходимо выбрать хотя бы один правильный ответ</string>
+    <string name="question_creation_validate_answer_is_empty">В вопросе не должны присуствовать ответы с пустым содержанием</string>
 </resources>

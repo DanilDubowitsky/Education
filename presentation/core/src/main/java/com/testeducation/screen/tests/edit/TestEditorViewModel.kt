@@ -152,7 +152,7 @@ class TestEditorViewModel(
 
     private suspend fun validate() : Boolean {
         val modelState = getModelState()
-        if (modelState.questionDetails.size < MIN_QUESTION) {
+        if (modelState.questionDetails.size - 1 < MIN_QUESTION) {
             val screen = NavigationScreen.Common.Information(
                 titleText = StringResource.Validate.TestEditErrorTitle.getString(resourceHelper),
                 description = StringResource.Validate.MaxQuestionValue(MIN_QUESTION).getString(resourceHelper),

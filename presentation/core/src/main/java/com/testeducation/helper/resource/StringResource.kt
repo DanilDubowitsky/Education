@@ -60,8 +60,14 @@ sealed interface StringResource {
         object OrderValueRandom : StringSettings
     }
 
-    sealed interface Validate: StringResource {
-        object TestEditErrorTitle: Validate
+    sealed interface Validate : StringResource {
+        object TestEditErrorTitle : Validate
+        object QuestionCreationErrorTitle : Validate
         data class MaxQuestionValue(val count: Int) : Validate
+        object EmptyQuestionCreation : Validate
+        object OneAnswerQuestionCreation : Validate
+        data class MinCountAnswer(val count: Int) : Validate
+        object MinOneTrueAnswer : Validate
+        object AnswerIsEmpty: Validate
     }
 }
