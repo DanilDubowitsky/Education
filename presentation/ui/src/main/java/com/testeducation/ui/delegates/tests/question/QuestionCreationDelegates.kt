@@ -27,9 +27,9 @@ fun answersDelegateDefault(
 ) {
     bind {
         binding {
-            if (etAnswer.text.isEmpty()) {
-                etAnswer.setText(item.answerText)
-            }
+            println(message = "TAG1 etAnswer = ${etAnswer.text}")
+            println(message = "TAG1 data = ${item.toString()}")
+            etAnswer.setText(item.answerText)
             imgDelete.setOnClickListener {
                 onClickDelete(item.id)
             }

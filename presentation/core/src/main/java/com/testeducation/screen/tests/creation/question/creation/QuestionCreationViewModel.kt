@@ -217,18 +217,27 @@ class QuestionCreationViewModel(
             }
             when (answerItem) {
                 is InputAnswer.DefaultAnswer -> {
+                    if (answerItem.answerText == text) {
+                        return@intent
+                    }
                     answerItem.copy(
                         answerText = text
                     )
                 }
 
                 is InputAnswer.TextAnswer -> {
+                    if (answerItem.text == text) {
+                        return@intent
+                    }
                     answerItem.copy(
                         text = text
                     )
                 }
 
                 is InputAnswer.OrderAnswer -> {
+                    if (answerItem.answerText == text) {
+                        return@intent
+                    }
                     answerItem.copy(
                         answerText = text
                     )
