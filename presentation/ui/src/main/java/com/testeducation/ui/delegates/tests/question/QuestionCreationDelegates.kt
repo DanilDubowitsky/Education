@@ -3,7 +3,6 @@ package com.testeducation.ui.delegates.tests.question
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.view.MotionEvent
-import androidx.core.widget.doOnTextChanged
 import com.testeducation.logic.model.test.AnswerCreationUI
 import com.testeducation.ui.R
 import com.testeducation.ui.databinding.ViewHolderAnswerDefaultBinding
@@ -19,7 +18,7 @@ import com.testeducation.ui.utils.simpleDelegateAdapter
 fun answersDelegateDefault(
     onClickCheckTrue: (String) -> Unit,
     onClickDelete: (String) -> Unit,
-    onAnswerTextChanger: (String, String) -> Unit
+    onAnswerTextChanger: (String) -> Unit
 ) = simpleDelegateAdapter<AnswerCreationUI.DefaultAnswer,
         AnswerCreationUI,
         ViewHolderAnswerDefaultBinding>(
@@ -27,9 +26,7 @@ fun answersDelegateDefault(
 ) {
     bind {
         binding {
-            if (etAnswer.text.isEmpty()) {
-                etAnswer.setText(item.answerText)
-            }
+            etAnswer.text = item.answerText
             imgDelete.setOnClickListener {
                 onClickDelete(item.id)
             }
@@ -42,8 +39,8 @@ fun answersDelegateDefault(
 
             root.backgroundTintList = ColorStateList.valueOf(item.color)
 
-            etAnswer.doOnTextChanged { text, start, before, count ->
-                onAnswerTextChanger(item.id, text.toString())
+            etAnswer.setOnClickListener {
+                onAnswerTextChanger(item.id)
             }
         }
     }
@@ -51,25 +48,23 @@ fun answersDelegateDefault(
 
 fun answerDelegateMatch(
     onClickDelete: (String) -> Unit,
-    onAnswerTextChanger: (String, Int, String) -> Unit
+    onAnswerTextChanger: (String, Boolean) -> Unit
 ) = simpleDelegateAdapter<AnswerCreationUI.MatchAnswer,
         AnswerCreationUI,
         ViewHolderAnswerMatchBinding>(
     ViewHolderAnswerMatchBinding::inflate
 ) {
-    binding.etAnswerFirst.doOnTextChanged { text, start, before, count ->
+    binding.etAnswerFirst.setOnClickListener {
         onAnswerTextChanger(
             item.id,
-            AnswerCreationUI.MatchAnswer.FIRST_ANSWER_MATCH,
-            text.toString()
+            true
         )
     }
 
-    binding.etAnswerSecond.doOnTextChanged { text, start, before, count ->
+    binding.etAnswerSecond.setOnClickListener {
         onAnswerTextChanger(
             item.id,
-            AnswerCreationUI.MatchAnswer.SECOND_ANSWER_MATCH,
-            text.toString()
+            false
         )
     }
 
@@ -79,12 +74,8 @@ fun answerDelegateMatch(
                 R.string.question_match_answer_position_hint,
                 (adapterPosition + 1).toString()
             )
-            if (etAnswerFirst.text.isEmpty()) {
-                etAnswerFirst.setText(item.firstAnswer)
-            }
-            if (etAnswerSecond.text.isEmpty()) {
-                etAnswerSecond.setText(item.secondAnswer)
-            }
+            etAnswerFirst.text = item.firstAnswer
+            etAnswerSecond.text = item.secondAnswer
             imgDelete.setOnClickListener {
                 onClickDelete(item.id)
             }
@@ -96,7 +87,7 @@ fun answerDelegateMatch(
 
 @SuppressLint("ClickableViewAccessibility")
 fun answerDelegateOrder(
-    onAnswerTextChanger: (String, String) -> Unit,
+    onAnswerTextChanger: (String) -> Unit,
     mDragStartListener: IDragStartListener,
     onSelectedElement: (String) -> Unit
 ) = simpleDelegateAdapter<AnswerCreationUI.OrderAnswer,
@@ -105,8 +96,8 @@ fun answerDelegateOrder(
         ViewHolderAnswerOrderBinding::inflate
     ) {
         binding {
-            etAnswer.doOnTextChanged { text, start, before, count ->
-                onAnswerTextChanger(item.id, text.toString())
+            etAnswer.setOnClickListener {
+                onAnswerTextChanger(item.id)
             }
             root.setOnTouchListener { _, motionEvent ->
                 if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
@@ -116,15 +107,13 @@ fun answerDelegateOrder(
                 false
             }
             bind {
-                if (etAnswer.text.isEmpty()) {
-                    etAnswer.setText(item.answerText)
-                }
+                etAnswer.text = item.answerText
                 root.backgroundTintList = ColorStateList.valueOf(item.color)
             }
         }
     }
 
-fun answerDelegateWrite(onAnswerTextChanger: (String, String) -> Unit) =
+fun answerDelegateWrite(onAnswerTextChanger: (String) -> Unit) =
     simpleDelegateAdapter<AnswerCreationUI.TextAnswer,
             AnswerCreationUI,
             ViewHolderAnswerWriteBinding>(
@@ -132,8 +121,9 @@ fun answerDelegateWrite(onAnswerTextChanger: (String, String) -> Unit) =
     ) {
         binding {
             bind {
-                etAnswer.doOnTextChanged { text, start, before, count ->
-                    onAnswerTextChanger(item.id, text.toString())
+                etAnswer.text = item.text
+                etAnswer.setOnClickListener {
+                    onAnswerTextChanger(item.id)
                 }
             }
         }
@@ -151,18 +141,18 @@ fun footerPlusAddDelegate(
                 imgPlus.setOnClickListener {
                     onClickAdd()
                 }
-               /* val marginRight = if (item.isOrderAnswer) {
-                    46.dp
-                } else {
-                    0.dp
-                }
-                val params = FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT
-                )
-                params.setMargins(0.dp, 0.dp, marginRight, 0.dp)
-                params.gravity = Gravity.CENTER
-                imgPlus.layoutParams = params*/
+                /* val marginRight = if (item.isOrderAnswer) {
+                     46.dp
+                 } else {
+                     0.dp
+                 }
+                 val params = FrameLayout.LayoutParams(
+                     FrameLayout.LayoutParams.WRAP_CONTENT,
+                     FrameLayout.LayoutParams.WRAP_CONTENT
+                 )
+                 params.setMargins(0.dp, 0.dp, marginRight, 0.dp)
+                 params.gravity = Gravity.CENTER
+                 imgPlus.layoutParams = params*/
             }
         }
     }

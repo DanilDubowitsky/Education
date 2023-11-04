@@ -3,19 +3,24 @@ package com.testeducation.screen.tests.creation.question.creation
 import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.question.GetQuestionDetails
 import com.testeducation.domain.cases.question.QuestionCreate
 import com.testeducation.domain.model.question.AnswerIndicatorItem
-import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.QuestionType
+import com.testeducation.domain.model.question.convertToDomain
+import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.getColor
+import com.testeducation.utils.getString
+import com.testeducation.utils.isEmptyOrBlank
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import java.util.Collections
@@ -27,7 +32,10 @@ class QuestionCreationViewModel(
     questionTypeItem: QuestionTypeUiItem,
     private val router: NavigationRouter,
     private val questionCreate: QuestionCreate,
-    private val testId: String
+    private val testId: String,
+    private val orderQuestion: Int,
+    private val questionId: String,
+    private val getQuestionDetails: GetQuestionDetails
 ) : BaseViewModel<QuestionCreationModelState, QuestionCreationState, QuestionCreationSideEffect>(
     reducer,
     errorHandler
@@ -35,6 +43,7 @@ class QuestionCreationViewModel(
 
     companion object {
         private const val ERROR_NUMBER_TEXT = "The number cannot be more than 2"
+        private const val MAX_ANSWER = 7
     }
 
     override val initialModelState: QuestionCreationModelState = QuestionCreationModelState(
@@ -42,7 +51,11 @@ class QuestionCreationViewModel(
     )
 
     init {
-        initQuestionType()
+        if (questionId.isNotEmpty()) {
+            getQuestionDetails()
+        } else {
+            initQuestionType()
+        }
     }
 
     override fun handleThrowable(throwable: Throwable) {
@@ -54,22 +67,50 @@ class QuestionCreationViewModel(
         super.handleThrowable(throwable)
     }
 
+    private fun getQuestionDetails() {
+        intent {
+            val answerIndicator = mutableListOf<AnswerIndicatorItem>()
+            getQuestionDetails.invoke(testId, questionId).also { result ->
+                if (result.type == QuestionType.REORDER) {
+                    repeat(result.answers.size) { index ->
+                        answerIndicator.apply {
+                            add(createAnswerIndicator(index))
+                        }
+                    }
+                }
+
+                updateModelState {
+                    copy(
+                        answerItem = result.answers.convertToDomain(::getColorAnswer, ::getTrueColor),
+                        questionText = result.title,
+                        answerIndicatorItems = answerIndicator
+                    )
+                }
+            }
+        }
+    }
+
     fun saveQuestion() = intent {
-        postSideEffect(
-            QuestionCreationSideEffect.LoaderVisible
-        )
         val modelState = getModelState()
-        questionCreate(
-            testId = testId,
-            type = modelState.questionTypeItem.questionType,
-            questionText = modelState.questionText,
-            answerItem = modelState.answerItem,
-            time = modelState.time
-        )
-        router.navigateTo(NavigationScreen.Tests.Details(testId))
-        postSideEffect(
-            QuestionCreationSideEffect.LoaderInvisible
-        )
+        doIfValidQuestion(modelState) {
+            intent {
+                postSideEffect(
+                    QuestionCreationSideEffect.LoaderVisible
+                )
+                questionCreate(
+                    testId = testId,
+                    type = modelState.questionTypeItem.questionType,
+                    questionText = modelState.questionText,
+                    answerItem = modelState.answerItem,
+                    time = modelState.time,
+                    orderQuestion = orderQuestion
+                )
+                router.navigateTo(NavigationScreen.Tests.Details(testId), false)
+                postSideEffect(
+                    QuestionCreationSideEffect.LoaderInvisible
+                )
+            }
+        }
     }
 
     fun openTimeDialog() {
@@ -89,6 +130,8 @@ class QuestionCreationViewModel(
     }
 
     fun updateQuestionText(textQuestion: String) = intent {
+        val questionText = getModelState().questionText
+        if (questionText == textQuestion) return@intent
         updateModelState {
             copy(
                 questionText = textQuestion
@@ -138,18 +181,21 @@ class QuestionCreationViewModel(
         val answer = createAnswer(
             index, getModelState().questionTypeItem.questionType
         )
-        val answerIndicator = if (modelState.questionTypeItem.questionType == QuestionType.REORDER) {
-            val indicator = createAnswerIndicator(index)
-            modelState.answerIndicatorItems.toMutableList().apply {
-                add(indicator)
-            }
-        } else emptyList()
+        val answerIndicator =
+            if (modelState.questionTypeItem.questionType == QuestionType.REORDER) {
+                val indicator = createAnswerIndicator(index)
+                modelState.answerIndicatorItems.toMutableList().apply {
+                    add(indicator)
+                }
+            } else emptyList()
+        val newAnswerItems = answerItems.toMutableList().apply {
+            add(index, answer)
+        }
         updateModelState {
             copy(
-                answerItem = answerItems.toMutableList().apply {
-                    add(index, answer)
-                },
-                answerIndicatorItems = answerIndicator
+                answerItem = newAnswerItems,
+                answerIndicatorItems = answerIndicator,
+                visibleAddFooter = newAnswerItems.size < MAX_ANSWER
             )
         }
     }
@@ -160,50 +206,82 @@ class QuestionCreationViewModel(
             item.id == selectedId
         }
         answerForDelete?.let { answerItemNotNull ->
+            val newAnswerItems = answerItems.apply {
+                remove(answerItemNotNull)
+            }
             updateModelState {
                 copy(
-                    answerItem = answerItems.apply {
-                        remove(answerItemNotNull)
-                    }
+                    answerItem = newAnswerItems,
+                    visibleAddFooter = newAnswerItems.size < MAX_ANSWER
                 )
             }
         }
     }
 
-    fun answerTextChanger(answerId: String, text: String) = intent {
-        var answerItems = getModelState().answerItem
-        answerItems = answerItems.map { answerItem ->
-            if (answerItem.id != answerId) {
-                return@map answerItem
-            }
-            when (answerItem) {
-                is InputAnswer.DefaultAnswer -> {
-                    answerItem.copy(
-                        answerText = text
-                    )
-                }
+    fun openAnswerInput(answerId: String, firstAnswer: Boolean = true) {
+        router.setResultListener(NavigationScreen.Questions.AnswerInput.OnAnswerInput) { result ->
+            intent {
+                var answerItems = getModelState().answerItem
+                answerItems = answerItems.map { answerItem ->
+                    if (answerItem.id != answerId) {
+                        return@map answerItem
+                    }
+                    when (answerItem) {
+                        is InputAnswer.DefaultAnswer -> {
+                            answerItem.copy(
+                                answerText = result.answerText
+                            )
+                        }
 
-                is InputAnswer.TextAnswer -> {
-                    answerItem.copy(
-                        text = text
-                    )
-                }
+                        is InputAnswer.TextAnswer -> {
+                            answerItem.copy(
+                                text = result.answerText
+                            )
+                        }
 
-                is InputAnswer.OrderAnswer -> {
-                    answerItem.copy(
-                        answerText = text
-                    )
-                }
+                        is InputAnswer.OrderAnswer -> {
+                            answerItem.copy(
+                                answerText = result.answerText
+                            )
+                        }
 
-                else -> {
-                    answerItem
+                        is InputAnswer.MatchAnswer -> {
+                            answerItem.copy(
+                                firstAnswer = if (result.firstAnswer) result.answerText else answerItem.firstAnswer,
+                                secondAnswer = if (!result.firstAnswer) result.answerText else answerItem.secondAnswer
+                            )
+                        }
+
+                        else -> {
+                            answerItem
+                        }
+                    }
+                }
+                updateModelState {
+                    copy(
+                        answerItem = answerItems
+                    )
                 }
             }
         }
-        updateModelState {
-            copy(
-                answerItem = answerItems
-            )
+        intent {
+            getModelState().answerItem.find { it.id == answerId }?.let { itemAnswer ->
+                if (itemAnswer is InputAnswer.FooterPlusAdd) {
+                    return@intent
+                }
+                val textAndColorPair = when (itemAnswer) {
+                    is InputAnswer.DefaultAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
+                    is InputAnswer.OrderAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
+                    is InputAnswer.MatchAnswer -> Pair(itemAnswer.firstAnswer, itemAnswer.color)
+                    is InputAnswer.TextAnswer -> Pair(itemAnswer.text, ColorResource.MainLight.Green.getColor(resourceHelper))
+                    else -> Pair("", 0)
+                }
+                router.navigateTo(NavigationScreen.Questions.AnswerInput(
+                    textAndColorPair.first,
+                    textAndColorPair.second,
+                    firstAnswer
+                ))
+            }
         }
     }
 
@@ -242,11 +320,7 @@ class QuestionCreationViewModel(
         answerItems = answerItems.map { answerItem ->
             if (answerItem.id == selectedId && answerItem is InputAnswer.DefaultAnswer) {
                 val newStateIsTrue = !answerItem.isTrue
-                val isTrueColor = if (newStateIsTrue) {
-                    ColorResource.Secondary.Gray1.getColor(resourceHelper)
-                } else {
-                    ColorResource.Main.White.getColor(resourceHelper)
-                }
+                val isTrueColor = getTrueColor(newStateIsTrue)
                 answerItem.copy(
                     isTrue = newStateIsTrue,
                     resource = answerItem.resource.copy(
@@ -277,9 +351,16 @@ class QuestionCreationViewModel(
             return@intent
         }
         Collections.swap(answerItems, positionCurrent, targetPosition)
+        val answerItemsUpdatedPosition = answerItems.mapIndexed { index, inputAnswer ->
+            if (inputAnswer is InputAnswer.OrderAnswer) {
+                inputAnswer.copy(
+                    order = index + 1
+                )
+            } else inputAnswer
+        }
         updateModelState {
             copy(
-                answerItem = answerItems
+                answerItem = answerItemsUpdatedPosition
             )
         }
     }
@@ -300,6 +381,117 @@ class QuestionCreationViewModel(
                 answerItem = answerItems
             )
         }
+    }
+
+    private fun doIfValidQuestion(state: QuestionCreationModelState, action: () -> Unit) = intent {
+        if (state.questionText.isEmptyOrBlank()) {
+            val screen = NavigationScreen.Common.Information(
+                titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                description = StringResource.Validate.EmptyQuestionCreation.getString(resourceHelper),
+                btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+            )
+            router.navigateTo(screen)
+            return@intent
+        }
+        if (state.answerItem.isEmpty()) {
+            val screen = NavigationScreen.Common.Information(
+                titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                description = StringResource.Validate.OneAnswerQuestionCreation.getString(resourceHelper),
+                btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+            )
+            router.navigateTo(screen)
+            return@intent
+        }
+        when (state.questionTypeItem.questionType) {
+            QuestionType.CHOICE -> {
+                if (state.answerItem.size - 1 < 2) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.MinCountAnswer(2).getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+                if (state.answerItem.find { it is InputAnswer.DefaultAnswer && it.isTrue } == null) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.MinOneTrueAnswer.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+                if (state.answerItem.find { it is InputAnswer.DefaultAnswer && it.answerText.isEmptyOrBlank() } != null) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.AnswerIsEmpty.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+            }
+
+            QuestionType.REORDER -> {
+                if (state.answerItem.size - 1 < 3) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.MinCountAnswer(3).getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+                if (state.answerItem.find { it is InputAnswer.OrderAnswer && it.answerText.isEmptyOrBlank() } != null) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.AnswerIsEmpty.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+            }
+
+            QuestionType.MATCH -> {
+                if (state.answerItem.size - 1 < 3) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.MinCountAnswer(3).getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+                if (state.answerItem.find {
+                        it is InputAnswer.MatchAnswer && it.firstAnswer.isEmptyOrBlank() ||
+                                it is InputAnswer.MatchAnswer && it.secondAnswer.isEmptyOrBlank()
+                    } != null) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.AnswerIsEmpty.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+            }
+
+            QuestionType.TEXT -> {
+                val textAnswer = state.answerItem.first()
+                if (textAnswer is InputAnswer.TextAnswer && textAnswer.text.isEmptyOrBlank()) {
+                    val screen = NavigationScreen.Common.Information(
+                        titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(resourceHelper),
+                        description = StringResource.Validate.AnswerIsEmpty.getString(resourceHelper),
+                        btnText = StringResource.Common.CommonNext.getString(resourceHelper),
+                    )
+                    router.navigateTo(screen)
+                    return@intent
+                }
+            }
+        }
+        action()
     }
 
     private suspend fun createAnswer(index: Int = 0, type: QuestionType): InputAnswer {
@@ -333,7 +525,7 @@ class QuestionCreationViewModel(
                 InputAnswer.OrderAnswer(
                     id = id.toString(),
                     color = color,
-                    order = 1
+                    order = index + 1
                 )
             }
         }
@@ -439,5 +631,11 @@ class QuestionCreationViewModel(
                 getColorAnswer(index - 4)
             }
         }
+    }
+
+    private fun getTrueColor(isTrue: Boolean) = if (isTrue) {
+        ColorResource.Secondary.Gray1.getColor(resourceHelper)
+    } else {
+        ColorResource.Main.White.getColor(resourceHelper)
     }
 }

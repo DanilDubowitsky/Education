@@ -3,9 +3,10 @@ package com.testeducation.core.repository.test
 import com.testeducation.core.source.remote.test.ITestRemoteSource
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.Page
-import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.Test
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
+import com.testeducation.domain.model.test.TestSettingsItem
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.repository.test.ITestRepository
 
@@ -46,5 +47,20 @@ class TestRepository(
 
     override suspend fun getTest(id: String): Test {
         return testRemoteSource.getTest(id)
+    }
+
+    override suspend fun getTestSettings(id: String): TestSettingsItem =
+        testRemoteSource.getTestSettings(id)
+
+    override suspend fun updateTestSettings(id: String, testSettings: TestSettingsItem) =
+        testRemoteSource.updateTestSettings(id, testSettings)
+
+    override suspend fun updateTestStyle(id: String, color: String, background: String) =
+        testRemoteSource.updateTestStyle(
+            id = id, color = color, background = background
+        )
+
+    override suspend fun changeStatusTest(id: String, status: Test.Status) {
+        testRemoteSource.changeTest(id, status)
     }
 }

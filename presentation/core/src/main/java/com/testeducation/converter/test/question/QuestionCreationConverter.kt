@@ -6,7 +6,7 @@ import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.logic.model.question.InputQuestionUI
 import com.testeducation.logic.model.test.AnswerCreationUI
 
-fun List<InputAnswer>.toModelUi() = this.map { answerItem ->
+fun List<InputAnswer>.toModelUi(visibleAddFooter: Boolean = true) = this.mapNotNull { answerItem ->
     when (answerItem) {
         is InputAnswer.DefaultAnswer -> {
             AnswerCreationUI.DefaultAnswer(
@@ -45,10 +45,12 @@ fun List<InputAnswer>.toModelUi() = this.map { answerItem ->
         }
 
         is InputAnswer.FooterPlusAdd -> {
-            AnswerCreationUI.FooterPlusAdd(
-                id = answerItem.id,
-                isOrderAnswer = answerItem.isOrderAnswer
-            )
+            if (visibleAddFooter) {
+                AnswerCreationUI.FooterPlusAdd(
+                    id = answerItem.id,
+                    isOrderAnswer = answerItem.isOrderAnswer
+                )
+            } else null
         }
     }
 }

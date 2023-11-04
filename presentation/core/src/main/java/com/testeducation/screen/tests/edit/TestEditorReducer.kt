@@ -32,7 +32,8 @@ class TestEditorReducer(private val timeConverterLongToString: ITimeConverterLon
                 passed = test.passed,
                 theme = test.theme.toUI()
             ),
-            questionDetailsUi = modelState.questionDetails.toUi(timeConverterLongToString)
+            questionDetailsUi = modelState.questionDetails.toUi(timeConverterLongToString),
+            visibleLoadingPublish = modelState.loadingPublish
         )
     }
 }

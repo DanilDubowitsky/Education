@@ -1,5 +1,7 @@
 package com.testeducation.education.di.modules.domain.usecase.question
 
+import com.testeducation.domain.cases.question.DeleteQuestion
+import com.testeducation.domain.cases.question.GetQuestionDetails
 import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.domain.cases.question.QuestionCreate
 import com.testeducation.domain.repository.question.IQuestionRepository
@@ -21,4 +23,14 @@ object QuestionUseCaseModule {
     @Reusable
     fun provideGetQuestions(questionRepository: IQuestionRepository): GetQuestions =
         GetQuestions(questionRepository)
+
+    @Provides
+    @Reusable
+    fun provideDeleteQuestion(questionRepository: IQuestionService) =
+        DeleteQuestion(questionRepository)
+
+    @Provides
+    @Reusable
+    fun provideGetQuestionDetails(questionRepository: IQuestionService) =
+        GetQuestionDetails(questionRepository)
 }

@@ -12,11 +12,12 @@ class QuestionCreationReducer(private val timeConverterLongToString: ITimeConver
     IReducer<QuestionCreationModelState, QuestionCreationState> {
     override fun reduce(modelState: QuestionCreationModelState): QuestionCreationState {
         return QuestionCreationState(
-            answerItemUiList = modelState.answerItem.toModelUi(),
+            answerItemUiList = modelState.answerItem.toModelUi(modelState.visibleAddFooter),
             questionTypeUiItem = modelState.questionTypeItem.questionType.toUiModel(),
             visibleIndicator = modelState.questionTypeItem.questionType == QuestionType.REORDER,
             answerIndicatorItems = modelState.answerIndicatorItems.toListUi(),
-            time = timeConverterLongToString.convert(modelState.time)
+            time = timeConverterLongToString.convert(modelState.time),
+            questionText = modelState.questionText
         )
     }
 }
