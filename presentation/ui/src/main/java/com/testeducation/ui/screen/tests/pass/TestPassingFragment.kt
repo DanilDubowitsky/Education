@@ -95,7 +95,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         btnAnswer.setClickListener {
             val time = questionTimer.getRemainingTime()
             questionTimer.release()
-            viewModel.submitAnswer(time)
+            viewModel.submitAnswer(time, testTimer.getRemainingTime())
         }
         answerText.addTextChangedListener {
             viewModel.onAnswerTextChanged(answerText.trimmedTextOrEmpty)
@@ -127,6 +127,9 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
                 state.currentQuestionPosition.toString(),
                 state.questionsCount.toString()
             )
+            val progress =
+                (state.currentQuestionPosition.toFloat() / state.questionsCount.toFloat()) * 100
+            questionsProgress.setProgress(progress.toInt(), true)
         }
         answerStatusLayout.isGone =
             state.currentQuestion?.answerState == QuestionUI.AnswerState.NONE
@@ -174,17 +177,32 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     }
 
     private fun FragmentTestPassBinding.startTest(time: Long) {
+        if (time == 0L) {
+            txtTotalTime.text = INFINITY_SYMBOL.toString()
+            return
+        }
         val dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
         testTimer.setOnUpdateListener { remainingTime ->
-            binding.txtTotalTime.text = dateFormatter.format(remainingTime)
+            txtTotalTime.text = dateFormatter.format(remainingTime)
         }
         testTimer.start(time, TIME_INTERVAL)
     }
 
     private fun FragmentTestPassBinding.startQuestion(time: Long) {
+        if (time == 0L) {
+            txtQuestionTime.text = INFINITY_SYMBOL.toString()
+            timeQuestionProgress.setProgress(100, true)
+            return
+        }
         val dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
         questionTimer.setOnUpdateListener { remainingTime ->
-            binding.txtQuestionTime.text = dateFormatter.format(remainingTime)
+            val progress = (remainingTime.toFloat() / time.toFloat()) * 100
+            timeQuestionProgress.setProgress(progress.toInt(), true)
+            txtQuestionTime.text = dateFormatter.format(remainingTime)
+        }
+        questionTimer.setOnExpireListener {
+            val remainingTime = questionTimer.getRemainingTime()
+            viewModel.submitAnswer(remainingTime, testTimer.getRemainingTime())
         }
         questionTimer.start(time, TIME_INTERVAL)
     }
@@ -199,6 +217,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
 
     private companion object {
         const val TIME_INTERVAL = 1000L
+        const val INFINITY_SYMBOL = '\u221e'
     }
 
 }

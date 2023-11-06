@@ -1,11 +1,11 @@
 package com.testeducation.screen.tests.creation.question.creation
 
+import com.testeducation.converter.test.answer.toInputAnswers
 import com.testeducation.converter.test.question.toModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.GetQuestionDetails
 import com.testeducation.domain.cases.question.QuestionCreate
-import com.testeducation.domain.model.answer.convertToDomain
 import com.testeducation.domain.model.question.AnswerIndicatorItem
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
@@ -88,7 +88,7 @@ class QuestionCreationViewModel(
 
                 updateModelState {
                     copy(
-                        answerItem = answers.convertToDomain(
+                        answerItem = answers.toInputAnswers(
                             ::getColorAnswer,
                             ::getTrueColor
                         ),

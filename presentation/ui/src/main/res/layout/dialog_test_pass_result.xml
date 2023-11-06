@@ -68,7 +68,7 @@
             <TextView
                 android:id="@+id/txtTrueAnswers"
                 style="@style/Text.Label.Medium"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="20dp"
@@ -79,6 +79,14 @@
                 app:layout_constraintStart_toStartOf="@+id/txtTrueAnswersCount"
                 app:layout_constraintTop_toBottomOf="@+id/txtTrueAnswersCount"
                 tools:text="Верных ответов" />
+
+            <ImageView
+                android:id="@+id/imgCorrect"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_check_transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,7 +115,7 @@
             <TextView
                 android:id="@+id/txtFalseAnswers"
                 style="@style/Text.Label.Medium"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="20dp"
@@ -118,6 +126,15 @@
                 app:layout_constraintStart_toStartOf="@+id/txtFalseAnswersCount"
                 app:layout_constraintTop_toBottomOf="@+id/txtFalseAnswersCount"
                 tools:text="Ошибок" />
+
+            <ImageView
+                android:id="@+id/imgIncorrect"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:paddingStart="10dp"
+                android:src="@drawable/ic_x_transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

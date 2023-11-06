@@ -1,6 +1,8 @@
 package com.testeducation.core.service.test
 
 import com.testeducation.core.client.remote.test.ITestRemoteClient
+import com.testeducation.domain.model.question.TestPassResult
+import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.model.test.TestCreationShort
 import com.testeducation.domain.service.test.ITestService
 
@@ -23,4 +25,17 @@ class TestService(
         background
     )
 
+    override suspend fun passTest(
+        testId: String,
+        answers: List<InputUserAnswerData>,
+        spentTime: Long,
+        isCheating: Boolean,
+        result: TestPassResult
+    ) = testRemoteClient.passTest(
+        testId,
+        answers,
+        spentTime,
+        isCheating,
+        result
+    )
 }

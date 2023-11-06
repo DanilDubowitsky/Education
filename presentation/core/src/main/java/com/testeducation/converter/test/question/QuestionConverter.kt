@@ -1,6 +1,7 @@
 package com.testeducation.converter.test.question
 
 import com.testeducation.converter.test.answer.toUIModels
+import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.domain.model.question.Question
 import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.helper.question.ITimeConverterLongToString
@@ -8,7 +9,7 @@ import com.testeducation.logic.model.question.QuestionUI
 import com.testeducation.logic.model.test.AnswerUI
 import com.testeducation.screen.tests.pass.TestPassingModelState
 
-fun TestPassingModelState.PassingQuestion.toUI(
+fun PassingQuestion.toUI(
     colorExtractor: IAnswerColorExtractor,
     timeConverterLongToString: ITimeConverterLongToString,
     selectedAnswerId: String? = null
@@ -30,7 +31,7 @@ fun TestPassingModelState.PassingQuestion.toUI(
 private fun Question.Order.toOrderUI(
     colorExtractor: IAnswerColorExtractor,
     timeConverterLongToString: ITimeConverterLongToString,
-    state: TestPassingModelState.PassingQuestion.AnswerState
+    state: PassingQuestion.AnswerState
 ) = QuestionUI.Order(
     id,
     title,
@@ -43,7 +44,7 @@ private fun Question.Order.toOrderUI(
 private fun Question.Match.toMatchUI(
     colorExtractor: IAnswerColorExtractor,
     timeConverterLongToString: ITimeConverterLongToString,
-    state: TestPassingModelState.PassingQuestion.AnswerState
+    state: PassingQuestion.AnswerState
 ) = QuestionUI.Match(
     id,
     title,
@@ -55,7 +56,7 @@ private fun Question.Match.toMatchUI(
 
 private fun Question.Text.toTextUI(
     timeConverterLongToString: ITimeConverterLongToString,
-    state: TestPassingModelState.PassingQuestion.AnswerState
+    state: PassingQuestion.AnswerState
 ) = QuestionUI.Text(
     id,
     title,
@@ -67,7 +68,7 @@ private fun Question.Text.toTextUI(
 private fun Question.Choice.toChoiceUI(
     colorExtractor: IAnswerColorExtractor,
     timeConverterLongToString: ITimeConverterLongToString,
-    state: TestPassingModelState.PassingQuestion.AnswerState,
+    state: PassingQuestion.AnswerState,
     selectedAnswerId: String?
 ) = QuestionUI.Choice(
     id,
@@ -78,9 +79,9 @@ private fun Question.Choice.toChoiceUI(
     answers.toUIModels(colorExtractor, state, selectedAnswerId) as List<AnswerUI.ChoiceAnswer>
 )
 
-private fun TestPassingModelState.PassingQuestion.AnswerState.toUI() = when (this) {
-    TestPassingModelState.PassingQuestion.AnswerState.CORRECT -> QuestionUI.AnswerState.CORRECT
-    TestPassingModelState.PassingQuestion.AnswerState.INCORRECT -> QuestionUI.AnswerState.INCORRECT
-    TestPassingModelState.PassingQuestion.AnswerState.NONE -> QuestionUI.AnswerState.NONE
+private fun PassingQuestion.AnswerState.toUI() = when (this) {
+    PassingQuestion.AnswerState.CORRECT -> QuestionUI.AnswerState.CORRECT
+    PassingQuestion.AnswerState.INCORRECT -> QuestionUI.AnswerState.INCORRECT
+    PassingQuestion.AnswerState.NONE -> QuestionUI.AnswerState.NONE
 }
 

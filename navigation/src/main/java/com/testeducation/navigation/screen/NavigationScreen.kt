@@ -140,7 +140,8 @@ sealed interface NavigationScreen : Serializable {
 
         data class Result(
             val correctAnswers: Int,
-            val incorrectAnswers: Int
+            val incorrectAnswers: Int,
+            val isSuccess: Boolean
         ) : Tests
     }
 

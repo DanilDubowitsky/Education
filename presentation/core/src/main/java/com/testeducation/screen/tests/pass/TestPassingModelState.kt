@@ -1,26 +1,16 @@
 package com.testeducation.screen.tests.pass
 
+import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.domain.model.question.Question
+import com.testeducation.domain.model.test.Test
 
 data class TestPassingModelState(
     val questions: List<PassingQuestion> = emptyList(),
     val currentQuestionIndex: Int = 0,
     val selectedQuestionState: SelectedQuestionState = SelectedQuestionState.Choice(),
-    val currentQuestion: PassingQuestion? = null
+    val currentQuestion: PassingQuestion? = null,
+    val test: Test? = null
 ) {
-
-    data class PassingQuestion(
-        val state: AnswerState = AnswerState.NONE,
-        val answers: List<String> = emptyList(),
-        val timeSpent: Long = 0L,
-        val question: Question
-    ) {
-        enum class AnswerState {
-            CORRECT,
-            INCORRECT,
-            NONE
-        }
-    }
 
     sealed interface SelectedQuestionState {
         val question: Question?

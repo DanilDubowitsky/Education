@@ -27,7 +27,8 @@ fun Answer.toEntity() = when (this) {
     is Answer.TextAnswer -> toTextEntity()
 }
 
-private fun Answer.TextAnswer.toTextEntity() = AnswerEntity(id, questionId, "")
+private fun Answer.TextAnswer.toTextEntity() =
+    AnswerEntity(id, questionId, "", correctText = correctText)
 
 private fun Answer.ChoiceAnswer.toChoiceEntity() = AnswerEntity(
     id,
@@ -59,7 +60,8 @@ private fun AnswerEntity.toChoice() = Answer.ChoiceAnswer(
 
 private fun AnswerEntity.toText() = Answer.TextAnswer(
     id,
-    questionId
+    questionId,
+    correctText!!
 )
 
 private fun AnswerEntity.toMatch() = Answer.MatchAnswer(

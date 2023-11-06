@@ -20,4 +20,7 @@ data class AnswerEntity(
 
     // Choice answer
     val isTrue: Boolean? = null,
+
+    // Text
+    val correctText: String? = null
 )

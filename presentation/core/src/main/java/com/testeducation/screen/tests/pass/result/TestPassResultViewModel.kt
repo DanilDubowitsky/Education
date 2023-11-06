@@ -5,11 +5,13 @@ import com.testeducation.core.IReducer
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.pass.result.TestPassResultSideEffect
 import com.testeducation.logic.screen.tests.pass.result.TestPassResultState
+import com.testeducation.navigation.core.NavigationRouter
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestPassResultViewModel(
     reducer: IReducer<TestPassResultModelState, TestPassResultState>,
     exceptionHandler: IExceptionHandler,
+    private val router: NavigationRouter,
     correctAnswers: Int,
     incorrectAnswers: Int
 ) : BaseViewModel<TestPassResultModelState, TestPassResultState, TestPassResultSideEffect>(
@@ -24,6 +26,11 @@ class TestPassResultViewModel(
 
     fun openFullStatistic() = intent {
 
+    }
+
+    fun returnToMainPage() = intent {
+        router.exit()
+        router.exit()
     }
 
 }

@@ -3,11 +3,15 @@ package com.testeducation.remote.converter.question
 import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
+import com.testeducation.domain.model.question.TestPassResult
 import com.testeducation.domain.model.question.input.InputAnswer
+import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.remote.model.answer.RemoteAnswer
 import com.testeducation.remote.model.question.RemoteQuestion
-import com.testeducation.remote.request.question.AnswerCreateRequest
-import com.testeducation.remote.request.question.AnswerMatch
+import com.testeducation.remote.request.question.answer.AnswerCreateRequest
+import com.testeducation.remote.model.answer.AnswerMatch
+import com.testeducation.remote.model.answer.InputUserAnswerDataRemote
+import com.testeducation.remote.model.test.TestPassResultRemote
 
 fun List<InputAnswer>.mapToRequestTypeDefault() = mapNotNull { answer ->
     if (answer is InputAnswer.DefaultAnswer) {
@@ -75,7 +79,8 @@ fun RemoteQuestion.toModel(): Question {
             id,
             title,
             questionNumber.toInt(),
-            time.toLong()
+            time.toLong(),
+            answers.toModels(questionType).first() as Answer.TextAnswer
         )
 
         RemoteQuestion.Type.Reorder -> Question.Order(
@@ -111,6 +116,20 @@ fun QuestionType.toRemote() = when (this) {
     QuestionType.REORDER -> RemoteQuestion.Type.Reorder
 }
 
+fun InputUserAnswerData.toRemote() = InputUserAnswerDataRemote(
+    questionId,
+    answerIds,
+    isCorrect,
+    spentTime
+)
+
+fun List<InputUserAnswerData>.toRemotes() = map(InputUserAnswerData::toRemote)
+
+fun TestPassResult.toRemote() = when (this) {
+    TestPassResult.SUCCESSFUL -> TestPassResultRemote.Successful
+    TestPassResult.FAILED -> TestPassResultRemote.Failed
+}
+
 private fun RemoteAnswer.toMatch(questionId: String) = Answer.MatchAnswer(
     id,
     questionId,
@@ -127,7 +146,8 @@ private fun RemoteAnswer.toChoice(questionId: String) = Answer.ChoiceAnswer(
 
 private fun RemoteAnswer.toText(questionId: String) = Answer.TextAnswer(
     id,
-    questionId
+    questionId,
+    text.orEmpty()
 )
 
 private fun RemoteAnswer.toReorder(questionId: String) = Answer.OrderAnswer(

@@ -6,6 +6,9 @@ import com.testeducation.logic.screen.tests.pass.result.TestPassResultState
 class TestPassResultReducer : IReducer<TestPassResultModelState, TestPassResultState> {
 
     override fun reduce(modelState: TestPassResultModelState): TestPassResultState {
-        return TestPassResultState()
+        return TestPassResultState(
+            trueAnswersCount = modelState.correctAnswers,
+            falseAnswersCount =modelState.incorrectAnswers
+        )
     }
 }

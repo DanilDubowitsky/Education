@@ -1,6 +1,7 @@
 package com.testeducation.converter.test.question
 
 import com.testeducation.converter.test.answer.toUIModels
+import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.domain.model.question.Question
 import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.helper.question.ITimeConverterLongToString
@@ -33,7 +34,7 @@ private fun Question.Choice.toUI(
     id,
     title,
     numberQuestion,
-    answers.toUIModels(answerColorExtractor, TestPassingModelState.PassingQuestion.AnswerState.NONE),
+    answers.toUIModels(answerColorExtractor, PassingQuestion.AnswerState.NONE),
     timeConverterLongToString.convert(time)
 )
 
@@ -44,7 +45,7 @@ private fun Question.Match.toUI(
     id,
     title,
     numberQuestion,
-    answers.toUIModels(answerColorExtractor, TestPassingModelState.PassingQuestion.AnswerState.NONE),
+    answers.toUIModels(answerColorExtractor, PassingQuestion.AnswerState.NONE),
     timeConverterLongToString.convert(time)
 )
 
@@ -55,7 +56,7 @@ private fun Question.Order.toUI(
     id,
     title,
     numberQuestion,
-    answers.toUIModels(answerColorExtractor, TestPassingModelState.PassingQuestion.AnswerState.NONE),
+    answers.toUIModels(answerColorExtractor, PassingQuestion.AnswerState.NONE),
     timeConverterLongToString.convert(time)
 )
 

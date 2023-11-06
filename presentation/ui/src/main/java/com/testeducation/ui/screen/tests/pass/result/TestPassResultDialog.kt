@@ -20,10 +20,7 @@ class TestPassResultDialog :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (dialog as AlertDialog).apply {
-            setCancelable(false)
-            setCanceledOnTouchOutside(false)
-        }
+        isCancelable = false
         observeData()
         setupListeners()
     }
@@ -32,9 +29,7 @@ class TestPassResultDialog :
         txtShopFullStatistic.setClickListener {
 
         }
-        btnReturnToMainPage.setClickListener {
-
-        }
+        btnReturnToMainPage.setClickListener(viewModel::returnToMainPage)
     }
 
     private fun observeData() = viewModel.observe(this, ::render)
@@ -42,9 +37,9 @@ class TestPassResultDialog :
     private fun render(state: TestPassResultState) = binding {
         txtTrueAnswersCount.text = state.trueAnswersCount.toString()
         txtFalseAnswersCount.text = state.falseAnswersCount.toString()
-        val falseText = resources.getQuantityString(R.plurals.mistakes, state.falseAnswersCount)
+        val falseText = resources.getQuantityText(R.plurals.mistakes, state.falseAnswersCount)
         val trueText =
-            resources.getQuantityString(R.plurals.correct_answers, state.trueAnswersCount)
+            resources.getQuantityText(R.plurals.correct_answers, state.trueAnswersCount)
         txtTrueAnswers.text = trueText
         txtFalseAnswers.text = falseText
     }

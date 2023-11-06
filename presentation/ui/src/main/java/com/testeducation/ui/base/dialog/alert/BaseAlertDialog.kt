@@ -1,5 +1,6 @@
 package com.testeducation.ui.base.dialog.alert
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,14 @@ abstract class BaseAlertDialog<VB : ViewBinding>(
     private var _binding: VB? = null
     protected val binding: VB
         get() = _binding!!
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState).apply {
+            this.window?.setBackgroundDrawableResource(
+                R.drawable.background_white_rounded_corners_20
+            )
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -38,7 +38,8 @@ fun QuestionEntity.toModel(answers: List<AnswerEntity>): Question {
             id,
             title,
             numberQuestion,
-            time
+            time,
+            answers.toModels(enumType).first() as Answer.TextAnswer
         )
 
         QuestionType.REORDER -> Question.Order(

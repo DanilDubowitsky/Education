@@ -3,14 +3,19 @@ package com.testeducation.screen.tests.pass
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.cases.test.PassTest
 import com.testeducation.domain.model.answer.Answer
+import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.domain.model.question.Question
-import com.testeducation.domain.utils.MINUTE_IN_MILLIS
+import com.testeducation.domain.model.question.TestPassResult
+import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.utils.SECOND_IN_MILLIS
 import com.testeducation.helper.answer.toPassingQuestions
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.pass.TestPassingSideEffect
 import com.testeducation.logic.screen.tests.pass.TestPassingState
+import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
@@ -25,8 +30,10 @@ private typealias Syntax = SimpleSyntax<TestPassingState, TestPassingSideEffect>
 class TestPassingViewModel(
     reducer: IReducer<TestPassingModelState, TestPassingState>,
     exceptionHandler: IExceptionHandler,
+    private val router: NavigationRouter,
     private val testId: String,
-    private val getTest: GetTest
+    private val getTest: GetTest,
+    private val passTest: PassTest
 ) : BaseViewModel<TestPassingModelState, TestPassingState, TestPassingSideEffect>(
     reducer,
     exceptionHandler
@@ -47,10 +54,10 @@ class TestPassingViewModel(
         }
     }
 
-    fun submitAnswer(questionRemainingTime: Long) = intent {
+    fun submitAnswer(questionRemainingTime: Long, testRemainingTime: Long) = intent {
         val currentQuestion = getModelState().currentQuestion ?: return@intent
         val isAnswered =
-            currentQuestion.state != TestPassingModelState.PassingQuestion.AnswerState.NONE
+            currentQuestion.state != PassingQuestion.AnswerState.NONE
         if (!isAnswered) {
             when (currentQuestion.question) {
                 is Question.Choice -> checkChoiceAnswer(questionRemainingTime)
@@ -59,7 +66,7 @@ class TestPassingViewModel(
                 is Question.Text -> applyTextAnswer(questionRemainingTime)
             }
         } else {
-            moveToNextQuestion()
+            moveToNextQuestion(testRemainingTime)
         }
     }
 
@@ -103,8 +110,66 @@ class TestPassingViewModel(
         }
     }
 
-    private fun applyTextAnswer(questionRemainingTime: Long) = intent {
+    fun completeTest(testRemainingTime: Long, isCheating: Boolean = false) = intent {
+        val modelState = getModelState()
+        val test = modelState.test ?: return@intent
+        val answers = modelState.questions.toInputAnswers()
+        val timeInMillis = test.settings.timeLimit * SECOND_IN_MILLIS
+        val spentTime = timeInMillis - testRemainingTime
 
+        val correctAnswersCount = answers.count(InputUserAnswerData::isCorrect)
+        val incorrectAnswersCount = answers.count {
+            !it.isCorrect
+        }
+
+        val isPassed = correctAnswersCount >= test.settings.minCorrectAnswers
+        val result = if (isPassed) {
+            TestPassResult.SUCCESSFUL
+        } else {
+            TestPassResult.FAILED
+        }
+        val resultScreen = NavigationScreen.Tests.Result(
+            correctAnswersCount,
+            incorrectAnswersCount,
+            isPassed
+        )
+
+        router.navigateTo(resultScreen, addToBackStack = false)
+
+        passTest(testId, answers, spentTime, isCheating, result)
+    }
+
+    private fun applyTextAnswer(questionRemainingTime: Long) = intent {
+        val modelState = getModelState()
+        val currentQuestion = modelState.currentQuestion ?: return@intent
+        val selectedQuestionState = modelState.selectedQuestionState.toText()
+        val spentTime = modelState.currentQuestion.question.time - questionRemainingTime
+        val questions = modelState.questions.toMutableList()
+        val answer = selectedQuestionState.question!!.answer
+        val answerCorrectText =
+            answer.correctText.trim().lowercase()
+
+        val correctState =
+            if (selectedQuestionState.answeredText.trim().lowercase() == answerCorrectText) {
+                PassingQuestion.AnswerState.CORRECT
+            } else {
+                PassingQuestion.AnswerState.INCORRECT
+            }
+
+        val newQuestion = currentQuestion.copy(
+            state = correctState,
+            timeSpent = spentTime,
+            answers = listOf(answer.id)
+        )
+
+        questions[modelState.currentQuestionIndex] = newQuestion
+
+        updateModelState {
+            copy(
+                currentQuestion = newQuestion,
+                questions = questions
+            )
+        }
     }
 
     private fun checkMatchAnswers(questionRemainingTime: Long) = intent {
@@ -118,9 +183,9 @@ class TestPassingViewModel(
             }
         }
         val answerState = if (isCorrect) {
-            TestPassingModelState.PassingQuestion.AnswerState.CORRECT
+            PassingQuestion.AnswerState.CORRECT
         } else {
-            TestPassingModelState.PassingQuestion.AnswerState.INCORRECT
+            PassingQuestion.AnswerState.INCORRECT
         }
         val spentTime = modelState.currentQuestion!!.question.time - questionRemainingTime
         val newQuestion = modelState.currentQuestion.copy(
@@ -128,8 +193,10 @@ class TestPassingViewModel(
             answers = state.question!!.answers.map(Answer::id),
             timeSpent = spentTime
         )
+        val questions = modelState.questions.toMutableList()
+        questions[modelState.currentQuestionIndex] = newQuestion
         updateModelState {
-            copy(currentQuestion = newQuestion)
+            copy(currentQuestion = newQuestion, questions = questions)
         }
     }
 
@@ -145,27 +212,34 @@ class TestPassingViewModel(
             }
         }
         val state = if (isCorrect) {
-            TestPassingModelState.PassingQuestion.AnswerState.CORRECT
+            PassingQuestion.AnswerState.CORRECT
         } else {
-            TestPassingModelState.PassingQuestion.AnswerState.INCORRECT
+            PassingQuestion.AnswerState.INCORRECT
         }
         val spentTime = modelState.currentQuestion!!.question.time - questionRemainingTime
+
+        val questions = modelState.questions.toMutableList()
+
         val newQuestion = modelState.currentQuestion.copy(
             state = state,
             answers = answers.map(Answer::id),
             timeSpent = spentTime
         )
+
+        questions[modelState.currentQuestionIndex] = newQuestion
+
         updateModelState {
-            copy(currentQuestion = newQuestion)
+            copy(currentQuestion = newQuestion, questions = questions)
         }
     }
 
-    private fun moveToNextQuestion() = intent {
+    private fun moveToNextQuestion(testRemainingTime: Long) = intent {
         val modelState = getModelState()
         val questionIndex = modelState.currentQuestionIndex + 1
 
         if (questionIndex >= modelState.questions.size) {
-
+            completeTest(testRemainingTime)
+            return@intent
         }
 
         val currentQuestion = modelState.questions[questionIndex]
@@ -195,18 +269,26 @@ class TestPassingViewModel(
         val index = questionState.selectedAnswerIndex ?: return
         val selectedAnswer = questionState.question?.answers?.get(index) ?: return
         val state = if (selectedAnswer.isTrue) {
-            TestPassingModelState.PassingQuestion.AnswerState.CORRECT
+            PassingQuestion.AnswerState.CORRECT
         } else {
-            TestPassingModelState.PassingQuestion.AnswerState.INCORRECT
+            PassingQuestion.AnswerState.INCORRECT
         }
         val spentTime = modelState.currentQuestion!!.question.time - remainingTime
+
+        val questions = modelState.questions.toMutableList()
+
         val newQuestion = modelState.currentQuestion.copy(
             state = state,
             answers = listOf(selectedAnswer.id),
             timeSpent = spentTime
         )
+        questions[modelState.currentQuestionIndex] = newQuestion
+
         updateModelState {
-            copy(currentQuestion = newQuestion)
+            copy(
+                questions = questions,
+                currentQuestion = newQuestion
+            )
         }
     }
 
@@ -216,6 +298,7 @@ class TestPassingViewModel(
         val currentQuestion = questions.first()
         updateModelState {
             copy(
+                test = test,
                 questions = questions,
                 currentQuestion = questions.first()
             )
@@ -224,37 +307,33 @@ class TestPassingViewModel(
         updateModelState {
             copy(selectedQuestionState = selectedQuestionState)
         }
-        if (test.settings.timeLimit != 0) {
-            val testEffect =
-                TestPassingSideEffect.StartTestTimer(60 * MINUTE_IN_MILLIS)
-            postSideEffect(testEffect)
-        }
 
+        val testEffect =
+            TestPassingSideEffect.StartTestTimer(test.settings.timeLimit * SECOND_IN_MILLIS)
+        postSideEffect(testEffect)
         val questionTime = currentQuestion.question.time
-        if (questionTime != 0L) {
-            val questionEffect = TestPassingSideEffect.StartQuestionTimer(questionTime)
-            postSideEffect(questionEffect)
-        }
+        val questionEffect = TestPassingSideEffect.StartQuestionTimer(questionTime)
+        postSideEffect(questionEffect)
     }
 
     private suspend fun Syntax.extractQuestionState(): TestPassingModelState.SelectedQuestionState {
         val modelState = getModelState()
-        val question = modelState.currentQuestion!!
-        return when (question.question) {
+        val currentQuestion = modelState.currentQuestion!!
+        return when (val question = currentQuestion.question) {
             is Question.Match -> TestPassingModelState.SelectedQuestionState.Match(
-                question = question.question,
-                matchData = question.question.answers.extractMatchData()
+                question = question,
+                matchData = question.answers.extractMatchData()
             )
 
             is Question.Choice -> TestPassingModelState.SelectedQuestionState.Choice(
-                question = question.question
+                question = question
             )
 
             is Question.Text -> TestPassingModelState.SelectedQuestionState.Text(
-                question = question.question
+                question = question
             )
             is Question.Order -> TestPassingModelState.SelectedQuestionState.Order(
-                question = question.question
+                question = question
             )
         }
     }
@@ -274,7 +353,16 @@ class TestPassingViewModel(
     private fun TestPassingModelState.SelectedQuestionState.toOrder(): TestPassingModelState.SelectedQuestionState.Order =
         this as TestPassingModelState.SelectedQuestionState.Order
 
+    private fun PassingQuestion.toInputAnswer() = InputUserAnswerData(
+        question.id,
+        answers,
+        isCorrect = state == PassingQuestion.AnswerState.CORRECT,
+        timeSpent
+    )
 
+    private fun List<PassingQuestion>.toInputAnswers() = map {
+        it.toInputAnswer()
+    }
 
     private companion object {
         fun getMockQuestions() = listOf(
@@ -318,7 +406,8 @@ class TestPassingViewModel(
                 "12",
                 "Вопрос со свободным ответом",
                 3,
-                60 * SECOND_IN_MILLIS
+                60 * SECOND_IN_MILLIS,
+                Answer.TextAnswer("1", "12", "aaa")
             ),
         )
     }

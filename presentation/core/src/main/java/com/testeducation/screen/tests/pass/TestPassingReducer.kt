@@ -2,6 +2,7 @@ package com.testeducation.screen.tests.pass
 
 import com.testeducation.converter.test.question.toUI
 import com.testeducation.core.IReducer
+import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.helper.answer.toPassingQuestion
 import com.testeducation.helper.question.ITimeConverterLongToString
@@ -16,7 +17,7 @@ class TestPassingReducer(
     override fun reduce(modelState: TestPassingModelState): TestPassingState {
         val currentState = modelState.selectedQuestionState
         val state = modelState.currentQuestion?.state
-            ?: TestPassingModelState.PassingQuestion.AnswerState.NONE
+            ?: PassingQuestion.AnswerState.NONE
         val answers = modelState.currentQuestion?.answers ?: emptyList()
         val timeSpent = modelState.currentQuestion?.timeSpent ?: 0L
         val choiceState = currentState as? TestPassingModelState.SelectedQuestionState.Choice

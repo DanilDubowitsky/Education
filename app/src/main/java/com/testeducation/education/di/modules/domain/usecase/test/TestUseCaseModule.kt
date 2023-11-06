@@ -5,6 +5,7 @@ import com.testeducation.domain.cases.test.CreateTest
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTestSettings
 import com.testeducation.domain.cases.test.GetTests
+import com.testeducation.domain.cases.test.PassTest
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.cases.test.UpdateTestSettings
 import com.testeducation.domain.cases.test.UpdateTestStyle
@@ -64,5 +65,11 @@ object TestUseCaseModule {
     fun provideChangeStatusTest(
         testRepository: ITestRepository
     ): ChangeStatusTest = ChangeStatusTest(testRepository)
+
+    @Provides
+    @Reusable
+    fun providePassTest(
+        testService: ITestService
+    ): PassTest = PassTest(testService)
 
 }

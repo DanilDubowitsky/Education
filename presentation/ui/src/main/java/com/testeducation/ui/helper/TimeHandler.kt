@@ -25,7 +25,7 @@ class TimeHandler {
         onUpdateListeners[key] = listener
     }
 
-    fun setOnExpireListener(key: Any?, listener: () -> Unit) {
+    fun setOnExpireListener(key: Any? = null, listener: () -> Unit) {
         onExpireListeners[key] = listener
     }
 

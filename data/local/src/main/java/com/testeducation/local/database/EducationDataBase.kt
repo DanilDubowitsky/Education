@@ -17,7 +17,8 @@ import com.testeducation.local.entity.theme.ThemeShortEntity
         QuestionEntity::class,
         AnswerEntity::class,
         TestLocalLiveTimeEntity::class
-    ], version = DATA_BASE_VERSION
+    ],
+    version = DATA_BASE_VERSION
 )
 abstract class EducationDataBase : RoomDatabase() {
 
@@ -27,6 +28,6 @@ abstract class EducationDataBase : RoomDatabase() {
 
     companion object {
         const val DATA_BASE_NAME = "EDUCATION_DATABASE"
-        const val DATA_BASE_VERSION = 1
+        const val DATA_BASE_VERSION = 2
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTests
+import com.testeducation.domain.cases.test.PassTest
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.cases.user.GetCurrentUser
@@ -60,6 +61,8 @@ interface TestPassingModule {
         @Provides
         fun provideViewModel(
             getTest: GetTest,
+            passTest: PassTest,
+            router: NavigationRouter,
             reducer: IReducer<TestPassingModelState, TestPassingState>,
             exceptionHandler: IExceptionHandler,
             fragment: TestPassingFragment
@@ -68,8 +71,10 @@ interface TestPassingModule {
             return TestPassingViewModel(
                 reducer,
                 exceptionHandler,
+                router,
                 testId,
-                getTest
+                getTest,
+                passTest
             )
         }
     }

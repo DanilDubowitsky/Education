@@ -1,11 +1,11 @@
 package com.testeducation.screen.tests.edit
 
+import com.testeducation.converter.test.answer.toInputAnswers
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.DeleteQuestion
 import com.testeducation.domain.cases.test.ChangeStatusTest
 import com.testeducation.domain.cases.test.GetTest
-import com.testeducation.domain.model.answer.convertToDomain
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionDetails
 import com.testeducation.domain.model.question.QuestionType
@@ -189,7 +189,7 @@ class TestEditorViewModel(
             is Question.Match -> itemQuestion.answers
             is Question.Order -> itemQuestion.answers
             is Question.Text -> emptyList()
-        }.convertToDomain()
+        }.toInputAnswers()
 
         if (answers.all { it is InputAnswer.OrderAnswer }) {
             answers = (answers as List<InputAnswer.OrderAnswer>).sortCompleted()

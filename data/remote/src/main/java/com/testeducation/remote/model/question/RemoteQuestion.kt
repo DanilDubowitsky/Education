@@ -2,7 +2,6 @@ package com.testeducation.remote.model.question
 
 import com.google.gson.annotations.SerializedName
 import com.testeducation.remote.model.answer.RemoteAnswer
-import com.testeducation.remote.request.question.AnswerCreateRequest
 
 data class RemoteQuestion(
     @SerializedName("id")

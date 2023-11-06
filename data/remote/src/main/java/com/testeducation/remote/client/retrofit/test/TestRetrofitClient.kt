@@ -6,6 +6,7 @@ import com.testeducation.remote.model.test.RemotePage
 import com.testeducation.remote.model.test.RemoteTest
 import com.testeducation.remote.model.test.RemoteTestSettingsItem
 import com.testeducation.remote.model.test.RemoteTestShort
+import com.testeducation.remote.request.test.PassTestRequest
 import com.testeducation.remote.request.test.TestCreationRequest
 import com.testeducation.remote.request.test.TestStyleRequest
 import retrofit2.http.Body
@@ -105,4 +106,7 @@ interface TestRetrofitClient {
 
     @POST("/api/app/content/tests/{testId}/unpublish")
     suspend fun draft(@Path("testId") id: String) : RemoteResponse<Unit>
+
+    @POST("/api/app/account/tests/passes")
+    suspend fun passTest(@Body passTestRequest: PassTestRequest) : RemoteResponse<Unit>
 }
