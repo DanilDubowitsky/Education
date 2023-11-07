@@ -67,6 +67,11 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.increaseResumeCount(testTimer.getRemainingTime())
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
@@ -106,8 +111,6 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private fun render(state: TestPassingState) = binding {
         txtQuestion.text = state.currentQuestion?.title
         answersOrderingRecycler.isGone = state.matchData.isEmpty()
-
-        println("CURRENT_QUESTION: ${state.currentQuestion}")
 
         if (answersMatchAdapter.items != state.matchData) {
             answersMatchAdapter.items = state.matchData
@@ -184,6 +187,9 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         val dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
         testTimer.setOnUpdateListener { remainingTime ->
             txtTotalTime.text = dateFormatter.format(remainingTime)
+        }
+        testTimer.setOnExpireListener {
+            viewModel.completeTest(testTimer.getRemainingTime())
         }
         testTimer.start(time, TIME_INTERVAL)
     }

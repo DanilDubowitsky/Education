@@ -13,7 +13,8 @@ class TestPassResultViewModel(
     exceptionHandler: IExceptionHandler,
     private val router: NavigationRouter,
     correctAnswers: Int,
-    incorrectAnswers: Int
+    incorrectAnswers: Int,
+    isSuccess: Boolean
 ) : BaseViewModel<TestPassResultModelState, TestPassResultState, TestPassResultSideEffect>(
         reducer,
         exceptionHandler
@@ -21,7 +22,8 @@ class TestPassResultViewModel(
 
     override val initialModelState: TestPassResultModelState = TestPassResultModelState(
         correctAnswers = correctAnswers,
-        incorrectAnswers = incorrectAnswers
+        incorrectAnswers = incorrectAnswers,
+        isSuccess = isSuccess
     )
 
     fun openFullStatistic() = intent {
@@ -29,7 +31,6 @@ class TestPassResultViewModel(
     }
 
     fun returnToMainPage() = intent {
-        router.exit()
         router.exit()
     }
 

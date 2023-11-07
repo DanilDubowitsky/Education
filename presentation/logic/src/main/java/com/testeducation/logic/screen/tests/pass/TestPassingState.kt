@@ -6,7 +6,8 @@ data class TestPassingState(
     val currentQuestion: QuestionUI?,
     val matchData: List<MatchDataUI>,
     val currentQuestionPosition: Int,
-    val questionsCount: Int
+    val questionsCount: Int,
+    val isAntiCheating: Boolean
 ) {
     data class MatchDataUI(
         val text: String,

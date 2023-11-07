@@ -35,6 +35,10 @@ class TestPassResultDialog :
     private fun observeData() = viewModel.observe(this, ::render)
 
     private fun render(state: TestPassResultState) = binding {
+        if (!state.isSuccess) {
+            txtTitle.text = getString(R.string.test_pass_test_failed_title)
+            imgIndicator.setImageResource(R.drawable.ic_negative_pass)
+        }
         txtTrueAnswersCount.text = state.trueAnswersCount.toString()
         txtFalseAnswersCount.text = state.falseAnswersCount.toString()
         val falseText = resources.getQuantityText(R.plurals.mistakes, state.falseAnswersCount)

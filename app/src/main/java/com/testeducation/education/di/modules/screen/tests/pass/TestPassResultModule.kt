@@ -43,7 +43,8 @@ interface TestPassResultModule {
                 exceptionHandler,
                 router,
                 screen.correctAnswers,
-                screen.incorrectAnswers
+                screen.incorrectAnswers,
+                screen.isSuccess
             )
         }
     }

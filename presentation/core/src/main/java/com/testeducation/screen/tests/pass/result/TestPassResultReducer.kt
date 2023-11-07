@@ -8,7 +8,8 @@ class TestPassResultReducer : IReducer<TestPassResultModelState, TestPassResultS
     override fun reduce(modelState: TestPassResultModelState): TestPassResultState {
         return TestPassResultState(
             trueAnswersCount = modelState.correctAnswers,
-            falseAnswersCount =modelState.incorrectAnswers
+            falseAnswersCount = modelState.incorrectAnswers,
+            isSuccess = modelState.isSuccess
         )
     }
 }

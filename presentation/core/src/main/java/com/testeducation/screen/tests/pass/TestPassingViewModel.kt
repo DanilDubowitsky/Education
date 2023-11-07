@@ -41,8 +41,6 @@ class TestPassingViewModel(
 
     override val initialModelState: TestPassingModelState = TestPassingModelState()
 
-    private val mutex = Mutex()
-
     init {
         loadData()
     }
@@ -137,6 +135,19 @@ class TestPassingViewModel(
         router.navigateTo(resultScreen, addToBackStack = false)
 
         passTest(testId, answers, spentTime, isCheating, result)
+    }
+
+    fun increaseResumeCount(testRemainingTime: Long) = intent {
+        val modelState = getModelState()
+        val test = modelState.test ?: return@intent
+        if (!test.settings.antiCheating) return@intent
+        val newResumeCount = modelState.resumeCount + 1
+        if (newResumeCount >= CHEAT_RESUME_COUNT) {
+            completeTest(testRemainingTime, isCheating = true)
+        }
+        updateModelState {
+            copy(resumeCount = newResumeCount)
+        }
     }
 
     private fun applyTextAnswer(questionRemainingTime: Long) = intent {
@@ -266,7 +277,7 @@ class TestPassingViewModel(
     private suspend fun Syntax.checkChoiceAnswer(remainingTime: Long) {
         val modelState = getModelState()
         val questionState = modelState.selectedQuestionState.toChoice()
-        val index = questionState.selectedAnswerIndex ?: return
+        val index = questionState.selectedAnswerIndex ?: 0
         val selectedAnswer = questionState.question?.answers?.get(index) ?: return
         val state = if (selectedAnswer.isTrue) {
             PassingQuestion.AnswerState.CORRECT
@@ -294,7 +305,7 @@ class TestPassingViewModel(
 
     private fun loadData() = intent {
         val test = getTest(testId)
-        val questions = getMockQuestions().toPassingQuestions()
+        val questions = test.questions.toPassingQuestions()
         val currentQuestion = questions.first()
         updateModelState {
             copy(
@@ -365,6 +376,7 @@ class TestPassingViewModel(
     }
 
     private companion object {
+        const val CHEAT_RESUME_COUNT = 1
         fun getMockQuestions() = listOf(
             Question.Choice(
                 "12332",

@@ -16,6 +16,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
+        android:paddingEnd="25dp"
         android:textColor="@color/colorWhite"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,6 +29,9 @@
         android:id="@+id/checkBoxAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:buttonTint="@color/colorWhite"
+        android:button="@drawable/background_checkbox"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
