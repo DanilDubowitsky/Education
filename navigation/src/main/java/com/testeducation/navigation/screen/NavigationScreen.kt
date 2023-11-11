@@ -77,6 +77,8 @@ sealed interface NavigationScreen : Serializable {
 
         object LikedTests : Main
 
+        object Profile : Main
+
         object Library : Main
     }
 
@@ -157,7 +159,8 @@ sealed interface NavigationScreen : Serializable {
         // TODO: move to class
         object OnTimeQuestionChanged : ResultKey<Long>
 
-        data class AnswerInput(val answerText: String, val color: Int, val firstAnswer: Boolean) : Questions {
+        data class AnswerInput(val answerText: String, val color: Int, val firstAnswer: Boolean) :
+            Questions {
             object OnAnswerInput : ResultKey<OnAnswerInput.Result> {
                 data class Result(
                     val answerText: String,

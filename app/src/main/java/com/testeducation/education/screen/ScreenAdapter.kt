@@ -13,6 +13,7 @@ import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.profile.ProfileFragment
 import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
@@ -100,6 +101,10 @@ class ScreenAdapter : IScreenAdapter {
 
         NavigationScreen.Main.LikedTests -> Screen.FragmentScreen {
             LikedTestsFragment()
+        }
+
+        NavigationScreen.Main.Profile -> Screen.FragmentScreen {
+            ProfileFragment()
         }
 
         NavigationScreen.Main.Library -> Screen.FragmentScreen {
