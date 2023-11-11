@@ -1,13 +1,15 @@
 package com.testeducation.core.service.test
 
 import com.testeducation.core.client.remote.test.ITestRemoteClient
+import com.testeducation.core.source.local.question.IAnsweredQuestionLocalSource
 import com.testeducation.domain.model.question.TestPassResult
 import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.model.test.TestCreationShort
 import com.testeducation.domain.service.test.ITestService
 
 class TestService(
-    private val testRemoteClient: ITestRemoteClient
+    private val testRemoteClient: ITestRemoteClient,
+    private val answeredQuestionLocalSource: IAnsweredQuestionLocalSource
 ) : ITestService {
 
     override suspend fun toggleTestLike(id: String, liked: Boolean) =
@@ -31,11 +33,14 @@ class TestService(
         spentTime: Long,
         isCheating: Boolean,
         result: TestPassResult
-    ) = testRemoteClient.passTest(
-        testId,
-        answers,
-        spentTime,
-        isCheating,
-        result
-    )
+    ) {
+        testRemoteClient.passTest(
+            testId,
+            answers,
+            spentTime,
+            isCheating,
+            result
+        )
+        answeredQuestionLocalSource.addAnsweredQuestions(testId, answers)
+    }
 }

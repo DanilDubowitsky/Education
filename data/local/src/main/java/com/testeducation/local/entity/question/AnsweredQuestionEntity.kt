@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 data class AnsweredQuestionEntity(
     @PrimaryKey
     val questionId: String,
+    val testId: String,
     val answeredIds: List<String>,
-    val type: String
+    val answerState: String,
+    val customAnswer: String?
 )

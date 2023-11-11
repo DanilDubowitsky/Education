@@ -26,6 +26,7 @@ import com.testeducation.ui.helper.TimeHandler
 import com.testeducation.ui.listener.QuestionItemTouchHelperCallback
 import com.testeducation.ui.listener.drag.DragStartListener
 import com.testeducation.ui.listener.drag.IDragStartListener
+import com.testeducation.ui.utils.animateTranslationXAndAlpha
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.loadColor
@@ -44,6 +45,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
 
     private val questionTimer = TimeHandler()
     private val testTimer = TimeHandler()
+    private var currentQuestionId: String? = null
 
     private val answersAdapter by lazy {
         AsyncListDifferDelegationAdapter(
@@ -105,20 +107,13 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         answerText.addTextChangedListener {
             viewModel.onAnswerTextChanged(answerText.trimmedTextOrEmpty)
         }
+        btnClose.setClickListener(viewModel::exit)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun render(state: TestPassingState) = binding {
-        txtQuestion.text = state.currentQuestion?.title
-        answersOrderingRecycler.isGone = state.matchData.isEmpty()
-
-        if (answersMatchAdapter.items != state.matchData) {
-            answersMatchAdapter.items = state.matchData
-            answersMatchAdapter.notifyDataSetChanged()
-        }
-
         if (state.currentQuestion != null) {
-            renderAnswers(state.currentQuestion!!)
+            renderAnswers(state.currentQuestion!!, state.matchData)
             bindQuestionAnswerStatus(state.currentQuestion!!)
             btnAnswer.text = if (state.currentQuestion!!.isAnswered()) {
                 getString(R.string.test_pass_next_label)
@@ -165,18 +160,41 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         }
     }
 
-    private fun renderAnswers(question: QuestionUI) = binding {
-        answersOrderingRecycler.isGone =
-            question !is QuestionUI.Order && question !is QuestionUI.Match
-        answersRecycler.isGone = question is QuestionUI.Text
-        answerText.isVisible = question is QuestionUI.Text
-
-        when (question) {
-            is QuestionUI.Choice -> answersAdapter.items = question.answers
-            is QuestionUI.Match -> answersAdapter.items = question.answers
-            is QuestionUI.Order -> answersAdapter.items = question.answers
-            is QuestionUI.Text -> {}
+    private fun renderAnswers(
+        question: QuestionUI,
+        matchData: List<TestPassingState.MatchDataUI>
+    ) = binding {
+        fun setAnswersData() {
+            txtQuestion.text = question.title
+            when (question) {
+                is QuestionUI.Choice -> answersAdapter.items = question.answers
+                is QuestionUI.Match -> answersAdapter.items = question.answers
+                is QuestionUI.Order -> answersAdapter.items = question.answers
+                is QuestionUI.Text -> {}
+            }
+            if (answersMatchAdapter.items != matchData) {
+                answersMatchAdapter.items = matchData
+                answersMatchAdapter.notifyDataSetChanged()
+            }
+            answersOrderingRecycler.isGone =
+                question !is QuestionUI.Order && question !is QuestionUI.Match
+            answersRecycler.isGone = question is QuestionUI.Text
+            answerText.isVisible = question is QuestionUI.Text
         }
+
+        if (currentQuestionId != null && currentQuestionId != question.id) {
+            rootScroll.animateTranslationXAndAlpha(
+                ANIMATION_DURATION,
+                -TRANSLATION_X,
+                0f
+            ) {
+                setAnswersData()
+                rootScroll.animateTranslationXAndAlpha(ANIMATION_DURATION, 0f, 1f)
+            }
+        } else {
+            setAnswersData()
+        }
+        currentQuestionId = question.id
     }
 
     private fun FragmentTestPassBinding.startTest(time: Long) {
@@ -184,7 +202,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
             txtTotalTime.text = INFINITY_SYMBOL.toString()
             return
         }
-        val dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
+        val dateFormatter = SimpleDateFormat(MINUTES_SECONDS_FORMAT, Locale.getDefault())
         testTimer.setOnUpdateListener { remainingTime ->
             txtTotalTime.text = dateFormatter.format(remainingTime)
         }
@@ -200,7 +218,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
             timeQuestionProgress.setProgress(100, true)
             return
         }
-        val dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
+        val dateFormatter = SimpleDateFormat(MINUTES_SECONDS_FORMAT, Locale.getDefault())
         questionTimer.setOnUpdateListener { remainingTime ->
             val progress = (remainingTime.toFloat() / time.toFloat()) * 100
             timeQuestionProgress.setProgress(progress.toInt(), true)
@@ -223,7 +241,10 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
 
     private companion object {
         const val TIME_INTERVAL = 1000L
+        const val TRANSLATION_X = 100f
+        const val ANIMATION_DURATION = 200L
         const val INFINITY_SYMBOL = '\u221e'
+        const val MINUTES_SECONDS_FORMAT = "mm:ss"
     }
 
 }

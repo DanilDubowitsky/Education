@@ -22,5 +22,4 @@ interface ITestService {
         isCheating: Boolean,
         result: TestPassResult
     )
-
 }

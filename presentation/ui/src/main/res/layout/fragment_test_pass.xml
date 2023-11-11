@@ -7,7 +7,7 @@
     android:background="@color/colorBackground">
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/appCompatImageButton"
+        android:id="@+id/btnClose"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
@@ -42,10 +42,10 @@
         android:paddingHorizontal="24dp"
         android:paddingVertical="8dp"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageButton"
+        app:layout_constraintBottom_toBottomOf="@+id/btnClose"
         app:layout_constraintEnd_toStartOf="@+id/txtQuestionTime"
-        app:layout_constraintStart_toEndOf="@+id/appCompatImageButton"
-        app:layout_constraintTop_toTopOf="@+id/appCompatImageButton"
+        app:layout_constraintStart_toEndOf="@+id/btnClose"
+        app:layout_constraintTop_toTopOf="@+id/btnClose"
         tools:text="1 / 25" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -75,9 +75,9 @@
         android:textSize="16sp"
         app:drawableStartCompat="@drawable/ic_bold_timer"
         app:drawableTint="@color/colorTextPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageButton"
+        app:layout_constraintBottom_toBottomOf="@+id/btnClose"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/appCompatImageButton"
+        app:layout_constraintTop_toTopOf="@+id/btnClose"
         tools:text="0:30" />
 
     <TextView
@@ -89,8 +89,8 @@
         android:text="@string/test_pass_test_time_remaining"
         android:textColor="@color/colorTextGray"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/appCompatImageButton"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageButton" />
+        app:layout_constraintStart_toStartOf="@+id/btnClose"
+        app:layout_constraintTop_toBottomOf="@+id/btnClose" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txtTotalTime"

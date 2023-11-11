@@ -13,7 +13,8 @@ fun Question.toPassingQuestion(
     question = this,
     state = state,
     answers = answers,
-    timeSpent = spentTime
+    timeSpent = spentTime,
+    customAnswer = ""
 )
 
 fun List<Question>.toPassingQuestions() = map { question ->

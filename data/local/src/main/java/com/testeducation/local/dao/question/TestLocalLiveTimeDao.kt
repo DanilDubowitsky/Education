@@ -13,5 +13,5 @@ interface TestLocalLiveTimeDao {
     suspend fun insertOrUpdate(entity: TestLocalLiveTimeEntity)
 
     @Query("SELECT lastCacheTime FROM TestLocalLiveTimeEntity WHERE testId = :testId")
-    suspend fun getTestLiveTime(testId: String): kotlin.Long?
+    suspend fun getTestLiveTime(testId: String): Long?
 }

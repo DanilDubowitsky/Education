@@ -17,7 +17,6 @@ import com.testeducation.logic.screen.tests.pass.TestPassingState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -115,9 +114,11 @@ class TestPassingViewModel(
         val timeInMillis = test.settings.timeLimit * SECOND_IN_MILLIS
         val spentTime = timeInMillis - testRemainingTime
 
-        val correctAnswersCount = answers.count(InputUserAnswerData::isCorrect)
+        val correctAnswersCount = answers.count {
+            it.isCorrect != null && it.isCorrect!!
+        }
         val incorrectAnswersCount = answers.count {
-            !it.isCorrect
+            it.isCorrect != null && !it.isCorrect!!
         }
 
         val isPassed = correctAnswersCount >= test.settings.minCorrectAnswers
@@ -156,21 +157,10 @@ class TestPassingViewModel(
         val selectedQuestionState = modelState.selectedQuestionState.toText()
         val spentTime = modelState.currentQuestion.question.time - questionRemainingTime
         val questions = modelState.questions.toMutableList()
-        val answer = selectedQuestionState.question!!.answer
-        val answerCorrectText =
-            answer.correctText.trim().lowercase()
-
-        val correctState =
-            if (selectedQuestionState.answeredText.trim().lowercase() == answerCorrectText) {
-                PassingQuestion.AnswerState.CORRECT
-            } else {
-                PassingQuestion.AnswerState.INCORRECT
-            }
 
         val newQuestion = currentQuestion.copy(
-            state = correctState,
             timeSpent = spentTime,
-            answers = listOf(answer.id)
+            customAnswer = selectedQuestionState.answeredText
         )
 
         questions[modelState.currentQuestionIndex] = newQuestion
@@ -364,15 +354,27 @@ class TestPassingViewModel(
     private fun TestPassingModelState.SelectedQuestionState.toOrder(): TestPassingModelState.SelectedQuestionState.Order =
         this as TestPassingModelState.SelectedQuestionState.Order
 
-    private fun PassingQuestion.toInputAnswer() = InputUserAnswerData(
-        question.id,
-        answers,
-        isCorrect = state == PassingQuestion.AnswerState.CORRECT,
-        timeSpent
-    )
+    private fun PassingQuestion.toInputAnswer(): InputUserAnswerData {
+        val isCorrect = if (question is Question.Text) {
+            null
+        } else {
+            state == PassingQuestion.AnswerState.CORRECT
+        }
+        return InputUserAnswerData(
+            question.id,
+            answers,
+            isCorrect,
+            timeSpent,
+            customAnswer
+        )
+    }
 
     private fun List<PassingQuestion>.toInputAnswers() = map {
         it.toInputAnswer()
+    }
+
+    fun exit() = intent {
+        router.exit()
     }
 
     private companion object {
@@ -418,8 +420,7 @@ class TestPassingViewModel(
                 "12",
                 "Вопрос со свободным ответом",
                 3,
-                60 * SECOND_IN_MILLIS,
-                Answer.TextAnswer("1", "12", "aaa")
+                60 * SECOND_IN_MILLIS
             ),
         )
     }

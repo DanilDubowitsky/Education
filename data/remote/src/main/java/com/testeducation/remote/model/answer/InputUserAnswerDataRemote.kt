@@ -8,7 +8,9 @@ data class InputUserAnswerDataRemote(
     @SerializedName("answers")
     val answerIds: List<String>,
     @SerializedName("is_currectly")
-    val isCorrect: Boolean,
+    val isCorrect: Boolean?,
     @SerializedName("time_spent")
-    val spentTime: Long
+    val spentTime: Long,
+    @SerializedName("custom_answer")
+    val customAnswer: String?
 )

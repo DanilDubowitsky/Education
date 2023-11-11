@@ -79,8 +79,7 @@ fun RemoteQuestion.toModel(): Question {
             id,
             title,
             questionNumber.toInt(),
-            time.toLong(),
-            answers.toModels(questionType).first() as Answer.TextAnswer
+            time.toLong()
         )
 
         RemoteQuestion.Type.Reorder -> Question.Order(
@@ -120,7 +119,8 @@ fun InputUserAnswerData.toRemote() = InputUserAnswerDataRemote(
     questionId,
     answerIds,
     isCorrect,
-    spentTime
+    spentTime,
+    customAnswer
 )
 
 fun List<InputUserAnswerData>.toRemotes() = map(InputUserAnswerData::toRemote)
