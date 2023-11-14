@@ -6,7 +6,9 @@ import com.testeducation.logic.screen.profile.ProfileState
 class ProfileReducer: IReducer<ProfileModelState, ProfileState> {
     override fun reduce(modelState: ProfileModelState): ProfileState {
         return ProfileState(
-            userName = modelState.user?.userName.orEmpty()
+            userName = modelState.user?.userName.orEmpty(),
+            createdTestCount = modelState.userStatistics?.createdTestCount ?: 0,
+            passedTestCount = modelState.userStatistics?.createdTestCount ?: 0
         )
     }
 }

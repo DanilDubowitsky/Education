@@ -24,5 +24,7 @@ class ProfileFragment: ViewModelHostFragment<ProfileViewModel, FragmentProfileBi
 
     private fun render(state: ProfileState) = binding {
         tvUserName.text = state.userName
+        tvCreatedTest.text = state.createdTestCount.toString()
+        tvPassTest.text = state.passedTestCount.toString()
     }
 }

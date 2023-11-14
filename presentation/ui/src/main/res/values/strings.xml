@@ -142,4 +142,7 @@
     <string name="question_creation_validate_min_count_answer">Минимальное количество ответов на вопрос должно быть равно %s-м</string>
     <string name="question_creation_validate_min_one_true_answer">Необходимо выбрать хотя бы один правильный ответ</string>
     <string name="question_creation_validate_answer_is_empty">В вопросе не должны присуствовать ответы с пустым содержанием</string>
+
+    <!--Profile-->
+    <string name="profile_my_data">Мои данные</string>
 </resources>

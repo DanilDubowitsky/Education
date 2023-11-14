@@ -1,9 +1,12 @@
 package com.testeducation.core.source.remote.user
 
 import com.testeducation.domain.model.user.User
+import com.testeducation.domain.model.user.UserStatistics
 
 interface IUserRemoteSource {
 
     suspend fun getCurrentUser(): User
+
+    suspend fun getUserStatistics(): UserStatistics
 
 }

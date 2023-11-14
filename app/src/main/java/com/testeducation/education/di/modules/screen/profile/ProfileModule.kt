@@ -3,6 +3,7 @@ package com.testeducation.education.di.modules.screen.profile
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.user.GetCurrentUser
+import com.testeducation.domain.cases.user.GetUserStatistics
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
@@ -34,10 +35,11 @@ interface ProfileModule {
             router: NavigationRouter,
             reducer: IReducer<ProfileModelState, ProfileState>,
             errorHandler: IExceptionHandler,
-            getCurrentUser: GetCurrentUser
+            getCurrentUser: GetCurrentUser,
+            getUserStatistics: GetUserStatistics
         ): ProfileViewModel {
             return ProfileViewModel(
-                router, resourceHelper, reducer, errorHandler, getCurrentUser
+                router, resourceHelper, reducer, errorHandler, getCurrentUser, getUserStatistics
             )
         }
     }
