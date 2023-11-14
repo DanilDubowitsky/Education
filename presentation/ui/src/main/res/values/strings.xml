@@ -158,5 +158,6 @@
 
     <string name="test_pass_results_title">Результаты теста</string>
     <string name="test_pass_results_answer">Ответ:</string>
+    <string name="test_pass_results_correct_answer">Правильно:</string>
 
 </resources>

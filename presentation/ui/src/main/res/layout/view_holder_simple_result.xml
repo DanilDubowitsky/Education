@@ -30,28 +30,37 @@
         tools:text="1. Назовите дату начала Великой Отечественной войны?" />
 
     <TextView
+        android:id="@+id/txtTrueAnswer"
+        style="@style/Text.Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/txtTitle"
+        android:text="@string/test_pass_results_correct_answer"
+        app:layout_constraintTop_toBottomOf="@+id/txtAnswerIndicator"
+        tools:textColor="@color/colorDarkGreen" />
+
+    <TextView
         android:id="@+id/txtAnswerIndicator"
         style="@style/Text.Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="14sp"
-        android:text="@string/test_pass_results_answer"
         app:layout_constraintStart_toStartOf="@+id/txtTitle"
+        android:text="@string/test_pass_results_answer"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle"
         tools:textColor="@color/colorDarkGreen" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/themeChips"
+        android:id="@+id/answerChipGroup"
         android:layout_width="0dp"
-        app:layout_constraintTop_toTopOf="@+id/txtAnswerIndicator"
-        app:layout_constraintBottom_toBottomOf="@+id/txtAnswerIndicator"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/txtAnswerIndicator"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="8dp"
-        app:chipSpacingHorizontal="16dp"
-        app:chipSpacingVertical="4dp"
-        app:singleSelection="true" />
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toStartOf="@+id/txtAnswerIndicator"
+        app:layout_constraintTop_toTopOf="@+id/txtAnswerIndicator" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

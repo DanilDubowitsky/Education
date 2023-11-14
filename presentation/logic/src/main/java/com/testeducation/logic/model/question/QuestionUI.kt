@@ -7,14 +7,14 @@ sealed interface QuestionUI {
     val title: String
     val numberQuestion: Int
     val time: String
-    val answerState: AnswerState
+    val answerState: AnswerStateUI
 
     data class Choice(
         override val id: String,
         override val title: String,
         override val numberQuestion: Int,
         override val time: String,
-        override val answerState: AnswerState,
+        override val answerState: AnswerStateUI,
         val answers: List<AnswerUI.ChoiceAnswer>,
     ) : QuestionUI
 
@@ -22,7 +22,7 @@ sealed interface QuestionUI {
         override val id: String,
         override val title: String,
         override val numberQuestion: Int,
-        override val answerState: AnswerState,
+        override val answerState: AnswerStateUI,
         override val time: String,
     ) : QuestionUI
 
@@ -31,7 +31,7 @@ sealed interface QuestionUI {
         override val title: String,
         override val numberQuestion: Int,
         override val time: String,
-        override val answerState: AnswerState,
+        override val answerState: AnswerStateUI,
         val answers: List<AnswerUI.MatchAnswer>,
     ) : QuestionUI
 
@@ -40,13 +40,7 @@ sealed interface QuestionUI {
         override val title: String,
         override val numberQuestion: Int,
         override val time: String,
-        override val answerState: AnswerState,
+        override val answerState: AnswerStateUI,
         val answers: List<AnswerUI.OrderAnswer>,
     ) : QuestionUI
-
-    enum class AnswerState {
-        CORRECT,
-        INCORRECT,
-        NONE
-    }
 }

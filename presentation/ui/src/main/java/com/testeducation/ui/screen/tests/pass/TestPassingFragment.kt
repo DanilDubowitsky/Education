@@ -10,6 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
+import com.testeducation.logic.model.question.AnswerStateUI
 import com.testeducation.logic.model.question.QuestionUI
 import com.testeducation.logic.model.test.AnswerUI
 import com.testeducation.logic.screen.tests.pass.TestPassingSideEffect
@@ -130,7 +131,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
             questionsProgress.setProgress(progress.toInt(), true)
         }
         answerStatusLayout.isGone =
-            state.currentQuestion?.answerState == QuestionUI.AnswerState.NONE
+            state.currentQuestion?.answerState == AnswerStateUI.NONE
     }
 
     private fun FragmentTestPassBinding.bindQuestionAnswerStatus(questionUI: QuestionUI) {
@@ -138,7 +139,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         val statusImage: Drawable?
         val textColor: Int
         val statusText: String
-        if (questionUI.answerState == QuestionUI.AnswerState.CORRECT) {
+        if (questionUI.answerState == AnswerStateUI.CORRECT) {
             statusImage = requireContext().loadDrawable(R.drawable.ic_correct_answer)
             textColor = requireContext().loadColor(R.color.colorDarkGreen)
             statusText = getString(R.string.test_pass_correct_label)
@@ -151,7 +152,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         txtAnswerStatus.setTextColor(textColor)
         imgCorrectIndicator.setImageDrawable(statusImage)
         if (questionUI is QuestionUI.Choice) {
-            txtCorrectAnswer.isVisible = questionUI.answerState == QuestionUI.AnswerState.INCORRECT
+            txtCorrectAnswer.isVisible = questionUI.answerState == AnswerStateUI.INCORRECT
             val correctText = questionUI.answers.first { choiceAnswer ->
                 choiceAnswer.isTrue
             }.title
@@ -231,7 +232,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         questionTimer.start(time, TIME_INTERVAL)
     }
 
-    private fun QuestionUI.isAnswered() = answerState != QuestionUI.AnswerState.NONE
+    private fun QuestionUI.isAnswered() = answerState != AnswerStateUI.NONE
 
     override fun onDestroy() {
         questionTimer.release()
@@ -246,5 +247,4 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         const val INFINITY_SYMBOL = '\u221e'
         const val MINUTES_SECONDS_FORMAT = "mm:ss"
     }
-
 }

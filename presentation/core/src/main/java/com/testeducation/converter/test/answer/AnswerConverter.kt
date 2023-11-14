@@ -27,6 +27,10 @@ fun List<Answer>.toUIModels(
     }
 }
 
+fun List<Answer>.toSimpleUIModels() = map { answer ->
+    answer.toUI(0, null)
+}
+
 fun List<Answer>.toInputAnswers(getColor: ((Int) -> Int)? = null, getTrueColor: ((Boolean) -> Int)? = null) =
     mapIndexed { index, itemAnswer ->
         when (itemAnswer) {

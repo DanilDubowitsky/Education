@@ -21,6 +21,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
+import com.testeducation.logic.model.test.AnswerUI
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.ui.R
 
@@ -146,10 +147,9 @@ fun ChipGroup.addThemes(
 }
 
 fun Button.switchHalfVisibleState(isVisible: Boolean) {
-    alpha = if (!isVisible){
+    alpha = if (!isVisible) {
         0.5f
-    }
-    else 1f
+    } else 1f
     isEnabled = isVisible
 }
 
