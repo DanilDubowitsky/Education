@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/colorTextPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/Text.Title1"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/profile_edit_toolbar_title"
+            app:layout_constraintStart_toEndOf="@+id/back"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:background="@drawable/ic_profile_avatar" />
+
+    <TextView
+        android:id="@+id/tvChangeAvatar"
+        style="@style/Text.Default"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_70"
+        android:text="@string/profile_edit_change_avatar"
+        app:layout_constraintEnd_toEndOf="@+id/imgAvatar"
+        app:layout_constraintStart_toStartOf="@+id/imgAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/imgAvatar" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvChangeAvatar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerProfileEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvNicknameTitle"
+                style="@style/Text.Title1"
+                android:text="@string/profile_edit_nick_title"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"/>
+
+            <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                android:id="@+id/edNickName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintTop_toBottomOf="@id/tvNicknameTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <EditText
+                    android:id="@+id/editTextNickName"
+                    style="@style/EditText.Input.Simple"
+                    android:layout_width="match_parent"
+                    android:enabled="false"
+                    android:layout_height="wrap_content" />
+
+            </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+            <TextView
+                android:id="@+id/tvEmailTitle"
+                style="@style/Text.Title1"
+                android:text="@string/profile_edit_email_title"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/edNickName"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"/>
+
+            <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                android:id="@+id/edEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmailTitle">
+
+                <EditText
+                    android:id="@+id/editTextEmail"
+                    style="@style/EditText.Input.Simple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:inputType="textEmailAddress" />
+
+            </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+            <TextView
+                android:id="@+id/tvPasswordTitle"
+                style="@style/Text.Title1"
+                android:text="Пароль"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/edEmail"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"/>
+
+            <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                android:id="@+id/edPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPasswordTitle">
+
+                <EditText
+                    android:id="@+id/editTextPassword"
+                    style="@style/EditText.Input.Simple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:inputType="textPassword" />
+
+            </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogOut"
+                style="@style/Button.Normal.Gray"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/profile_edit_log_out"
+                app:layout_constraintBottom_toTopOf="@+id/btnDeleteAccount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDeleteAccount"
+                style="@style/Button.Outline.Red"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="32dp"
+                android:text="@string/profile_edit_delete_account"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

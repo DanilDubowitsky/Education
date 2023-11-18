@@ -10,6 +10,7 @@ import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.profile.ProfileSideEffect
 import com.testeducation.logic.screen.profile.ProfileState
 import com.testeducation.navigation.core.NavigationRouter
+import com.testeducation.navigation.screen.NavigationScreen
 import kotlinx.coroutines.async
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -25,6 +26,10 @@ class ProfileViewModel(
 
     init {
         initDataProfile()
+    }
+
+    fun navigateToEdit() {
+        router.navigateTo(NavigationScreen.Profile.Editor)
     }
 
     private fun initDataProfile() = intent {

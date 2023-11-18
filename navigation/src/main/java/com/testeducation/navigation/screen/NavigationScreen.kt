@@ -170,4 +170,8 @@ sealed interface NavigationScreen : Serializable {
         }
     }
 
+    sealed interface Profile: NavigationScreen {
+        object Editor: Profile
+    }
+
 }

@@ -18,6 +18,11 @@ class ProfileFragment: ViewModelHostFragment<ProfileViewModel, FragmentProfileBi
         super.onViewCreated(view, savedInstanceState)
         observeData()
         requireActivity().window.statusBarColor = requireContext().getColor(R.color.colorDarkGreen)
+        binding {
+            tvEdit.setOnClickListener {
+                viewModel.navigateToEdit()
+            }
+        }
     }
 
     private fun observeData() = viewModel.observe(this, ::render)

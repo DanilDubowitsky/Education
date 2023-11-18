@@ -10,6 +10,7 @@
         </shape>
     </item>
 
+
     <item android:state_enabled="true" android:state_focused="true">
         <shape android:shape="rectangle">
             <stroke android:width="2dp" android:color="@color/colorGrayBlueSelected" />
@@ -19,7 +20,11 @@
 
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorGrayBlueDisabled" />
+            <solid android:color="@color/colorGrayBlueDisabledLow" />
+            <corners android:radius="10dp" />
+            <stroke
+                android:width="1dp"
+                android:color="@color/colorGrayBlueDisabled" />
             <corners android:radius="10dp" />
         </shape>
     </item>

@@ -105,7 +105,9 @@ class InputTextPlaceHolder @JvmOverloads constructor(
 
     private fun onEditTextChanged() {
         editText.addTextChangedListener {
-            setInputState(InputState.Default)
+            if (editText.isEnabled) {
+                setInputState(InputState.Default)
+            }
         }
     }
 
@@ -114,7 +116,9 @@ class InputTextPlaceHolder @JvmOverloads constructor(
         this.editText = editText
         hint = editText.hint?.toString().orEmpty()
         binding.tvLabel.text = hint
-        setInputState(InputState.Default)
+        if (editText.isEnabled) {
+            setInputState(InputState.Default)
+        } else setInputState(InputState.Disabled)
         processFocusedChange()
         changeFaceTextInput(false)
         onEditTextChanged()
@@ -157,6 +161,8 @@ class InputTextPlaceHolder @JvmOverloads constructor(
     private fun setSettingsByEnabled(isEnabled: Boolean) {
         editText.isEnabled = isEnabled
         isFocusableInTouchMode = isEnabled
+        editText.isFocusable = isEnabled
+        editText.showSoftInputOnFocus = isEnabled
     }
 
     private fun processFocusedChange() {

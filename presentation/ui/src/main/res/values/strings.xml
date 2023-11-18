@@ -145,4 +145,16 @@
 
     <!--Profile-->
     <string name="profile_my_data">Мои данные</string>
+    <string name="profile_achive_title">Достижения</string>
+    <string name="profile_create_test_title">Создано тестов</string>
+    <string name="profile_police_title">Конфиденциальность</string>
+    <string name="profile_problem_title">Сообщить о проблеме</string>
+    <string name="profile_about_app_title">О приложении</string>
+    <string name="profile_test_passed_title">Пройдено тестов</string>
+    <string name="profile_edit_change_avatar"><u>Изменить аватар</u></string>
+    <string name="profile_edit_delete_account">Удалить аккаунт</string>
+    <string name="profile_edit_log_out">Выйти из аккаунта</string>
+    <string name="profile_edit_nick_title">Никнейм</string>
+    <string name="profile_edit_email_title">Электронная почта</string>
+    <string name="profile_edit_toolbar_title">Данные профиля</string>
 </resources>

@@ -38,6 +38,12 @@ class ResourceHelper(
         DrawableResource.DefaultIconQuestion -> R.drawable.ic_answer_choosing
         DrawableResource.WriteAnswerIconQuestion -> R.drawable.ic_answer_write
         DrawableResource.OrderAnswerIconQuestion -> R.drawable.ic_answer_order
+        is DrawableResource.Avatar -> extractAvatarDrawableResource(resource)
+    }
+
+    private fun extractAvatarDrawableResource(avatar: DrawableResource.Avatar) = when(avatar) {
+        DrawableResource.Avatar.Default -> R.drawable.ic_profile_avatar
+        DrawableResource.Avatar.First -> R.drawable.ic_profile_avatar
     }
 
 
