@@ -25,6 +25,10 @@ class TestPassStatisticViewModel(
         loadData()
     }
 
+    fun exit() {
+
+    }
+
     private fun loadData() = intent {
         val statistic = getTestPassStatistic(testId)
         updateModelState {

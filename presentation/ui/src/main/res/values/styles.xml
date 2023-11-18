@@ -164,6 +164,7 @@
         <item name="android:textColor">@color/selector_color_chip_text</item>
         <item name="android:fontFamily">@font/mulish_regular</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:checkable">false</item>
     </style>
 
     <style name="ShapeAppearance.Rounded.Small" parent="">

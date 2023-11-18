@@ -7,6 +7,6 @@ import com.testeducation.local.entity.answer.AnswerEntity
 data class QuestionWithAnswers(
     @Embedded
     val question: QuestionEntity,
-    @Relation(parentColumn = "id", entityColumn = "questionId")
+    @Relation(entity = AnswerEntity::class, parentColumn = "id", entityColumn = "questionId")
     val answers: List<AnswerEntity>
 )

@@ -4,6 +4,7 @@ import com.testeducation.converter.test.answer.toInputAnswers
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.DeleteQuestion
+import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.domain.cases.test.ChangeStatusTest
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.model.question.Question
@@ -34,7 +35,8 @@ class TestEditorViewModel(
     private val deleteQuestion: DeleteQuestion,
     private val questionResourceHelper: IQuestionResourceHelper,
     private val router: NavigationRouter,
-    private val changeStatusTest: ChangeStatusTest
+    private val changeStatusTest: ChangeStatusTest,
+    private val getQuestions: GetQuestions
 ) : BaseViewModel<TestEditorModelState, TestEditorState, TestEditorSideEffect>(
     reducer,
     exceptionHandler
@@ -169,8 +171,9 @@ class TestEditorViewModel(
 
     private fun getTestDetails(testId: String) = singleIntent(getTest.javaClass.name) {
         val details = getTest.invoke(id = testId)
+        val questions = getQuestions(testId)
         val questionItems =
-            questionResourceHelper.getQuestionItemPrepared(details.questions.convertToQuestionDomain())
+            questionResourceHelper.getQuestionItemPrepared(questions.convertToQuestionDomain())
         val questionDetails: MutableList<QuestionDetails> = mutableListOf()
         questionDetails.addAll(questionItems.prepareQuestionDetailsItems())
         questionDetails.add(QuestionDetails.FooterAdd())

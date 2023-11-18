@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Text.Label.Medium"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:background="@drawable/background_green_rounded_6"
+    android:backgroundTint="@color/colorBackground"
+    android:ellipsize="end"
+    android:gravity="center"
+    android:lineSpacingExtra="0dp"
+    android:maxLines="3"
+    android:paddingHorizontal="5dp"
+    android:textSize="10sp"
+    tools:ignore="SmallSp"
+    tools:text="ajsdjaskdjkasdad sdaas dsaas asd asdas asdasd asd asdasd daasd asda sa asdaksdjaskjd" />
+

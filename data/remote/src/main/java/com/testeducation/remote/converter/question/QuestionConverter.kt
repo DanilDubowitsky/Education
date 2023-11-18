@@ -64,7 +64,7 @@ fun RemoteQuestion.toModel(): Question {
             title,
             questionNumber.toInt(),
             time.toLong(),
-            answers.toModels(questionType) as List<Answer.MatchAnswer>
+            answers.toModels(questionType,id) as List<Answer.MatchAnswer>
         )
 
         RemoteQuestion.Type.Choice -> Question.Choice(
@@ -72,7 +72,7 @@ fun RemoteQuestion.toModel(): Question {
             title,
             questionNumber.toInt(),
             time.toLong(),
-            answers.toModels(questionType) as List<Answer.ChoiceAnswer>
+            answers.toModels(questionType, id) as List<Answer.ChoiceAnswer>
         )
 
         RemoteQuestion.Type.Text -> Question.Text(
@@ -87,13 +87,16 @@ fun RemoteQuestion.toModel(): Question {
             title,
             questionNumber.toInt(),
             time.toLong(),
-            answers.toModels(questionType) as List<Answer.OrderAnswer>
+            answers.toModels(questionType, id) as List<Answer.OrderAnswer>
         )
     }
 }
 
-fun List<RemoteAnswer>.toModels(questionType: QuestionType) = map { answer ->
-    answer.toModel(answer.id, questionType)
+fun List<RemoteAnswer>.toModels(
+    questionType: QuestionType,
+    questionId: String
+) = map { answer ->
+    answer.toModel(questionId, questionType)
 }
 
 fun RemoteAnswer.toModel(

@@ -1,4 +1,7 @@
 package com.testeducation.logic.screen.tests.statistic
 
-class TestPassStatisticState {
-}
+import com.testeducation.logic.model.question.AnsweredQuestionUI
+
+data class TestPassStatisticState(
+    val questions: List<AnsweredQuestionUI>
+)

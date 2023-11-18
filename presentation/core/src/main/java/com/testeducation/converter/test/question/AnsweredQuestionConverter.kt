@@ -13,7 +13,10 @@ fun AnsweredQuestion.toUI() = when (this) {
     is AnsweredQuestion.Text -> toUI()
 }
 
+fun List<AnsweredQuestion>.toUIModels() = map(AnsweredQuestion::toUI)
+
 private fun AnsweredQuestion.Match.toUI() = AnsweredQuestionUI.Match(
+    id,
     title,
     state.toUI(),
     matchValues,
@@ -21,6 +24,7 @@ private fun AnsweredQuestion.Match.toUI() = AnsweredQuestionUI.Match(
 )
 
 private fun AnsweredQuestion.Order.toUI() = AnsweredQuestionUI.Order(
+    id,
     title,
     state.toUI(),
     correctOrderAnswers.toSimpleUIModels() as List<AnswerUI.OrderAnswer>,
@@ -28,6 +32,7 @@ private fun AnsweredQuestion.Order.toUI() = AnsweredQuestionUI.Order(
 )
 
 private fun AnsweredQuestion.Choose.toUI() = AnsweredQuestionUI.Choose(
+    id,
     title,
     state.toUI(),
     chosenAnswer.toUI(0, null) as AnswerUI.ChoiceAnswer,
@@ -35,6 +40,7 @@ private fun AnsweredQuestion.Choose.toUI() = AnsweredQuestionUI.Choose(
 )
 
 private fun AnsweredQuestion.Text.toUI() = AnsweredQuestionUI.Text(
+    id,
     title,
     state.toUI(),
     answered

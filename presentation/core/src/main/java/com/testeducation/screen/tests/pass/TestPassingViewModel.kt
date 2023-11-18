@@ -2,6 +2,7 @@ package com.testeducation.screen.tests.pass
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.PassTest
 import com.testeducation.domain.model.answer.Answer
@@ -32,7 +33,8 @@ class TestPassingViewModel(
     private val router: NavigationRouter,
     private val testId: String,
     private val getTest: GetTest,
-    private val passTest: PassTest
+    private val passTest: PassTest,
+    private val getQuestions: GetQuestions
 ) : BaseViewModel<TestPassingModelState, TestPassingState, TestPassingSideEffect>(
     reducer,
     exceptionHandler
@@ -134,7 +136,12 @@ class TestPassingViewModel(
         )
 
         router.navigateTo(resultScreen, addToBackStack = false)
-
+        router.setResultListener(NavigationScreen.Tests.Result.OpenResults) {
+            router.navigateTo(NavigationScreen.Tests.Statistic(testId))
+        }
+        router.setResultListener(NavigationScreen.Tests.Result.OpenMainPage) {
+            router.exit()
+        }
         passTest(testId, answers, spentTime, isCheating, result)
     }
 
@@ -295,7 +302,7 @@ class TestPassingViewModel(
 
     private fun loadData() = intent {
         val test = getTest(testId)
-        val questions = test.questions.toPassingQuestions()
+        val questions = getQuestions(testId).toPassingQuestions()
         val currentQuestion = questions.first()
         updateModelState {
             copy(

@@ -17,6 +17,7 @@ import com.testeducation.education.di.modules.screen.tests.pass.TestPassingModul
 import com.testeducation.education.di.modules.screen.tests.preview.TestPreviewModule
 import com.testeducation.education.di.modules.screen.tests.question.QuestionCreationModule
 import com.testeducation.education.di.modules.screen.tests.settings.TestSettingsModule
+import com.testeducation.education.di.modules.screen.tests.statistic.TestPassStatisticModule
 import com.testeducation.ui.screen.auth.confirmation.CodeConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
@@ -34,6 +35,7 @@ import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.screen.tests.pass.TestPassingFragment
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
+import com.testeducation.ui.screen.tests.statistic.TestPassStatisticFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -91,4 +93,6 @@ interface FragmentModule {
     @ContributesAndroidInjector(modules = [TestPassingModule::class])
     fun testPassingFragment(): TestPassingFragment
 
+    @ContributesAndroidInjector(modules = [TestPassStatisticModule::class])
+    fun testPassStatisticFragment(): TestPassStatisticFragment
 }

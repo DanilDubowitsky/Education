@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.screen.tests.pass
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.PassTest
@@ -65,7 +66,8 @@ interface TestPassingModule {
             router: NavigationRouter,
             reducer: IReducer<TestPassingModelState, TestPassingState>,
             exceptionHandler: IExceptionHandler,
-            fragment: TestPassingFragment
+            fragment: TestPassingFragment,
+            getQuestions: GetQuestions
         ): TestPassingViewModel {
             val testId = fragment.getScreen<NavigationScreen.Tests.Passing>().id
             return TestPassingViewModel(
@@ -74,7 +76,8 @@ interface TestPassingModule {
                 router,
                 testId,
                 getTest,
-                passTest
+                passTest,
+                getQuestions
             )
         }
     }

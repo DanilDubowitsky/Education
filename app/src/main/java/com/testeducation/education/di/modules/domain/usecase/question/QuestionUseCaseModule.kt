@@ -36,6 +36,8 @@ object QuestionUseCaseModule {
     fun provideGetQuestionDetails(questionRepository: IQuestionService) =
         GetQuestionDetails(questionRepository)
 
+    @Provides
+    @Reusable
     fun provideGetTestPassStatistic(
         repository: IAnsweredQuestionRepository
     ) = GetTestPassStatistic(repository)

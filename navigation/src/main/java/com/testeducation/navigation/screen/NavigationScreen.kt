@@ -142,6 +142,15 @@ sealed interface NavigationScreen : Serializable {
             val correctAnswers: Int,
             val incorrectAnswers: Int,
             val isSuccess: Boolean
+        ) : Tests {
+
+            object OpenMainPage : ResultKey<Unit>
+
+            object OpenResults : ResultKey<Unit>
+        }
+
+        data class Statistic(
+            val testId: String
         ) : Tests
     }
 

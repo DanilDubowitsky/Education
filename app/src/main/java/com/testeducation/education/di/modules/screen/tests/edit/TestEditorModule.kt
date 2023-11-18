@@ -3,6 +3,7 @@ package com.testeducation.education.di.modules.screen.tests.edit
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.DeleteQuestion
+import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.domain.cases.test.ChangeStatusTest
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.education.di.viewmodel.ViewModelKey
@@ -71,7 +72,8 @@ interface TestEditorModule {
             questionResourceHelper: IQuestionResourceHelper,
             navigationRouter: NavigationRouter,
             deleteQuestion: DeleteQuestion,
-            changeStatusTest: ChangeStatusTest
+            changeStatusTest: ChangeStatusTest,
+            getQuestions: GetQuestions
         ): TestEditorViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Details>()
             return TestEditorViewModel(
@@ -83,7 +85,8 @@ interface TestEditorModule {
                 questionResourceHelper = questionResourceHelper,
                 router = navigationRouter,
                 deleteQuestion = deleteQuestion,
-                changeStatusTest = changeStatusTest
+                changeStatusTest = changeStatusTest,
+                getQuestions = getQuestions
             )
         }
     }

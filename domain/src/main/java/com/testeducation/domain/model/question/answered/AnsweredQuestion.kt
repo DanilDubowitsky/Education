@@ -4,11 +4,12 @@ import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.PassingQuestion
 
 sealed interface AnsweredQuestion {
-
+    val id: String
     val title: String
     val state: PassingQuestion.AnswerState
 
     data class Choose(
+        override val id: String,
         override val title: String,
         override val state: PassingQuestion.AnswerState,
         val chosenAnswer: Answer.ChoiceAnswer,
@@ -16,23 +17,26 @@ sealed interface AnsweredQuestion {
     ) : AnsweredQuestion
 
     data class Order(
+        override val id: String,
         override val title: String,
         override val state: PassingQuestion.AnswerState,
         val correctOrderAnswers: List<Answer.OrderAnswer>,
-        val answeredAnswers: List<Answer.OrderAnswer>
+        val answeredAnswers: List<Answer.OrderAnswer>,
     ) : AnsweredQuestion
 
     data class Text(
+        override val id: String,
         override val title: String,
         override val state: PassingQuestion.AnswerState,
-        val answered: String
+        val answered: String,
     ) : AnsweredQuestion
 
     data class Match(
+        override val id: String,
         override val title: String,
         override val state: PassingQuestion.AnswerState,
         val matchValues: List<String>,
-        val matchAnswers: List<Answer.MatchAnswer>
+        val matchAnswers: List<Answer.MatchAnswer>,
     ) : AnsweredQuestion
 
 }

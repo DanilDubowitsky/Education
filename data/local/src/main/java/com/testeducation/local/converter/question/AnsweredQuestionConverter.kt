@@ -39,6 +39,7 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
                 it.isTrue
             }
             AnsweredQuestion.Choose(
+                domainQuestion.id,
                 domainQuestion.title,
                 answeredQuestion.answerState.toEnumModel(),
                 chosenAnswer,
@@ -57,6 +58,7 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
             }
 
             AnsweredQuestion.Match(
+                domainQuestion.id,
                 domainQuestion.title,
                 answeredQuestion.answerState.toEnumModel(),
                 matchData,
@@ -73,6 +75,7 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
             }
 
             AnsweredQuestion.Order(
+                domainQuestion.id,
                 domainQuestion.title,
                 answeredQuestion.answerState.toEnumModel(),
                 correctOrder,
@@ -82,6 +85,7 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
 
         is Question.Text -> {
             AnsweredQuestion.Text(
+                domainQuestion.id,
                 domainQuestion.title,
                 PassingQuestion.AnswerState.NONE,
                 answeredQuestion.customAnswer.orEmpty()

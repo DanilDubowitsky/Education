@@ -26,9 +26,7 @@ class TestPassResultDialog :
     }
 
     private fun setupListeners() = binding {
-        txtShopFullStatistic.setClickListener {
-
-        }
+        txtShopFullStatistic.setClickListener(viewModel::openFullStatistic)
         btnReturnToMainPage.setClickListener(viewModel::returnToMainPage)
     }
 

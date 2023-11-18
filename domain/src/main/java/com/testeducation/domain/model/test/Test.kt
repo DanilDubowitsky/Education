@@ -1,6 +1,5 @@
 package com.testeducation.domain.model.test
 
-import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.domain.model.user.UserInfo
 
@@ -9,7 +8,6 @@ data class Test(
     val title: String,
     val style: TestStyle,
     val settings: TestSettings,
-    val questions: List<Question>,
     val status: Status,
     val likes: Long,
     val liked: Boolean,
