@@ -22,6 +22,9 @@ class ProfileEditFragment : ViewModelHostFragment<ProfileEditViewModel, Fragment
             back.setOnClickListener {
                 viewModel.back()
             }
+            btnLogOut.setOnClickListener {
+                viewModel.logOut()
+            }
         }
     }
 

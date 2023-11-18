@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.screen.profile
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.auth.LogOut
 import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.avatar.AvatarHelper
@@ -41,13 +42,15 @@ interface ProfileEditModule {
             reducer: IReducer<ProfileEditModelState, ProfileEditState>,
             errorHandler: IExceptionHandler,
             getCurrentUser: GetCurrentUser,
+            logOut: LogOut
         ): ProfileEditViewModel {
             return ProfileEditViewModel(
                 router = router,
                 resourceHelper = resourceHelper,
                 reducer = reducer,
                 errorHandler = errorHandler,
-                getCurrentUser = getCurrentUser
+                getCurrentUser = getCurrentUser,
+                logOut = logOut
             )
         }
     }
