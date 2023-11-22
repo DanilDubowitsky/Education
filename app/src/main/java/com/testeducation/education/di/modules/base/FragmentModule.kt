@@ -7,6 +7,7 @@ import com.testeducation.education.di.modules.screen.auth.PasswordResetEmailModu
 import com.testeducation.education.di.modules.screen.auth.RegistrationModule
 import com.testeducation.education.di.modules.screen.home.HomeModule
 import com.testeducation.education.di.modules.screen.home.library.LibraryModule
+import com.testeducation.education.di.modules.screen.profile.ProfileAvatarChangerModule
 import com.testeducation.education.di.modules.screen.profile.ProfileEditModule
 import com.testeducation.education.di.modules.screen.profile.ProfileModule
 import com.testeducation.education.di.modules.screen.tests.edit.TestEditorModule
@@ -25,6 +26,7 @@ import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
 import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
 import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
@@ -95,5 +97,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [ProfileEditModule::class])
     fun profileEditFragment(): ProfileEditFragment
+
+    @ContributesAndroidInjector(modules = [ProfileAvatarChangerModule::class])
+    fun profileAvatarChangerFragment(): ProfileAvatarChangerFragment
 
 }

@@ -42,8 +42,9 @@ class ResourceHelper(
     }
 
     private fun extractAvatarDrawableResource(avatar: DrawableResource.Avatar) = when(avatar) {
-        DrawableResource.Avatar.Default -> R.drawable.ic_profile_avatar
-        DrawableResource.Avatar.First -> R.drawable.ic_profile_avatar
+        DrawableResource.Avatar.Default -> R.drawable.ic_avatar_default
+        DrawableResource.Avatar.First -> R.drawable.ic_first_avatar
+        DrawableResource.Avatar.Second -> R.drawable.ic_second_avatar
     }
 
 

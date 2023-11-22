@@ -170,8 +170,9 @@ sealed interface NavigationScreen : Serializable {
         }
     }
 
-    sealed interface Profile: NavigationScreen {
-        object Editor: Profile
+    sealed interface Profile : NavigationScreen {
+        object Editor : Profile
+        object Avatar : Profile
     }
 
 }

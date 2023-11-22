@@ -13,6 +13,7 @@ import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
 import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
 import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
@@ -161,6 +162,9 @@ class ScreenAdapter : IScreenAdapter {
     private fun createPlatformScreen(screen: NavigationScreen.Profile) = when(screen) {
         NavigationScreen.Profile.Editor -> Screen.FragmentScreen {
             ProfileEditFragment().withScreen(screen)
+        }
+        NavigationScreen.Profile.Avatar -> Screen.FragmentScreen {
+            ProfileAvatarChangerFragment().withScreen(screen)
         }
     }
 

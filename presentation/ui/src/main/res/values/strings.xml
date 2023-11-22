@@ -157,4 +157,6 @@
     <string name="profile_edit_nick_title">Никнейм</string>
     <string name="profile_edit_email_title">Электронная почта</string>
     <string name="profile_edit_toolbar_title">Данные профиля</string>
+    <string name="profile_avatar_changer_title_toolbar">Аватар</string>
+
 </resources>

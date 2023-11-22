@@ -25,6 +25,9 @@ class ProfileEditFragment : ViewModelHostFragment<ProfileEditViewModel, Fragment
             btnLogOut.setOnClickListener {
                 viewModel.logOut()
             }
+            tvChangeAvatar.setOnClickListener {
+                viewModel.goToAvatarChangerScreen()
+            }
         }
     }
 

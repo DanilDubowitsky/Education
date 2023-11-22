@@ -37,6 +37,12 @@ class ProfileEditViewModel(
         }
     }
 
+    fun goToAvatarChangerScreen() {
+        intent {
+            router.navigateTo(NavigationScreen.Profile.Avatar)
+        }
+    }
+
     private fun initDataProfile() = intent {
         val currentUser = getCurrentUser.invoke()
         updateModelState {
