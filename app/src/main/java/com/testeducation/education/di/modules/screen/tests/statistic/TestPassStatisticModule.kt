@@ -6,6 +6,7 @@ import com.testeducation.domain.cases.question.GetTestPassStatistic
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.statistic.TestPassStatisticState
+import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.statistic.TestPassStatisticModelState
 import com.testeducation.screen.tests.statistic.TestPassStatisticReducer
@@ -35,12 +36,14 @@ interface TestPassStatisticModule {
             fragment: TestPassStatisticFragment,
             getTestPassStatistic: GetTestPassStatistic,
             exceptionHandler: IExceptionHandler,
+            router: NavigationRouter,
             reducer: IReducer<TestPassStatisticModelState, TestPassStatisticState>
         ): TestPassStatisticViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Statistic>()
             return TestPassStatisticViewModel(
                 reducer,
                 exceptionHandler,
+                router,
                 screen.testId,
                 getTestPassStatistic
             )

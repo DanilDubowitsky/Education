@@ -31,52 +31,58 @@
         app:layout_constraintTop_toTopOf="@+id/imgAnswerIndicator"
         tools:text="1. Назовите дату начала Великой Отечественной войны?" />
 
-    <TextView
-        android:id="@+id/txtTrueAnswer"
-        style="@style/Text.Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/txtTitle"
-        android:text="@string/test_pass_results_correct_answer"
-        app:layout_constraintTop_toBottomOf="@+id/txtAnswerIndicator"
-        tools:textColor="@color/colorDarkGreen" />
-
-    <com.google.android.material.chip.ChipGroup
+    <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/trueAnswerChip"
         android:layout_width="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
-        app:chipSpacingHorizontal="4dp"
-        app:chipSpacingVertical="4dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintStart_toEndOf="@+id/txtTrueAnswer"
-        app:layout_constraintTop_toTopOf="@+id/txtTrueAnswer" />
-
-    <TextView
-        android:id="@+id/txtAnswerIndicator"
-        style="@style/Text.Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textSize="14sp"
+        app:flexDirection="row"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="12dp"
+        app:flexWrap="wrap"
         app:layout_constraintStart_toStartOf="@+id/txtTitle"
-        android:text="@string/test_pass_results_answer"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
-        tools:textColor="@color/colorDarkGreen" />
+        app:layout_constraintTop_toBottomOf="@+id/answerChipGroup">
 
-    <com.google.android.material.chip.ChipGroup
+        <TextView
+            android:id="@+id/txtTrueAnswer"
+            style="@style/Text.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test_pass_results_correct_answer"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/txtTitle"
+            app:layout_constraintTop_toBottomOf="@+id/txtAnswerIndicator"
+            android:textColor="@color/colorDarkGreen" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/answerChipGroup"
         android:layout_width="0dp"
-        app:chipSpacingHorizontal="4dp"
-        app:chipSpacingVertical="0dp"
-        app:chipSpacing="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        app:layout_constraintStart_toEndOf="@+id/txtAnswerIndicator"
-        app:layout_constraintTop_toTopOf="@+id/txtAnswerIndicator" />
+        android:layout_marginTop="8dp"
+        app:layout_goneMarginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/trueAnswerChip"
+        android:layout_marginBottom="4dp"
+        app:flexDirection="row"
+        app:flexWrap="wrap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtTitle"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle">
+
+        <TextView
+            android:id="@+id/txtAnswerIndicator"
+            style="@style/Text.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test_pass_results_answer"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/txtTitle"
+            tools:textColor="@color/colorDarkGreen" />
+
+    </com.google.android.flexbox.FlexboxLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

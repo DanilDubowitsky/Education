@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_grey_round_8"
+    tools:text="Asd ss"
+    style="@style/Text.Label.Medium"
+    android:paddingHorizontal="6dp"
+    android:paddingVertical="4dp"
+    android:textSize="10sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:ignore="SmallSp" />

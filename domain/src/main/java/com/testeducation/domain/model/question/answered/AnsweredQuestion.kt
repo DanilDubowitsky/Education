@@ -7,11 +7,13 @@ sealed interface AnsweredQuestion {
     val id: String
     val title: String
     val state: PassingQuestion.AnswerState
+    val numberQuestion: Int
 
     data class Choose(
         override val id: String,
         override val title: String,
         override val state: PassingQuestion.AnswerState,
+        override val numberQuestion: Int,
         val chosenAnswer: Answer.ChoiceAnswer,
         val correctAnswer: Answer.ChoiceAnswer,
     ) : AnsweredQuestion
@@ -20,6 +22,7 @@ sealed interface AnsweredQuestion {
         override val id: String,
         override val title: String,
         override val state: PassingQuestion.AnswerState,
+        override val numberQuestion: Int,
         val correctOrderAnswers: List<Answer.OrderAnswer>,
         val answeredAnswers: List<Answer.OrderAnswer>,
     ) : AnsweredQuestion
@@ -28,6 +31,7 @@ sealed interface AnsweredQuestion {
         override val id: String,
         override val title: String,
         override val state: PassingQuestion.AnswerState,
+        override val numberQuestion: Int,
         val answered: String,
     ) : AnsweredQuestion
 
@@ -35,6 +39,7 @@ sealed interface AnsweredQuestion {
         override val id: String,
         override val title: String,
         override val state: PassingQuestion.AnswerState,
+        override val numberQuestion: Int,
         val matchValues: List<String>,
         val matchAnswers: List<Answer.MatchAnswer>,
     ) : AnsweredQuestion

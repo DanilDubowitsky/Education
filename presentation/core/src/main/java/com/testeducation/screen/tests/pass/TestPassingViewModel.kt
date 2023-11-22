@@ -137,6 +137,7 @@ class TestPassingViewModel(
 
         router.navigateTo(resultScreen, addToBackStack = false)
         router.setResultListener(NavigationScreen.Tests.Result.OpenResults) {
+            router.exit()
             router.navigateTo(NavigationScreen.Tests.Statistic(testId))
         }
         router.setResultListener(NavigationScreen.Tests.Result.OpenMainPage) {
@@ -214,7 +215,7 @@ class TestPassingViewModel(
         val answers = questionState.question?.answers ?: return@intent
         var isCorrect = true
         answers.forEachIndexed { index, orderAnswer ->
-            if (index != orderAnswer.order) {
+            if (index + 1 != orderAnswer.order) {
                 isCorrect = false
                 return@forEachIndexed
             }
@@ -237,7 +238,10 @@ class TestPassingViewModel(
         questions[modelState.currentQuestionIndex] = newQuestion
 
         updateModelState {
-            copy(currentQuestion = newQuestion, questions = questions)
+            copy(
+                currentQuestion = newQuestion,
+                questions = questions
+            )
         }
     }
 

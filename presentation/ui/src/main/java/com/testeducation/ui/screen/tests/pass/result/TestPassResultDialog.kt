@@ -36,14 +36,12 @@ class TestPassResultDialog :
         if (!state.isSuccess) {
             txtTitle.text = getString(R.string.test_pass_test_failed_title)
             imgIndicator.setImageResource(R.drawable.ic_negative_pass)
+            txtDescription.text = getString(R.string.test_pass_test_failed_description)
         }
         txtTrueAnswersCount.text = state.trueAnswersCount.toString()
         txtFalseAnswersCount.text = state.falseAnswersCount.toString()
-        val falseText = resources.getQuantityText(R.plurals.mistakes, state.falseAnswersCount)
-        val trueText =
-            resources.getQuantityText(R.plurals.correct_answers, state.trueAnswersCount)
-        txtTrueAnswers.text = trueText
-        txtFalseAnswers.text = falseText
+        txtTrueAnswers.text = getString(R.string.test_pass_test_correct_answers)
+        txtFalseAnswers.text = getString(R.string.test_pass_test_incorrect_answers)
     }
 
 }

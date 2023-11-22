@@ -42,8 +42,9 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
                 domainQuestion.id,
                 domainQuestion.title,
                 answeredQuestion.answerState.toEnumModel(),
+                question.question.numberQuestion,
                 chosenAnswer,
-                correctAnswer
+                correctAnswer,
             )
         }
 
@@ -61,6 +62,7 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
                 domainQuestion.id,
                 domainQuestion.title,
                 answeredQuestion.answerState.toEnumModel(),
+                question.question.numberQuestion,
                 matchData,
                 matchedAnswers
             )
@@ -78,6 +80,7 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
                 domainQuestion.id,
                 domainQuestion.title,
                 answeredQuestion.answerState.toEnumModel(),
+                question.question.numberQuestion,
                 correctOrder,
                 answeredOrder
             )
@@ -88,6 +91,7 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
                 domainQuestion.id,
                 domainQuestion.title,
                 PassingQuestion.AnswerState.NONE,
+                question.question.numberQuestion,
                 answeredQuestion.customAnswer.orEmpty()
             )
         }

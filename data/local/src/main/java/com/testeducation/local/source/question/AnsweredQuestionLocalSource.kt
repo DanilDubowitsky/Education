@@ -17,4 +17,5 @@ class AnsweredQuestionLocalSource(
 
     override suspend fun getAnsweredQuestions(testId: String): List<AnsweredQuestion> =
         answeredQuestionDao.getAnsweredQuestions(testId).map(AnsweredQuestionWithAnswers::toModel)
+            .sortedBy(AnsweredQuestion::numberQuestion)
 }

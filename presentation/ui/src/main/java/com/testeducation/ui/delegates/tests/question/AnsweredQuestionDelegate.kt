@@ -1,13 +1,15 @@
 package com.testeducation.ui.delegates.tests.question
 
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.forEach
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipDrawable
-import com.google.android.material.chip.ChipGroup
 import com.testeducation.logic.model.question.AnswerStateUI
 import com.testeducation.logic.model.question.AnsweredQuestionUI
 import com.testeducation.logic.model.test.AnswerUI
@@ -15,9 +17,11 @@ import com.testeducation.ui.R
 import com.testeducation.ui.databinding.ViewAnswerAnsweredQuestionBinding
 import com.testeducation.ui.databinding.ViewHolderAnsweredMatchQuestionBinding
 import com.testeducation.ui.databinding.ViewHolderSimpleResultBinding
+import com.testeducation.ui.databinding.ViewTestResultsAnswerItemBinding
+import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.loadColor
+import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDelegateAdapter
-import kotlin.random.Random
 
 fun choiceAnsweredQuestionDelegate() =
     simpleDelegateAdapter<AnsweredQuestionUI.Choose, AnsweredQuestionUI,
@@ -28,6 +32,7 @@ fun choiceAnsweredQuestionDelegate() =
             bindSimpleData(
                 item.title,
                 binding.txtTitle,
+                item.numberQuestion,
                 binding.txtAnswerIndicator,
                 binding.imgAnswerIndicator,
                 null,
@@ -50,6 +55,7 @@ fun orderAnsweredQuestionDelegate() =
             bindSimpleData(
                 item.title,
                 binding.txtTitle,
+                item.numberQuestion,
                 binding.txtAnswerIndicator,
                 binding.imgAnswerIndicator,
                 null,
@@ -63,76 +69,91 @@ fun orderAnsweredQuestionDelegate() =
         }
     }
 
-fun matchAnsweredQuestionDelegate() =
-    simpleDelegateAdapter<AnsweredQuestionUI.Match, AnsweredQuestionUI,
-            ViewHolderAnsweredMatchQuestionBinding>(
-        ViewHolderAnsweredMatchQuestionBinding::inflate
-    ) {
-        bind {
-            with(binding) {
-                matchDataLayout.removeAllViews()
-                item.matchValues.forEachIndexed { index, value ->
-                    val view = ViewAnswerAnsweredQuestionBinding.inflate(
-                        LayoutInflater.from(root.context)
-                    )
-                    view.matchDataText.root.text = value
-                    view.answerDataText.root.text = item.matchAnswers[index].title
-                    matchDataLayout.addView(view.root)
+fun matchAnsweredQuestionDelegate(
+    onClick: (String) -> Unit
+) = simpleDelegateAdapter<AnsweredQuestionUI.Match, AnsweredQuestionUI,
+        ViewHolderAnsweredMatchQuestionBinding>(
+    ViewHolderAnsweredMatchQuestionBinding::inflate
+) {
+    binding.root.setClickListener {
+        onClick(item.id)
+    }
+    bind {
+        with(binding) {
+            matchDataLayout.isGone = !item.isExpanded
+            val inflater = LayoutInflater.from(root.context)
+            matchDataLayout.removeAllViews()
+            item.matchValues.forEachIndexed { index, value ->
+                val view = ViewAnswerAnsweredQuestionBinding.inflate(inflater).apply {
+                    root.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        setMargins(0, 4.dp, 0, 4.dp)
+                    }
                 }
-                bindSimpleData(
-                    item.title,
-                    txtTitle,
-                    txtAnswerIndicator,
-                    imgAnswerIndicator,
-                    null,
-                    emptyList(),
-                    emptyList(),
-                    item.state,
-                    null,
-                    null,
-                    null
-                )
+                view.matchDataText.root.text = value
+                view.answerDataText.root.text = item.matchAnswers[index].title
+                matchDataLayout.addView(view.root)
             }
+            bindSimpleData(
+                item.title,
+                txtTitle,
+                item.numberQuestion,
+                txtAnswerIndicator,
+                imgAnswerIndicator,
+                null,
+                emptyList(),
+                emptyList(),
+                item.state,
+                null,
+                null,
+                null
+            )
         }
     }
+}
 
 private fun bindSimpleData(
     title: String,
     txtTitle: TextView,
+    number: Int,
     txtAnswerIndicator: TextView,
     imgAnswerIndicator: ImageView,
     customAnswer: String?,
     answers: List<AnswerUI>,
     correctAnswers: List<AnswerUI>,
     stateUI: AnswerStateUI,
-    chipGroup: ChipGroup?,
-    correctChipGroup: ChipGroup?,
+    answersLayout: FlexboxLayout?,
+    correctAnswersLayout: FlexboxLayout?,
     txtCorrectAnswer: TextView?
 ) {
+    val inflater = LayoutInflater.from(txtTitle.context)
     val answer = answers.firstOrNull()
-    chipGroup?.removeAllViews()
-    correctChipGroup?.removeAllViews()
+    answersLayout?.forEach { view ->
+        if (view is Chip) answersLayout.removeView(view)
+    }
+    correctAnswersLayout?.forEach { view ->
+        if (view is Chip) correctAnswersLayout.removeView(view)
+    }
 
     answers.forEachIndexed { index, answerUI ->
-        val chipDrawableS =
-            ChipDrawable.createFromAttributes(txtTitle.context, null, 0, R.style.ChipStyleGray)
-        val chip = Chip(
-            txtTitle.context,
-        ).apply {
-            id = index
-            setChipDrawable(chipDrawableS)
-            val answerTitle = when (answerUI) {
-                is AnswerUI.ChoiceAnswer -> answerUI.title
-                is AnswerUI.MatchAnswer -> answerUI.title
-                is AnswerUI.OrderAnswer -> "${index + 1}. ${answerUI.title}"
-                is AnswerUI.TextAnswer -> customAnswer
-            }
-            text = answerTitle
-            setTextColor(context.getColorStateList(R.color.selector_color_chip_text_color))
+        val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
+        val answerTitle = when (answerUI) {
+            is AnswerUI.ChoiceAnswer -> answerUI.title
+            is AnswerUI.MatchAnswer -> answerUI.title
+            is AnswerUI.OrderAnswer -> "${index + 1}. ${answerUI.title}"
+            is AnswerUI.TextAnswer -> customAnswer
         }
-        chipGroup?.addView(chip)
+        item.root.text = answerTitle
+        item.root.layoutParams = item.root.createLayoutParams()
+        answersLayout?.addView(item.root)
     }
-    txtTitle.text = title
+    txtTitle.text = txtTitle.context.getString(
+        R.string.test_pass_results_title_template,
+        number.toString(),
+        title
+    )
     when (stateUI) {
         AnswerStateUI.CORRECT -> {
             txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorDarkGreenLight))
@@ -151,24 +172,19 @@ private fun bindSimpleData(
     }
     val isCorrectVisible = answer is AnswerUI.ChoiceAnswer && stateUI == AnswerStateUI.INCORRECT
     txtCorrectAnswer?.isVisible = isCorrectVisible
-    correctChipGroup?.isVisible = isCorrectVisible
-    correctChipGroup?.let {
+    correctAnswersLayout?.isVisible = isCorrectVisible
+    correctAnswersLayout?.let {
         if (answer !is AnswerUI.ChoiceAnswer) return
-        val chipDrawableS =
-            ChipDrawable.createFromAttributes(
-                correctChipGroup.context,
-                null,
-                0,
-                R.style.ChipStyleGray
-            )
-        val chip = Chip(
-            correctChipGroup.context,
-        ).apply {
-            id = Random.nextInt()
-            setChipDrawable(chipDrawableS)
-            text = (correctAnswers.first() as AnswerUI.ChoiceAnswer).title
-            setTextColor(context.getColorStateList(R.color.selector_color_chip_text_color))
-        }
-        correctChipGroup.addView(chip)
+        val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
+        item.root.text = (correctAnswers.first() as AnswerUI.ChoiceAnswer).title
+        item.root.layoutParams = item.root.createLayoutParams()
+        correctAnswersLayout.addView(item.root)
     }
+}
+
+private fun View.createLayoutParams() = FlexboxLayout.LayoutParams(
+    FlexboxLayout.LayoutParams.WRAP_CONTENT,
+    FlexboxLayout.LayoutParams.WRAP_CONTENT
+).apply {
+    setMargins(8.dp, 0, 8.dp, 0)
 }
