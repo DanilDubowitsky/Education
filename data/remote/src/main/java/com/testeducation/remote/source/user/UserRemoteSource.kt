@@ -6,6 +6,7 @@ import com.testeducation.domain.model.user.UserStatistics
 import com.testeducation.remote.client.retrofit.user.UserRetrofitClient
 import com.testeducation.remote.converter.user.toModel
 import com.testeducation.remote.converter.user.userStatisticsToModel
+import com.testeducation.remote.request.user.SetAvatarRequest
 import com.testeducation.remote.utils.getResult
 
 class UserRemoteSource(
@@ -17,4 +18,10 @@ class UserRemoteSource(
 
     override suspend fun getUserStatistics(): UserStatistics =
         userRetrofitClient.getUserStatistics().getResult().data.userStatisticsToModel()
+
+    override suspend fun setAvatar(avatarId: Int) {
+        userRetrofitClient.setAvatar(
+            SetAvatarRequest(avatarId)
+        )
+    }
 }

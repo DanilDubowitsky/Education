@@ -14,4 +14,6 @@ class UserRepository(
 
     override suspend fun getUserStatistics(): UserStatistics = userRemoteSource.getUserStatistics()
 
+    override suspend fun setAvatar(avatarId: Int) = userRemoteSource.setAvatar(avatarId)
+
 }

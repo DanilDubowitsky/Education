@@ -10,7 +10,7 @@ class ProfileEditReducer(private val avatarHelper: IAvatarHelper) :
         return ProfileEditState(
             email = modelState.user?.email.orEmpty(),
             nickName = modelState.user?.userName.orEmpty(),
-            avatar = avatarHelper.getAvatarDrawable(modelState.user?.avatarId ?: 0)
+            avatar = avatarHelper.getAvatarDrawable(modelState.user?.avatarId)
         )
     }
 }

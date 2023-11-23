@@ -10,7 +10,8 @@ class ProfileAvatarChangerReducer constructor(private val avatarHelper: IAvatarH
         return ProfileAvatarChangerState(
             avatarItemList = avatarHelper.convertAvatarDataToUi(
                 modelState.listAvatarId
-            )
+            ),
+            isLoading = modelState.isLoading
         )
     }
 }

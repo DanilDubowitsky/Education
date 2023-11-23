@@ -36,6 +36,6 @@ class ProfileEditFragment : ViewModelHostFragment<ProfileEditViewModel, Fragment
     private fun render(state: ProfileEditState) = binding {
         editTextEmail.setText(state.email)
         editTextNickName.setText(state.nickName)
-        imgAvatar.setBackgroundResource(state.avatar)
+        imgAvatar.setImageResource(state.avatar)
     }
 }

@@ -39,7 +39,22 @@ class ProfileEditViewModel(
 
     fun goToAvatarChangerScreen() {
         intent {
-            router.navigateTo(NavigationScreen.Profile.Avatar)
+            val modelState = getModelState()
+            val avatarId = modelState.user?.avatarId ?: 0
+            router.setResultListener(NavigationScreen.Profile.Avatar.OnAvatarUpdated) { avatarId ->
+                intent {
+                    val newUser = getModelState().user?.copy(
+                        avatarId = avatarId
+                    )
+                    updateModelState {
+                        copy(
+                            user = newUser
+                        )
+                    }
+                }
+
+            }
+            router.navigateTo(NavigationScreen.Profile.Avatar(avatarId))
         }
     }
 

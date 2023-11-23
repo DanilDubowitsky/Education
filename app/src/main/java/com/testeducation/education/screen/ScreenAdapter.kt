@@ -163,7 +163,7 @@ class ScreenAdapter : IScreenAdapter {
         NavigationScreen.Profile.Editor -> Screen.FragmentScreen {
             ProfileEditFragment().withScreen(screen)
         }
-        NavigationScreen.Profile.Avatar -> Screen.FragmentScreen {
+        is NavigationScreen.Profile.Avatar -> Screen.FragmentScreen {
             ProfileAvatarChangerFragment().withScreen(screen)
         }
     }

@@ -7,7 +7,10 @@ import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.education.di.viewmodel.ViewModelKey
+import com.testeducation.helper.avatar.AvatarHelper
+import com.testeducation.helper.avatar.IAvatarHelper
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.helper.test.TestHelper
 import com.testeducation.logic.screen.tests.list.TestsState
@@ -30,8 +33,12 @@ interface TestsModule {
 
     companion object {
         @Provides
-        fun provideReducer(): IReducer<TestsModelState, TestsState> =
-            TestsReducer()
+        fun provideReducer(avatarHelper: IAvatarHelper): IReducer<TestsModelState, TestsState> =
+            TestsReducer(avatarHelper)
+
+        @Provides
+        fun profileAvatarHelper(resourceHelper: IResourceHelper): IAvatarHelper =
+            AvatarHelper(resourceHelper)
 
         @Provides
         fun provideTestHelper(

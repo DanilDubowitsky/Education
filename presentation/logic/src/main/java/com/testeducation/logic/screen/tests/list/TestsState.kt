@@ -11,5 +11,6 @@ data class TestsState(
     val isProfileLoading: Boolean,
     val isThemesLoading: Boolean,
     val isTestsLoading: Boolean,
-    val selectedSortField: TestOrderFieldUI
+    val selectedSortField: TestOrderFieldUI,
+    val avatarDrawableId: Int
 )

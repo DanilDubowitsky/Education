@@ -31,5 +31,6 @@ class ProfileFragment: ViewModelHostFragment<ProfileViewModel, FragmentProfileBi
         tvUserName.text = state.userName
         tvCreatedTest.text = state.createdTestCount.toString()
         tvPassTest.text = state.passedTestCount.toString()
+        imgAvatar.setImageResource(state.drawableAvatar)
     }
 }

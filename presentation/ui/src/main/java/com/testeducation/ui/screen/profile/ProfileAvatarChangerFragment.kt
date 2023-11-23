@@ -2,6 +2,7 @@ package com.testeducation.ui.screen.profile
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import com.testeducation.logic.screen.profile.avatar.ProfileAvatarChangerState
 import com.testeducation.screen.profile.avatar.ProfileAvatarChangerViewModel
 import com.testeducation.ui.R
@@ -22,7 +23,7 @@ class ProfileAvatarChangerFragment :
         requireActivity().window.statusBarColor = requireContext().getColor(R.color.colorBackground)
         binding {
             btnSave.setOnClickListener {
-
+                viewModel.save()
             }
             back.setOnClickListener {
                 viewModel.back()
@@ -37,6 +38,12 @@ class ProfileAvatarChangerFragment :
 
     private fun render(state: ProfileAvatarChangerState) = binding {
         avatarChanger.setItems(state.avatarItemList)
+        avatarChanger.isClickable = !state.isLoading
+        loadingProgress.isVisible = state.isLoading
+        btnSave.text = if (state.isLoading) {
+            ""
+        } else requireContext().getString(R.string.common_save)
+        btnSave.isClickable = !state.isLoading
     }
 
 }

@@ -172,7 +172,9 @@ sealed interface NavigationScreen : Serializable {
 
     sealed interface Profile : NavigationScreen {
         object Editor : Profile
-        object Avatar : Profile
+        data class Avatar(val avatarId: Int) : Profile {
+            object OnAvatarUpdated: ResultKey<Int>
+        }
     }
 
 }

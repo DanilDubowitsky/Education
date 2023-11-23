@@ -9,7 +9,7 @@ class AvatarHelper(
     private val resourceHelper: IResourceHelper
 ): IAvatarHelper {
 
-    override fun getAvatarDrawable(avatarId: Int): Int = getAvatarById(avatarId)
+    override fun getAvatarDrawable(avatarId: Int?): Int = getAvatarById(avatarId ?: 0)
 
     override fun convertAvatarDataToUi(list: List<AvatarData>): List<AvatarItemUI> {
         return list.map {

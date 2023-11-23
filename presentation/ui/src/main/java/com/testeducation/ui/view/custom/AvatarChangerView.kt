@@ -22,7 +22,9 @@ class AvatarChangerView @JvmOverloads constructor(
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(AvatarItemUI::id),
             avatarChangerViewAdapterDelegate {
-                changeAvatar?.invoke(it)
+                if (isClickable) {
+                    changeAvatar?.invoke(it)
+                }
             }
         )
     }
@@ -41,7 +43,7 @@ class AvatarChangerView @JvmOverloads constructor(
     fun setItems(avatarItemList: List<AvatarItemUI>) {
         iconDesignAdapter.items = avatarItemList
         avatarItemList.find { it.isSelected }?.let { avatarInfo ->
-            binding.imgCurrentAvatar.setBackgroundResource(avatarInfo.avatarDrawableId)
+            binding.imgCurrentAvatar.setImageResource(avatarInfo.avatarDrawableId)
         }
     }
 }

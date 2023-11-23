@@ -9,4 +9,6 @@ interface IUserRepository {
 
     suspend fun getUserStatistics(): UserStatistics
 
+    suspend fun setAvatar(avatarId: Int)
+
 }

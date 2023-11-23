@@ -9,4 +9,5 @@ interface IUserRemoteSource {
 
     suspend fun getUserStatistics(): UserStatistics
 
+    suspend fun setAvatar(avatarId: Int)
 }

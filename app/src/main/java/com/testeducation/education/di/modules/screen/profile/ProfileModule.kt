@@ -5,6 +5,8 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.domain.cases.user.GetUserStatistics
 import com.testeducation.education.di.viewmodel.ViewModelKey
+import com.testeducation.helper.avatar.AvatarHelper
+import com.testeducation.helper.avatar.IAvatarHelper
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.profile.ProfileState
@@ -26,8 +28,12 @@ interface ProfileModule {
 
     companion object {
         @Provides
-        fun provideReducer(): IReducer<ProfileModelState, ProfileState> =
-            ProfileReducer()
+        fun provideReducer(avatarHelper: IAvatarHelper): IReducer<ProfileModelState, ProfileState> =
+            ProfileReducer(avatarHelper)
+
+        @Provides
+        fun profileAvatarHelper(resourceHelper: IResourceHelper): IAvatarHelper =
+            AvatarHelper(resourceHelper)
 
         @Provides
         fun provideViewModel(
