@@ -2,5 +2,7 @@ package com.testeducation.domain.model.question
 
 enum class TestPassResult {
     SUCCESSFUL,
-    FAILED
+    FAILED,
+    TIME_OVER,
+    ANTI_CHEAT_FAILED
 }

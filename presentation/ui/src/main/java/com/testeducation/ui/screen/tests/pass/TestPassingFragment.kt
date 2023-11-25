@@ -77,6 +77,9 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.statusBarColor = requireContext().loadColor(
+            android.R.color.transparent
+        )
         setupViews()
         observeData()
         setupListeners()

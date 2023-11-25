@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
+import java.util.Stack
 
 class Navigator(
     private val activity: FragmentActivity,
@@ -18,6 +19,7 @@ class Navigator(
 
     // TODO: add screen history
     private var currentVisibleScreen: Screen? = null
+    private val screenStack: Stack<Screen> = Stack()
 
     override fun executeCommand(command: Command) {
         when (command) {

@@ -135,7 +135,14 @@ class TestPassingViewModel(
             isPassed
         )
 
-        router.navigateTo(resultScreen, addToBackStack = false)
+        if (isCheating || testRemainingTime <= 0L) {
+            router.navigateTo(
+                NavigationScreen.Tests.FailedResult(isCheating),
+                addToBackStack = false
+            )
+        } else {
+            router.navigateTo(resultScreen, addToBackStack = false)
+        }
         router.setResultListener(NavigationScreen.Tests.Result.OpenResults) {
             router.exit()
             router.navigateTo(NavigationScreen.Tests.Statistic(testId))
@@ -151,7 +158,7 @@ class TestPassingViewModel(
         val test = modelState.test ?: return@intent
         if (!test.settings.antiCheating) return@intent
         val newResumeCount = modelState.resumeCount + 1
-        if (newResumeCount >= CHEAT_RESUME_COUNT) {
+        if (newResumeCount == CHEAT_RESUME_COUNT) {
             completeTest(testRemainingTime, isCheating = true)
         }
         updateModelState {
@@ -306,11 +313,13 @@ class TestPassingViewModel(
 
     private fun loadData() = intent {
         val test = getTest(testId)
+        val settings = test.settings.copy(antiCheating = true, timeLimit = 30)
+        val newTest = test.copy(settings = settings)
         val questions = getQuestions(testId).toPassingQuestions()
         val currentQuestion = questions.first()
         updateModelState {
             copy(
-                test = test,
+                test = newTest,
                 questions = questions,
                 currentQuestion = questions.first()
             )
@@ -321,7 +330,7 @@ class TestPassingViewModel(
         }
 
         val testEffect =
-            TestPassingSideEffect.StartTestTimer(test.settings.timeLimit * SECOND_IN_MILLIS)
+            TestPassingSideEffect.StartTestTimer(newTest.settings.timeLimit * SECOND_IN_MILLIS)
         postSideEffect(testEffect)
         val questionTime = currentQuestion.question.time
         val questionEffect = TestPassingSideEffect.StartQuestionTimer(questionTime)

@@ -130,7 +130,9 @@ fun List<InputUserAnswerData>.toRemotes() = map(InputUserAnswerData::toRemote)
 
 fun TestPassResult.toRemote() = when (this) {
     TestPassResult.SUCCESSFUL -> TestPassResultRemote.Successful
-    TestPassResult.FAILED -> TestPassResultRemote.Failed
+    TestPassResult.FAILED,
+    TestPassResult.TIME_OVER,
+    TestPassResult.ANTI_CHEAT_FAILED -> TestPassResultRemote.Failed
 }
 
 private fun RemoteAnswer.toMatch(questionId: String) = Answer.MatchAnswer(

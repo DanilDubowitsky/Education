@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.base
 
 import com.testeducation.education.di.modules.screen.question.QuestionsPreviewModule
 import com.testeducation.education.di.modules.screen.tests.creation.TestCreationModule
+import com.testeducation.education.di.modules.screen.tests.pass.TestFailedPassModule
 import com.testeducation.education.di.modules.screen.tests.pass.TestPassResultModule
 import com.testeducation.education.di.modules.screen.tests.question.QuestionModule
 import com.testeducation.education.di.modules.screen.tests.question.input.AnswerInputModule
@@ -14,6 +15,7 @@ import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
 import com.testeducation.ui.screen.tests.creation.input.AnswerInputDialog
 import com.testeducation.ui.screen.tests.creation.time.TimeQuestionDialog
+import com.testeducation.ui.screen.tests.pass.result.TestFailedPassDialog
 import com.testeducation.ui.screen.tests.pass.result.TestPassResultDialog
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -47,4 +49,7 @@ interface DialogsModule {
 
     @ContributesAndroidInjector(modules = [TestPassResultModule::class])
     fun testResultDialog(): TestPassResultDialog
+
+    @ContributesAndroidInjector(modules = [TestFailedPassModule::class])
+    fun testFailedPassDialog(): TestFailedPassDialog
 }

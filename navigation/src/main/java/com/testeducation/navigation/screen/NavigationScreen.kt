@@ -149,6 +149,10 @@ sealed interface NavigationScreen : Serializable {
             object OpenResults : ResultKey<Unit>
         }
 
+        data class FailedResult(
+            val isCheating: Boolean
+        ) : Tests
+
         data class Statistic(
             val testId: String
         ) : Tests

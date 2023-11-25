@@ -77,21 +77,24 @@ fun matchAnsweredQuestionDelegate(
 ) {
     binding.root.setClickListener {
         onClick(item.id)
+        binding.btnExpand.animate().rotationBy(180f)
+    }
+    binding.btnExpand.setClickListener {
+        onClick(item.id)
+        binding.btnExpand.animate().rotationBy(180f)
     }
     bind {
         with(binding) {
+            if (!item.isExpanded) {
+                btnExpand.rotationY = 0f
+            } else {
+                btnExpand.rotationY = 180f
+            }
             matchDataLayout.isGone = !item.isExpanded
             val inflater = LayoutInflater.from(root.context)
             matchDataLayout.removeAllViews()
             item.matchValues.forEachIndexed { index, value ->
-                val view = ViewAnswerAnsweredQuestionBinding.inflate(inflater).apply {
-                    root.layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    ).apply {
-                        setMargins(0, 4.dp, 0, 4.dp)
-                    }
-                }
+                val view = ViewAnswerAnsweredQuestionBinding.inflate(inflater)
                 view.matchDataText.root.text = value
                 view.answerDataText.root.text = item.matchAnswers[index].title
                 matchDataLayout.addView(view.root)
@@ -146,7 +149,7 @@ private fun bindSimpleData(
             is AnswerUI.TextAnswer -> customAnswer
         }
         item.root.text = answerTitle
-        item.root.layoutParams = item.root.createLayoutParams()
+        item.root.createLayoutParams()
         answersLayout?.addView(item.root)
     }
     txtTitle.text = txtTitle.context.getString(
@@ -177,14 +180,16 @@ private fun bindSimpleData(
         if (answer !is AnswerUI.ChoiceAnswer) return
         val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
         item.root.text = (correctAnswers.first() as AnswerUI.ChoiceAnswer).title
-        item.root.layoutParams = item.root.createLayoutParams()
+        item.root.createLayoutParams()
         correctAnswersLayout.addView(item.root)
     }
 }
 
-private fun View.createLayoutParams() = FlexboxLayout.LayoutParams(
-    FlexboxLayout.LayoutParams.WRAP_CONTENT,
-    FlexboxLayout.LayoutParams.WRAP_CONTENT
-).apply {
-    setMargins(8.dp, 0, 8.dp, 0)
+private fun View.createLayoutParams() {
+    layoutParams = FlexboxLayout.LayoutParams(
+        FlexboxLayout.LayoutParams.WRAP_CONTENT,
+        FlexboxLayout.LayoutParams.WRAP_CONTENT
+    ).apply {
+        setMargins(8.dp, 5.dp, 8.dp, 0)
+    }
 }

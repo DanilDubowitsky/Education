@@ -156,8 +156,11 @@
     <string name="test_pass_return_to_main_page">Вернуться на главную</string>
     <string name="test_pass_test_failed_title">Тест провален!</string>
     <string name="test_pass_test_failed_description">К сожалению, вы превысили допустимое количество ошибок.</string>
+    <string name="test_pass_test_anti_cheating_description">К сожалению, вы не можете продолжить прохождение теста, так как данный тест запрещает выход в фоновый режим.</string>
     <string name="test_pass_test_incorrect_answers">Ошибок</string>
     <string name="test_pass_test_correct_answers">Верных ответов</string>
+    <string name="test_pass_time_over_title">Время истекло!</string>
+    <string name="test_pass_time_over_description">К сожалению, вы не можете продолжить прохождение теста</string>
 
     <string name="test_pass_results_title">Результаты теста</string>
     <string name="test_pass_results_answer">Ответ:</string>
