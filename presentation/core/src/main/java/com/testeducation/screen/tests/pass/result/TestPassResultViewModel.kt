@@ -7,6 +7,7 @@ import com.testeducation.logic.screen.tests.pass.result.TestPassResultSideEffect
 import com.testeducation.logic.screen.tests.pass.result.TestPassResultState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestPassResultViewModel(
@@ -33,8 +34,8 @@ class TestPassResultViewModel(
     }
 
     fun returnToMainPage() = intent {
-        router.exit()
         router.sendResult(NavigationScreen.Tests.Result.OpenMainPage, Unit)
+        router.exit()
     }
 
 }

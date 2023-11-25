@@ -15,7 +15,7 @@ class TimeHandler {
         startInternal(key, time, interval)
     }
 
-    fun stop(key: Any?) {
+    fun stop(key: Any? = null) {
         handler.removeCallbacksAndMessages(key)
     }
 

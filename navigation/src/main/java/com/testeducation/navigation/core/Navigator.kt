@@ -19,7 +19,7 @@ class Navigator(
 
     // TODO: add screen history
     private var currentVisibleScreen: Screen? = null
-    private val screenStack: Stack<Screen> = Stack()
+    private val screenHistory: MutableSet<Screen> = mutableSetOf()
 
     override fun executeCommand(command: Command) {
         when (command) {
@@ -31,7 +31,8 @@ class Navigator(
     }
 
     private fun executeForwardCommand(command: Command.Forward) {
-        when (val screen = screenAdapter.createPlatformScreen(command.screen)) {
+        val screen = screenAdapter.createPlatformScreen(command.screen)
+        when (screen) {
             is Screen.ActivityScreen -> {
                 // TODO: add activity support
             }
@@ -39,15 +40,19 @@ class Navigator(
             is Screen.DialogScreen -> moveDialog(screen)
             is Screen.FragmentScreen -> moveFragment(screen, command.addToBackStack)
         }
+        screenHistory.add(screen)
     }
 
     private fun handleBackCommand() {
+        println("CURRENT_SCREEN: $currentVisibleScreen")
         val fragment = fragmentManager.findFragmentByTag(currentVisibleScreen!!::class.java.name)
         if (fragment is DialogFragment) {
             fragment.dismiss()
         } else {
-            fragmentManager.popBackStack()
+            fragmentManager.popBackStackImmediate()
         }
+        screenHistory.remove(currentVisibleScreen)
+        currentVisibleScreen = screenHistory.last()
     }
 
     private fun executeRootChainCommand(command: Command.NewRootChain) {
@@ -77,13 +82,18 @@ class Navigator(
                 .setReorderingAllowed(true)
                 .commit()
         }
+        screenHistory.forEach {
+            screenHistory.remove(it)
+        }
         currentVisibleScreen = screen
+        screenHistory.add(screen)
     }
 
     private fun moveDialog(screen: Screen.DialogScreen) {
         if (screen == currentVisibleScreen) return
         val dialog = screen.createDialog(fragmentFactory)
         dialog.showNow(fragmentManager, screen::class.java.name)
+        screenHistory.add(screen)
         currentVisibleScreen = screen
     }
 
@@ -114,6 +124,7 @@ class Navigator(
         transaction.setReorderingAllowed(true)
         transaction.commit()
         currentVisibleScreen = screen
+        screenHistory.add(screen)
     }
 
     private fun replaceFragment(screen: Screen.FragmentScreen) {
@@ -130,6 +141,7 @@ class Navigator(
             .setReorderingAllowed(true)
             .commit()
         currentVisibleScreen = screen
+        screenHistory.add(screen)
     }
 
 }

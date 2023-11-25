@@ -8,4 +8,6 @@ sealed interface TestPassingSideEffect {
     data class StartTestTimer(
         val time: Long
     ) : TestPassingSideEffect
+
+    object EndTimer : TestPassingSideEffect
 }

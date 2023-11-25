@@ -18,6 +18,7 @@ import com.testeducation.logic.screen.tests.pass.TestPassingState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -110,6 +111,7 @@ class TestPassingViewModel(
     }
 
     fun completeTest(testRemainingTime: Long, isCheating: Boolean = false) = intent {
+        postSideEffect(TestPassingSideEffect.EndTimer)
         val modelState = getModelState()
         val test = modelState.test ?: return@intent
         val answers = modelState.questions.toInputAnswers()
@@ -135,7 +137,7 @@ class TestPassingViewModel(
             isPassed
         )
 
-        if (isCheating || testRemainingTime <= 0L) {
+        if (isCheating || testRemainingTime < 0L) {
             router.navigateTo(
                 NavigationScreen.Tests.FailedResult(isCheating),
                 addToBackStack = false
@@ -148,6 +150,7 @@ class TestPassingViewModel(
             router.navigateTo(NavigationScreen.Tests.Statistic(testId))
         }
         router.setResultListener(NavigationScreen.Tests.Result.OpenMainPage) {
+            println("EXECUTING_EXIT_MAIN: ")
             router.exit()
         }
         passTest(testId, answers, spentTime, isCheating, result)
@@ -313,13 +316,11 @@ class TestPassingViewModel(
 
     private fun loadData() = intent {
         val test = getTest(testId)
-        val settings = test.settings.copy(antiCheating = true, timeLimit = 30)
-        val newTest = test.copy(settings = settings)
         val questions = getQuestions(testId).toPassingQuestions()
         val currentQuestion = questions.first()
         updateModelState {
             copy(
-                test = newTest,
+                test = test,
                 questions = questions,
                 currentQuestion = questions.first()
             )
@@ -330,7 +331,7 @@ class TestPassingViewModel(
         }
 
         val testEffect =
-            TestPassingSideEffect.StartTestTimer(newTest.settings.timeLimit * SECOND_IN_MILLIS)
+            TestPassingSideEffect.StartTestTimer(test.settings.timeLimit * SECOND_IN_MILLIS)
         postSideEffect(testEffect)
         val questionTime = currentQuestion.question.time
         val questionEffect = TestPassingSideEffect.StartQuestionTimer(questionTime)

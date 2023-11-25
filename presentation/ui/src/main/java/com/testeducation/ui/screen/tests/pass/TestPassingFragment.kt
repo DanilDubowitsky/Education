@@ -8,11 +8,10 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.testeducation.logic.model.question.AnswerStateUI
 import com.testeducation.logic.model.question.QuestionUI
-import com.testeducation.logic.model.test.AnswerUI
 import com.testeducation.logic.screen.tests.pass.TestPassingSideEffect
 import com.testeducation.logic.screen.tests.pass.TestPassingState
 import com.testeducation.screen.tests.pass.TestPassingViewModel
@@ -34,9 +33,9 @@ import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.loadDrawable
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
-import com.testeducation.ui.utils.simpleDiffUtil
 import com.testeducation.ui.utils.trimmedTextOrEmpty
 import java.text.SimpleDateFormat
+import java.util.Collections
 import java.util.Locale
 
 class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, FragmentTestPassBinding>(
@@ -49,8 +48,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private var currentQuestionId: String? = null
 
     private val answersAdapter by lazy {
-        AsyncListDifferDelegationAdapter(
-            simpleDiffUtil(AnswerUI::id),
+        ListDelegationAdapter(
             createChoiceAnswerDelegate(viewModel::selectChoiceAnswer),
             createOrderAnswerDelegate(orderDragListener),
             createMatchAnswerDelegate(orderDragListener)
@@ -65,8 +63,15 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
 
     private val questionItemTouchHelperCallback by lazy {
         QuestionItemTouchHelperCallback(
-            updateResultMove = viewModel::swapAnswers,
-            onClearView = {}
+            updateResultMove = { oldPosition, newPosition ->
+                val mutableItems = answersAdapter.items!!.toMutableList()
+                Collections.swap(mutableItems, oldPosition, newPosition)
+                answersAdapter.notifyItemMoved(oldPosition, newPosition)
+            },
+            onClearView = {},
+            onDragStateChanged = { _, oldPosition, newPosition ->
+                viewModel.swapAnswers(oldPosition, newPosition)
+            }
         )
     }
 
@@ -90,6 +95,10 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private fun onSideEffect(sideEffect: TestPassingSideEffect) = when (sideEffect) {
         is TestPassingSideEffect.StartQuestionTimer -> binding.startQuestion(sideEffect.time)
         is TestPassingSideEffect.StartTestTimer -> binding.startTest(sideEffect.time)
+        TestPassingSideEffect.EndTimer -> {
+            questionTimer.stop()
+            testTimer.stop()
+        }
     }
 
     private fun setupViews() = binding {
@@ -171,11 +180,21 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         fun setAnswersData() {
             txtQuestion.text = question.title
             when (question) {
-                is QuestionUI.Choice -> answersAdapter.items = question.answers
-                is QuestionUI.Match -> answersAdapter.items = question.answers
-                is QuestionUI.Order -> answersAdapter.items = question.answers
+                is QuestionUI.Choice -> {
+                    answersAdapter.items = question.answers
+                }
+
+                is QuestionUI.Match -> {
+                    answersAdapter.items = question.answers
+                }
+
+                is QuestionUI.Order -> {
+                    answersAdapter.items = question.answers
+                }
+
                 is QuestionUI.Text -> {}
             }
+            answersAdapter.notifyDataSetChanged()
             if (answersMatchAdapter.items != matchData) {
                 answersMatchAdapter.items = matchData
                 answersMatchAdapter.notifyDataSetChanged()
