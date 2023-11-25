@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:colorControlHighlight">
+    <item>
+        <shape android:shape="oval">
+            <corners android:radius="10dp" />
+            <stroke
+                android:width="4dp"
+                android:color="@color/colorError_2" />
+        </shape>
+    </item>
+</ripple>

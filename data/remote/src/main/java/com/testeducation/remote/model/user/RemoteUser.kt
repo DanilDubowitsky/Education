@@ -7,6 +7,8 @@ data class RemoteUser(
     val id: String,
     @SerializedName("email")
     val email: String,
+    @SerializedName("avatar_id")
+    val avatarId: Int,
     @SerializedName("username")
     val userName: String,
     @SerializedName("registrydate")

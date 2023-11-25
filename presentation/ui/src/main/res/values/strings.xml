@@ -167,4 +167,26 @@
     <string name="test_pass_results_correct_answer">Правильно:</string>
     <string name="test_pass_results_title_template">%1$s. %2$s</string>
 
+    <!--Profile-->
+    <string name="profile_my_data">Мои данные</string>
+    <string name="profile_achive_title">Достижения</string>
+    <string name="profile_create_test_title">Создано тестов</string>
+    <string name="profile_police_title">Конфиденциальность</string>
+    <string name="profile_problem_title">Сообщить о проблеме</string>
+    <string name="profile_about_app_title">О приложении</string>
+    <string name="profile_test_passed_title">Пройдено тестов</string>
+    <string name="profile_edit_change_avatar"><u>Изменить аватар</u></string>
+    <string name="profile_edit_delete_account">Удалить аккаунт</string>
+    <string name="profile_edit_log_out">Выйти из аккаунта</string>
+    <string name="profile_edit_nick_title">Никнейм</string>
+    <string name="profile_edit_email_title">Электронная почта</string>
+    <string name="profile_edit_toolbar_title">Данные профиля</string>
+    <string name="profile_avatar_changer_title_toolbar">Аватар</string>
+
+    <!--Support-->
+    <string name="support_chip_bug">Баг</string>
+    <string name="support_chip_wish">Пожелания</string>
+    <string name="support_title_category">Выберите категорию проблемы</string>
+    <string name="support_title_toolbar">Сообщить о проблеме</string>
+
 </resources>

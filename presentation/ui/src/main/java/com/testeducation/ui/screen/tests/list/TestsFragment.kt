@@ -101,6 +101,8 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         bindProfile(state)
         bindThemes(state)
         bindTests(state)
+
+        imgAvatar.setImageResource(state.avatarDrawableId)
     }
 
     private fun addTestsLoadingListener() {

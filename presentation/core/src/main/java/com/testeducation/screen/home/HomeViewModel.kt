@@ -49,9 +49,13 @@ class HomeViewModel(
     }
 
     fun navigateToProfile() = intent {
+        val currentScreen = getModelState().selectedScreen
+        val screen = NavigationScreen.Main.Profile
+        if (currentScreen == HomeModelState.BottomNavigationItems.PROFILE) return@intent
         updateModelState {
             copy(selectedScreen = HomeModelState.BottomNavigationItems.PROFILE)
         }
+        router.replace(screen, HOME_NAVIGATOR_KEY)
     }
 
     fun navigateToLibrary() = intent {

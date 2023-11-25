@@ -3,10 +3,11 @@ package com.testeducation.screen.tests.list
 import com.testeducation.converter.test.toUIModel
 import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.IReducer
+import com.testeducation.helper.avatar.IAvatarHelper
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.logic.screen.tests.list.TestsState
 
-class TestsReducer : IReducer<TestsModelState, TestsState> {
+class TestsReducer(private val avatarHelper: IAvatarHelper) : IReducer<TestsModelState, TestsState> {
 
     override fun reduce(modelState: TestsModelState): TestsState {
         return modelState.run {
@@ -25,7 +26,8 @@ class TestsReducer : IReducer<TestsModelState, TestsState> {
                         == TestsModelState.ProfileLoadingState.LOADING,
                 isThemesLoading = themesLoadingState
                         == TestsModelState.ThemesLoadingState.LOADING,
-                selectedSortField = selectedOrderField.toUIModel()
+                selectedSortField = selectedOrderField.toUIModel(),
+                avatarDrawableId = avatarHelper.getAvatarDrawable(user?.avatarId)
             )
         }
     }
