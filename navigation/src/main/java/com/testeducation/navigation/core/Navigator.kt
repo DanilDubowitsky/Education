@@ -44,7 +44,7 @@ class Navigator(
     }
 
     private fun handleBackCommand() {
-        println("CURRENT_SCREEN: $currentVisibleScreen")
+        if (currentVisibleScreen == null) fragmentManager.popBackStackImmediate()
         val fragment = fragmentManager.findFragmentByTag(currentVisibleScreen!!::class.java.name)
         if (fragment is DialogFragment) {
             fragment.dismiss()
@@ -52,7 +52,7 @@ class Navigator(
             fragmentManager.popBackStackImmediate()
         }
         screenHistory.remove(currentVisibleScreen)
-        currentVisibleScreen = screenHistory.last()
+        currentVisibleScreen = screenHistory.lastOrNull()
     }
 
     private fun executeRootChainCommand(command: Command.NewRootChain) {

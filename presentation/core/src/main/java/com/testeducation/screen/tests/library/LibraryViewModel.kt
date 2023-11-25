@@ -47,7 +47,7 @@ class LibraryViewModel(
 
     fun openTestPreview(id: String) {
         val screen = NavigationScreen.Tests.Preview(id)
-        router.navigateTo(screen, key = HOME_NAVIGATOR_KEY)
+        router.navigateTo(screen)
     }
 
     fun toggleTestLike(position: Int, type: TestGetTypeUI) = intent {

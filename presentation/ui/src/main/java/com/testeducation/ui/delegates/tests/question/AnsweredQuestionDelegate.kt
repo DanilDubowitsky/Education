@@ -77,19 +77,12 @@ fun matchAnsweredQuestionDelegate(
 ) {
     binding.root.setClickListener {
         onClick(item.id)
-        binding.btnExpand.animate().rotationBy(180f)
     }
     binding.btnExpand.setClickListener {
         onClick(item.id)
-        binding.btnExpand.animate().rotationBy(180f)
     }
     bind {
         with(binding) {
-            if (!item.isExpanded) {
-                btnExpand.rotationY = 0f
-            } else {
-                btnExpand.rotationY = 180f
-            }
             matchDataLayout.isGone = !item.isExpanded
             val inflater = LayoutInflater.from(root.context)
             matchDataLayout.removeAllViews()

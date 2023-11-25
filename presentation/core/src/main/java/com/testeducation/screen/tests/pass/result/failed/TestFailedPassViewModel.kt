@@ -12,7 +12,7 @@ class TestFailedPassViewModel(
     exceptionHandler: IExceptionHandler,
     reducer: IReducer<TestFailedPassModelState, TestFailedPassState>,
     private val router: NavigationRouter,
-    private val isCheating: Boolean
+    isCheating: Boolean
 ) : BaseViewModel<TestFailedPassModelState, TestFailedPassState, TestFailedPassSideEffect>(
     reducer,
     exceptionHandler
@@ -22,8 +22,8 @@ class TestFailedPassViewModel(
         TestFailedPassModelState(isCheating = isCheating)
 
     fun backToMainPaige() {
-        router.exit()
         router.sendResult(NavigationScreen.Tests.Result.OpenMainPage, Unit)
+        router.exit()
     }
 
 }

@@ -58,7 +58,8 @@ class TestPassingReducer(
             matchData = matchDataUI,
             currentQuestionPosition = modelState.currentQuestionIndex + 1,
             questionsCount = modelState.questions.size,
-            isAntiCheating = modelState.test?.settings?.antiCheating ?: false
+            isAntiCheating = modelState.test?.settings?.antiCheating ?: false,
+            isLoading = modelState.isLoading
         )
     }
 }

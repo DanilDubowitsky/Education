@@ -25,7 +25,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import java.util.Collections
 
-
 private typealias Syntax = SimpleSyntax<TestPassingState, TestPassingSideEffect>
 
 class TestPassingViewModel(
@@ -150,7 +149,6 @@ class TestPassingViewModel(
             router.navigateTo(NavigationScreen.Tests.Statistic(testId))
         }
         router.setResultListener(NavigationScreen.Tests.Result.OpenMainPage) {
-            println("EXECUTING_EXIT_MAIN: ")
             router.exit()
         }
         passTest(testId, answers, spentTime, isCheating, result)
@@ -288,9 +286,11 @@ class TestPassingViewModel(
     private suspend fun Syntax.checkChoiceAnswer(remainingTime: Long) {
         val modelState = getModelState()
         val questionState = modelState.selectedQuestionState.toChoice()
-        val index = questionState.selectedAnswerIndex ?: 0
-        val selectedAnswer = questionState.question?.answers?.get(index) ?: return
-        val state = if (selectedAnswer.isTrue) {
+        val index = questionState.selectedAnswerIndex
+        val selectedAnswer = if (index != null) {
+            questionState.question?.answers?.get(index)
+        } else null
+        val state = if (selectedAnswer?.isTrue == true) {
             PassingQuestion.AnswerState.CORRECT
         } else {
             PassingQuestion.AnswerState.INCORRECT
@@ -301,7 +301,7 @@ class TestPassingViewModel(
 
         val newQuestion = modelState.currentQuestion.copy(
             state = state,
-            answers = listOf(selectedAnswer.id),
+            answers = listOf(selectedAnswer?.id.orEmpty()),
             timeSpent = spentTime
         )
         questions[modelState.currentQuestionIndex] = newQuestion
@@ -322,7 +322,8 @@ class TestPassingViewModel(
             copy(
                 test = test,
                 questions = questions,
-                currentQuestion = questions.first()
+                currentQuestion = questions.first(),
+                isLoading = false
             )
         }
         val selectedQuestionState = extractQuestionState()
