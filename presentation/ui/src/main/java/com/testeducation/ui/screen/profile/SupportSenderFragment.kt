@@ -32,6 +32,9 @@ class SupportSenderFragment : ViewModelHostFragment<SupportSenderViewModel, Frag
                 viewModel.onTextChanged(text.toString())
             }
             btnSend.setClickListener(viewModel::send)
+            back.setOnClickListener {
+                viewModel.back()
+            }
         }
     }
 

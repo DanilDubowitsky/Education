@@ -23,7 +23,7 @@ class UserRemoteSource(
     override suspend fun setAvatar(avatarId: Int) {
         userRetrofitClient.setAvatar(
             SetAvatarRequest(avatarId)
-        )
+        ).getResult()
     }
 
     override suspend fun sendSupport(text: String, category: String) {
@@ -31,6 +31,6 @@ class UserRemoteSource(
             BugReportRequest(
                 category, text
             )
-        )
+        ).getResult()
     }
 }

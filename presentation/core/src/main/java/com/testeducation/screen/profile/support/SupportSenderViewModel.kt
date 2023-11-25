@@ -44,7 +44,6 @@ class SupportSenderViewModel(
         }
         val modelState = getModelState()
         sendSupport(modelState.text, modelState.categorySupport)
-        back()
     }
 
     fun changeCategory(isBug: Boolean) = intent {
