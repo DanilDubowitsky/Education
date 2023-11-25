@@ -1,13 +1,17 @@
 package com.testeducation.remote.converter.question
 
-import com.testeducation.domain.model.question.Answer
+import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
+import com.testeducation.domain.model.question.TestPassResult
 import com.testeducation.domain.model.question.input.InputAnswer
+import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.remote.model.answer.RemoteAnswer
 import com.testeducation.remote.model.question.RemoteQuestion
-import com.testeducation.remote.request.question.AnswerCreateRequest
-import com.testeducation.remote.request.question.AnswerMatch
+import com.testeducation.remote.request.question.answer.AnswerCreateRequest
+import com.testeducation.remote.model.answer.AnswerMatch
+import com.testeducation.remote.model.answer.InputUserAnswerDataRemote
+import com.testeducation.remote.model.test.TestPassResultRemote
 
 fun List<InputAnswer>.mapToRequestTypeDefault() = mapNotNull { answer ->
     if (answer is InputAnswer.DefaultAnswer) {
@@ -54,18 +58,45 @@ fun List<InputAnswer>.mapToRequestAnswer(type: QuestionType) = when (type) {
 fun RemoteQuestion.toModel(): Question {
     val questionType = type.toModel()
 
-    return Question(
-        id = id,
-        title = title,
-        numberQuestion = questionNumber,
-        time = time.toLong(),
-        type = questionType,
-        answers = answers.toModels(questionType)
-    )
+    return when (type) {
+        RemoteQuestion.Type.Match -> Question.Match(
+            id,
+            title,
+            questionNumber.toInt(),
+            time.toLong(),
+            answers.toModels(questionType,id) as List<Answer.MatchAnswer>
+        )
+
+        RemoteQuestion.Type.Choice -> Question.Choice(
+            id,
+            title,
+            questionNumber.toInt(),
+            time.toLong(),
+            answers.toModels(questionType, id) as List<Answer.ChoiceAnswer>
+        )
+
+        RemoteQuestion.Type.Text -> Question.Text(
+            id,
+            title,
+            questionNumber.toInt(),
+            time.toLong()
+        )
+
+        RemoteQuestion.Type.Reorder -> Question.Order(
+            id,
+            title,
+            questionNumber.toInt(),
+            time.toLong(),
+            answers.toModels(questionType, id) as List<Answer.OrderAnswer>
+        )
+    }
 }
 
-fun List<RemoteAnswer>.toModels(questionType: QuestionType) = map { answer ->
-    answer.toModel(answer.id, questionType)
+fun List<RemoteAnswer>.toModels(
+    questionType: QuestionType,
+    questionId: String
+) = map { answer ->
+    answer.toModel(questionId, questionType)
 }
 
 fun RemoteAnswer.toModel(
@@ -87,11 +118,28 @@ fun QuestionType.toRemote() = when (this) {
     QuestionType.REORDER -> RemoteQuestion.Type.Reorder
 }
 
+fun InputUserAnswerData.toRemote() = InputUserAnswerDataRemote(
+    questionId,
+    answerIds,
+    isCorrect,
+    spentTime,
+    customAnswer
+)
+
+fun List<InputUserAnswerData>.toRemotes() = map(InputUserAnswerData::toRemote)
+
+fun TestPassResult.toRemote() = when (this) {
+    TestPassResult.SUCCESSFUL -> TestPassResultRemote.Successful
+    TestPassResult.FAILED,
+    TestPassResult.TIME_OVER,
+    TestPassResult.ANTI_CHEAT_FAILED -> TestPassResultRemote.Failed
+}
+
 private fun RemoteAnswer.toMatch(questionId: String) = Answer.MatchAnswer(
-    id = id,
-    questionId = questionId,
-    matchedCorrectText = match!!.title,
-    title = title!!
+    id,
+    questionId,
+    title.orEmpty(),
+    match?.title.orEmpty()
 )
 
 private fun RemoteAnswer.toChoice(questionId: String) = Answer.ChoiceAnswer(
@@ -103,7 +151,8 @@ private fun RemoteAnswer.toChoice(questionId: String) = Answer.ChoiceAnswer(
 
 private fun RemoteAnswer.toText(questionId: String) = Answer.TextAnswer(
     id,
-    questionId
+    questionId,
+    text.orEmpty()
 )
 
 private fun RemoteAnswer.toReorder(questionId: String) = Answer.OrderAnswer(

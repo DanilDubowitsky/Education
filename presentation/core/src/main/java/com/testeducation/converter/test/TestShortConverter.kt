@@ -10,19 +10,26 @@ import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
 
-fun TestShort.toUI(): TestShortUI = TestShortUI.Test(
-    id,
-    title,
-    questionsCount,
-    isPublic,
-    likes,
-    passesCount,
-    theme.toUI(),
-    style.color,
-    CardTestStyle.ELLIPSE,
-    liked,
-    passed
-)
+fun TestShort.toUI(): TestShortUI {
+    val cardStyle = if (style.background.isNotBlank()) {
+        CardTestStyle.valueOf(style.background)
+    } else {
+        CardTestStyle.X
+    }
+    return TestShortUI.Test(
+        id,
+        title,
+        questionsCount,
+        isPublic,
+        likes,
+        passesCount,
+        theme.toUI(),
+        style.color,
+        cardStyle,
+        liked,
+        passed
+    )
+}
 
 fun List<TestShort>.toUIModels(): List<TestShortUI> = this.map(TestShort::toUI)
 
@@ -48,7 +55,7 @@ fun TestShortUI.Test.toModel() = TestShort(
     theme.toModel(),
     liked,
     passed,
-    TestStyle(color, "")
+    TestStyle(color, style.name)
 )
 
 fun List<TestShortUI>.toModels() = this.mapNotNull { testShortUI ->

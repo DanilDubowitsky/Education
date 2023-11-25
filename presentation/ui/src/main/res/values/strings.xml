@@ -132,7 +132,7 @@
 
     <string name="test_draft">В черновик</string>
     <string name="test_publish">Опубликовать</string>
-    
+
     <!--Validate-->
     <string name="test_edit_error_title">Ошибка при создании теста</string>
     <string name="question_creation_error_title">Ошибка при создании вопроса</string>
@@ -142,6 +142,30 @@
     <string name="question_creation_validate_min_count_answer">Минимальное количество ответов на вопрос должно быть равно %s-м</string>
     <string name="question_creation_validate_min_one_true_answer">Необходимо выбрать хотя бы один правильный ответ</string>
     <string name="question_creation_validate_answer_is_empty">В вопросе не должны присуствовать ответы с пустым содержанием</string>
+
+    <string name="test_pass_test_time_remaining">Всего осталось:</string>
+    <string name="test_pass_answer_label">Ответить</string>
+    <string name="test_pass_next_label">Далее</string>
+    <string name="test_pass_incorrect_label">Неверно</string>
+    <string name="test_pass_correct_label">Верно</string>
+    <string name="test_pass_question_count">%1$s / %2$s</string>
+    <string name="test_pass_true_answer_label">Верный ответ: %1$s</string>
+    <string name="test_pass_congratulations">Поздравляем!</string>
+    <string name="test_pass_congratulations_description">Вы успешно прошли тест</string>
+    <string name="test_pass_show_full_statistic">Показать полную статистику</string>
+    <string name="test_pass_return_to_main_page">Вернуться на главную</string>
+    <string name="test_pass_test_failed_title">Тест провален!</string>
+    <string name="test_pass_test_failed_description">К сожалению, вы превысили допустимое количество ошибок.</string>
+    <string name="test_pass_test_anti_cheating_description">К сожалению, вы не можете продолжить прохождение теста, так как данный тест запрещает выход в фоновый режим.</string>
+    <string name="test_pass_test_incorrect_answers">Ошибок</string>
+    <string name="test_pass_test_correct_answers">Верных ответов</string>
+    <string name="test_pass_time_over_title">Время истекло!</string>
+    <string name="test_pass_time_over_description">К сожалению, вы не можете продолжить прохождение теста</string>
+
+    <string name="test_pass_results_title">Результаты теста</string>
+    <string name="test_pass_results_answer">Ответ:</string>
+    <string name="test_pass_results_correct_answer">Правильно:</string>
+    <string name="test_pass_results_title_template">%1$s. %2$s</string>
 
     <!--Profile-->
     <string name="profile_my_data">Мои данные</string>

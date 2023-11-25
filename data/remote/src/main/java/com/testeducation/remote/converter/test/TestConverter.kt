@@ -60,7 +60,6 @@ fun RemoteTest.toModel(): Test {
         title = title,
         style = style.toModel(),
         settings = settings.toModel(),
-        questions = question.toModels(),
         status = status.toModel(),
         likes = likes,
         liked = liked,

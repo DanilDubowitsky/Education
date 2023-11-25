@@ -13,8 +13,6 @@ data class RemoteTest(
     val style: RemoteTestStyle,
     @SerializedName("settings")
     val settings: RemoteTestSettings,
-    @SerializedName("questions")
-    val question: List<RemoteQuestion>,
     @SerializedName("status")
     val status: Status,
     @SerializedName("likes")

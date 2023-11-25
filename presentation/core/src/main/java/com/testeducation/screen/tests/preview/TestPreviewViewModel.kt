@@ -76,6 +76,11 @@ class TestPreviewViewModel(
         }
     }
 
+    fun openTestPassingScreen() = intent {
+        val screen = NavigationScreen.Tests.Passing(testId)
+        router.navigateTo(screen)
+    }
+
     private fun loadData() = intent {
         val test = getTest(testId)
         val testsPage = getTests(

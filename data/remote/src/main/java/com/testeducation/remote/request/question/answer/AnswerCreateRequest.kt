@@ -1,6 +1,7 @@
-package com.testeducation.remote.request.question
+package com.testeducation.remote.request.question.answer
 
 import com.google.gson.annotations.SerializedName
+import com.testeducation.remote.model.answer.AnswerMatch
 
 data class AnswerCreateRequest(
     @SerializedName("title")

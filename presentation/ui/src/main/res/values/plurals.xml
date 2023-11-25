@@ -15,4 +15,5 @@
         <item quantity="few">Показать %1$s тестов</item>
         <item quantity="many">Показать %1$s тестов</item>
     </plurals>
+
 </resources>

@@ -1,9 +1,11 @@
 package com.testeducation.ui.utils
 
+import android.animation.Animator
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.ViewPropertyAnimator
 import android.view.animation.Animation
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -19,6 +21,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
+import com.testeducation.logic.model.test.AnswerUI
 import com.testeducation.logic.model.theme.ThemeShortUI
 import com.testeducation.ui.R
 
@@ -144,10 +147,9 @@ fun ChipGroup.addThemes(
 }
 
 fun Button.switchHalfVisibleState(isVisible: Boolean) {
-    alpha = if (!isVisible){
+    alpha = if (!isVisible) {
         0.5f
-    }
-    else 1f
+    } else 1f
     isEnabled = isVisible
 }
 
@@ -191,3 +193,41 @@ var View.isFadeGone: Boolean
                 .start()
         }
     }
+
+fun View.animateTranslationXAndAlpha(
+    duration: Long,
+    translationX: Float,
+    alpha: Float,
+    onEnd: (() -> Unit)? = null
+) {
+    this.animate().translationX(translationX)
+        .alpha(alpha)
+        .setListener(onEnd = onEnd)
+        .start()
+}
+
+fun ViewPropertyAnimator.setListener(
+    onStart: (() -> Unit)? = null,
+    onEnd: (() -> Unit)? = null,
+    onCancel: (() -> Unit)? = null,
+    onRepeat: (() -> Unit)? = null,
+): ViewPropertyAnimator {
+    return this.setListener(object : Animator.AnimatorListener {
+
+        override fun onAnimationStart(animation: Animator) {
+            onStart?.invoke()
+        }
+
+        override fun onAnimationEnd(animation: Animator) {
+            onEnd?.invoke()
+        }
+
+        override fun onAnimationCancel(animation: Animator) {
+            onCancel?.invoke()
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+            onRepeat?.invoke()
+        }
+    })
+}

@@ -1,4 +1,4 @@
-package com.testeducation.remote.request.question
+package com.testeducation.remote.model.answer
 
 import com.google.gson.annotations.SerializedName
 

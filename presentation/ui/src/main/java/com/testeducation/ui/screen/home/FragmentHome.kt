@@ -42,7 +42,7 @@ class FragmentHome : ViewModelHostFragment<HomeViewModel, FragmentHomeBinding>(
             requireActivity(),
             R.id.homeFragmentContainer,
             screenAdapter,
-            parentFragmentManager,
+            childFragmentManager,
             moveAnimationSet = AnimationSet(
                 com.testeducation.navigation.R.anim.slide_in,
                 com.testeducation.navigation.R.anim.fade_out,
