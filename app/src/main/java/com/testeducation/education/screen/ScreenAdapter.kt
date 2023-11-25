@@ -13,6 +13,10 @@ import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
+import com.testeducation.ui.screen.profile.ProfileEditFragment
+import com.testeducation.ui.screen.profile.ProfileFragment
+import com.testeducation.ui.screen.profile.SupportSenderFragment
 import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
@@ -31,6 +35,7 @@ import com.testeducation.ui.screen.tests.pass.result.TestFailedPassDialog
 import com.testeducation.ui.screen.tests.pass.result.TestPassResultDialog
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
 import com.testeducation.ui.screen.tests.statistic.TestPassStatisticFragment
+import com.testeducation.ui.screen.webview.WebViewFragment
 import com.testeducation.ui.utils.withScreen
 
 class ScreenAdapter : IScreenAdapter {
@@ -42,6 +47,7 @@ class ScreenAdapter : IScreenAdapter {
             is NavigationScreen.Main -> createPlatformScreen(screen)
             is NavigationScreen.Tests -> createPlatformScreen(screen)
             is NavigationScreen.Questions -> createPlatformScreen(screen)
+            is NavigationScreen.Profile -> createPlatformScreen(screen)
         }
 
     private fun createPlatformScreen(screen: NavigationScreen.Auth): Screen =
@@ -82,6 +88,10 @@ class ScreenAdapter : IScreenAdapter {
             is NavigationScreen.Common.PopUpInformation -> Screen.DialogScreen {
                 InformationAlertDialog().withScreen(screen)
             }
+
+            is NavigationScreen.Common.WebView -> Screen.FragmentScreen {
+                WebViewFragment().withScreen(screen)
+            }
         }
 
     private fun createPlatformScreen(screen: NavigationScreen.Main): Screen = when (screen) {
@@ -104,6 +114,10 @@ class ScreenAdapter : IScreenAdapter {
 
         NavigationScreen.Main.LikedTests -> Screen.FragmentScreen {
             LikedTestsFragment()
+        }
+
+        NavigationScreen.Main.Profile -> Screen.FragmentScreen {
+            ProfileFragment()
         }
 
         NavigationScreen.Main.Library -> Screen.FragmentScreen {
@@ -170,4 +184,17 @@ class ScreenAdapter : IScreenAdapter {
             AnswerInputDialog().withScreen(screen)
         }
     }
+
+    private fun createPlatformScreen(screen: NavigationScreen.Profile) = when(screen) {
+        NavigationScreen.Profile.Editor -> Screen.FragmentScreen {
+            ProfileEditFragment().withScreen(screen)
+        }
+        is NavigationScreen.Profile.Avatar -> Screen.FragmentScreen {
+            ProfileAvatarChangerFragment().withScreen(screen)
+        }
+        NavigationScreen.Profile.Support -> Screen.FragmentScreen {
+            SupportSenderFragment().withScreen(screen)
+        }
+    }
+
 }

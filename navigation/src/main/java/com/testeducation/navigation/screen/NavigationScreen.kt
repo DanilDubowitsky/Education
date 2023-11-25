@@ -55,6 +55,8 @@ sealed interface NavigationScreen : Serializable {
 
             object OnConfirm : ResultKey<Unit>
         }
+
+        data class WebView(val url: String): Common
     }
 
     sealed interface Main : NavigationScreen {
@@ -76,6 +78,8 @@ sealed interface NavigationScreen : Serializable {
         }
 
         object LikedTests : Main
+
+        object Profile : Main
 
         object Library : Main
     }
@@ -180,13 +184,22 @@ sealed interface NavigationScreen : Serializable {
         // TODO: move to class
         object OnTimeQuestionChanged : ResultKey<Long>
 
-        data class AnswerInput(val answerText: String, val color: Int, val firstAnswer: Boolean) : Questions {
+        data class AnswerInput(val answerText: String, val color: Int, val firstAnswer: Boolean) :
+            Questions {
             object OnAnswerInput : ResultKey<OnAnswerInput.Result> {
                 data class Result(
                     val answerText: String,
                     val firstAnswer: Boolean
                 )
             }
+        }
+    }
+
+    sealed interface Profile : NavigationScreen {
+        object Editor : Profile
+        object Support : Profile
+        data class Avatar(val avatarId: Int) : Profile {
+            object OnAvatarUpdated: ResultKey<Int>
         }
     }
 

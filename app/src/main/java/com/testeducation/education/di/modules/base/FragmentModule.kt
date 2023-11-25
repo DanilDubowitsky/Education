@@ -7,6 +7,10 @@ import com.testeducation.education.di.modules.screen.auth.PasswordResetEmailModu
 import com.testeducation.education.di.modules.screen.auth.RegistrationModule
 import com.testeducation.education.di.modules.screen.home.HomeModule
 import com.testeducation.education.di.modules.screen.home.library.LibraryModule
+import com.testeducation.education.di.modules.screen.profile.ProfileAvatarChangerModule
+import com.testeducation.education.di.modules.screen.profile.ProfileEditModule
+import com.testeducation.education.di.modules.screen.profile.ProfileModule
+import com.testeducation.education.di.modules.screen.profile.SupportSenderModule
 import com.testeducation.education.di.modules.screen.tests.edit.TestEditorModule
 import com.testeducation.education.di.modules.screen.tests.edit.TestStyleChangerModule
 import com.testeducation.education.di.modules.screen.tests.filters.TestsFiltersModule
@@ -18,6 +22,7 @@ import com.testeducation.education.di.modules.screen.tests.preview.TestPreviewMo
 import com.testeducation.education.di.modules.screen.tests.question.QuestionCreationModule
 import com.testeducation.education.di.modules.screen.tests.settings.TestSettingsModule
 import com.testeducation.education.di.modules.screen.tests.statistic.TestPassStatisticModule
+import com.testeducation.education.di.modules.screen.webview.WebViewModule
 import com.testeducation.ui.screen.auth.confirmation.CodeConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
@@ -25,6 +30,10 @@ import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
 import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
+import com.testeducation.ui.screen.profile.ProfileEditFragment
+import com.testeducation.ui.screen.profile.ProfileFragment
+import com.testeducation.ui.screen.profile.SupportSenderFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.edit.TestEditorFragment
 import com.testeducation.ui.screen.tests.edit.TestSettingsFragment
@@ -36,6 +45,7 @@ import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.screen.tests.pass.TestPassingFragment
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
 import com.testeducation.ui.screen.tests.statistic.TestPassStatisticFragment
+import com.testeducation.ui.screen.webview.WebViewFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -95,4 +105,20 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [TestPassStatisticModule::class])
     fun testPassStatisticFragment(): TestPassStatisticFragment
+
+    @ContributesAndroidInjector(modules = [ProfileModule::class])
+    fun profileFragment(): ProfileFragment
+
+    @ContributesAndroidInjector(modules = [ProfileEditModule::class])
+    fun profileEditFragment(): ProfileEditFragment
+
+    @ContributesAndroidInjector(modules = [ProfileAvatarChangerModule::class])
+    fun profileAvatarChangerFragment(): ProfileAvatarChangerFragment
+
+    @ContributesAndroidInjector(modules = [SupportSenderModule::class])
+    fun supportSenderFragment(): SupportSenderFragment
+
+    @ContributesAndroidInjector(modules = [WebViewModule::class])
+    fun webViewFragment(): WebViewFragment
+
 }
