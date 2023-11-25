@@ -9,7 +9,7 @@ class ProfileReducer(private val avatarHelper: IAvatarHelper): IReducer<ProfileM
         return ProfileState(
             userName = modelState.user?.userName.orEmpty(),
             createdTestCount = modelState.userStatistics?.createdTestCount ?: 0,
-            passedTestCount = modelState.userStatistics?.createdTestCount ?: 0,
+            passedTestCount = modelState.userStatistics?.passedTestCount ?: 0,
             drawableAvatar = avatarHelper.getAvatarDrawable(modelState.user?.avatarId)
         )
     }
