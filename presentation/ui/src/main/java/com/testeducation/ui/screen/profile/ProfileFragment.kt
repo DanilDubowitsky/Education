@@ -24,6 +24,9 @@ class ProfileFragment: ViewModelHostFragment<ProfileViewModel, FragmentProfileBi
                 viewModel.navigateToEdit()
             }
             tvProblemTitle.setClickListener(viewModel::navigateToSupport)
+            tvSecurityTitle.setClickListener {
+                viewModel.navigateToPolicies()
+            }
         }
     }
 

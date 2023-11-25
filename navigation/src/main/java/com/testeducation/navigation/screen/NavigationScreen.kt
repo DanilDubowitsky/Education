@@ -55,6 +55,8 @@ sealed interface NavigationScreen : Serializable {
 
             object OnConfirm : ResultKey<Unit>
         }
+
+        data class WebView(val url: String): Common
     }
 
     sealed interface Main : NavigationScreen {

@@ -35,6 +35,7 @@ import com.testeducation.ui.screen.tests.pass.result.TestFailedPassDialog
 import com.testeducation.ui.screen.tests.pass.result.TestPassResultDialog
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
 import com.testeducation.ui.screen.tests.statistic.TestPassStatisticFragment
+import com.testeducation.ui.screen.webview.WebViewFragment
 import com.testeducation.ui.utils.withScreen
 
 class ScreenAdapter : IScreenAdapter {
@@ -86,6 +87,10 @@ class ScreenAdapter : IScreenAdapter {
 
             is NavigationScreen.Common.PopUpInformation -> Screen.DialogScreen {
                 InformationAlertDialog().withScreen(screen)
+            }
+
+            is NavigationScreen.Common.WebView -> Screen.FragmentScreen {
+                WebViewFragment().withScreen(screen)
             }
         }
 

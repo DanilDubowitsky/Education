@@ -22,6 +22,7 @@ import com.testeducation.education.di.modules.screen.tests.preview.TestPreviewMo
 import com.testeducation.education.di.modules.screen.tests.question.QuestionCreationModule
 import com.testeducation.education.di.modules.screen.tests.settings.TestSettingsModule
 import com.testeducation.education.di.modules.screen.tests.statistic.TestPassStatisticModule
+import com.testeducation.education.di.modules.screen.webview.WebViewModule
 import com.testeducation.ui.screen.auth.confirmation.CodeConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
@@ -44,6 +45,7 @@ import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.screen.tests.pass.TestPassingFragment
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
 import com.testeducation.ui.screen.tests.statistic.TestPassStatisticFragment
+import com.testeducation.ui.screen.webview.WebViewFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -115,5 +117,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [SupportSenderModule::class])
     fun supportSenderFragment(): SupportSenderFragment
+
+    @ContributesAndroidInjector(modules = [WebViewModule::class])
+    fun webViewFragment(): WebViewFragment
 
 }
