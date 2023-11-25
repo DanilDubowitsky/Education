@@ -16,4 +16,6 @@ class UserRepository(
 
     override suspend fun setAvatar(avatarId: Int) = userRemoteSource.setAvatar(avatarId)
 
+    override suspend fun sendSupport(text: String, category: String) =
+        userRemoteSource.sendSupport(text, category)
 }

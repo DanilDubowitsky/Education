@@ -9,6 +9,7 @@ import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentProfileBinding
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
+import com.testeducation.ui.utils.setClickListener
 
 class ProfileFragment: ViewModelHostFragment<ProfileViewModel, FragmentProfileBinding>(
     ProfileViewModel::class,
@@ -22,6 +23,7 @@ class ProfileFragment: ViewModelHostFragment<ProfileViewModel, FragmentProfileBi
             tvEdit.setOnClickListener {
                 viewModel.navigateToEdit()
             }
+            tvProblemTitle.setClickListener(viewModel::navigateToSupport)
         }
     }
 

@@ -16,6 +16,7 @@ import com.testeducation.ui.screen.home.library.TestLibraryFragment
 import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
 import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
+import com.testeducation.ui.screen.profile.SupportSenderFragment
 import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
@@ -165,6 +166,9 @@ class ScreenAdapter : IScreenAdapter {
         }
         is NavigationScreen.Profile.Avatar -> Screen.FragmentScreen {
             ProfileAvatarChangerFragment().withScreen(screen)
+        }
+        NavigationScreen.Profile.Support -> Screen.FragmentScreen {
+            SupportSenderFragment().withScreen(screen)
         }
     }
 

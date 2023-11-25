@@ -11,4 +11,6 @@ interface IUserRepository {
 
     suspend fun setAvatar(avatarId: Int)
 
+    suspend fun sendSupport(text: String, category: String)
+
 }

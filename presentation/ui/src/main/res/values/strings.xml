@@ -159,4 +159,8 @@
     <string name="profile_edit_toolbar_title">Данные профиля</string>
     <string name="profile_avatar_changer_title_toolbar">Аватар</string>
 
+    <!--Support-->
+    <string name="support_chip_bug">Баг</string>
+    <string name="support_chip_wish">Пожелания</string>
+    <string name="support_title_category">Выберите категорию проблемы</string>
 </resources>

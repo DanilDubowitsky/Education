@@ -32,6 +32,10 @@ class ProfileViewModel(
         router.navigateTo(NavigationScreen.Profile.Editor)
     }
 
+    fun navigateToSupport() {
+        router.navigateTo(NavigationScreen.Profile.Support)
+    }
+
     private fun initDataProfile() = intent {
         val currentUser = viewModelScope.async {
             getCurrentUser.invoke()

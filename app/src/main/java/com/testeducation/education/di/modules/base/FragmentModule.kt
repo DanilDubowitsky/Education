@@ -10,6 +10,7 @@ import com.testeducation.education.di.modules.screen.home.library.LibraryModule
 import com.testeducation.education.di.modules.screen.profile.ProfileAvatarChangerModule
 import com.testeducation.education.di.modules.screen.profile.ProfileEditModule
 import com.testeducation.education.di.modules.screen.profile.ProfileModule
+import com.testeducation.education.di.modules.screen.profile.SupportSenderModule
 import com.testeducation.education.di.modules.screen.tests.edit.TestEditorModule
 import com.testeducation.education.di.modules.screen.tests.edit.TestStyleChangerModule
 import com.testeducation.education.di.modules.screen.tests.filters.TestsFiltersModule
@@ -29,6 +30,7 @@ import com.testeducation.ui.screen.home.library.TestLibraryFragment
 import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
 import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
+import com.testeducation.ui.screen.profile.SupportSenderFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
 import com.testeducation.ui.screen.tests.edit.TestEditorFragment
 import com.testeducation.ui.screen.tests.edit.TestSettingsFragment
@@ -100,5 +102,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [ProfileAvatarChangerModule::class])
     fun profileAvatarChangerFragment(): ProfileAvatarChangerFragment
+
+    @ContributesAndroidInjector(modules = [SupportSenderModule::class])
+    fun supportSenderFragment(): SupportSenderFragment
 
 }

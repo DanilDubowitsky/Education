@@ -10,4 +10,6 @@ interface IUserRemoteSource {
     suspend fun getUserStatistics(): UserStatistics
 
     suspend fun setAvatar(avatarId: Int)
+
+    suspend fun sendSupport(text: String, category: String)
 }
