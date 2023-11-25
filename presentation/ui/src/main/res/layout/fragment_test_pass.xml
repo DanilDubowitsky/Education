@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnClose"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/background_selectable_white_10"
+        android:padding="8dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/questionsProgress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:indeterminate="false"
+        android:max="100"
+        app:indicatorColor="@color/colorMainBlueLight"
+        app:layout_constraintBottom_toBottomOf="@+id/txtQuestionProgress"
+        app:layout_constraintEnd_toEndOf="@+id/txtQuestionProgress"
+        app:layout_constraintStart_toStartOf="@+id/txtQuestionProgress"
+        app:layout_constraintTop_toTopOf="@+id/txtQuestionProgress"
+        app:trackColor="@color/colorWhite"
+        app:trackCornerRadius="10dp"
+        app:trackThickness="40dp" />
+
+    <TextView
+        android:id="@+id/txtQuestionProgress"
+        style="@style/Text.Label.SemiBold"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnClose"
+        app:layout_constraintEnd_toStartOf="@+id/txtQuestionTime"
+        app:layout_constraintStart_toEndOf="@+id/btnClose"
+        app:layout_constraintTop_toTopOf="@+id/btnClose"
+        tools:text="1 / 25" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/timeQuestionProgress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:indeterminate="false"
+        android:max="100"
+        app:indicatorColor="@color/colorMainGreenLight"
+        app:layout_constraintBottom_toBottomOf="@+id/txtQuestionTime"
+        app:layout_constraintEnd_toEndOf="@+id/txtQuestionTime"
+        app:layout_constraintStart_toStartOf="@+id/txtQuestionTime"
+        app:layout_constraintTop_toTopOf="@+id/txtQuestionTime"
+        app:trackColor="@color/colorWhite"
+        app:trackCornerRadius="10dp"
+        app:trackThickness="40dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtQuestionTime"
+        style="@style/Text.Label.SemiBold"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_bold_timer"
+        app:drawableTint="@color/colorTextPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/btnClose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnClose"
+        tools:text="0:30" />
+
+    <TextView
+        android:id="@+id/txtTotalTimeLabel"
+        style="@style/Text.Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/test_pass_test_time_remaining"
+        android:textColor="@color/colorTextGray"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/btnClose"
+        app:layout_constraintTop_toBottomOf="@+id/btnClose" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtTotalTime"
+        style="@style/Text.Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:drawablePadding="5dp"
+        android:textColor="@color/colorTextGray"
+        android:textSize="14sp"
+        app:drawableStartCompat="@drawable/ic_timer"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTotalTimeLabel"
+        app:layout_constraintStart_toEndOf="@+id/txtTotalTimeLabel"
+        app:layout_constraintTop_toTopOf="@+id/txtTotalTimeLabel"
+        tools:text="11:35" />
+
+    <ScrollView
+        android:id="@+id/rootScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/background_dialog_drawable"
+        app:layout_constraintBottom_toTopOf="@+id/btnAnswer"
+        app:layout_constraintTop_toBottomOf="@+id/txtTotalTimeLabel">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtQuestion"
+                style="@style/Text.Label.Medium"
+                android:layout_width="0dp"
+                android:layout_height="190dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/background_light_grey_round_14"
+                android:gravity="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Назовите дату начала Великой Отечественной войны?" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/answersRecycler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/answersOrderingRecycler"
+                app:layout_constraintTop_toBottomOf="@+id/txtQuestion"
+                app:layout_goneMarginStart="24dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/answersOrderingRecycler"
+                android:layout_width="wrap_content"
+                android:maxWidth="96dp"
+                android:minWidth="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtQuestion" />
+
+            <EditText
+                android:id="@+id/answerText"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/background_grey_rounded_14"
+                android:backgroundTint="@color/colorDarkGreen"
+                android:gravity="center"
+                android:hint="_ _ _ _ _ _ _ _ _ _ _ _"
+                android:minHeight="68dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                app:layout_constraintTop_toBottomOf="@+id/txtQuestion" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/answerStatusLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_dialog_drawable"
+        android:backgroundTint="@color/colorBackground"
+        android:minHeight="160dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imgCorrectIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_incorrect_answer" />
+
+        <TextView
+            android:id="@+id/txtAnswerStatus"
+            style="@style/Text.Label.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorRed"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgCorrectIndicator"
+            app:layout_constraintStart_toEndOf="@+id/imgCorrectIndicator"
+            app:layout_constraintTop_toTopOf="@+id/imgCorrectIndicator"
+            tools:text="Неверно" />
+
+        <TextView
+            android:id="@+id/txtCorrectAnswer"
+            style="@style/Text.Label.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/colorRed"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imgCorrectIndicator"
+            app:layout_constraintTop_toBottomOf="@+id/imgCorrectIndicator"
+            tools:text="Правильный ответ: 22 июня 1945" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAnswer"
+        style="@style/Button.Normal.Green"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/test_pass_answer_label"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

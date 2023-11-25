@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_selectable_white_10">
+
+    <ImageView
+        android:id="@+id/imgAnswerIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_incorrect_answer" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        style="@style/Text.Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgAnswerIndicator"
+        app:layout_constraintTop_toTopOf="@+id/imgAnswerIndicator"
+        tools:text="1. Назовите дату начала Великой Отечественной войны?" />
+
+    <TextView
+        android:id="@+id/txtAnswerIndicator"
+        style="@style/Text.Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        app:layout_goneMarginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/matchDataLayout"
+        app:layout_constraintStart_toStartOf="@+id/txtTitle"
+        android:text="@string/test_pass_results_answer"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        tools:textColor="@color/colorDarkGreen" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnExpand"
+        app:layout_constraintTop_toTopOf="@+id/txtAnswerIndicator"
+        app:layout_constraintBottom_toBottomOf="@+id/txtAnswerIndicator"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_expand_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/matchDataLayout"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnExpand"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintStart_toStartOf="@+id/txtAnswerIndicator"
+        app:layout_constraintTop_toBottomOf="@+id/txtAnswerIndicator">
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

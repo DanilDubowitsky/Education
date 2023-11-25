@@ -3,7 +3,9 @@ package com.testeducation.education.di.modules.domain.usecase.question
 import com.testeducation.domain.cases.question.DeleteQuestion
 import com.testeducation.domain.cases.question.GetQuestionDetails
 import com.testeducation.domain.cases.question.GetQuestions
+import com.testeducation.domain.cases.question.GetTestPassStatistic
 import com.testeducation.domain.cases.question.QuestionCreate
+import com.testeducation.domain.repository.question.IAnsweredQuestionRepository
 import com.testeducation.domain.repository.question.IQuestionRepository
 import com.testeducation.domain.service.question.IQuestionService
 import dagger.Module
@@ -33,4 +35,11 @@ object QuestionUseCaseModule {
     @Reusable
     fun provideGetQuestionDetails(questionRepository: IQuestionService) =
         GetQuestionDetails(questionRepository)
+
+    @Provides
+    @Reusable
+    fun provideGetTestPassStatistic(
+        repository: IAnsweredQuestionRepository
+    ) = GetTestPassStatistic(repository)
+
 }

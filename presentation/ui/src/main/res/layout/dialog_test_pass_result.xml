@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        style="@style/Text.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/test_pass_congratulations"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_trophy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        style="@style/Text.Label.Medium"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:text="@string/test_pass_congratulations_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgIndicator" />
+
+    <LinearLayout
+        android:id="@+id/statsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescription">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/trueAnswersLayout"
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_grey_rounded_16"
+            android:backgroundTint="@color/colorBlue">
+
+            <TextView
+                android:id="@+id/txtTrueAnswersCount"
+                style="@style/Text.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="35" />
+
+            <TextView
+                android:id="@+id/txtTrueAnswers"
+                style="@style/Text.Label.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtTrueAnswersCount"
+                app:layout_constraintTop_toBottomOf="@+id/txtTrueAnswersCount"
+                tools:text="Верных ответов" />
+
+            <ImageView
+                android:id="@+id/imgCorrect"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_check_transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/falseAnswersLayout"
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_grey_rounded_16"
+            android:backgroundTint="@color/colorRed">
+
+            <TextView
+                android:id="@+id/txtFalseAnswersCount"
+                style="@style/Text.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="35" />
+
+            <TextView
+                android:id="@+id/txtFalseAnswers"
+                style="@style/Text.Label.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtFalseAnswersCount"
+                app:layout_constraintTop_toBottomOf="@+id/txtFalseAnswersCount"
+                tools:text="Ошибок" />
+
+            <ImageView
+                android:id="@+id/imgIncorrect"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:paddingStart="10dp"
+                android:src="@drawable/ic_x_transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtShopFullStatistic"
+        style="@style/Text.Label.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/test_pass_show_full_statistic"
+        android:textColor="@color/colorDarkGreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statsLayout" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnReturnToMainPage"
+        style="@style/Button.Normal.Green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/test_pass_return_to_main_page"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtShopFullStatistic"
+        tools:layout_editor_absoluteX="24dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

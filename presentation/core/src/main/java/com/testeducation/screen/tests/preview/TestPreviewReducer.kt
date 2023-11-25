@@ -22,7 +22,7 @@ class TestPreviewReducer : IReducer<TestPreviewModelState, TestPreviewState> {
             isLiked = test?.liked ?: false,
             allowPreviewQuestions = test?.settings?.previewQuestions ?: false,
             description = tempDesc,
-            questionsCount = test?.questions?.size ?: 0,
+            questionsCount = 0,
             creatorName = test?.creator?.username.orEmpty(),
             isExpandButtonVisible = tempDesc.length >= MAX_DESCRIPTION_LENGTH,
             isExpand = isDescriptionExpanded,

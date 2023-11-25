@@ -118,6 +118,10 @@ sealed interface NavigationScreen : Serializable {
             val id: String
         ) : Tests
 
+        data class Passing(
+            val id: String
+        ) : Tests
+
         data class TestStyleChangerData(
             val testId: String,
             val testName: String,
@@ -133,6 +137,25 @@ sealed interface NavigationScreen : Serializable {
                 )
             }
         }
+
+        data class Result(
+            val correctAnswers: Int,
+            val incorrectAnswers: Int,
+            val isSuccess: Boolean
+        ) : Tests {
+
+            object OpenMainPage : ResultKey<Unit>
+
+            object OpenResults : ResultKey<Unit>
+        }
+
+        data class FailedResult(
+            val isCheating: Boolean
+        ) : Tests
+
+        data class Statistic(
+            val testId: String
+        ) : Tests
     }
 
     sealed interface Questions : NavigationScreen {

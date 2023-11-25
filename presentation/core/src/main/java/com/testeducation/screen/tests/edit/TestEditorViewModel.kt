@@ -1,13 +1,15 @@
 package com.testeducation.screen.tests.edit
 
+import com.testeducation.converter.test.answer.toInputAnswers
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.DeleteQuestion
+import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.domain.cases.test.ChangeStatusTest
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionDetails
-import com.testeducation.domain.model.question.convertToDomain
+import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.domain.model.test.Test
@@ -33,7 +35,8 @@ class TestEditorViewModel(
     private val deleteQuestion: DeleteQuestion,
     private val questionResourceHelper: IQuestionResourceHelper,
     private val router: NavigationRouter,
-    private val changeStatusTest: ChangeStatusTest
+    private val changeStatusTest: ChangeStatusTest,
+    private val getQuestions: GetQuestions
 ) : BaseViewModel<TestEditorModelState, TestEditorState, TestEditorSideEffect>(
     reducer,
     exceptionHandler
@@ -168,8 +171,9 @@ class TestEditorViewModel(
 
     private fun getTestDetails(testId: String) = singleIntent(getTest.javaClass.name) {
         val details = getTest.invoke(id = testId)
+        val questions = getQuestions(testId)
         val questionItems =
-            questionResourceHelper.getQuestionItemPrepared(details.questions.convertToQuestionDomain())
+            questionResourceHelper.getQuestionItemPrepared(questions.convertToQuestionDomain())
         val questionDetails: MutableList<QuestionDetails> = mutableListOf()
         questionDetails.addAll(questionItems.prepareQuestionDetailsItems())
         questionDetails.add(QuestionDetails.FooterAdd())
@@ -182,17 +186,32 @@ class TestEditorViewModel(
     }
 
     private fun List<Question>.convertToQuestionDomain() = map { itemQuestion ->
-        var answers = itemQuestion.answers.convertToDomain()
+
+        var answers = when (itemQuestion) {
+            is Question.Choice -> itemQuestion.answers
+            is Question.Match -> itemQuestion.answers
+            is Question.Order -> itemQuestion.answers
+            is Question.Text -> emptyList()
+        }.toInputAnswers()
+
         if (answers.all { it is InputAnswer.OrderAnswer }) {
             answers = (answers as List<InputAnswer.OrderAnswer>).sortCompleted()
         }
+
+        val type = when (itemQuestion) {
+            is Question.Choice -> QuestionType.CHOICE
+            is Question.Match -> QuestionType.MATCH
+            is Question.Order -> QuestionType.REORDER
+            is Question.Text -> QuestionType.TEXT
+        }
+
         InputQuestion(
             id = itemQuestion.id,
             title = itemQuestion.title,
-            numberQuestion = itemQuestion.numberQuestion,
+            numberQuestion = itemQuestion.numberQuestion.toString(),
             time = itemQuestion.time,
             icon = 0,
-            type = itemQuestion.type,
+            type = type,
             answers = answers
         )
     }

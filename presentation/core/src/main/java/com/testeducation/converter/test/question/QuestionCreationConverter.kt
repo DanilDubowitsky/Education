@@ -1,12 +1,9 @@
 package com.testeducation.converter.test.question
 
-import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.input.InputQuestion
-import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.logic.model.question.InputQuestionUI
-import com.testeducation.logic.model.question.QuestionUI
 import com.testeducation.logic.model.test.AnswerCreationUI
 
 fun List<InputAnswer>.toModelUi(visibleAddFooter: Boolean = true) = this.mapNotNull { answerItem ->
@@ -70,22 +67,4 @@ fun InputQuestion.toUi(timeConverterLongToString: ITimeConverterLongToString) = 
     numberQuestion = numberQuestion,
     answerItemUiList = answers.toModelUi(),
     time = timeConverterLongToString.convert(time)
-)
-
-fun List<Question>.toUIModels(
-    answerColorExtractor: IAnswerColorExtractor,
-    timeConverterLongToString: ITimeConverterLongToString
-) = map { question ->
-    question.toUI(answerColorExtractor, timeConverterLongToString)
-}
-
-fun Question.toUI(
-    answerColorExtractor: IAnswerColorExtractor,
-    timeConverterLongToString: ITimeConverterLongToString
-) = QuestionUI(
-    id,
-    title,
-    numberQuestion,
-    answers.toUIModels(answerColorExtractor),
-    timeConverterLongToString.convert(time)
 )

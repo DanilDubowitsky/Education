@@ -1,7 +1,6 @@
 package com.testeducation.remote.model.answer
 
 import com.google.gson.annotations.SerializedName
-import com.testeducation.remote.request.question.AnswerMatch
 
 data class RemoteAnswer(
     @SerializedName("id")

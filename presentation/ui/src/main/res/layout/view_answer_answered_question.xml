@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="4dp"
+    android:orientation="horizontal">
+
+    <include
+        android:id="@+id/matchDataText"
+        layout="@layout/view_answered_answer_text"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="5dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/background_black_shape" />
+
+    <include
+        android:id="@+id/answerDataText"
+        layout="@layout/view_answered_answer_text"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

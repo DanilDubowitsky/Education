@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="24dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_selectable_white_10">
+
+    <ImageView
+        android:id="@+id/imgAnswerIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_incorrect_answer" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        style="@style/Text.Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgAnswerIndicator"
+        app:layout_constraintTop_toTopOf="@+id/imgAnswerIndicator"
+        tools:text="1. Назовите дату начала Великой Отечественной войны?" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/trueAnswerChip"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="8dp"
+        app:flexDirection="row"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="12dp"
+        app:flexWrap="wrap"
+        app:layout_constraintStart_toStartOf="@+id/txtTitle"
+        app:layout_constraintTop_toBottomOf="@+id/answerChipGroup">
+
+        <TextView
+            android:id="@+id/txtTrueAnswer"
+            style="@style/Text.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test_pass_results_correct_answer"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/txtTitle"
+            app:layout_constraintTop_toBottomOf="@+id/txtAnswerIndicator"
+            android:textColor="@color/colorDarkGreen" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/answerChipGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="8dp"
+        app:layout_goneMarginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/trueAnswerChip"
+        android:layout_marginBottom="4dp"
+        app:flexDirection="row"
+        app:flexWrap="wrap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtTitle"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle">
+
+        <TextView
+            android:id="@+id/txtAnswerIndicator"
+            style="@style/Text.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test_pass_results_answer"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/txtTitle"
+            tools:textColor="@color/colorDarkGreen" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

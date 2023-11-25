@@ -19,6 +19,6 @@ object DataBaseModule {
         context,
         EducationDataBase::class.java,
         DATA_BASE_NAME
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
 }

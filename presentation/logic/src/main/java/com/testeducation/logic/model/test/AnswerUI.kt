@@ -7,7 +7,8 @@ sealed interface AnswerUI {
         override val id: String,
         val title: String,
         val isTrue: Boolean,
-        val color: Int
+        val color: Int,
+        val isSelected: Boolean
     ) : AnswerUI
 
     data class TextAnswer(
@@ -17,6 +18,7 @@ sealed interface AnswerUI {
 
     data class MatchAnswer(
         override val id: String,
+        val title: String,
         val matchedCorrectText: String,
         val color: Int
     ) : AnswerUI

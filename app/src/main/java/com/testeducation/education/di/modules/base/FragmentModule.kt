@@ -13,9 +13,11 @@ import com.testeducation.education.di.modules.screen.tests.filters.TestsFiltersM
 import com.testeducation.education.di.modules.screen.tests.library.TestLibraryModule
 import com.testeducation.education.di.modules.screen.tests.liked.LikedTestsModule
 import com.testeducation.education.di.modules.screen.tests.list.TestsModule
+import com.testeducation.education.di.modules.screen.tests.pass.TestPassingModule
 import com.testeducation.education.di.modules.screen.tests.preview.TestPreviewModule
 import com.testeducation.education.di.modules.screen.tests.question.QuestionCreationModule
 import com.testeducation.education.di.modules.screen.tests.settings.TestSettingsModule
+import com.testeducation.education.di.modules.screen.tests.statistic.TestPassStatisticModule
 import com.testeducation.ui.screen.auth.confirmation.CodeConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
@@ -31,7 +33,9 @@ import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
 import com.testeducation.ui.screen.tests.library.LibraryFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
+import com.testeducation.ui.screen.tests.pass.TestPassingFragment
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
+import com.testeducation.ui.screen.tests.statistic.TestPassStatisticFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -86,4 +90,9 @@ interface FragmentModule {
     @ContributesAndroidInjector(modules = [TestStyleChangerModule::class])
     fun testStyleChangerFragment(): TestStyleChangerFragment
 
+    @ContributesAndroidInjector(modules = [TestPassingModule::class])
+    fun testPassingFragment(): TestPassingFragment
+
+    @ContributesAndroidInjector(modules = [TestPassStatisticModule::class])
+    fun testPassStatisticFragment(): TestPassStatisticFragment
 }
