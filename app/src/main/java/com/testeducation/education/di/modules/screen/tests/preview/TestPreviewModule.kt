@@ -6,9 +6,9 @@ import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.education.di.viewmodel.ViewModelKey
+import com.testeducation.helper.avatar.AvatarHelper
+import com.testeducation.helper.avatar.IAvatarHelper
 import com.testeducation.helper.error.IExceptionHandler
-import com.testeducation.helper.question.ITimeConverterLongToString
-import com.testeducation.helper.question.TimeConverterLongToString
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.helper.test.TestHelper
@@ -38,8 +38,12 @@ interface TestPreviewModule {
             TestHelper(toggleTestLike)
 
         @Provides
-        fun provideReducer(): IReducer<TestPreviewModelState, TestPreviewState> =
-            TestPreviewReducer()
+        fun profileAvatarHelper(resourceHelper: IResourceHelper): IAvatarHelper =
+            AvatarHelper(resourceHelper)
+
+        @Provides
+        fun provideReducer(avatarHelper: IAvatarHelper): IReducer<TestPreviewModelState, TestPreviewState> =
+            TestPreviewReducer(avatarHelper)
 
         @Provides
         fun provideViewModel(

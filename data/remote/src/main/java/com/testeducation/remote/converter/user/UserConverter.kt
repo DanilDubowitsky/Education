@@ -22,5 +22,6 @@ fun RemoteUserStatistics.userStatisticsToModel() = UserStatistics(
 
 fun RemoteUserInfo.toModel() = UserInfo(
     id,
-    username
+    username,
+    avatarId
 )
