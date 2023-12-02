@@ -188,5 +188,6 @@
     <string name="support_chip_wish">Пожелания</string>
     <string name="support_title_category">Выберите категорию проблемы</string>
     <string name="support_title_toolbar">Сообщить о проблеме</string>
+    <string name="test_pass_custom_answer_hint">Введите развернутый ответ</string>
 
 </resources>

@@ -206,7 +206,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
             answersOrderingRecycler.isGone =
                 question !is QuestionUI.Order && question !is QuestionUI.Match
             answersRecycler.isGone = question is QuestionUI.Text
-            answerText.isVisible = question is QuestionUI.Text
+            answerTextLayout.isVisible = question is QuestionUI.Text
         }
 
         if (currentQuestionId != null && currentQuestionId != question.id) {

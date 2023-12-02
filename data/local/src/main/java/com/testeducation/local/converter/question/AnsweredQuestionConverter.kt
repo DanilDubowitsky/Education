@@ -32,10 +32,10 @@ fun InputUserAnswerData.toEntity(testId: String): AnsweredQuestionEntity {
 fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
     return when (val domainQuestion = question.toModel()) {
         is Question.Choice -> {
-            val chosenAnswer = domainQuestion.answers.first {
+            val chosenAnswer = domainQuestion.answers.firstOrNull {
                 it.id == answeredQuestion.answeredIds.first()
             }
-            val correctAnswer = domainQuestion.answers.first {
+            val correctAnswer = domainQuestion.answers.firstOrNull {
                 it.isTrue
             }
             AnsweredQuestion.Choose(

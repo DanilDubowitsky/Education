@@ -14,8 +14,8 @@ sealed interface AnsweredQuestion {
         override val title: String,
         override val state: PassingQuestion.AnswerState,
         override val numberQuestion: Int,
-        val chosenAnswer: Answer.ChoiceAnswer,
-        val correctAnswer: Answer.ChoiceAnswer,
+        val chosenAnswer: Answer.ChoiceAnswer?,
+        val correctAnswer: Answer.ChoiceAnswer?,
     ) : AnsweredQuestion
 
     data class Order(

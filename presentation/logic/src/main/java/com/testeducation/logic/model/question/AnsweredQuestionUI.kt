@@ -13,8 +13,8 @@ sealed interface AnsweredQuestionUI {
         override val title: String,
         override val state: AnswerStateUI,
         override val numberQuestion: Int,
-        val chosenAnswer: AnswerUI.ChoiceAnswer,
-        val correctAnswer: AnswerUI.ChoiceAnswer,
+        val chosenAnswer: AnswerUI.ChoiceAnswer?,
+        val correctAnswer: AnswerUI.ChoiceAnswer?,
     ) : AnsweredQuestionUI
 
     data class Order(
