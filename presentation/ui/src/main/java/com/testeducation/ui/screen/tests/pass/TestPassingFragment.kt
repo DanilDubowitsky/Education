@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -125,6 +126,9 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
 
     @SuppressLint("NotifyDataSetChanged")
     private fun render(state: TestPassingState) = binding {
+        rootScroll.isInvisible = state.isLoading
+        loadingProgress.isGone = !state.isLoading
+        btnAnswer.isGone = state.isLoading
         if (state.currentQuestion != null) {
             renderAnswers(state.currentQuestion!!, state.matchData)
             bindQuestionAnswerStatus(state.currentQuestion!!)
@@ -202,7 +206,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
             answersOrderingRecycler.isGone =
                 question !is QuestionUI.Order && question !is QuestionUI.Match
             answersRecycler.isGone = question is QuestionUI.Text
-            answerText.isVisible = question is QuestionUI.Text
+            answerTextLayout.isVisible = question is QuestionUI.Text
         }
 
         if (currentQuestionId != null && currentQuestionId != question.id) {

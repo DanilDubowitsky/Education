@@ -93,6 +93,8 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
     private fun FragmentTestPreviewBinding.renderTestDetails(state: TestPreviewState) {
         txtTestPassTime.isGone = state.hideTestTimeLimit
         txtTestPassTime.text = state.timeLimit
+        imgAvatar.setImageResource(state.avatarResource)
+        imgAvatar2.setImageResource(state.avatarResource)
         if (state.isExpand) {
             txtDescription.maxLines = Int.MAX_VALUE
         } else {

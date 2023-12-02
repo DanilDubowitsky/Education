@@ -3,7 +3,6 @@ package com.testeducation.ui.delegates.tests.question
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.forEach
 import androidx.core.view.isGone
@@ -69,6 +68,26 @@ fun orderAnsweredQuestionDelegate() =
         }
     }
 
+fun textAnswerDelegate() = simpleDelegateAdapter<AnsweredQuestionUI.Text, AnsweredQuestionUI,
+        ViewHolderSimpleResultBinding>(ViewHolderSimpleResultBinding::inflate) {
+    bind {
+        bindSimpleData(
+            item.title,
+            binding.txtTitle,
+            item.numberQuestion,
+            binding.txtAnswerIndicator,
+            binding.imgAnswerIndicator,
+            item.answered,
+            emptyList(),
+            emptyList(),
+            item.state,
+            binding.answerChipGroup,
+            binding.trueAnswerChip,
+            binding.txtTrueAnswer
+        )
+    }
+}
+
 fun matchAnsweredQuestionDelegate(
     onClick: (String) -> Unit
 ) = simpleDelegateAdapter<AnsweredQuestionUI.Match, AnsweredQuestionUI,
@@ -77,19 +96,12 @@ fun matchAnsweredQuestionDelegate(
 ) {
     binding.root.setClickListener {
         onClick(item.id)
-        binding.btnExpand.animate().rotationBy(180f)
     }
     binding.btnExpand.setClickListener {
         onClick(item.id)
-        binding.btnExpand.animate().rotationBy(180f)
     }
     bind {
         with(binding) {
-            if (!item.isExpanded) {
-                btnExpand.rotationY = 0f
-            } else {
-                btnExpand.rotationY = 180f
-            }
             matchDataLayout.isGone = !item.isExpanded
             val inflater = LayoutInflater.from(root.context)
             matchDataLayout.removeAllViews()
@@ -124,8 +136,8 @@ private fun bindSimpleData(
     txtAnswerIndicator: TextView,
     imgAnswerIndicator: ImageView,
     customAnswer: String?,
-    answers: List<AnswerUI>,
-    correctAnswers: List<AnswerUI>,
+    answers: List<AnswerUI?>,
+    correctAnswers: List<AnswerUI?>,
     stateUI: AnswerStateUI,
     answersLayout: FlexboxLayout?,
     correctAnswersLayout: FlexboxLayout?,
@@ -147,6 +159,7 @@ private fun bindSimpleData(
             is AnswerUI.MatchAnswer -> answerUI.title
             is AnswerUI.OrderAnswer -> "${index + 1}. ${answerUI.title}"
             is AnswerUI.TextAnswer -> customAnswer
+            else -> return@forEachIndexed
         }
         item.root.text = answerTitle
         item.root.createLayoutParams()

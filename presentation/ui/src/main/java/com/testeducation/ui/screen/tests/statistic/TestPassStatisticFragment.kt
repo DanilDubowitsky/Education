@@ -11,7 +11,9 @@ import com.testeducation.ui.databinding.FragmentTestPassStatisticBinding
 import com.testeducation.ui.delegates.tests.question.choiceAnsweredQuestionDelegate
 import com.testeducation.ui.delegates.tests.question.matchAnsweredQuestionDelegate
 import com.testeducation.ui.delegates.tests.question.orderAnsweredQuestionDelegate
+import com.testeducation.ui.delegates.tests.question.textAnswerDelegate
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
@@ -27,12 +29,16 @@ class TestPassStatisticFragment :
             simpleDiffUtil(AnsweredQuestionUI::id),
             orderAnsweredQuestionDelegate(),
             choiceAnsweredQuestionDelegate(),
-            matchAnsweredQuestionDelegate(viewModel::changeItemExpandState)
+            matchAnsweredQuestionDelegate(viewModel::changeItemExpandState),
+            textAnswerDelegate()
         )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.statusBarColor = requireContext().loadColor(
+            android.R.color.transparent
+        )
         observeData()
         setupListeners()
         setupViews()

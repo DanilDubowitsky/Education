@@ -2,17 +2,21 @@ package com.testeducation.screen.tests.preview
 
 import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.IReducer
+import com.testeducation.helper.avatar.IAvatarHelper
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.utils.DAY_MONTH_YEAR_FULL
 import com.testeducation.utils.formatDateInSeconds
 import com.testeducation.utils.getElapsedTime
 
-class TestPreviewReducer : IReducer<TestPreviewModelState, TestPreviewState> {
+class TestPreviewReducer(
+    private val avatarHelper: IAvatarHelper
+) : IReducer<TestPreviewModelState, TestPreviewState> {
 
     override fun reduce(modelState: TestPreviewModelState): TestPreviewState = modelState.run {
         val tempDesc = ""
 
         val timeLimit = test?.settings?.timeLimit ?: 0
+        val avatarRes = avatarHelper.getAvatarDrawable(test?.creator?.avatarId)
 
         TestPreviewState(
             isLoading = loadingState == TestPreviewModelState.LoadingState.LOADING,
@@ -28,7 +32,8 @@ class TestPreviewReducer : IReducer<TestPreviewModelState, TestPreviewState> {
             isExpand = isDescriptionExpanded,
             timeLimit = getElapsedTime(timeLimit),
             authorTests = authorTests.toUIModels(),
-            hideTestTimeLimit = timeLimit == 0
+            hideTestTimeLimit = timeLimit == 0,
+            avatarResource = avatarRes
         )
     }
 

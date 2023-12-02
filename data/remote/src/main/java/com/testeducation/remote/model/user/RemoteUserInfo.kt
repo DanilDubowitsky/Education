@@ -6,5 +6,7 @@ data class RemoteUserInfo(
     @SerializedName("id")
     val id: String,
     @SerializedName("username")
-    val username: String
+    val username: String,
+    @SerializedName("avatar_id")
+    val avatarId: Int?
 )

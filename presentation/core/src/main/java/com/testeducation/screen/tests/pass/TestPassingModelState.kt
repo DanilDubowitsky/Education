@@ -10,7 +10,8 @@ data class TestPassingModelState(
     val selectedQuestionState: SelectedQuestionState = SelectedQuestionState.Choice(),
     val currentQuestion: PassingQuestion? = null,
     val test: Test? = null,
-    val resumeCount: Int = 0
+    val resumeCount: Int = 0,
+    val isLoading: Boolean = true
 ) {
 
     sealed interface SelectedQuestionState {
