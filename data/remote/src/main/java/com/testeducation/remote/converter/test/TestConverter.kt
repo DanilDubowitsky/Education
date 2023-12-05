@@ -67,7 +67,8 @@ fun RemoteTest.toModel(): Test {
         passed = passed,
         theme = theme.toModel(),
         creationDate = creationDate,
-        creator = creator.toModel()
+        creator = creator.toModel(),
+        questionsCount = questionsCount
     )
 }
 

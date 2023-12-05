@@ -15,7 +15,8 @@ data class Test(
     val passed: Boolean,
     val theme: ThemeShort,
     val creationDate: Long,
-    val creator: UserInfo
+    val creator: UserInfo,
+    val questionsCount: Int
 ) {
 
     enum class Status {

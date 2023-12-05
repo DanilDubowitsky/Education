@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.testeducation.logic.model.question.AnswerStateUI
 import com.testeducation.logic.model.question.QuestionUI
+import com.testeducation.logic.model.test.AnswerUI
 import com.testeducation.logic.screen.tests.pass.TestPassingSideEffect
 import com.testeducation.logic.screen.tests.pass.TestPassingState
 import com.testeducation.screen.tests.pass.TestPassingViewModel
@@ -68,10 +69,12 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
                 val mutableItems = answersAdapter.items!!.toMutableList()
                 Collections.swap(mutableItems, oldPosition, newPosition)
                 answersAdapter.notifyItemMoved(oldPosition, newPosition)
+                answersAdapter.items = mutableItems
             },
             onClearView = {},
-            onDragStateChanged = { _, oldPosition, newPosition ->
-                viewModel.swapAnswers(oldPosition, newPosition)
+            onDragStateChanged = { _, _, _ ->
+                val ids = answersAdapter.items!!.map(AnswerUI::id)
+                viewModel.swapAnswers(ids)
             }
         )
     }
