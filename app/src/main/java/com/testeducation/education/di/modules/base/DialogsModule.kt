@@ -1,6 +1,7 @@
 package com.testeducation.education.di.modules.base
 
 import com.testeducation.education.di.modules.screen.question.QuestionsPreviewModule
+import com.testeducation.education.di.modules.screen.tests.code.share.TestCodeShareModule
 import com.testeducation.education.di.modules.screen.tests.creation.TestCreationModule
 import com.testeducation.education.di.modules.screen.tests.pass.TestFailedPassModule
 import com.testeducation.education.di.modules.screen.tests.pass.TestPassResultModule
@@ -11,6 +12,7 @@ import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
+import com.testeducation.ui.screen.tests.code.TestCodeShareDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
 import com.testeducation.ui.screen.tests.creation.input.AnswerInputDialog
@@ -52,4 +54,7 @@ interface DialogsModule {
 
     @ContributesAndroidInjector(modules = [TestFailedPassModule::class])
     fun testFailedPassDialog(): TestFailedPassDialog
+
+    @ContributesAndroidInjector(modules = [TestCodeShareModule::class])
+    fun testCodeShareDialog(): TestCodeShareDialog
 }

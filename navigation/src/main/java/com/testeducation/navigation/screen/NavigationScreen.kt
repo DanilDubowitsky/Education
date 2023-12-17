@@ -161,6 +161,11 @@ sealed interface NavigationScreen : Serializable {
         data class Statistic(
             val testId: String
         ) : Tests
+
+        data class ShareCode(
+            val testId: String
+        ) : Tests
+
     }
 
     sealed interface Questions : NavigationScreen {

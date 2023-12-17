@@ -9,6 +9,15 @@ fun <T, R> List<T>.firstByConditionOrNull(
     }
 }
 
+fun <T, R> List<T>.firstByCondition(
+    condition: T.() -> R,
+    value: R
+): T {
+    return first {
+        it.condition() == value
+    }
+}
+
 fun <T, R> List<T>.indexOfByConditionOrNull(
     condition: T.() -> R,
     value: R

@@ -28,7 +28,9 @@ data class RemoteTest(
     @SerializedName("date_created")
     val creationDate: Long,
     @SerializedName("owner")
-    val creator: RemoteUserInfo
+    val creator: RemoteUserInfo,
+    @SerializedName("questions_count")
+    val questionsCount: Int
 ) {
 
     enum class Status {

@@ -48,6 +48,7 @@
     <string name="common_next">Продолжить</string>
     <string name="common_apply">Применить</string>
     <string name="common_send">Отправить</string>
+    <string name="common_share">Поделиться</string>
 
     <string name="tests_filters_label">Фильтры</string>
 
@@ -191,5 +192,8 @@
     <string name="support_title_category">Выберите категорию проблемы</string>
     <string name="support_title_toolbar">Сообщить о проблеме</string>
     <string name="test_pass_custom_answer_hint">Введите развернутый ответ</string>
+
+    <string name="code_share_description">Используйте этот код, чтобы поделиться тестом с другими</string>
+    <string name="code_share_copy">Скопировать код</string>
 
 </resources>
