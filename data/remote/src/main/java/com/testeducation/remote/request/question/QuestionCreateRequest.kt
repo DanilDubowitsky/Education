@@ -8,7 +8,7 @@ data class QuestionCreateRequest(
     val title: String,
     @SerializedName("type")
     val type: String,
-    @SerializedName("time")
+    @SerializedName("time_limit")
     val time: Long,
     @SerializedName("media")
     val media: String = "",

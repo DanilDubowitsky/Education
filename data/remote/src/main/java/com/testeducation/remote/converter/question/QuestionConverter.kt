@@ -6,12 +6,12 @@ import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.domain.model.question.TestPassResult
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.input.InputUserAnswerData
-import com.testeducation.remote.model.answer.RemoteAnswer
-import com.testeducation.remote.model.question.RemoteQuestion
-import com.testeducation.remote.request.question.answer.AnswerCreateRequest
 import com.testeducation.remote.model.answer.AnswerMatch
 import com.testeducation.remote.model.answer.InputUserAnswerDataRemote
+import com.testeducation.remote.model.answer.RemoteAnswer
+import com.testeducation.remote.model.question.RemoteQuestion
 import com.testeducation.remote.model.test.TestPassResultRemote
+import com.testeducation.remote.request.question.answer.AnswerCreateRequest
 
 fun List<InputAnswer>.mapToRequestTypeDefault() = mapNotNull { answer ->
     if (answer is InputAnswer.DefaultAnswer) {
@@ -43,7 +43,8 @@ fun List<InputAnswer>.mapToRequestTypeOrder() = mapNotNull { answer ->
 fun List<InputAnswer>.mapToRequestTypeWriteAnswer() = mapNotNull { answer ->
     if (answer is InputAnswer.TextAnswer) {
         AnswerCreateRequest(
-            text = answer.text
+            text = answer.text,
+            title = answer.text
         )
     } else null
 }
