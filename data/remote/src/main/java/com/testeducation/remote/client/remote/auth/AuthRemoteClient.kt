@@ -1,6 +1,8 @@
 package com.testeducation.remote.client.remote.auth
 
 import com.testeducation.core.client.remote.auth.IAuthRemoteClient
+import com.testeducation.domain.config.user.IRegistrationConfig
+import com.testeducation.domain.config.user.ITokenConfirmConfig
 import com.testeducation.domain.model.auth.Token
 import com.testeducation.remote.client.retrofit.auth.AuthRetrofitClient
 import com.testeducation.remote.converter.auth.toModel
@@ -12,7 +14,9 @@ import com.testeducation.remote.request.auth.SignUpRequest
 import com.testeducation.remote.utils.getResult
 
 class AuthRemoteClient(
-    private val authRetrofitClient: AuthRetrofitClient
+    private val authRetrofitClient: AuthRetrofitClient,
+    private val registrationConfig: IRegistrationConfig,
+    private val tokenConfirm: ITokenConfirmConfig
 ) : IAuthRemoteClient {
 
     override suspend fun signUp(
@@ -20,15 +24,19 @@ class AuthRemoteClient(
         email: String,
         password: String,
         confirmPassword: String
-    ) {
+    ): String {
         val request = SignUpRequest(username, email, password, confirmPassword)
         val response = authRetrofitClient.signUp(request)
-        return response.getResult()
+        val token = response.getResult().data
+        registrationConfig.set(
+            email, password, confirmPassword, token, username
+        )
+        return token
     }
 
-    override suspend fun confirmEmail(code: String, email: String) {
-        val request = ConfirmEmailRequest(code)
-        val response = authRetrofitClient.confirmEmail(email, request)
+    override suspend fun confirmEmail(code: String, email: String, token: String) {
+        val request = ConfirmEmailRequest(code, email, token)
+        val response = authRetrofitClient.confirmEmail(request)
         return response.getResult()
     }
 
@@ -47,16 +55,19 @@ class AuthRemoteClient(
         return response.getResult().data
     }
 
-    override suspend fun sendResetPasswordCode(email: String) =
-        authRetrofitClient.sendResetPasswordCode(email).getResult()
+    override suspend fun sendResetPasswordCode(email: String) {
+        val responseToken = authRetrofitClient.sendResetPasswordCode(email).getResult()
+        tokenConfirm.set(responseToken.data, email)
+    }
 
     override suspend fun resetPassword(
         email: String,
-        token: String,
+        code: String,
         newPassword: String,
         repeatedPassword: String
     ) {
-        val request = ResetPasswordRequest(newPassword, repeatedPassword, token)
-        return authRetrofitClient.resetPassword(email, request).getResult()
+        val token = tokenConfirm.get()
+        val request = ResetPasswordRequest(email, newPassword, code, token)
+        return authRetrofitClient.resetPassword(request).getResult()
     }
 }

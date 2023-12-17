@@ -54,7 +54,8 @@ interface CodeConfirmationModule {
                 sendCodeAgain,
                 getResetPasswordToken,
                 reducer,
-                errorHandler
+                errorHandler,
+                screen.token
             )
         }
     }

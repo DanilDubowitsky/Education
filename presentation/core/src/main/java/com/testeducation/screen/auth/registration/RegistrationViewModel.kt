@@ -5,18 +5,22 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.auth.SignUp
 import com.testeducation.domain.exception.ServerException
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.auth.ConfirmationType
 import com.testeducation.logic.screen.auth.registration.RegistrationSideEffect
 import com.testeducation.logic.screen.auth.registration.RegistrationState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.utils.getString
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class RegistrationViewModel(
     private val router: NavigationRouter,
     private val signUp: SignUp,
     reducer: IReducer<RegistrationModelState, RegistrationState>,
-    errorHandler: IExceptionHandler
+    errorHandler: IExceptionHandler,
+    private val resourceHelper: IResourceHelper
 ) : BaseViewModel<RegistrationModelState, RegistrationState, RegistrationSideEffect>(
     reducer,
     errorHandler
@@ -32,7 +36,19 @@ class RegistrationViewModel(
             modelState.email,
             modelState.confirmPassword
         )
-        if (!isValid) return@intent
+        if (!isValid) {
+            router.navigateTo(
+                NavigationScreen.Common.Information(
+                    StringResource.Validate.RegistrationEmptyData.getString(
+                        resourceHelper = resourceHelper
+                    ),
+                    titleText = StringResource.Validate.ValidateTitleAttention.getString(
+                        resourceHelper
+                    )
+                )
+            )
+            return@intent
+        }
         updateModelState {
             copy(loadingState = RegistrationModelState.LoadingState.LOADING)
         }
@@ -41,16 +57,17 @@ class RegistrationViewModel(
             modelState.email!!,
             modelState.password!!,
             modelState.confirmPassword!!
-        )
+        ).also { token ->
+            val screen = NavigationScreen.Auth.CodeConfirmation(
+                modelState.email,
+                token,
+                ConfirmationType.EMAIL_CONFIRMATION
+            )
+            router.navigateTo(screen)
 
-        val screen = NavigationScreen.Auth.CodeConfirmation(
-            modelState.email,
-            ConfirmationType.EMAIL_CONFIRMATION
-        )
-        router.navigateTo(screen)
-
-        updateModelState {
-            copy(loadingState = RegistrationModelState.LoadingState.IDLE)
+            updateModelState {
+                copy(loadingState = RegistrationModelState.LoadingState.IDLE)
+            }
         }
     }
 
@@ -84,14 +101,7 @@ class RegistrationViewModel(
             copy(loadingState = RegistrationModelState.LoadingState.IDLE)
         }
         if (throwable is ServerException) {
-            if (throwable.displayMessage == REGISTRATION_CODE_ALREADY_SEND_ERROR) {
-                val screen = NavigationScreen.Auth.CodeConfirmation(
-                    email,
-                    ConfirmationType.EMAIL_CONFIRMATION
-                )
-                router.navigateTo(screen)
-                return@intent
-            } else super.handleThrowable(throwable)
+            super.handleThrowable(throwable)
         }
     }
 

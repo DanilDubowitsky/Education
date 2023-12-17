@@ -9,17 +9,15 @@ import com.testeducation.remote.request.auth.SignInRequest
 import com.testeducation.remote.request.auth.SignUpRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface AuthRetrofitClient {
 
     @POST("/api/auth/sign-up")
-    suspend fun signUp(@Body signUpRequest: SignUpRequest): RemoteResponse<Unit>
+    suspend fun signUp(@Body signUpRequest: SignUpRequest): RemoteResponse<String>
 
-    @POST("/api/auth/confirm-sign-up-code")
+    @POST("/api/auth/confirm-sign-up")
     suspend fun confirmEmail(
-        @Query("email") email: String,
         @Body confirmEmailRequest: ConfirmEmailRequest
     ): RemoteResponse<Unit>
 
@@ -38,11 +36,11 @@ interface AuthRetrofitClient {
     @POST("/api/auth/reset-password")
     suspend fun sendResetPasswordCode(
         @Query("email") email: String
-    ): RemoteResponse<Unit>
+    ): RemoteResponse<String>
 
-    @PUT("/api/auth/reset-password")
+
+    @POST("/api/auth/confirm-reset-password")
     suspend fun resetPassword(
-        @Query("email") email: String,
         @Body request: ResetPasswordRequest
     ): RemoteResponse<Unit>
 

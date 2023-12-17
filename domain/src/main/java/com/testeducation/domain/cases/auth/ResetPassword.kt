@@ -10,6 +10,6 @@ class ResetPassword(
         email: String,
         newPassword: String,
         repeatedPassword: String,
-        token: String
-    ) = authService.resetPassword(email, token, newPassword, repeatedPassword)
+        code: String
+    ) = authService.resetPassword(email, code, newPassword, repeatedPassword)
 }

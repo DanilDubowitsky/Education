@@ -143,6 +143,8 @@
     <string name="question_creation_validate_min_count_answer">Минимальное количество ответов на вопрос должно быть равно %s-м</string>
     <string name="question_creation_validate_min_one_true_answer">Необходимо выбрать хотя бы один правильный ответ</string>
     <string name="question_creation_validate_answer_is_empty">В вопросе не должны присуствовать ответы с пустым содержанием</string>
+    <string name="registration_empty_data">Для прохождение регистрации необходимо заполнить все поля в карточке</string>
+    <string name="validate_title">Внимание!</string>
 
     <string name="test_pass_test_time_remaining">Всего осталось:</string>
     <string name="test_pass_answer_label">Ответить</string>

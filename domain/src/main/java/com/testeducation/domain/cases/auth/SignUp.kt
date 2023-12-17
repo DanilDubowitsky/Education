@@ -11,7 +11,7 @@ class SignUp(
         email: String,
         password: String,
         confirmPassword: String
-    ) = authService.signUp(
+    ): String = authService.signUp(
         username,
         email,
         password,

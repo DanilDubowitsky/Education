@@ -5,6 +5,7 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.auth.SignUp
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.auth.registration.RegistrationState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.screen.auth.registration.RegistrationModelState
@@ -33,12 +34,14 @@ interface RegistrationModule {
             router: NavigationRouter,
             signUp: SignUp,
             reducer: IReducer<RegistrationModelState, RegistrationState>,
-            errorHandler: IExceptionHandler
+            errorHandler: IExceptionHandler,
+            resourceHelper: IResourceHelper
         ): RegistrationViewModel = RegistrationViewModel(
             router,
             signUp,
             reducer,
-            errorHandler
+            errorHandler,
+            resourceHelper
         )
     }
 }

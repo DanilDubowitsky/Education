@@ -35,7 +35,9 @@ class PasswordResetEmailViewModel(
         sendResetPasswordCode(email)
         val screen = NavigationScreen.Auth.CodeConfirmation(
             email,
-            ConfirmationType.PASSWORD_RESET
+            "",
+            ConfirmationType.PASSWORD_RESET,
+
         )
         router.navigateTo(screen)
         updateModelState {

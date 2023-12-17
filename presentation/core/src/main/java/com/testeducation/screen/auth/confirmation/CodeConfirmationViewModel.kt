@@ -27,7 +27,8 @@ class CodeConfirmationViewModel(
     private val sendCodeAgain: SendCodeAgain,
     private val getResetPasswordToken: GetResetPasswordToken,
     reducer: IReducer<CodeConfirmationModelState, CodeConfirmationState>,
-    errorHandler: IExceptionHandler
+    errorHandler: IExceptionHandler,
+    private val token: String
 ) : BaseViewModel<CodeConfirmationModelState,
         CodeConfirmationState, CodeConfirmationSideEffect>(reducer, errorHandler) {
 
@@ -90,7 +91,7 @@ class CodeConfirmationViewModel(
         updateModelState {
             copy(loadingState = CodeConfirmationModelState.LoadingState.LOADING)
         }
-        confirmEmail(modelState.code, email)
+        confirmEmail(modelState.code, email, token)
         postSideEffect(CodeConfirmationSideEffect.RegistrationSuccess)
         router.newRootChain(NavigationScreen.Auth.Login)
     }
@@ -104,8 +105,7 @@ class CodeConfirmationViewModel(
         updateModelState {
             copy(loadingState = CodeConfirmationModelState.LoadingState.LOADING)
         }
-        val token = getResetPasswordToken(email, modelState.code)
-        val screen = NavigationScreen.Auth.NewPassword(email, token)
+        val screen = NavigationScreen.Auth.NewPassword(email, modelState.code)
         router.navigateTo(screen, false)
         updateModelState {
             copy(loadingState = CodeConfirmationModelState.LoadingState.IDLE)

@@ -6,6 +6,6 @@ class ConfirmEmail(
     private val authService: IAuthService
 ) {
 
-    suspend operator fun invoke(code: String, email: String) =
-        authService.confirmEmail(code, email)
+    suspend operator fun invoke(code: String, email: String, token: String) =
+        authService.confirmEmail(code, email, token)
 }
