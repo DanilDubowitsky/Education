@@ -165,6 +165,8 @@ class ResourceHelper(
         is StringResource.Validate.MinOneTrueAnswer -> string(R.string.question_creation_validate_min_one_true_answer)
         is StringResource.Validate.AnswerIsEmpty -> string(R.string.question_creation_validate_answer_is_empty)
         is StringResource.Validate.MinCountAnswer -> context.getString(R.string.question_creation_validate_min_count_answer, resource.count.toString())
+        StringResource.Validate.RegistrationEmptyData -> context.getString(R.string.registration_empty_data)
+        StringResource.Validate.ValidateTitleAttention -> context.getString(R.string.validate_title)
     }
 
     private fun color(@ColorRes id: Int) = ContextCompat.getColor(context, id)

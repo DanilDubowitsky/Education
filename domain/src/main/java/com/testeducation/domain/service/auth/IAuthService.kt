@@ -9,11 +9,12 @@ interface IAuthService {
         email: String,
         password: String,
         confirmPassword: String,
-    )
+    ): String
 
     suspend fun confirmEmail(
         code: String,
-        email: String
+        email: String,
+        token: String
     )
 
     suspend fun signIn(
@@ -36,7 +37,7 @@ interface IAuthService {
 
     suspend fun resetPassword(
         email: String,
-        token: String,
+        code: String,
         newPassword: String,
         repeatedPassword: String
     )

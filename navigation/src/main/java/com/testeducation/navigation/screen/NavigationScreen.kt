@@ -19,6 +19,7 @@ sealed interface NavigationScreen : Serializable {
 
         data class CodeConfirmation(
             val email: String,
+            val token: String,
             val confirmationType: ConfirmationType
         ) : Auth
 
@@ -26,7 +27,7 @@ sealed interface NavigationScreen : Serializable {
 
         data class NewPassword(
             val email: String,
-            val token: String
+            val code: String
         ) : Auth
 
     }

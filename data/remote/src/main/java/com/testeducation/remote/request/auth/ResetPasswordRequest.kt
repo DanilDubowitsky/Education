@@ -3,10 +3,12 @@ package com.testeducation.remote.request.auth
 import com.google.gson.annotations.SerializedName
 
 class ResetPasswordRequest(
-    @SerializedName("new_password")
-    val newPassword: String,
-    @SerializedName("confirmation_password")
-    val repeatedPassword: String,
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("password")
+    val password: String,
+    @SerializedName("code")
+    val code: String,
     @SerializedName("token")
-    val token: String
+    val token: String,
 )

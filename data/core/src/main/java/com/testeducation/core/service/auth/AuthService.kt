@@ -1,11 +1,13 @@
 package com.testeducation.core.service.auth
 
 import com.testeducation.core.client.remote.auth.IAuthRemoteClient
+import com.testeducation.domain.config.user.IRegistrationConfig
 import com.testeducation.domain.model.auth.Token
 import com.testeducation.domain.service.auth.IAuthService
 
 class AuthService(
-    private val authRemoteClient: IAuthRemoteClient
+    private val authRemoteClient: IAuthRemoteClient,
+    private val registrationConfig: IRegistrationConfig
 ) : IAuthService {
 
     override suspend fun signUp(
@@ -13,21 +15,28 @@ class AuthService(
         email: String,
         password: String,
         confirmPassword: String
-    ) = authRemoteClient.signUp(
+    ): String = authRemoteClient.signUp(
         username,
         email,
         password,
         confirmPassword
     )
 
-    override suspend fun confirmEmail(code: String, email: String) =
-        authRemoteClient.confirmEmail(code, email)
+    override suspend fun confirmEmail(code: String, email: String, token: String) =
+        authRemoteClient.confirmEmail(code, email, token)
 
     override suspend fun signIn(email: String, password: String): Token =
         authRemoteClient.signIn(email, password)
 
-    override suspend fun sendCodeAgain(email: String) =
-        authRemoteClient.sendCodeAgain(email)
+    override suspend fun sendCodeAgain(email: String) {
+        val config = registrationConfig.getAll()
+        signUp(
+            username = config.userName,
+            email = config.email,
+            password = config.password,
+            confirmPassword = config.passwordConfirm
+        )
+    }
 
     override suspend fun getResetPasswordToken(email: String, code: String): String =
         authRemoteClient.getResetPasswordToken(email, code)
@@ -37,8 +46,8 @@ class AuthService(
 
     override suspend fun resetPassword(
         email: String,
-        token: String,
+        code: String,
         newPassword: String,
         repeatedPassword: String
-    ) = authRemoteClient.resetPassword(email, token, newPassword, repeatedPassword)
+    ) = authRemoteClient.resetPassword(email, code, newPassword, repeatedPassword)
 }

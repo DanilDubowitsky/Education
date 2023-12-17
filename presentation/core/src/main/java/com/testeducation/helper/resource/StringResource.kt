@@ -69,5 +69,7 @@ sealed interface StringResource {
         data class MinCountAnswer(val count: Int) : Validate
         object MinOneTrueAnswer : Validate
         object AnswerIsEmpty: Validate
+        object RegistrationEmptyData: Validate
+        object ValidateTitleAttention: Validate
     }
 }

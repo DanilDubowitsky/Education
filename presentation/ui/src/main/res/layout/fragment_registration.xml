@@ -1,145 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorBlue"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/colorBlue">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/rootForm"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="88dp"
-        android:background="@drawable/background_white_rounded_large"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/colorBlue">
 
-        <TextView
-            android:id="@+id/titleText"
-            style="@style/Text.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/registration_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.testeducation.ui.view.custom.InputTextPlaceHolder
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp">
-
-            <EditText
-                android:id="@+id/txtEmail"
-                style="@style/EditText.Input.Simple"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/registration_login_fld_hint"
-                android:inputType="textEmailAddress" />
-
-        </com.testeducation.ui.view.custom.InputTextPlaceHolder>
-
-        <com.testeducation.ui.view.custom.InputTextPlaceHolder
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp">
-
-            <EditText
-                android:id="@+id/txtNickName"
-                style="@style/EditText.Input.Simple"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/registration_nickname_fld_hint"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLogin" />
-
-        </com.testeducation.ui.view.custom.InputTextPlaceHolder>
-
-        <com.testeducation.ui.view.custom.InputTextPlaceHolder
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp">
-
-            <EditText
-                android:id="@+id/txtPassword"
-                style="@style/EditText.Input.Simple"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/registration_password_fld_hint"
-                android:inputType="textPassword"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtNickName" />
-
-        </com.testeducation.ui.view.custom.InputTextPlaceHolder>
-
-        <com.testeducation.ui.view.custom.InputTextPlaceHolder
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp">
-
-            <EditText
-                style="@style/EditText.Input.Simple"
-                android:id="@+id/txtRepeatPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/registration_password_repeat_fld_hint"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
-
-        </com.testeducation.ui.view.custom.InputTextPlaceHolder>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnRegister"
-            style="@style/Button.Normal.Green"
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/registration_btn_title"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:cardElevation="10dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            style="@style/Text.Label.Medium"
-            android:id="@+id/termsAndConditionsTxt"
-            android:textColor="@color/colorBlueSky"
-            android:layout_marginHorizontal="24dp"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/rootForm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+                <TextView
+                    android:id="@+id/titleText"
+                    style="@style/Text.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/registration_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/globalProgress"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/colorDarkGreen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <EditText
+                        android:id="@+id/txtEmail"
+                        style="@style/EditText.Input.Simple"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/registration_login_fld_hint"
+                        android:inputType="textEmailAddress" />
+
+                </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+                <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp">
+
+                    <EditText
+                        android:id="@+id/txtNickName"
+                        style="@style/EditText.Input.Simple"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/registration_nickname_fld_hint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtLogin" />
+
+                </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+                <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp">
+
+                    <EditText
+                        android:id="@+id/txtPassword"
+                        style="@style/EditText.Input.Simple"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/registration_password_fld_hint"
+                        android:inputType="textPassword"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtNickName" />
+
+                </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+                <com.testeducation.ui.view.custom.InputTextPlaceHolder
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp">
+
+                    <EditText
+                        android:id="@+id/txtRepeatPassword"
+                        style="@style/EditText.Input.Simple"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/registration_password_repeat_fld_hint"
+                        android:inputType="textPassword"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+
+                </com.testeducation.ui.view.custom.InputTextPlaceHolder>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnRegister"
+                    style="@style/Button.Normal.Green"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/registration_btn_title"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/termsAndConditionsTxt"
+                    style="@style/Text.Label.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorBlueSky"
+                    android:textSize="12sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <ProgressBar
+            android:id="@+id/globalProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorDarkGreen"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

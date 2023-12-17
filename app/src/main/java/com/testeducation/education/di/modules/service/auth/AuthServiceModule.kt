@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.service.auth
 
 import com.testeducation.core.client.remote.auth.IAuthRemoteClient
 import com.testeducation.core.service.auth.AuthService
+import com.testeducation.domain.config.user.IRegistrationConfig
 import com.testeducation.domain.service.auth.IAuthService
 import dagger.Module
 import dagger.Provides
@@ -13,9 +14,10 @@ object AuthServiceModule {
     @Provides
     @Reusable
     fun provideAuthService(
-        client: IAuthRemoteClient
+        client: IAuthRemoteClient,
+        registrationConfig: IRegistrationConfig,
     ): IAuthService {
-        return AuthService(client)
+        return AuthService(client, registrationConfig)
     }
 
 }

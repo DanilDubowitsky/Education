@@ -14,7 +14,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class NewPasswordViewModel(
-    private val token: String,
+    private val code: String,
     private val email: String,
     private val resetPassword: ResetPassword,
     private val router: NavigationRouter,
@@ -33,7 +33,7 @@ class NewPasswordViewModel(
         updateModelState {
             copy(loadingState = NewPasswordModelState.LoadingState.LOADING)
         }
-        resetPassword(email, modelState.password, modelState.repeatedPassword, token)
+        resetPassword(email, modelState.password, modelState.repeatedPassword, code)
         postSideEffect(NewPasswordSideEffect.PasswordResetSuccess)
         router.newRootChain(NavigationScreen.Auth.Login)
     }

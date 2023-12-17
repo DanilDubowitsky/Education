@@ -41,7 +41,7 @@ interface NewPasswordModule {
             val screen = fragment.getScreen<NavigationScreen.Auth.NewPassword>()
 
             return NewPasswordViewModel(
-                screen.token,
+                screen.code,
                 screen.email,
                 resetPassword,
                 router,
