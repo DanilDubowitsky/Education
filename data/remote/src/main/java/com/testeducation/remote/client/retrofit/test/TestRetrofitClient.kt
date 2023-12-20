@@ -70,6 +70,7 @@ interface TestRetrofitClient {
         @Query("has_limit") hasLimit: Boolean,
         @Query("min_questions") minQuestions: Int?,
         @Query("max_questions") maxQuestions: Int?,
+        @Query("status") status: String,
         @Query("offset") offset: Int,
         @Query("page_size") limit: Int,
     ): RemoteResponse<RemotePage<RemoteTestShort>>

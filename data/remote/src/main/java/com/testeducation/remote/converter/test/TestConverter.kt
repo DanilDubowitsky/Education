@@ -21,6 +21,17 @@ private const val TITLE = "title"
 private const val CREATION = "creation"
 private const val QUESTIONS = "questions"
 
+private const val DRAFT = "draft"
+private const val SCHEDULED = "scheduled"
+private const val PUBLISHED = "published"
+
+fun Test.Status.toRemote() = when (this) {
+    Test.Status.DRAFT -> DRAFT
+    Test.Status.SCHEDULED -> SCHEDULED
+    Test.Status.PUBLISHED -> PUBLISHED
+    Test.Status.LOCKED -> TODO("ADD LOCKED SUPPORT")
+}
+
 fun RemoteTestShort.toModel() = TestShort(
     id,
     title,

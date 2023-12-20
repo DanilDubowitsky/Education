@@ -18,11 +18,9 @@ import com.testeducation.logic.screen.tests.pass.TestPassingState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.firstByCondition
-import com.testeducation.utils.firstByConditionOrNull
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
-import java.util.Collections
 
 private typealias Syntax = SimpleSyntax<TestPassingState, TestPassingSideEffect>
 
@@ -61,7 +59,10 @@ class TestPassingViewModel(
                 is Question.Choice -> checkChoiceAnswer(questionRemainingTime)
                 is Question.Match -> checkMatchAnswers(questionRemainingTime)
                 is Question.Order -> checkOrderAnswers(questionRemainingTime)
-                is Question.Text -> applyTextAnswer(questionRemainingTime)
+                is Question.Text -> {
+                    applyTextAnswer(questionRemainingTime)
+                    moveToNextQuestion(testRemainingTime)
+                }
             }
         } else {
             moveToNextQuestion(testRemainingTime)
@@ -277,7 +278,7 @@ class TestPassingViewModel(
 
         postSideEffect(
             TestPassingSideEffect.StartQuestionTimer(
-                currentQuestion.question.time
+                currentQuestion.question.time * SECOND_IN_MILLIS
             )
         )
     }
@@ -333,7 +334,7 @@ class TestPassingViewModel(
         val testEffect =
             TestPassingSideEffect.StartTestTimer(test.settings.timeLimit * SECOND_IN_MILLIS)
         postSideEffect(testEffect)
-        val questionTime = currentQuestion.question.time
+        val questionTime = currentQuestion.question.time * SECOND_IN_MILLIS
         val questionEffect = TestPassingSideEffect.StartQuestionTimer(questionTime)
         postSideEffect(questionEffect)
     }
