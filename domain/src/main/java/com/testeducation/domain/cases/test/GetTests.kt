@@ -2,6 +2,7 @@ package com.testeducation.domain.cases.test
 
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.Page
+import com.testeducation.domain.model.test.Test
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
@@ -25,6 +26,7 @@ class GetTests(
         limit: Int,
         offset: Int,
         getType: TestGetType,
+        status: Test.Status = Test.Status.PUBLISHED
     ): Page<TestShort> = testRepository.getTests(
         query,
         themeId,
@@ -38,6 +40,7 @@ class GetTests(
         limit,
         offset,
         getType,
+        status,
         userId
     )
 }

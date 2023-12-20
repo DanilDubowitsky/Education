@@ -23,6 +23,7 @@ interface ITestRepository {
         limit: Int,
         offset: Int,
         getType: TestGetType,
+        testStatus: Test.Status,
         userId: String?
     ): Page<TestShort>
 

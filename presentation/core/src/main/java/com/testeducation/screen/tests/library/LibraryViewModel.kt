@@ -3,6 +3,7 @@ package com.testeducation.screen.tests.library
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
+import com.testeducation.domain.model.test.Test
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
@@ -84,7 +85,17 @@ class LibraryViewModel(
                 getTests(
                     limit = TEST_LIBRARY_LIMIT,
                     getType = TestGetType.CREATED,
-                    offset = 0
+                    offset = 0,
+                    status = Test.Status.PUBLISHED
+                )
+            }
+
+            val draftTestsDeferred = async {
+                getTests(
+                    limit = TEST_LIBRARY_LIMIT,
+                    getType = TestGetType.CREATED,
+                    offset = 0,
+                    status = Test.Status.DRAFT
                 )
             }
 
@@ -98,11 +109,13 @@ class LibraryViewModel(
 
             val publishedTests = publishedTestsDeferred.await()
             val passedTests = passedTestsDeferred.await()
+            val draftTests = draftTestsDeferred.await()
 
             updateModelState {
                 copy(
                     publishedTests = publishedTests.tests,
                     passedTests = passedTests.tests,
+                    draftsTests = draftTests.tests,
                     loadingState = LibraryModelState.LoadingState.IDLE
                 )
             }

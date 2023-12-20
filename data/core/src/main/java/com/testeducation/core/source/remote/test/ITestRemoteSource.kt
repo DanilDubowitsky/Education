@@ -23,6 +23,7 @@ interface ITestRemoteSource {
         limit: Int,
         offset: Int,
         getType: TestGetType,
+        status: Test.Status,
         userId: String?
     ): Page<TestShort>
 

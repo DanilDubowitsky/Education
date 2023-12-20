@@ -33,11 +33,28 @@ class TestRemoteSource(
         limit: Int,
         offset: Int,
         getType: TestGetType,
+        status: Test.Status,
         userId: String?
     ): Page<TestShort> {
         val method = when (getType) {
             TestGetType.LIKED -> testRetrofitClient::getLikedTests
-            TestGetType.CREATED -> testRetrofitClient::getCreatedTests
+            TestGetType.CREATED -> {
+                return getCreatedTests(
+                    query,
+                    themeId,
+                    orderField,
+                    orderDirection,
+                    minTime,
+                    maxTime,
+                    hasLimit,
+                    minQuestions,
+                    maxQuestions,
+                    status,
+                    limit,
+                    offset
+                )
+            }
+
             TestGetType.PASSED -> testRetrofitClient::getPassedTests
             TestGetType.MAIN -> {
                 return getMainTests(
@@ -75,6 +92,34 @@ class TestRemoteSource(
     override suspend fun getTest(id: String): Test {
         return testRetrofitClient.getTest(id = id).getResult().data.toModel()
     }
+
+    private suspend fun getCreatedTests(
+        query: String?,
+        themeId: String?,
+        orderField: TestOrderField?,
+        orderDirection: OrderDirection?,
+        minTime: Int?,
+        maxTime: Int?,
+        hasLimit: Boolean,
+        minQuestions: Int?,
+        maxQuestions: Int?,
+        status: Test.Status,
+        limit: Int,
+        offset: Int,
+    ): Page<TestShort> = testRetrofitClient.getCreatedTests(
+        query,
+        themeId,
+        orderField?.toRemote(),
+        orderDirection?.toRemote(),
+        minTime,
+        maxTime,
+        hasLimit,
+        minQuestions,
+        maxQuestions,
+        status.toRemote(),
+        offset,
+        limit
+    ).getResult().data.toModel()
 
     private suspend fun getMainTests(
         query: String?,

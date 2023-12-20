@@ -152,6 +152,12 @@ private fun bindSimpleData(
         if (view is Chip) correctAnswersLayout.removeView(view)
     }
 
+    if (customAnswer != null) {
+        val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
+        item.root.text = customAnswer
+        item.root.createLayoutParams()
+        answersLayout?.addView(item.root)
+    }
     answers.forEachIndexed { index, answerUI ->
         val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
         val answerTitle = when (answerUI) {
@@ -159,6 +165,7 @@ private fun bindSimpleData(
             is AnswerUI.MatchAnswer -> answerUI.title
             is AnswerUI.OrderAnswer -> "${index + 1}. ${answerUI.title}"
             is AnswerUI.TextAnswer -> customAnswer
+
             else -> return@forEachIndexed
         }
         item.root.text = answerTitle
@@ -174,16 +181,19 @@ private fun bindSimpleData(
         AnswerStateUI.CORRECT -> {
             txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorDarkGreenLight))
             imgAnswerIndicator.setImageResource(R.drawable.ic_correct_answer)
+            imgAnswerIndicator.colorFilter = null
         }
 
         AnswerStateUI.INCORRECT -> {
             txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorRed))
             imgAnswerIndicator.setImageResource(R.drawable.ic_incorrect_answer)
+            imgAnswerIndicator.colorFilter = null
         }
 
         AnswerStateUI.NONE -> {
             txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorGrayBlue))
             imgAnswerIndicator.setImageResource(R.drawable.ic_correct_answer)
+            imgAnswerIndicator.setColorFilter(txtTitle.context.loadColor(R.color.colorGrayBlue))
         }
     }
     val isCorrectVisible = answer is AnswerUI.ChoiceAnswer && stateUI == AnswerStateUI.INCORRECT

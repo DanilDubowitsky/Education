@@ -27,6 +27,7 @@ class TestRepository(
         limit: Int,
         offset: Int,
         getType: TestGetType,
+        testStatus: Test.Status,
         userId: String?
     ): Page<TestShort> =
         testRemoteSource.getTests(
@@ -42,6 +43,7 @@ class TestRepository(
             limit,
             offset,
             getType,
+            testStatus,
             userId
         )
 

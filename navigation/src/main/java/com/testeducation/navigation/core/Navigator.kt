@@ -82,9 +82,7 @@ class Navigator(
                 .setReorderingAllowed(true)
                 .commit()
         }
-        screenHistory.forEach {
-            screenHistory.remove(it)
-        }
+        screenHistory.clear()
         currentVisibleScreen = screen
         screenHistory.add(screen)
     }
@@ -143,5 +141,4 @@ class Navigator(
         currentVisibleScreen = screen
         screenHistory.add(screen)
     }
-
 }
