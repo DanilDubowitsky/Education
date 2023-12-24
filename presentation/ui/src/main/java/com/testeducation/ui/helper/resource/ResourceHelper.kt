@@ -5,6 +5,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.testeducation.helper.resource.AnswerColorResource
+import com.testeducation.helper.resource.CodeStringResource
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.DrawableResource
 import com.testeducation.helper.resource.IResourceHelper
@@ -24,6 +25,7 @@ class ResourceHelper(
         is StringResource.Question -> extractQuestionResource(resource)
         is StringResource.StringSettings -> extractStringSettingResource(resource)
         is StringResource.Validate -> extractValidateStringResource(resource)
+        is CodeStringResource -> string(resource.extractResourceId())
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {

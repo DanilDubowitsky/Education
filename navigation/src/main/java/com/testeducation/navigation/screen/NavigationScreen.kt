@@ -166,6 +166,7 @@ sealed interface NavigationScreen : Serializable {
             val testId: String
         ) : Tests
 
+        object EnterCode : Tests
     }
 
     sealed interface Questions : NavigationScreen {

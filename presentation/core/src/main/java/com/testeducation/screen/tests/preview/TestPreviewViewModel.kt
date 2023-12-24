@@ -81,6 +81,11 @@ class TestPreviewViewModel(
         router.navigateTo(screen)
     }
 
+    fun openCodeScreen() = intent {
+        val screen = NavigationScreen.Tests.ShareCode(testId)
+        router.navigateTo(screen)
+    }
+
     private fun loadData() = intent {
         val test = getTest(testId)
         val testsPage = getTests(

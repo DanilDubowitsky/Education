@@ -36,4 +36,8 @@ interface ITestRemoteSource {
 
     suspend fun changeTest(id: String, status: Test.Status)
 
+    suspend fun getTestCode(id: String): String
+
+    suspend fun getTestByCode(code: String): Test
+
 }

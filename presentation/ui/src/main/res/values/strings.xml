@@ -195,5 +195,10 @@
 
     <string name="code_share_description">Используйте этот код, чтобы поделиться тестом с другими</string>
     <string name="code_share_copy">Скопировать код</string>
+    <string name="code_share_copy_success_label">Код %1$s скопирован</string>
+    <string name="code_enter_title">Введите код</string>
+    <string name="code_enter_description">Используйте индивидуальный код, чтобы присоединиться к тесту</string>
+    <string name="code_enter_btn_text">Присоединиться</string>
+    <string name="code_enter_code_invalid_error">Неправильный код</string>
 
 </resources>

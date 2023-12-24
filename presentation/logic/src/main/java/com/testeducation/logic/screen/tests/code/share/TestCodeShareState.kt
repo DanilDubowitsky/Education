@@ -1,4 +1,6 @@
 package com.testeducation.logic.screen.tests.code.share
 
-class TestCodeShareState {
-}
+data class TestCodeShareState(
+    val code: String,
+    val isLoading: Boolean
+)
