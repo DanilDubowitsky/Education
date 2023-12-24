@@ -18,16 +18,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnSearch"
+    <TextView
+        android:id="@+id/txtEnterCode"
+        style="@style/Text.Label.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+        android:layout_marginEnd="16dp"
+        android:text="@string/code_enter_title"
+        android:textColor="@color/colorTextGray"
+        app:layout_constraintBottom_toBottomOf="@+id/txtUserName"
+        app:layout_constraintTop_toTopOf="@+id/txtUserName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imgAvatar" />
+        app:layout_goneMarginTop="20dp" />
 
     <TextView
         android:id="@+id/txtUserName"

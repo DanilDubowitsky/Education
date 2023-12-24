@@ -18,6 +18,7 @@ import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
 import com.testeducation.ui.screen.profile.SupportSenderFragment
 import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
+import com.testeducation.ui.screen.tests.code.TestCodeEnterDialog
 import com.testeducation.ui.screen.tests.code.TestCodeShareDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.QuestionCreationFragment
@@ -170,6 +171,10 @@ class ScreenAdapter : IScreenAdapter {
 
         is NavigationScreen.Tests.ShareCode -> Screen.DialogScreen {
             TestCodeShareDialog().withScreen(screen)
+        }
+
+        is NavigationScreen.Tests.EnterCode -> Screen.DialogScreen {
+            TestCodeEnterDialog()
         }
     }
 

@@ -88,6 +88,7 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         btnFavorite.setClickListener(viewModel::toggleFavorite)
         btnBack.setClickListener(viewModel::exit)
         btnPassTest.setClickListener(viewModel::openTestPassingScreen)
+        btnShare.setClickListener(viewModel::openCodeScreen)
     }
 
     private fun FragmentTestPreviewBinding.renderTestDetails(state: TestPreviewState) {

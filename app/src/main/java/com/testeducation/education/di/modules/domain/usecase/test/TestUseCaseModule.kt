@@ -3,6 +3,8 @@ package com.testeducation.education.di.modules.domain.usecase.test
 import com.testeducation.domain.cases.test.ChangeStatusTest
 import com.testeducation.domain.cases.test.CreateTest
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.cases.test.GetTestByCode
+import com.testeducation.domain.cases.test.GetTestCode
 import com.testeducation.domain.cases.test.GetTestSettings
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.PassTest
@@ -71,5 +73,17 @@ object TestUseCaseModule {
     fun providePassTest(
         testService: ITestService
     ): PassTest = PassTest(testService)
+
+    @Provides
+    @Reusable
+    fun provideGetTestCode(
+        testRepository: ITestRepository
+    ): GetTestCode = GetTestCode(testRepository)
+
+    @Provides
+    @Reusable
+    fun provideGetTestByCode(
+        testRepository: ITestRepository
+    ): GetTestByCode = GetTestByCode(testRepository)
 
 }

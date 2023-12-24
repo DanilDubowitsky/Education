@@ -141,6 +141,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
             TestsDefaults.TESTS_THRESHOLD,
             viewModel::loadNextPage
         )
+        txtEnterCode.setClickListener(viewModel::openEnterCodeScreen)
     }
 
     private fun FragmentTestsBinding.bindTests(state: TestsState) {

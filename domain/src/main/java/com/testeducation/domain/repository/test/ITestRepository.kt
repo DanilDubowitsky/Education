@@ -36,4 +36,8 @@ interface ITestRepository {
     suspend fun updateTestStyle(id: String, color: String, background: String)
 
     suspend fun changeStatusTest(id: String, status: Test.Status)
+
+    suspend fun getTestCode(id: String): String
+
+    suspend fun getTestByCode(code: String): Test
 }

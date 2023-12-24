@@ -6,6 +6,9 @@ import com.testeducation.logic.screen.tests.code.share.TestCodeShareState
 class TestCodeShareReducer : IReducer<TestCodeShareModelState, TestCodeShareState> {
 
     override fun reduce(modelState: TestCodeShareModelState): TestCodeShareState {
-        return TestCodeShareState()
+        return TestCodeShareState(
+            code = modelState.code,
+            isLoading = modelState.isLoading
+        )
     }
 }

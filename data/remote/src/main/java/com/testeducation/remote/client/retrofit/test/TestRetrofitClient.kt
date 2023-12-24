@@ -6,6 +6,7 @@ import com.testeducation.remote.model.test.RemotePage
 import com.testeducation.remote.model.test.RemoteTest
 import com.testeducation.remote.model.test.RemoteTestSettingsItem
 import com.testeducation.remote.model.test.RemoteTestShort
+import com.testeducation.remote.model.test.RemoteTestToken
 import com.testeducation.remote.request.test.PassTestRequest
 import com.testeducation.remote.request.test.TestCreationRequest
 import com.testeducation.remote.request.test.TestStyleRequest
@@ -110,4 +111,10 @@ interface TestRetrofitClient {
 
     @POST("/api/app/account/tests/passes")
     suspend fun passTest(@Body passTestRequest: PassTestRequest) : RemoteResponse<Unit>
+
+    @GET("/api/app/content/tests/{id}/token")
+    suspend fun getTestToken(@Path("id") id: String) : RemoteResponse<RemoteTestToken>
+
+    @GET("/api/app/content/tests/code/{code}")
+    suspend fun getTestByCode(@Path("code") code: String) : RemoteResponse<RemoteTest>
 }

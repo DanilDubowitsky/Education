@@ -131,7 +131,7 @@
                     android:inputType="number"
                     android:maxLength="2"
                     android:background="@drawable/selector_input_text"
-                    android:hint="@string/common_from" />
+                    android:hint="@string/common_to" />
 
             </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
@@ -213,7 +213,7 @@
                     android:inputType="number"
                     android:maxLength="2"
                     android:background="@drawable/selector_input_text"
-                    android:hint="@string/common_from" />
+                    android:hint="@string/common_to" />
 
             </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 

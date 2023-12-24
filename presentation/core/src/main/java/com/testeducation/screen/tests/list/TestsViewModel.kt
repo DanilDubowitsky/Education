@@ -61,6 +61,11 @@ class TestsViewModel(
         router.sendResult(NavigationScreen.Main.Tests.OnScrollToBottom, Unit, false)
     }
 
+    fun openEnterCodeScreen() = intent {
+        val screen = NavigationScreen.Tests.EnterCode
+        router.navigateTo(screen)
+    }
+
     fun onScrollToTop() = intent {
         router.sendResult(NavigationScreen.Main.Tests.OnScrollToTop, Unit, false)
     }

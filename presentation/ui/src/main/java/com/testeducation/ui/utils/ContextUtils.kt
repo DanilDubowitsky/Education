@@ -1,5 +1,7 @@
 package com.testeducation.ui.utils
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -28,4 +30,10 @@ fun Context.loadDrawable(@DrawableRes drawableRes: Int): Drawable? {
 
 fun Context.loadColor(@ColorRes color: Int): Int {
     return ContextCompat.getColor(this, color)
+}
+
+fun Context.copyToClipboard(text: String) {
+    val manager = getSystemService(ClipboardManager::class.java)
+    val clipData = ClipData.newPlainText("", text)
+    manager.setPrimaryClip(clipData)
 }

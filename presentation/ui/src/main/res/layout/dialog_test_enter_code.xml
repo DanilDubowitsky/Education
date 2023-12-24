@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/common_share"
+        android:text="@string/code_enter_title"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,9 +34,9 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="@string/code_share_description"
+        android:text="@string/code_enter_description"
         android:textColor="@color/colorTextGray"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
@@ -54,39 +54,28 @@
         <EditText
             android:id="@+id/txtCode"
             style="@style/EditText.Input.Simple"
-            android:padding="0dp"
             android:textSize="24sp"
+            android:maxLines="1"
+            android:maxLength="6"
+            android:textColorHint="@color/colorLightGrey"
+            android:hint="@string/code_enter_title"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false" />
+            android:layout_height="wrap_content" />
 
     </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
-    <TextView
-        android:id="@+id/txtCopy"
-        style="@style/Text.Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/code_share_copy"
-        android:textColor="@color/colorBlue"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCodePlaceHolder" />
-
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnClose"
+        android:id="@+id/btnEnter"
         style="@style/Button.Normal.Green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:text="@string/common_close"
+        android:text="@string/code_enter_btn_text"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCopy" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCodePlaceHolder" />
 
     <ProgressBar
         android:id="@+id/loadingIndicator"
@@ -101,7 +90,7 @@
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/contentGroup"
-        app:constraint_referenced_ids="txtCodeDescription, txtCodePlaceHolder, txtCopy, btnEnter"
+        app:constraint_referenced_ids="txtCodeDescription, txtCodePlaceHolder, btnEnter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

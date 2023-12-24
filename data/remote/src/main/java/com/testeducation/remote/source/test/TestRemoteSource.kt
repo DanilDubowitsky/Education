@@ -174,4 +174,10 @@ class TestRemoteSource(
             testRetrofitClient.publish(id)
         }
     }
+
+    override suspend fun getTestCode(id: String): String =
+        testRetrofitClient.getTestToken(id).getResult().data.code
+
+    override suspend fun getTestByCode(code: String): Test =
+        testRetrofitClient.getTestByCode(code).getResult().data.toModel()
 }
