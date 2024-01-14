@@ -4,5 +4,6 @@ enum class TestGetType {
     MAIN,
     LIKED,
     CREATED,
-    PASSED
+    PASSED,
+    DRAFT
 }

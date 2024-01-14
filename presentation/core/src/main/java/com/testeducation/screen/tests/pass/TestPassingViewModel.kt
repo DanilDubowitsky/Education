@@ -61,7 +61,6 @@ class TestPassingViewModel(
                 is Question.Order -> checkOrderAnswers(questionRemainingTime)
                 is Question.Text -> {
                     applyTextAnswer(questionRemainingTime)
-                    moveToNextQuestion(testRemainingTime)
                 }
             }
         } else {
@@ -170,13 +169,24 @@ class TestPassingViewModel(
     private fun applyTextAnswer(questionRemainingTime: Long) = intent {
         val modelState = getModelState()
         val currentQuestion = modelState.currentQuestion ?: return@intent
+        val textQuestion = currentQuestion.question as Question.Text
         val selectedQuestionState = modelState.selectedQuestionState.toText()
         val spentTime = modelState.currentQuestion.question.time - questionRemainingTime
         val questions = modelState.questions.toMutableList()
 
+        val answerState =
+            if (textQuestion.answers.first().correctText.lowercase() ==
+                selectedQuestionState.answeredText.lowercase()
+            ) {
+                PassingQuestion.AnswerState.CORRECT
+            } else {
+                PassingQuestion.AnswerState.INCORRECT
+            }
+
         val newQuestion = currentQuestion.copy(
             timeSpent = spentTime,
-            customAnswer = selectedQuestionState.answeredText
+            customAnswer = selectedQuestionState.answeredText,
+            state = answerState
         )
 
         questions[modelState.currentQuestionIndex] = newQuestion
@@ -377,11 +387,7 @@ class TestPassingViewModel(
         this as TestPassingModelState.SelectedQuestionState.Order
 
     private fun PassingQuestion.toInputAnswer(): InputUserAnswerData {
-        val isCorrect = if (question is Question.Text) {
-            null
-        } else {
-            state == PassingQuestion.AnswerState.CORRECT
-        }
+        val isCorrect = state == PassingQuestion.AnswerState.CORRECT
         return InputUserAnswerData(
             question.id,
             answers,

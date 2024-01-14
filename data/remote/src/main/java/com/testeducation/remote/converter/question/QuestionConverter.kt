@@ -80,7 +80,8 @@ fun RemoteQuestion.toModel(): Question {
             id,
             title,
             questionNumber.toInt(),
-            time.toLong()
+            time.toLong(),
+            answers.toModels(questionType, id) as List<Answer.TextAnswer>
         )
 
         RemoteQuestion.Type.Reorder -> Question.Order(

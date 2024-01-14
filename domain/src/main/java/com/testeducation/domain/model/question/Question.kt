@@ -20,7 +20,8 @@ sealed interface Question {
         override val id: String,
         override val title: String,
         override val numberQuestion: Int,
-        override val time: Long
+        override val time: Long,
+        val answers: List<Answer.TextAnswer>
     ) : Question
 
     data class Match(

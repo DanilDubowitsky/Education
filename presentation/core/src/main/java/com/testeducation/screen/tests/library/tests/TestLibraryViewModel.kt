@@ -58,6 +58,11 @@ class TestLibraryViewModel(
         }
     }
 
+    fun openTestPreview(id: String) = intent {
+        val screen = NavigationScreen.Tests.Preview(id)
+        router.navigateTo(screen)
+    }
+
     fun onThemeChanged(themeId: String) = intent {
         updateModelState {
             copy(

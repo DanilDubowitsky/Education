@@ -114,6 +114,11 @@ class LikedTestsViewModel(
         router.sendResult(NavigationScreen.Main.Tests.OnScrollToTop, Unit, false)
     }
 
+    fun openTestPreview(id: String) = intent {
+        val screen = NavigationScreen.Tests.Preview(id)
+        router.navigateTo(screen)
+    }
+
     private fun handleNewFilters(newFilters: TestFiltersUI) = intent {
         updateModelState {
             copy(

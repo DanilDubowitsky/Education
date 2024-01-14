@@ -38,7 +38,8 @@ fun QuestionEntity.toModel(answers: List<AnswerEntity>): Question {
             id,
             title,
             numberQuestion,
-            time
+            time,
+            answers.toModels(enumType) as List<Answer.TextAnswer>
         )
 
         QuestionType.REORDER -> Question.Order(
@@ -102,7 +103,7 @@ fun Question.toQuestionWithAnswers(testId: String): QuestionWithAnswers {
         is Question.Choice -> answers.toEntities()
         is Question.Match -> answers.toEntities()
         is Question.Order -> answers.toEntities()
-        is Question.Text -> emptyList()
+        is Question.Text -> answers.toEntities()
     }
     return QuestionWithAnswers(
         this.toEntity(testId),

@@ -46,11 +46,14 @@ class TestsViewModel(
 
     fun onThemeChanged(id: String?) = intent {
         val modelState = getModelState()
-        if (modelState.selectedThemeId == id) return@intent
+        var themeId = id
+        if (modelState.selectedThemeId == id) {
+            themeId = null
+        }
         updateModelState {
             copy(
                 tests = emptyList(),
-                selectedThemeId = id,
+                selectedThemeId = themeId,
                 testsLoadingState = TestsModelState.TestsLoadingState.LOADING
             )
         }

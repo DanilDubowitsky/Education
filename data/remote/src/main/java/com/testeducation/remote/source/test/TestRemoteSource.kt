@@ -72,6 +72,22 @@ class TestRemoteSource(
                     userId
                 )
             }
+
+            TestGetType.DRAFT ->
+                return testRetrofitClient.getCreatedTests(
+                    query,
+                    themeId,
+                    orderField?.toRemote(),
+                    orderDirection?.toRemote(),
+                    minTime,
+                    maxTime,
+                    hasLimit,
+                    minQuestions,
+                    maxQuestions,
+                    Test.Status.DRAFT.toRemote(),
+                    offset,
+                    limit
+                ).getResult().data.toModel()
         }
 
         return method.invoke(
