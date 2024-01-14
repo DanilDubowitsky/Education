@@ -58,9 +58,14 @@ class LikedTestsViewModel(
     }
 
     fun onThemeChanged(themeId: String) = intent {
+        val modelState = getModelState()
+        var selectedTheme: String? = themeId
+        if (modelState.selectedThemeId == selectedTheme) {
+            selectedTheme = null
+        }
         updateModelState {
             copy(
-                selectedThemeId = themeId,
+                selectedThemeId = selectedTheme,
                 tests = emptyList(),
                 testsLoadingState = LikedTestsModelState.TestsLoadingState.LOADING
             )
@@ -112,6 +117,11 @@ class LikedTestsViewModel(
 
     fun onScrollToTop() = intent {
         router.sendResult(NavigationScreen.Main.Tests.OnScrollToTop, Unit, false)
+    }
+
+    fun openTestPreview(id: String) = intent {
+        val screen = NavigationScreen.Tests.Preview(id)
+        router.navigateTo(screen)
     }
 
     private fun handleNewFilters(newFilters: TestFiltersUI) = intent {

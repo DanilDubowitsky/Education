@@ -58,10 +58,20 @@ class TestLibraryViewModel(
         }
     }
 
+    fun openTestPreview(id: String) = intent {
+        val screen = NavigationScreen.Tests.Preview(id)
+        router.navigateTo(screen)
+    }
+
     fun onThemeChanged(themeId: String) = intent {
+        val modelState = getModelState()
+        var selectedTheme: String? = themeId
+        if (modelState.selectedThemeId == selectedTheme) {
+            selectedTheme = null
+        }
         updateModelState {
             copy(
-                selectedThemeId = themeId,
+                selectedThemeId = selectedTheme,
                 tests = emptyList(),
                 testsLoadingState = TestLibraryModelState.TestsLoadingState.LOADING
             )

@@ -4,5 +4,6 @@ enum class TestGetTypeUI {
     MAIN,
     LIKED,
     CREATED,
-    PASSED
+    PASSED,
+    DRAFT
 }

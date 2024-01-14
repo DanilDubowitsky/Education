@@ -68,6 +68,7 @@ fun TestGetType.toUI() = when (this) {
     TestGetType.LIKED -> TestGetTypeUI.LIKED
     TestGetType.CREATED -> TestGetTypeUI.CREATED
     TestGetType.PASSED -> TestGetTypeUI.PASSED
+    TestGetType.DRAFT -> TestGetTypeUI.DRAFT
 }
 
 fun TestGetTypeUI.toModel() = when (this) {
@@ -75,6 +76,7 @@ fun TestGetTypeUI.toModel() = when (this) {
     TestGetTypeUI.LIKED -> TestGetType.LIKED
     TestGetTypeUI.CREATED -> TestGetType.CREATED
     TestGetTypeUI.PASSED -> TestGetType.PASSED
+    TestGetTypeUI.DRAFT -> TestGetType.DRAFT
 }
 
 fun TestSettings.toUI() = TestShortUI.Test.Settings(

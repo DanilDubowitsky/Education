@@ -90,7 +90,7 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
             AnsweredQuestion.Text(
                 domainQuestion.id,
                 domainQuestion.title,
-                PassingQuestion.AnswerState.NONE,
+                answeredQuestion.answerState.toEnumModel(),
                 question.question.numberQuestion,
                 answeredQuestion.customAnswer.orEmpty()
             )

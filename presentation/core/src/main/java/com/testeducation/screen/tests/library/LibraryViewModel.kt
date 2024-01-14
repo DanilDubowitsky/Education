@@ -41,9 +41,8 @@ class LibraryViewModel(
         navigateToTestsLibrary(TestGetTypeUI.PASSED)
     }
 
-    // TODO: use draft type when ready
     fun openDraftTests() = intent {
-        navigateToTestsLibrary(TestGetTypeUI.MAIN)
+        navigateToTestsLibrary(TestGetTypeUI.DRAFT)
     }
 
     fun openTestPreview(id: String) {
@@ -66,6 +65,14 @@ class LibraryViewModel(
 
             TestGetTypeUI.PASSED -> {
                 val tests = getModelState().passedTests
+                val newTests = testHelper.toggleTestLike(position, tests)
+                updateModelState {
+                    copy(passedTests = newTests)
+                }
+            }
+
+            TestGetTypeUI.DRAFT -> {
+                val tests = getModelState().draftsTests
                 val newTests = testHelper.toggleTestLike(position, tests)
                 updateModelState {
                     copy(passedTests = newTests)
