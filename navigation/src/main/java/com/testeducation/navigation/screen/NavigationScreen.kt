@@ -83,6 +83,8 @@ sealed interface NavigationScreen : Serializable {
         object Profile : Main
 
         object Library : Main
+
+        object HomeLibrary : Main
     }
 
     sealed interface Tests : NavigationScreen {

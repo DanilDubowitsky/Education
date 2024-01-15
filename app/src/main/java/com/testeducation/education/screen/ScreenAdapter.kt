@@ -12,7 +12,8 @@ import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
-import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.home.library.LibraryHomeFragment
+import com.testeducation.ui.screen.tests.library.test.TestLibraryFragment
 import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
 import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
@@ -124,6 +125,10 @@ class ScreenAdapter : IScreenAdapter {
 
         NavigationScreen.Main.Library -> Screen.FragmentScreen {
             LibraryFragment()
+        }
+
+        NavigationScreen.Main.HomeLibrary -> Screen.FragmentScreen {
+            LibraryHomeFragment()
         }
     }
 

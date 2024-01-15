@@ -6,6 +6,7 @@ import com.testeducation.education.di.modules.screen.auth.NewPasswordModule
 import com.testeducation.education.di.modules.screen.auth.PasswordResetEmailModule
 import com.testeducation.education.di.modules.screen.auth.RegistrationModule
 import com.testeducation.education.di.modules.screen.home.HomeModule
+import com.testeducation.education.di.modules.screen.home.library.HomeLibraryModule
 import com.testeducation.education.di.modules.screen.home.library.LibraryModule
 import com.testeducation.education.di.modules.screen.profile.ProfileAvatarChangerModule
 import com.testeducation.education.di.modules.screen.profile.ProfileEditModule
@@ -29,7 +30,8 @@ import com.testeducation.ui.screen.auth.registration.RegistrationFragment
 import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
 import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
 import com.testeducation.ui.screen.home.FragmentHome
-import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.home.library.LibraryHomeFragment
+import com.testeducation.ui.screen.tests.library.test.TestLibraryFragment
 import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
 import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
@@ -120,5 +122,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [WebViewModule::class])
     fun webViewFragment(): WebViewFragment
+
+    @ContributesAndroidInjector(modules = [HomeLibraryModule::class])
+    fun homeLibraryFragment(): LibraryHomeFragment
 
 }

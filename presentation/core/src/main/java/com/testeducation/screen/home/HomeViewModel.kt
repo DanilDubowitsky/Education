@@ -60,7 +60,7 @@ class HomeViewModel(
 
     fun navigateToLibrary() = intent {
         val currentScreen = getModelState().selectedScreen
-        val screen = NavigationScreen.Main.Library
+        val screen = NavigationScreen.Main.HomeLibrary
         if (currentScreen == HomeModelState.BottomNavigationItems.LIBRARY) return@intent
         updateModelState {
             copy(selectedScreen = HomeModelState.BottomNavigationItems.LIBRARY)

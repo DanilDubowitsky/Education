@@ -1,4 +1,4 @@
-package com.testeducation.ui.screen.home.library
+package com.testeducation.ui.screen.tests.library.test
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -13,6 +13,7 @@ import com.testeducation.logic.screen.tests.library.LibraryState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.home.HomeViewModel.Companion.HOME_NAVIGATOR_KEY
+import com.testeducation.screen.home.library.LibraryHomeViewModel.Companion.LIBRARY_NAVIGATOR_KEY
 import kotlinx.coroutines.async
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -83,7 +84,7 @@ class LibraryViewModel(
 
     private fun navigateToTestsLibrary(type: TestGetTypeUI) {
         val screen = NavigationScreen.Tests.Library(type)
-        router.replace(screen, key = HOME_NAVIGATOR_KEY)
+        router.navigateTo(screen, key = LIBRARY_NAVIGATOR_KEY)
     }
 
     private fun loadData() = intent {
