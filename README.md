@@ -11,3 +11,7 @@
 7. Coroutines
 8. Custom navigation
 9. Adapter Delegates
+# Скриншоты
+<img src="https://github.com/DanilDubowitsky/Education/blob/master/docs/images/photo_2024-01-19_16-49-37.jpg" width="269" height="620">    <img src="https://github.com/DanilDubowitsky/Education/blob/master/docs/images/photo_2024-01-19_16-49-35.jpg" width="269" height="620">
+   <img src="https://github.com/DanilDubowitsky/Education/blob/master/docs/images/photo_2024-01-19_16-48-58.jpg" width="269" height="620">   <img src="https://github.com/DanilDubowitsky/Education/blob/master/docs/images/photo_2024-01-19_16-49-19.jpg" width="269" height="620">
+   <img src="https://github.com/DanilDubowitsky/Education/blob/master/docs/images/photo_2024-01-19_16-49-29.jpg" width="269" height="620"> <img src="https://github.com/DanilDubowitsky/Education/blob/master/docs/images/photo_2024-01-19_16-49-26.jpg" width="269" height="620"> 
