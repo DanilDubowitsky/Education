@@ -7,7 +7,6 @@ import com.testeducation.logic.model.test.AnswerUI
 import com.testeducation.logic.screen.tests.pass.TestPassingState
 import com.testeducation.ui.databinding.ViewHolderAnswerChoiceBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerMatchPassBinding
-import com.testeducation.ui.databinding.ViewHolderAnswerOrderIndicatorBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerOrderPassBinding
 import com.testeducation.ui.databinding.ViewHolderMatchDataBinding
 import com.testeducation.ui.listener.drag.IDragStartListener
