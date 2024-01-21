@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
-import java.util.Stack
+import androidx.fragment.app.replace
 
 class Navigator(
     private val activity: FragmentActivity,
@@ -17,11 +17,10 @@ class Navigator(
     private val replaceAnimationSet: AnimationSet? = null
 ) : INavigator {
 
-    // TODO: add screen history
-    private var currentVisibleScreen: Screen? = null
-    private val screenHistory: MutableSet<Screen> = mutableSetOf()
+    private val screenStack: MutableList<String> = mutableListOf()
 
     override fun executeCommand(command: Command) {
+        copyStackToLocal()
         when (command) {
             is Command.Back -> handleBackCommand()
             is Command.Forward -> executeForwardCommand(command)
@@ -31,8 +30,7 @@ class Navigator(
     }
 
     private fun executeForwardCommand(command: Command.Forward) {
-        val screen = screenAdapter.createPlatformScreen(command.screen)
-        when (screen) {
+        when (val screen: Screen = screenAdapter.createPlatformScreen(command.screen)) {
             is Screen.ActivityScreen -> {
                 // TODO: add activity support
             }
@@ -40,19 +38,16 @@ class Navigator(
             is Screen.DialogScreen -> moveDialog(screen)
             is Screen.FragmentScreen -> moveFragment(screen, command.addToBackStack)
         }
-        screenHistory.add(screen)
     }
 
     private fun handleBackCommand() {
-        if (currentVisibleScreen == null) fragmentManager.popBackStackImmediate()
-        val fragment = fragmentManager.findFragmentByTag(currentVisibleScreen!!::class.java.name)
+        val fragment = fragmentManager.findFragmentByTag(screenStack[screenStack.lastIndex])
         if (fragment is DialogFragment) {
             fragment.dismiss()
         } else {
-            fragmentManager.popBackStackImmediate()
+            fragmentManager.popBackStack()
         }
-        screenHistory.remove(currentVisibleScreen)
-        currentVisibleScreen = screenHistory.lastOrNull()
+        screenStack.removeAt(screenStack.lastIndex)
     }
 
     private fun executeRootChainCommand(command: Command.NewRootChain) {
@@ -75,24 +70,20 @@ class Navigator(
             fragmentManager.popBackStack()
         }
         if (fragment is DialogFragment) {
-            fragment.showNow(fragmentManager, screen::class.java.name)
+            fragment.showNow(fragmentManager, screen.screenKey)
         } else {
             fragmentManager.beginTransaction()
-                .replace(containerId, fragment, screen::class.java.name)
+                .replace(containerId, fragment, screen.screenKey)
                 .setReorderingAllowed(true)
                 .commit()
         }
-        screenHistory.clear()
-        currentVisibleScreen = screen
-        screenHistory.add(screen)
+        screenStack.clear()
     }
 
     private fun moveDialog(screen: Screen.DialogScreen) {
-        if (screen == currentVisibleScreen) return
         val dialog = screen.createDialog(fragmentFactory)
-        dialog.showNow(fragmentManager, screen::class.java.name)
-        screenHistory.add(screen)
-        currentVisibleScreen = screen
+        dialog.showNow(fragmentManager, screen.screenKey)
+        screenStack.add(screen.screenKey)
     }
 
     private fun executeReplaceCommand(command: Command.Replace) {
@@ -106,7 +97,13 @@ class Navigator(
     }
 
     private fun moveFragment(screen: Screen.FragmentScreen, addToBackStack: Boolean) {
-        if (screen == currentVisibleScreen) return
+        if (screenStack.isNotEmpty()) {
+            val currentScreen = screenStack[screenStack.lastIndex]
+            if (currentScreen == screen.screenKey) {
+                val fragment = fragmentManager.findFragmentByTag(currentScreen)
+                return
+            }
+        }
         val fragment = screen.createFragment(fragmentFactory)
         val transaction = fragmentManager.beginTransaction()
         if (moveAnimationSet != null) {
@@ -117,16 +114,16 @@ class Navigator(
                 moveAnimationSet.popExitAnim
             )
         }
-        transaction.replace(containerId, fragment, screen::class.java.name)
-        if (addToBackStack) transaction.addToBackStack(null)
+        transaction.replace(containerId, fragment, screen.screenKey)
+        if (addToBackStack) {
+            transaction.addToBackStack(screen.screenKey)
+            screenStack.add(screen.screenKey)
+        }
         transaction.setReorderingAllowed(true)
         transaction.commit()
-        currentVisibleScreen = screen
-        screenHistory.add(screen)
     }
 
     private fun replaceFragment(screen: Screen.FragmentScreen) {
-        if (screen == currentVisibleScreen) return
         val fragment = screen.createFragment(fragmentFactory)
         val transaction = fragmentManager.beginTransaction()
         if (replaceAnimationSet != null) {
@@ -135,10 +132,15 @@ class Navigator(
                 replaceAnimationSet.exitAnim
             )
         }
-        transaction.replace(containerId, fragment, screen::class.java.name)
+        transaction.replace(containerId, fragment, screen.screenKey)
             .setReorderingAllowed(true)
             .commit()
-        currentVisibleScreen = screen
-        screenHistory.add(screen)
+    }
+
+    private fun copyStackToLocal() {
+        screenStack.clear()
+        for (i in 0 until fragmentManager.backStackEntryCount) {
+            screenStack.add(fragmentManager.getBackStackEntryAt(i).name!!)
+        }
     }
 }

@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentFactory
 
 sealed interface Screen {
 
+    val screenKey: String get() = this::class.java.name
+
     interface FragmentScreen : Screen {
         fun createFragment(
             fragmentFactory: FragmentFactory
@@ -18,6 +20,7 @@ sealed interface Screen {
                 fragmentCreator: ScreenCreator<FragmentFactory, Fragment>
             ): FragmentScreen =
                 object : FragmentScreen {
+                    override val screenKey = fragmentCreator::class.java.name
                     override fun createFragment(fragmentFactory: FragmentFactory): Fragment =
                         fragmentCreator.create(fragmentFactory)
                 }
@@ -32,6 +35,7 @@ sealed interface Screen {
         companion object {
             operator fun invoke(fragmentCreator: ScreenCreator<FragmentFactory, DialogFragment>) =
                 object : DialogScreen {
+                    override val screenKey = fragmentCreator::class.java.name
                     override fun createDialog(fragmentFactory: FragmentFactory): DialogFragment {
                         return fragmentCreator.create(fragmentFactory)
                     }

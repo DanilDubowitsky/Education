@@ -35,7 +35,7 @@ class HomeViewModel(
         val screen = NavigationScreen.Main.Tests
         router.setResultListener(NavigationScreen.Main.Tests.OnScrollToTop, ::onScrollToTop)
         router.setResultListener(NavigationScreen.Main.Tests.OnScrollToBottom, ::onScrollToBottom)
-        router.replace(screen, HOME_NAVIGATOR_KEY)
+        router.navigateTo(screen, addToBackStack = true, HOME_NAVIGATOR_KEY)
     }
 
     fun navigateToFavorites() = intent {
@@ -45,7 +45,7 @@ class HomeViewModel(
         updateModelState {
             copy(selectedScreen = HomeModelState.BottomNavigationItems.FAVORITES)
         }
-        router.replace(screen, HOME_NAVIGATOR_KEY)
+        router.navigateTo(screen, addToBackStack = true, HOME_NAVIGATOR_KEY)
     }
 
     fun navigateToProfile() = intent {
@@ -55,7 +55,7 @@ class HomeViewModel(
         updateModelState {
             copy(selectedScreen = HomeModelState.BottomNavigationItems.PROFILE)
         }
-        router.replace(screen, HOME_NAVIGATOR_KEY)
+        router.navigateTo(screen, addToBackStack = true, HOME_NAVIGATOR_KEY)
     }
 
     fun navigateToLibrary() = intent {
@@ -65,7 +65,7 @@ class HomeViewModel(
         updateModelState {
             copy(selectedScreen = HomeModelState.BottomNavigationItems.LIBRARY)
         }
-        router.replace(screen, HOME_NAVIGATOR_KEY)
+        router.navigateTo(screen, addToBackStack = true, HOME_NAVIGATOR_KEY)
     }
 
     fun navigateToCreation() = intent {
