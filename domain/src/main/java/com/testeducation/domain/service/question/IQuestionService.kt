@@ -15,4 +15,13 @@ interface IQuestionService {
     )
     suspend fun deleteQuestion(testId: String, questionId: String)
     suspend fun getQuestionDetails(testId: String, questionId: String): Question
+    suspend fun updateQuestion(
+        questionId: String,
+        testId: String,
+        type: QuestionType,
+        questionText: String,
+        answers: List<InputAnswer>,
+        time: Long,
+        orderQuestion: Int
+    )
 }

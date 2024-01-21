@@ -42,4 +42,26 @@ class QuestionRemoteClient(
         return questionRetrofitClient.getQuestions(testId = testId, questionId = questionId)
             .getResult().data.toModel()
     }
+
+    override suspend fun updateQuestion(
+        questionId: String,
+        testId: String,
+        type: QuestionType,
+        questionText: String,
+        answers: List<InputAnswer>,
+        time: Long,
+        orderQuestion: Int
+    ) {
+        val request = QuestionCreateRequest(
+            title = questionText,
+            type = type.toRemote().name,
+            time = time,
+            answers = answers.mapToRequestAnswer(type = type)
+        )
+        questionRetrofitClient.updateQuestion(
+            id = testId,
+            questionId = questionId,
+            request = request
+        )
+    }
 }

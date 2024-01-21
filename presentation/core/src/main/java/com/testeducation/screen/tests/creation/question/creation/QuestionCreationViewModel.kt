@@ -6,6 +6,7 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.GetQuestionDetails
 import com.testeducation.domain.cases.question.QuestionCreate
+import com.testeducation.domain.cases.question.UpdateQuestion
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
 import com.testeducation.domain.model.question.input.InputAnswer
@@ -32,6 +33,7 @@ class QuestionCreationViewModel(
     questionTypeItem: QuestionTypeUiItem,
     private val router: NavigationRouter,
     private val questionCreate: QuestionCreate,
+    private val updateQuestion: UpdateQuestion,
     private val testId: String,
     private val orderQuestion: Int,
     private val questionId: String,
@@ -82,8 +84,9 @@ class QuestionCreationViewModel(
                         answerItem = answers.toInputAnswers(
                             ::getColorAnswer,
                             ::getTrueColor
-                        ),
-                        questionText = result.title
+                        ).plus(InputAnswer.FooterPlusAdd()),
+                        questionText = result.title,
+                        time = result.time
                     )
                 }
             }
@@ -97,14 +100,26 @@ class QuestionCreationViewModel(
                 postSideEffect(
                     QuestionCreationSideEffect.LoaderVisible
                 )
-                questionCreate(
-                    testId = testId,
-                    type = modelState.questionTypeItem.questionType,
-                    questionText = modelState.questionText,
-                    answerItem = modelState.answerItem,
-                    time = modelState.time,
-                    orderQuestion = orderQuestion
-                )
+                if (questionId.isNotEmpty()) {
+                    updateQuestion(
+                        questionId = questionId,
+                        testId = testId,
+                        type = modelState.questionTypeItem.questionType,
+                        questionText = modelState.questionText,
+                        answerItem = modelState.answerItem,
+                        time = modelState.time,
+                        orderQuestion = orderQuestion
+                    )
+                } else {
+                    questionCreate(
+                        testId = testId,
+                        type = modelState.questionTypeItem.questionType,
+                        questionText = modelState.questionText,
+                        answerItem = modelState.answerItem,
+                        time = modelState.time,
+                        orderQuestion = orderQuestion
+                    )
+                }
                 router.navigateTo(NavigationScreen.Tests.Details(testId), false)
                 postSideEffect(
                     QuestionCreationSideEffect.LoaderInvisible
@@ -264,7 +279,10 @@ class QuestionCreationViewModel(
                 val textAndColorPair = when (itemAnswer) {
                     is InputAnswer.DefaultAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
                     is InputAnswer.OrderAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
-                    is InputAnswer.MatchAnswer -> Pair(itemAnswer.firstAnswer, itemAnswer.color)
+                    is InputAnswer.MatchAnswer -> {
+                        val answer = if (firstAnswer) itemAnswer.firstAnswer else itemAnswer.secondAnswer
+                        Pair(answer, itemAnswer.color)
+                    }
                     is InputAnswer.TextAnswer -> Pair(
                         itemAnswer.text,
                         ColorResource.MainLight.Green.getColor(resourceHelper)
