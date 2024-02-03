@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.replace
+import androidx.fragment.app.commit
 
 class Navigator(
     private val activity: FragmentActivity,
@@ -20,7 +20,7 @@ class Navigator(
     private val screenStack: MutableList<String> = mutableListOf()
 
     override fun executeCommand(command: Command) {
-        copyStackToLocal()
+        //copyStackToLocal()
         when (command) {
             is Command.Back -> handleBackCommand()
             is Command.Forward -> executeForwardCommand(command)
@@ -97,10 +97,13 @@ class Navigator(
     }
 
     private fun moveFragment(screen: Screen.FragmentScreen, addToBackStack: Boolean) {
-        if (screenStack.isNotEmpty()) {
-            val currentScreen = screenStack[screenStack.lastIndex]
-            if (currentScreen == screen.screenKey) {
-                val fragment = fragmentManager.findFragmentByTag(currentScreen)
+        if (screenStack.size > 1) {
+            val alreadyInStack = screenStack.contains(screen.screenKey)
+            if (alreadyInStack) {
+                val fragment = fragmentManager.findFragmentByTag(screen.screenKey)
+                fragmentManager.commit {
+                    replace(containerId, fragment!!)
+                }
                 return
             }
         }

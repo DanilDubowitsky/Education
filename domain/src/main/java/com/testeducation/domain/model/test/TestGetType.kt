@@ -1,9 +1,8 @@
 package com.testeducation.domain.model.test
 
 enum class TestGetType {
-    MAIN,
+    CONTENT,
     LIKED,
-    CREATED,
-    PASSED,
-    DRAFT
+    ACCOUNT,
+    PASSED
 }

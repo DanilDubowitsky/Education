@@ -5,6 +5,7 @@ import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.model.test.TestGetTypeUI
+import com.testeducation.logic.model.test.TestLibraryGetTypeUI
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.navigation.core.ResultKey
 import java.io.Serializable
@@ -103,7 +104,7 @@ sealed interface NavigationScreen : Serializable {
         }
 
         data class Library(
-            val getTypeUI: TestGetTypeUI
+            val getTypeUI: TestLibraryGetTypeUI
         ) : Tests
 
         data class Details(
@@ -169,6 +170,10 @@ sealed interface NavigationScreen : Serializable {
         ) : Tests
 
         object EnterCode : Tests
+
+        data class FullAnswer(
+            val text: String
+        ) : Tests
     }
 
     sealed interface Questions : NavigationScreen {

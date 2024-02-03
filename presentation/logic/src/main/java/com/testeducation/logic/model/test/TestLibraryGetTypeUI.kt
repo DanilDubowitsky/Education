@@ -1,9 +1,7 @@
 package com.testeducation.logic.model.test
 
-enum class TestGetTypeUI {
-    CONTENT,
-    LIKED,
-    CREATED,
+enum class TestLibraryGetTypeUI {
+    PUBLISHED,
     PASSED,
     DRAFT
 }

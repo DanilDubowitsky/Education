@@ -8,8 +8,11 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
+import com.testeducation.domain.model.test.Test
+import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.model.test.TestFiltersUI
+import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.screen.tests.filters.TestsFiltersSideEffect
 import com.testeducation.logic.screen.tests.filters.TestsFiltersState
 import com.testeducation.navigation.core.NavigationRouter
@@ -180,6 +183,13 @@ class TestsFiltersViewModel(
             )
         }
         val modelState = getModelState()
+        val (status, getType) = when (filtersUI.testGetTypeUI) {
+            TestGetTypeUI.CONTENT -> Test.Status.PUBLISHED to TestGetType.CONTENT
+            TestGetTypeUI.LIKED -> Test.Status.PUBLISHED to TestGetType.LIKED
+            TestGetTypeUI.CREATED -> Test.Status.PUBLISHED to TestGetType.ACCOUNT
+            TestGetTypeUI.PASSED -> Test.Status.PUBLISHED to TestGetType.PASSED
+            TestGetTypeUI.DRAFT -> Test.Status.DRAFT to TestGetType.ACCOUNT
+        }
 
         val page = getTests(
             themeId = modelState.selectedTheme,
@@ -191,7 +201,8 @@ class TestsFiltersViewModel(
             minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
             limit = TestsDefaults.TESTS_PAGE_SIZE,
             offset = 0,
-            getType = filtersUI.testGetTypeUI.toModel()
+            getType = getType,
+            status = status
         )
 
         updateModelState {

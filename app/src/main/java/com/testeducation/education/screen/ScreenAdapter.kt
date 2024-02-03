@@ -34,6 +34,7 @@ import com.testeducation.ui.screen.tests.library.LibraryFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.screen.tests.pass.TestPassingFragment
+import com.testeducation.ui.screen.tests.pass.answer.FullAnswerTextDialog
 import com.testeducation.ui.screen.tests.pass.result.TestFailedPassDialog
 import com.testeducation.ui.screen.tests.pass.result.TestPassResultDialog
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
@@ -180,6 +181,10 @@ class ScreenAdapter : IScreenAdapter {
 
         is NavigationScreen.Tests.EnterCode -> Screen.DialogScreen {
             TestCodeEnterDialog()
+        }
+
+        is NavigationScreen.Tests.FullAnswer -> Screen.DialogScreen {
+            FullAnswerTextDialog().withScreen(screen)
         }
     }
 

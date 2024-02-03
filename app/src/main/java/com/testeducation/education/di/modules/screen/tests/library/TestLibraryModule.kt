@@ -52,7 +52,7 @@ interface TestLibraryModule {
             exceptionHandler: IExceptionHandler
         ): TestLibraryViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Library>()
-            val testGetType = screen.getTypeUI.toModel()
+            val testGetType = screen.getTypeUI
             return TestLibraryViewModel(
                 testGetType,
                 testShortHelper,

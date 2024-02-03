@@ -17,7 +17,6 @@ import com.testeducation.logic.screen.tests.list.TestsState
 import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import com.testeducation.screen.home.HomeViewModel.Companion.HOME_NAVIGATOR_KEY
 import com.testeducation.screen.tests.base.TestsDefaults
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -123,6 +122,13 @@ class TestsViewModel(
         router.navigateTo(screen)
     }
 
+    fun refresh() = intent {
+        updateModelState {
+            copy(tests = emptyList())
+        }
+        loadTests()
+    }
+
     private fun loadTests() = singleIntent(getTests.javaClass.name) {
         val modelState = getModelState()
         val page = getTests(
@@ -135,7 +141,7 @@ class TestsViewModel(
             minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
             limit = TestsDefaults.TESTS_PAGE_SIZE,
             offset = modelState.tests.size,
-            getType = TestGetType.MAIN
+            getType = TestGetType.CONTENT
         )
         updateModelState {
             copy(

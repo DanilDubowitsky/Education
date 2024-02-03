@@ -20,7 +20,11 @@ class LibraryHomeViewModel(
 
     override val initialModelState: LibraryHomeModelState = LibraryHomeModelState()
 
-    fun navigateToLibrary() = intent {
+    init {
+        navigateToLibrary()
+    }
+
+    private fun navigateToLibrary() = intent {
         router.replace(NavigationScreen.Main.Library, key = LIBRARY_NAVIGATOR_KEY)
         updateModelState {
             copy(currentScreen = LibraryHomeModelState.Screen.TEST_LIBRARY)

@@ -190,17 +190,17 @@
             app:layout_anchor="@id/appBar"
             app:layout_anchorGravity="bottom" />
 
-        <androidx.core.widget.NestedScrollView
+        <ScrollView
             android:id="@+id/rootScroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="40dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:animateLayoutChanges="true"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/txtLabelAboutTest"
@@ -211,6 +211,7 @@
                     android:text="@string/test_preview_about_test_label"
                     android:layout_marginTop="10dp"
                     android:textSize="18sp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -329,11 +330,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:layout_marginBottom="10dp"
                     app:layout_constraintTop_toBottomOf="@+id/txtAuthorTests" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </ScrollView>
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerLayout"

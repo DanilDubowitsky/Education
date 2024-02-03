@@ -1,7 +1,5 @@
 package com.testeducation.ui.screen.home.library
 
-import android.os.Bundle
-import android.view.View
 import com.testeducation.navigation.core.AnimationSet
 import com.testeducation.navigation.core.IScreenAdapter
 import com.testeducation.navigation.core.NavigationHost
@@ -44,11 +42,6 @@ class LibraryHomeFragment :
                 com.testeducation.navigation.R.anim.fade_out
             )
         )
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.navigateToLibrary()
     }
 
     override fun onResume() {

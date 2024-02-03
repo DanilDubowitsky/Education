@@ -92,7 +92,10 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
     }
 
     private fun onSideEffect(sideEffect: LikedTestsSideEffect) = when (sideEffect) {
-        LikedTestsSideEffect.OnLoadReady -> addScrollListener()
+        LikedTestsSideEffect.OnLoadReady ->{
+            binding.refreshLayout.isRefreshing = false
+            addScrollListener()
+        }
     }
 
     private fun setupViews() = binding {
@@ -117,6 +120,7 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
         })
         btnFilter.setClickListener(viewModel::openFilters)
         filtersLabel.setClickListener(viewModel::openFilters)
+        refreshLayout.setOnRefreshListener(viewModel::refreshContent)
         addScrollListener()
     }
 

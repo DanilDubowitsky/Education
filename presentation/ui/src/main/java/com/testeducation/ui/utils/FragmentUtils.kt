@@ -3,6 +3,7 @@ package com.testeducation.ui.utils
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -199,4 +200,17 @@ fun Fragment.setNavBarLight(isNavigationBarLight: Boolean) {
         requireActivity().window,
         requireActivity().window.decorView
     ).isAppearanceLightNavigationBars = isNavigationBarLight
+}
+
+inline fun Fragment.addOnBackPressListener(
+    enabled: Boolean = true,
+    crossinline onBackPressed: () -> Unit
+) {
+    requireActivity().onBackPressedDispatcher.addCallback(
+        this,
+        object : OnBackPressedCallback(enabled) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        })
 }
