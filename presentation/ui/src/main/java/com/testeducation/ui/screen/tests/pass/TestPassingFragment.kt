@@ -51,9 +51,9 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
 
     private val answersAdapter by lazy {
         ListDelegationAdapter(
-            createChoiceAnswerDelegate(viewModel::selectChoiceAnswer),
-            createOrderAnswerDelegate(orderDragListener),
-            createMatchAnswerDelegate(orderDragListener)
+            createChoiceAnswerDelegate(viewModel::selectChoiceAnswer, viewModel::onAnswerClick),
+            createOrderAnswerDelegate(orderDragListener, viewModel::onAnswerClick),
+            createMatchAnswerDelegate(orderDragListener, viewModel::onAnswerClick)
         )
     }
 

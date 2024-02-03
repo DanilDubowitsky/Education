@@ -49,7 +49,7 @@ class LibraryFragment : ViewModelHostFragment<LibraryViewModel, FragmentLibraryB
         AsyncListDifferDelegationAdapter(
             TestShortDiffUtil(),
             createTestShortPagerDelegate(viewModel::openTestPreview) { position ->
-                viewModel.toggleTestLike(position, TestGetTypeUI.MAIN)
+                viewModel.toggleTestLike(position, TestGetTypeUI.CONTENT)
             }
         )
     }

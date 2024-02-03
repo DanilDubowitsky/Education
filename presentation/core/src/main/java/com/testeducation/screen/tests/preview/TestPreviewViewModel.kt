@@ -12,7 +12,6 @@ import com.testeducation.logic.screen.tests.preview.TestPreviewSideEffect
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import com.testeducation.screen.home.HomeViewModel
 import com.testeducation.screen.home.HomeViewModel.Companion.HOME_NAVIGATOR_KEY
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -91,7 +90,7 @@ class TestPreviewViewModel(
         val testsPage = getTests(
             limit = TESTS_PAGE_SIZE,
             offset = 0,
-            getType = TestGetType.MAIN,
+            getType = TestGetType.CONTENT,
             userId = test.creator.id
         )
 

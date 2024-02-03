@@ -61,7 +61,7 @@ interface TestRetrofitClient {
     suspend fun createTest(@Body testCreationRequest: TestCreationRequest): RemoteResponse<RemoteCreationTest>
 
     @GET("/api/app/account/tests")
-    suspend fun getCreatedTests(
+    suspend fun getAccountTests(
         @Query("title") query: String?,
         @Query("theme") theme: String?,
         @Query("order") order: String?,

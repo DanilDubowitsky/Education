@@ -1,30 +1,32 @@
 package com.testeducation.screen.tests.library.tests
 
 import com.testeducation.converter.test.toModels
-import com.testeducation.converter.test.toUI
 import com.testeducation.converter.test.toUIModel
 import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
+import com.testeducation.domain.model.test.Test
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestFiltersUI
 import com.testeducation.logic.model.test.TestGetTypeUI
+import com.testeducation.logic.model.test.TestLibraryGetTypeUI
 import com.testeducation.logic.screen.tests.library.tests.TestLibrarySideEffect
 import com.testeducation.logic.screen.tests.library.tests.TestLibraryState
 import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.screen.home.library.LibraryHomeViewModel.Companion.LIBRARY_NAVIGATOR_KEY
 import com.testeducation.screen.tests.base.TestsDefaults
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class TestLibraryViewModel(
-    private val testGetType: TestGetType,
+    private val testGetType: TestLibraryGetTypeUI,
     private val testShortHelper: ITestHelper,
     private val router: NavigationRouter,
     private val getTests: GetTests,
@@ -80,6 +82,11 @@ class TestLibraryViewModel(
     }
 
     fun openFilters() = intent {
+        val getType = when (testGetType) {
+            TestLibraryGetTypeUI.PUBLISHED -> TestGetTypeUI.CONTENT
+            TestLibraryGetTypeUI.PASSED -> TestGetTypeUI.PASSED
+            TestLibraryGetTypeUI.DRAFT -> TestGetTypeUI.DRAFT
+        }
         val filters = getModelState().run {
             TestFiltersUI(
                 timeLimitFrom,
@@ -91,7 +98,7 @@ class TestLibraryViewModel(
                 selectedOrderField.toUIModel(),
                 tests.toUIModels(),
                 tests.size,
-                testGetType.toUI()
+                getType
             )
         }
 
@@ -125,6 +132,17 @@ class TestLibraryViewModel(
         router.sendResult(NavigationScreen.Main.Tests.OnScrollToTop, Unit, false)
     }
 
+    fun exit() = intent {
+        router.exit(LIBRARY_NAVIGATOR_KEY)
+    }
+
+    fun refresh() = intent {
+        updateModelState {
+            copy(tests = emptyList())
+        }
+        loadTests()
+    }
+
     private fun handleNewFilters(newFilters: TestFiltersUI) = intent {
         updateModelState {
             copy(
@@ -154,6 +172,11 @@ class TestLibraryViewModel(
 
     private fun loadTests() = singleIntent(getTests.javaClass.name) {
         val modelState = getModelState()
+        val (status, getType) = when (testGetType) {
+            TestLibraryGetTypeUI.PUBLISHED -> Test.Status.PUBLISHED to TestGetType.ACCOUNT
+            TestLibraryGetTypeUI.PASSED -> Test.Status.PUBLISHED to TestGetType.PASSED
+            TestLibraryGetTypeUI.DRAFT -> Test.Status.DRAFT to TestGetType.ACCOUNT
+        }
         val testsPage = modelState.run {
             getTests(
                 themeId = selectedThemeId,
@@ -165,7 +188,8 @@ class TestLibraryViewModel(
                 minQuestions = questionsLimitFrom.toIntOrNull(),
                 limit = TestsDefaults.TESTS_PAGE_SIZE,
                 offset = tests.size,
-                getType = testGetType
+                getType = getType,
+                status = status
             )
         }
 
@@ -178,5 +202,4 @@ class TestLibraryViewModel(
         }
         postSideEffect(TestLibrarySideEffect.OnLoadReady)
     }
-
 }

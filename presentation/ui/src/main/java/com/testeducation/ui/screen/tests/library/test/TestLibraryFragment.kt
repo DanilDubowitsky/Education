@@ -1,4 +1,4 @@
-package com.testeducation.ui.screen.home.library
+package com.testeducation.ui.screen.tests.library.test
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,6 +22,7 @@ import com.testeducation.ui.delegates.tests.createTestLoadingDelegate
 import com.testeducation.ui.delegates.tests.createTestShortAdapterDelegate
 import com.testeducation.ui.delegates.tests.createThemeShortAdapterDelegate
 import com.testeducation.ui.screen.tests.list.TestShortDiffUtil
+import com.testeducation.ui.utils.addOnBackPressListener
 import com.testeducation.ui.utils.addPageScrollListener
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
@@ -59,6 +60,7 @@ class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, Fragment
         savedInstanceState: Bundle?
     ): View? {
         requireActivity().window.statusBarColor = requireContext().loadColor(R.color.colorBlue)
+        addOnBackPressListener(onBackPressed = viewModel::exit)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -91,7 +93,10 @@ class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, Fragment
     }
 
     private fun onSideEffect(sideEffect: TestLibrarySideEffect) = when (sideEffect) {
-        TestLibrarySideEffect.OnLoadReady -> addScrollListener()
+        TestLibrarySideEffect.OnLoadReady -> {
+            binding.refreshLayout.isRefreshing = false
+            addScrollListener()
+        }
     }
 
     private fun setupViews() = binding {
@@ -116,6 +121,8 @@ class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, Fragment
         })
         btnFilter.setClickListener(viewModel::openFilters)
         filtersLabel.setClickListener(viewModel::openFilters)
+        btnBack.setClickListener(viewModel::exit)
+        refreshLayout.setOnRefreshListener(viewModel::refresh)
         addScrollListener()
     }
 

@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace = "com.testeducation.remote"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles.add(File("consumer-rules.pro"))
@@ -17,12 +17,12 @@ android {
 
     buildTypes {
         release {
-            buildConfigField("String", "API_URL", "\"https://edprojectserver.azurewebsites.net\"")
+            buildConfigField("String", "API_URL", "\"https://testoria.azurewebsites.net\"")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         debug {
-            buildConfigField("String", "API_URL", "\"https://edprojectserver.azurewebsites.net\"")
+            buildConfigField("String", "API_URL", "\"https://testoria-test.azurewebsites.net\"")
         }
     }
     compileOptions {

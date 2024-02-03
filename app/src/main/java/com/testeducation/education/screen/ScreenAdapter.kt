@@ -12,7 +12,8 @@ import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
-import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.home.library.LibraryHomeFragment
+import com.testeducation.ui.screen.tests.library.test.TestLibraryFragment
 import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
 import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
@@ -33,6 +34,7 @@ import com.testeducation.ui.screen.tests.library.LibraryFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.screen.tests.pass.TestPassingFragment
+import com.testeducation.ui.screen.tests.pass.answer.FullAnswerTextDialog
 import com.testeducation.ui.screen.tests.pass.result.TestFailedPassDialog
 import com.testeducation.ui.screen.tests.pass.result.TestPassResultDialog
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
@@ -125,6 +127,10 @@ class ScreenAdapter : IScreenAdapter {
         NavigationScreen.Main.Library -> Screen.FragmentScreen {
             LibraryFragment()
         }
+
+        NavigationScreen.Main.HomeLibrary -> Screen.FragmentScreen {
+            LibraryHomeFragment()
+        }
     }
 
     private fun createPlatformScreen(screen: NavigationScreen.Tests) = when (screen) {
@@ -175,6 +181,10 @@ class ScreenAdapter : IScreenAdapter {
 
         is NavigationScreen.Tests.EnterCode -> Screen.DialogScreen {
             TestCodeEnterDialog()
+        }
+
+        is NavigationScreen.Tests.FullAnswer -> Screen.DialogScreen {
+            FullAnswerTextDialog().withScreen(screen)
         }
     }
 

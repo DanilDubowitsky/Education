@@ -124,6 +124,13 @@ class LikedTestsViewModel(
         router.navigateTo(screen)
     }
 
+    fun refreshContent() = intent {
+        updateModelState {
+            copy(tests = emptyList())
+        }
+        loadTests()
+    }
+
     private fun handleNewFilters(newFilters: TestFiltersUI) = intent {
         updateModelState {
             copy(

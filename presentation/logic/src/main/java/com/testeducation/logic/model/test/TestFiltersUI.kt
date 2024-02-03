@@ -12,5 +12,5 @@ data class TestFiltersUI(
     val orderFieldUI: TestOrderFieldUI,
     val preLoadedTests: List<TestShortUI>,
     val currentItemsCount: Int,
-    val testGetTypeUI: TestGetTypeUI = TestGetTypeUI.MAIN
+    val testGetTypeUI: TestGetTypeUI = TestGetTypeUI.CONTENT
 ) : Serializable

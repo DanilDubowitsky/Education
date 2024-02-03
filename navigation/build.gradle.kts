@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation(kotlin("reflect"))
 
     implementation("androidx.fragment:fragment-ktx:1.6.0")
 

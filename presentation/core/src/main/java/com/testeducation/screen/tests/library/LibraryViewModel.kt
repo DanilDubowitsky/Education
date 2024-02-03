@@ -8,11 +8,12 @@ import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestGetTypeUI
+import com.testeducation.logic.model.test.TestLibraryGetTypeUI
 import com.testeducation.logic.screen.tests.library.LibrarySideEffect
 import com.testeducation.logic.screen.tests.library.LibraryState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import com.testeducation.screen.home.HomeViewModel.Companion.HOME_NAVIGATOR_KEY
+import com.testeducation.screen.home.library.LibraryHomeViewModel.Companion.LIBRARY_NAVIGATOR_KEY
 import kotlinx.coroutines.async
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -34,15 +35,15 @@ class LibraryViewModel(
     }
 
     fun openPublishedTests() = intent {
-        navigateToTestsLibrary(TestGetTypeUI.CREATED)
+        navigateToTestsLibrary(TestLibraryGetTypeUI.PUBLISHED)
     }
 
     fun openPassedTests() = intent {
-        navigateToTestsLibrary(TestGetTypeUI.PASSED)
+        navigateToTestsLibrary(TestLibraryGetTypeUI.PASSED)
     }
 
     fun openDraftTests() = intent {
-        navigateToTestsLibrary(TestGetTypeUI.DRAFT)
+        navigateToTestsLibrary(TestLibraryGetTypeUI.DRAFT)
     }
 
     fun openTestPreview(id: String) {
@@ -52,7 +53,7 @@ class LibraryViewModel(
 
     fun toggleTestLike(position: Int, type: TestGetTypeUI) = intent {
         when (type) {
-            TestGetTypeUI.MAIN,
+            TestGetTypeUI.CONTENT,
             TestGetTypeUI.LIKED -> return@intent
 
             TestGetTypeUI.CREATED -> {
@@ -81,9 +82,9 @@ class LibraryViewModel(
         }
     }
 
-    private fun navigateToTestsLibrary(type: TestGetTypeUI) {
+    private fun navigateToTestsLibrary(type: TestLibraryGetTypeUI) {
         val screen = NavigationScreen.Tests.Library(type)
-        router.replace(screen, key = HOME_NAVIGATOR_KEY)
+        router.navigateTo(screen, key = LIBRARY_NAVIGATOR_KEY)
     }
 
     private fun loadData() = intent {
@@ -91,7 +92,7 @@ class LibraryViewModel(
             val publishedTestsDeferred = async {
                 getTests(
                     limit = TEST_LIBRARY_LIMIT,
-                    getType = TestGetType.CREATED,
+                    getType = TestGetType.ACCOUNT,
                     offset = 0,
                     status = Test.Status.PUBLISHED
                 )
@@ -100,7 +101,7 @@ class LibraryViewModel(
             val draftTestsDeferred = async {
                 getTests(
                     limit = TEST_LIBRARY_LIMIT,
-                    getType = TestGetType.CREATED,
+                    getType = TestGetType.ACCOUNT,
                     offset = 0,
                     status = Test.Status.DRAFT
                 )

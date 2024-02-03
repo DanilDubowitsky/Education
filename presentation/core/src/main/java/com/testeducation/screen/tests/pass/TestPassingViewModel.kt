@@ -1,5 +1,6 @@
 package com.testeducation.screen.tests.pass
 
+import com.testeducation.converter.test.question.toPreviewUI
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.GetQuestions
@@ -164,6 +165,23 @@ class TestPassingViewModel(
         updateModelState {
             copy(resumeCount = newResumeCount)
         }
+    }
+
+    fun exit() = intent {
+        router.exit()
+    }
+
+    fun onAnswerClick(position: Int) = intent {
+        val modelState = getModelState()
+        val answer = when (val question = modelState.currentQuestion?.question) {
+            is Question.Choice -> question.answers[position]
+            is Question.Match -> question.answers[position]
+            is Question.Order -> question.answers[position]
+            is Question.Text,
+            null -> return@intent
+        }
+        val screen = NavigationScreen.Tests.FullAnswer(answer.extractText())
+        router.navigateTo(screen)
     }
 
     private fun applyTextAnswer(questionRemainingTime: Long) = intent {
@@ -401,8 +419,11 @@ class TestPassingViewModel(
         it.toInputAnswer()
     }
 
-    fun exit() = intent {
-        router.exit()
+    private fun Answer.extractText() = when (this) {
+        is Answer.ChoiceAnswer -> title
+        is Answer.MatchAnswer -> title
+        is Answer.OrderAnswer -> title
+        is Answer.TextAnswer -> ""
     }
 
     private companion object {

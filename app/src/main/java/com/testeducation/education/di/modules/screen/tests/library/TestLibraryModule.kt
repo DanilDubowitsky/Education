@@ -16,7 +16,7 @@ import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.library.tests.TestLibraryModelState
 import com.testeducation.screen.tests.library.tests.TestLibraryReducer
 import com.testeducation.screen.tests.library.tests.TestLibraryViewModel
-import com.testeducation.ui.screen.home.library.TestLibraryFragment
+import com.testeducation.ui.screen.tests.library.test.TestLibraryFragment
 import com.testeducation.ui.utils.getScreen
 import dagger.Binds
 import dagger.Module
@@ -52,7 +52,7 @@ interface TestLibraryModule {
             exceptionHandler: IExceptionHandler
         ): TestLibraryViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Library>()
-            val testGetType = screen.getTypeUI.toModel()
+            val testGetType = screen.getTypeUI
             return TestLibraryViewModel(
                 testGetType,
                 testShortHelper,

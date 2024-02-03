@@ -86,7 +86,10 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private fun onSideEffect(sideEffect: TestsSideEffect) = when (sideEffect) {
-        TestsSideEffect.OnLoadReady -> addTestsLoadingListener()
+        TestsSideEffect.OnLoadReady -> {
+            binding.refreshLayout.isRefreshing = false
+            addTestsLoadingListener()
+        }
     }
 
     private fun render(state: TestsState) = binding {
@@ -142,6 +145,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
             viewModel::loadNextPage
         )
         txtEnterCode.setClickListener(viewModel::openEnterCodeScreen)
+        refreshLayout.setOnRefreshListener(viewModel::refresh)
     }
 
     private fun FragmentTestsBinding.bindTests(state: TestsState) {
