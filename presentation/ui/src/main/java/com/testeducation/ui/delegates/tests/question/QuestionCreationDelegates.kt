@@ -89,7 +89,8 @@ fun answerDelegateMatch(
 fun answerDelegateOrder(
     onAnswerTextChanger: (String) -> Unit,
     mDragStartListener: IDragStartListener,
-    onSelectedElement: (String) -> Unit
+    onSelectedElement: (String) -> Unit,
+    onClickDelete: (String) -> Unit
 ) = simpleDelegateAdapter<AnswerCreationUI.OrderAnswer,
             AnswerCreationUI,
             ViewHolderAnswerOrderBinding>(
@@ -99,16 +100,21 @@ fun answerDelegateOrder(
             etAnswer.setOnClickListener {
                 onAnswerTextChanger(item.id)
             }
-            root.setOnTouchListener { _, motionEvent ->
+            imgMove.setOnTouchListener { _, motionEvent ->
                 if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
                     mDragStartListener.oDragStarted(viewHolder = this@simpleDelegateAdapter);
                     onSelectedElement(item.id)
                 }
                 false
             }
+            imgDelete.setOnClickListener {
+                onClickDelete(item.id)
+            }
             bind {
                 etAnswer.text = item.answerText
-                root.backgroundTintList = ColorStateList.valueOf(item.color)
+                containerAnswer.backgroundTintList = ColorStateList.valueOf(item.color)
+                tvNumber.text = item.order.toString()
+                constraintOrder.backgroundTintList = ColorStateList.valueOf(item.color)
             }
         }
     }
@@ -141,18 +147,6 @@ fun footerPlusAddDelegate(
                 imgPlus.setOnClickListener {
                     onClickAdd()
                 }
-                /* val marginRight = if (item.isOrderAnswer) {
-                     46.dp
-                 } else {
-                     0.dp
-                 }
-                 val params = FrameLayout.LayoutParams(
-                     FrameLayout.LayoutParams.WRAP_CONTENT,
-                     FrameLayout.LayoutParams.WRAP_CONTENT
-                 )
-                 params.setMargins(0.dp, 0.dp, marginRight, 0.dp)
-                 params.gravity = Gravity.CENTER
-                 imgPlus.layoutParams = params*/
             }
         }
     }

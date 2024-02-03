@@ -7,6 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface QuestionRetrofitClient {
@@ -14,6 +15,13 @@ interface QuestionRetrofitClient {
     @POST("/api/app/content/tests/{testId}/questions")
     suspend fun createQuestion(
         @Path("testId") id: String,
+        @Body request: QuestionCreateRequest
+    ): RemoteResponse<Unit>
+
+    @PUT("/api/app/content/tests/{testId}/questions/{questionId}")
+    suspend fun updateQuestion(
+        @Path("testId") id: String,
+        @Path("questionId") questionId: String,
         @Body request: QuestionCreateRequest
     ): RemoteResponse<Unit>
 

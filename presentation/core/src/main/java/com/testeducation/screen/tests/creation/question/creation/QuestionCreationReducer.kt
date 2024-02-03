@@ -1,6 +1,5 @@
 package com.testeducation.screen.tests.creation.question.creation
 
-import com.testeducation.converter.test.question.toListUi
 import com.testeducation.converter.test.question.toModelUi
 import com.testeducation.converter.test.question.toUiModel
 import com.testeducation.core.IReducer
@@ -15,7 +14,6 @@ class QuestionCreationReducer(private val timeConverterLongToString: ITimeConver
             answerItemUiList = modelState.answerItem.toModelUi(modelState.visibleAddFooter),
             questionTypeUiItem = modelState.questionTypeItem.questionType.toUiModel(),
             visibleIndicator = modelState.questionTypeItem.questionType == QuestionType.REORDER,
-            answerIndicatorItems = modelState.answerIndicatorItems.toListUi(),
             time = timeConverterLongToString.convert(modelState.time),
             questionText = modelState.questionText
         )
