@@ -1,5 +1,6 @@
 package com.testeducation.screen.tests.library.tests
 
+import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestShort
@@ -18,7 +19,8 @@ data class TestLibraryModelState(
     val timeLimitTo: String = TestsDefaults.DEFAULT_TIME_MAX,
     val questionsLimitFrom: String = TestsDefaults.DEFAULT_QUESTIONS_MIN,
     val questionsLimitTo: String = TestsDefaults.DEFAULT_QUESTIONS_MAX,
-    val totalTestsCount: Int = 0
+    val totalTestsCount: Int = 0,
+    val selectedDirection: OrderDirection = OrderDirection.DESCENDING
 ) {
 
     enum class TestsLoadingState {

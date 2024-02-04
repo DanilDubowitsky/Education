@@ -97,6 +97,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
             TestOrderFieldUI.TITLE -> getString(R.string.tests_list_sort_field_title)
             TestOrderFieldUI.CREATION -> getString(R.string.tests_list_sort_field_creation_date)
             TestOrderFieldUI.QUESTIONS -> getString(R.string.tests_list_sort_field_questions)
+            TestOrderFieldUI.PUBLISHED -> getString(R.string.tests_list_sort_field_published_date)
         }
 
         sortLabel.text = orderFieldText
@@ -146,6 +147,8 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         )
         txtEnterCode.setClickListener(viewModel::openEnterCodeScreen)
         refreshLayout.setOnRefreshListener(viewModel::refresh)
+        sortLabel.setClickListener(viewModel::openSort)
+        btnSort.setClickListener(viewModel::openSort)
     }
 
     private fun FragmentTestsBinding.bindTests(state: TestsState) {

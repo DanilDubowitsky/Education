@@ -8,7 +8,9 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.cases.user.GetCurrentUser
+import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.TestGetType
+import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestFiltersUI
@@ -129,6 +131,30 @@ class TestsViewModel(
         loadTests()
     }
 
+    fun openSort() = intent {
+        val modelState = getModelState()
+        val screen = NavigationScreen.Tests.TestSort(
+            modelState.selectedOrderField.name,
+            modelState.selectedDirection.name
+        )
+        router.setResultListener(NavigationScreen.Tests.TestSort.OnSortChanged, ::handleNewSort)
+        router.navigateTo(screen)
+    }
+
+    private fun handleNewSort(
+        values: NavigationScreen.Tests.TestSort.SortValues
+    ) = intent {
+        updateModelState {
+            copy(
+                selectedOrderField = TestOrderField.valueOf(values.orderField),
+                selectedDirection = OrderDirection.valueOf(values.direction),
+                tests = emptyList(),
+                testsLoadingState = TestsModelState.TestsLoadingState.LOADING
+            )
+        }
+        loadTests()
+    }
+
     private fun loadTests() = singleIntent(getTests.javaClass.name) {
         val modelState = getModelState()
         val page = getTests(
@@ -141,7 +167,8 @@ class TestsViewModel(
             minQuestions = modelState.questionsLimitFrom.toIntOrNull(),
             limit = TestsDefaults.TESTS_PAGE_SIZE,
             offset = modelState.tests.size,
-            getType = TestGetType.CONTENT
+            getType = TestGetType.CONTENT,
+            orderDirection = modelState.selectedDirection
         )
         updateModelState {
             copy(

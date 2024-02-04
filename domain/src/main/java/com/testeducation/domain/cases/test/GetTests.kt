@@ -16,7 +16,7 @@ class GetTests(
         query: String? = null,
         themeId: String? = null,
         orderField: TestOrderField? = null,
-        orderDirection: OrderDirection = OrderDirection.ASCENDING,
+        orderDirection: OrderDirection = OrderDirection.DESCENDING,
         minTime: Int? = null,
         maxTime: Int? = null,
         hasLimit: Boolean = false,

@@ -78,6 +78,7 @@ class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, Fragment
             TestOrderFieldUI.TITLE -> getString(R.string.tests_list_sort_field_title)
             TestOrderFieldUI.CREATION -> getString(R.string.tests_list_sort_field_creation_date)
             TestOrderFieldUI.QUESTIONS -> getString(R.string.tests_list_sort_field_questions)
+            TestOrderFieldUI.PUBLISHED -> getString(R.string.tests_list_sort_field_published_date)
         }
 
         sortLabel.text = orderFieldText
@@ -123,6 +124,8 @@ class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, Fragment
         filtersLabel.setClickListener(viewModel::openFilters)
         btnBack.setClickListener(viewModel::exit)
         refreshLayout.setOnRefreshListener(viewModel::refresh)
+        btnSort.setClickListener(viewModel::openSort)
+        sortLabel.setClickListener(viewModel::openSort)
         addScrollListener()
     }
 

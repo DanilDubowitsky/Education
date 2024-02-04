@@ -7,7 +7,9 @@ import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
+import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.TestGetType
+import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
@@ -19,6 +21,7 @@ import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.base.TestsDefaults
+import com.testeducation.screen.tests.list.TestsModelState
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
@@ -131,6 +134,30 @@ class LikedTestsViewModel(
         loadTests()
     }
 
+    fun openSort() = intent {
+        val modelState = getModelState()
+        val screen = NavigationScreen.Tests.TestSort(
+            modelState.selectedOrderField.name,
+            modelState.selectedDirection.name
+        )
+        router.setResultListener(NavigationScreen.Tests.TestSort.OnSortChanged, ::handleNewSort)
+        router.navigateTo(screen)
+    }
+
+    private fun handleNewSort(
+        values: NavigationScreen.Tests.TestSort.SortValues
+    ) = intent {
+        updateModelState {
+            copy(
+                selectedOrderField = TestOrderField.valueOf(values.orderField),
+                selectedDirection = OrderDirection.valueOf(values.direction),
+                tests = emptyList(),
+                testsLoadingState = LikedTestsModelState.TestsLoadingState.LOADING
+            )
+        }
+        loadTests()
+    }
+
     private fun handleNewFilters(newFilters: TestFiltersUI) = intent {
         updateModelState {
             copy(
@@ -168,7 +195,8 @@ class LikedTestsViewModel(
                 minQuestions = questionsLimitFrom.toIntOrNull(),
                 limit = TestsDefaults.TESTS_PAGE_SIZE,
                 offset = tests.size,
-                getType = TestGetType.LIKED
+                getType = TestGetType.LIKED,
+                orderDirection = selectedDirection
             )
         }
 
