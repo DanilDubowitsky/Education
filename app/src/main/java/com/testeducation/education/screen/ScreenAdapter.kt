@@ -38,6 +38,7 @@ import com.testeducation.ui.screen.tests.pass.answer.FullAnswerTextDialog
 import com.testeducation.ui.screen.tests.pass.result.TestFailedPassDialog
 import com.testeducation.ui.screen.tests.pass.result.TestPassResultDialog
 import com.testeducation.ui.screen.tests.preview.TestPreviewFragment
+import com.testeducation.ui.screen.tests.sort.TestSortDialog
 import com.testeducation.ui.screen.tests.statistic.TestPassStatisticFragment
 import com.testeducation.ui.screen.webview.WebViewFragment
 import com.testeducation.ui.utils.withScreen
@@ -185,6 +186,10 @@ class ScreenAdapter : IScreenAdapter {
 
         is NavigationScreen.Tests.FullAnswer -> Screen.DialogScreen {
             FullAnswerTextDialog().withScreen(screen)
+        }
+
+        is NavigationScreen.Tests.TestSort -> Screen.DialogScreen {
+            TestSortDialog().withScreen(screen)
         }
     }
 

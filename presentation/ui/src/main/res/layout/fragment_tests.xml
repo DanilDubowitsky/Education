@@ -158,13 +158,15 @@
                     <TextView
                         android:id="@+id/sortLabel"
                         style="@style/Text.Label"
-                        android:layout_marginStart="5dp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        tools:text="@string/tests_filters_label"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="24dp"
                         app:layout_constraintBottom_toBottomOf="@+id/btnFilter"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/btnSort"
-                        app:layout_constraintTop_toTopOf="@+id/btnFilter" />
+                        app:layout_constraintTop_toTopOf="@+id/btnFilter"
+                        tools:text="@string/tests_filters_label" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

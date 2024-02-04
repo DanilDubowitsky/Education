@@ -9,6 +9,7 @@ import com.testeducation.helper.resource.CodeStringResource
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.DrawableResource
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.resource.SortStringResource
 import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.ui.R
@@ -26,6 +27,7 @@ class ResourceHelper(
         is StringResource.StringSettings -> extractStringSettingResource(resource)
         is StringResource.Validate -> extractValidateStringResource(resource)
         is CodeStringResource -> string(resource.extractResourceId())
+        is SortStringResource -> string(resource.extractResourceId())
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {

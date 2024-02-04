@@ -18,9 +18,9 @@ class Navigator(
 ) : INavigator {
 
     private val screenStack: MutableList<String> = mutableListOf()
+    private val currentVisibleDialog: Screen.DialogScreen? = null
 
     override fun executeCommand(command: Command) {
-        //copyStackToLocal()
         when (command) {
             is Command.Back -> handleBackCommand()
             is Command.Forward -> executeForwardCommand(command)
@@ -36,18 +36,25 @@ class Navigator(
             }
 
             is Screen.DialogScreen -> moveDialog(screen)
-            is Screen.FragmentScreen -> moveFragment(screen, command.addToBackStack)
+            is Screen.FragmentScreen -> {
+                copyStackToLocal()
+                moveFragment(screen, command.addToBackStack)
+            }
         }
     }
 
     private fun handleBackCommand() {
-        val fragment = fragmentManager.findFragmentByTag(screenStack[screenStack.lastIndex])
-        if (fragment is DialogFragment) {
-            fragment.dismiss()
+        if (screenStack.isNotEmpty()) {
+            val fragment = fragmentManager.findFragmentByTag(screenStack[screenStack.lastIndex])
+            if (fragment is DialogFragment) {
+                fragment.dismiss()
+            } else {
+                fragmentManager.popBackStack()
+            }
+            screenStack.removeAt(screenStack.lastIndex)
         } else {
             fragmentManager.popBackStack()
         }
-        screenStack.removeAt(screenStack.lastIndex)
     }
 
     private fun executeRootChainCommand(command: Command.NewRootChain) {
@@ -78,6 +85,7 @@ class Navigator(
                 .commit()
         }
         screenStack.clear()
+        screenStack.add(screen.screenKey)
     }
 
     private fun moveDialog(screen: Screen.DialogScreen) {
@@ -92,20 +100,20 @@ class Navigator(
                 // TODO: add activity support
             }
             is Screen.DialogScreen -> moveDialog(screen)
-            is Screen.FragmentScreen -> replaceFragment(screen)
+            is Screen.FragmentScreen -> {
+                copyStackToLocal()
+                replaceFragment(screen)
+            }
         }
     }
 
     private fun moveFragment(screen: Screen.FragmentScreen, addToBackStack: Boolean) {
-        if (screenStack.size > 1) {
-            val alreadyInStack = screenStack.contains(screen.screenKey)
-            if (alreadyInStack) {
-                val fragment = fragmentManager.findFragmentByTag(screen.screenKey)
-                fragmentManager.commit {
-                    replace(containerId, fragment!!)
-                }
-                return
+        val existingFragment = fragmentManager.findFragmentByTag(screen.screenKey)
+        if (existingFragment != null) {
+            fragmentManager.commit {
+                replace(containerId, existingFragment)
             }
+            return
         }
         val fragment = screen.createFragment(fragmentFactory)
         val transaction = fragmentManager.beginTransaction()

@@ -61,6 +61,7 @@
 
     <string name="tests_list_sort_field_title">Название</string>
     <string name="tests_list_sort_field_creation_date">Дата создания</string>
+    <string name="tests_list_sort_field_published_date">Дата публикации</string>
     <string name="tests_list_sort_field_questions">Кол-во вопросов</string>
 
     <string name="tests_filters_title_label">Фильтры</string>
@@ -200,5 +201,16 @@
     <string name="code_enter_description">Используйте индивидуальный код, чтобы присоединиться к тесту</string>
     <string name="code_enter_btn_text">Присоединиться</string>
     <string name="code_enter_code_invalid_error">Неправильный код</string>
+
+    <string name="tests_sort_title">Сортировка</string>
+    <string name="tests_sort_show">Показать</string>
+    <string name="tests_sort_name_descending">По названию (А-Я)</string>
+    <string name="tests_sort_name_ascending">По названию (Я-А)</string>
+    <string name="tests_sort_creation_date_descending">По дате создания (сначала новые)</string>
+    <string name="tests_sort_creation_date_ascending">По дате создания (сначала старые)</string>
+    <string name="tests_sort_publish_date_ascending">По дате публикации (сначала старые)</string>
+    <string name="tests_sort_publish_date_descending">По дате публикации (сначала новые)</string>
+    <string name="tests_sort_questions_count_ascending">По количеству вопросов (сначала меньше)</string>
+    <string name="tests_sort_questions_count_descending">По количеству вопросов (сначала больше)</string>
 
 </resources>

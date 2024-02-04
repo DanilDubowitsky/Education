@@ -37,12 +37,14 @@ fun TestOrderField.toUIModel() = when (this) {
     TestOrderField.TITLE -> TestOrderFieldUI.TITLE
     TestOrderField.CREATION -> TestOrderFieldUI.CREATION
     TestOrderField.QUESTIONS -> TestOrderFieldUI.QUESTIONS
+    TestOrderField.PUBLISHED -> TestOrderFieldUI.PUBLISHED
 }
 
 fun TestOrderFieldUI.toModel() = when (this) {
     TestOrderFieldUI.TITLE -> TestOrderField.TITLE
     TestOrderFieldUI.CREATION -> TestOrderField.CREATION
     TestOrderFieldUI.QUESTIONS -> TestOrderField.QUESTIONS
+    TestOrderFieldUI.PUBLISHED -> TestOrderField.PUBLISHED
 }
 
 fun TestShortUI.Test.toModel() = TestShort(
