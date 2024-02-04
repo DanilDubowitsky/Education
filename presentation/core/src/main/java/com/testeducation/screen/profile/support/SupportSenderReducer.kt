@@ -8,9 +8,15 @@ class SupportSenderReducer :
     IReducer<SupportSenderModelState, SupportSenderState> {
     override fun reduce(modelState: SupportSenderModelState): SupportSenderState {
         return SupportSenderState(
-            isBugCategory = modelState.categorySupport == CategorySupport.Bug,
+            categorySelected = modelState.categorySupport.convert(),
             isLoading = modelState.isLoading
         )
+    }
+
+    private fun CategorySupport.convert() = when (this) {
+        CategorySupport.Bug -> SupportSenderState.CategoryUi.Bug
+        CategorySupport.Message -> SupportSenderState.CategoryUi.Message
+        CategorySupport.Wish -> SupportSenderState.CategoryUi.Wish
     }
 
 }

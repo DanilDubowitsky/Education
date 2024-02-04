@@ -17,6 +17,8 @@ sealed interface StringResource {
         object CommonNext : Common
 
         object CommonSave : Common
+
+        object Close: Common
     }
 
     sealed interface Error : StringResource {
@@ -42,6 +44,11 @@ sealed interface StringResource {
         data class TimeQuestionOnlyMinutes(val minutes: String) : Question
         data class TimeQuestionLess(val seconds: String) : Question
         data class MaxLengthAnswer(val count: Int) : Question
+    }
+
+    sealed interface BugReport: StringResource {
+        object TitleInfoSuccess: BugReport
+        object DescriptionInfoSuccess: BugReport
     }
 
     sealed interface StringSettings : StringResource {

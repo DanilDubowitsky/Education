@@ -14,6 +14,7 @@ import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.ui.R
 import com.testeducation.ui.helper.extractor.extractResourceId
+import com.testeducation.ui.helper.extractor.getText
 
 class ResourceHelper(
     private val context: Context
@@ -28,6 +29,7 @@ class ResourceHelper(
         is StringResource.Validate -> extractValidateStringResource(resource)
         is CodeStringResource -> string(resource.extractResourceId())
         is SortStringResource -> string(resource.extractResourceId())
+        is StringResource.BugReport -> string(resource.getText())
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {
@@ -80,6 +82,8 @@ class ResourceHelper(
         StringResource.Common.CommonCancel -> string(R.string.common_cancel)
         StringResource.Common.CommonNext -> string(R.string.common_next)
         StringResource.Common.CommonSave -> string(R.string.common_save)
+        StringResource.Common.CommonSave -> string(R.string.common_save)
+        StringResource.Common.Close -> string(R.string.common_close)
     }
 
     private fun extractErrorStringResource(resource: StringResource.Error): String =

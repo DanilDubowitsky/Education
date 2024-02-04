@@ -5,6 +5,7 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.user.SendSupport
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.logic.screen.profile.support.SupportSenderState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.screen.profile.support.SupportSenderModelState
@@ -32,10 +33,15 @@ interface SupportSenderModule {
             router: NavigationRouter,
             reducer: IReducer<SupportSenderModelState, SupportSenderState>,
             errorHandler: IExceptionHandler,
-            sendSupport: SendSupport
+            sendSupport: SendSupport,
+            resource: IResourceHelper
         ): SupportSenderViewModel {
             return SupportSenderViewModel(
-                router, reducer, errorHandler, sendSupport
+                router = router,
+                reducer = reducer,
+                errorHandler = errorHandler,
+                sendSupport = sendSupport,
+                resources = resource
             )
         }
     }
