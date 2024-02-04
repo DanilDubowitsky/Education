@@ -9,8 +9,10 @@ import com.testeducation.logic.screen.tests.creation.question.creation.input.Ans
 import com.testeducation.screen.tests.creation.question.creation.input.AnswerInputViewModel
 import com.testeducation.ui.base.dialog.bottom.ViewModelHostBottomSheetDialog
 import com.testeducation.ui.databinding.DialogAnswerInputBinding
+import com.testeducation.ui.utils.hideKeyboard
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
+import com.testeducation.ui.utils.showKeyboard
 
 class AnswerInputDialog:
     ViewModelHostBottomSheetDialog<DialogAnswerInputBinding, AnswerInputViewModel>(
@@ -29,7 +31,13 @@ class AnswerInputDialog:
             btnSave.setOnClickListener {
                 viewModel.save()
             }
+            view.showKeyboard()
         }
+    }
+
+    override fun onDestroyView() {
+        view?.hideKeyboard()
+        super.onDestroyView()
     }
 
     private fun render(answerInputState: AnswerInputState) = binding {
