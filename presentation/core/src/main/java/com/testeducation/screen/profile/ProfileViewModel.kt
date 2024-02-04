@@ -35,7 +35,7 @@ class ProfileViewModel(
     }
 
     fun navigateToPolicies() {
-        router.navigateTo(NavigationScreen.Common.WebView("https://www.calltouch.ru/blog/primery-politiki-konfidentsialnosti-dlya-internet-magazina/"))
+        router.navigateTo(NavigationScreen.Common.WebView("https://testoria.azurewebsites.net/home/privacy"))
     }
 
     private fun initDataProfile() = intent {

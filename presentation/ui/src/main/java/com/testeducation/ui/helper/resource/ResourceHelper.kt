@@ -14,6 +14,7 @@ import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.ui.R
 import com.testeducation.ui.helper.extractor.extractResourceId
+import com.testeducation.ui.helper.extractor.getText
 
 class ResourceHelper(
     private val context: Context
@@ -28,6 +29,7 @@ class ResourceHelper(
         is StringResource.Validate -> extractValidateStringResource(resource)
         is CodeStringResource -> string(resource.extractResourceId())
         is SortStringResource -> string(resource.extractResourceId())
+        is StringResource.BugReport -> string(resource.getText())
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {
@@ -80,6 +82,8 @@ class ResourceHelper(
         StringResource.Common.CommonCancel -> string(R.string.common_cancel)
         StringResource.Common.CommonNext -> string(R.string.common_next)
         StringResource.Common.CommonSave -> string(R.string.common_save)
+        StringResource.Common.CommonSave -> string(R.string.common_save)
+        StringResource.Common.Close -> string(R.string.common_close)
     }
 
     private fun extractErrorStringResource(resource: StringResource.Error): String =
@@ -151,6 +155,7 @@ class ResourceHelper(
             is StringResource.StringSettings.AntiCheatTitle -> string(R.string.test_settings_anti_cheat_title)
             is StringResource.StringSettings.AntiCheatDescription -> string(R.string.test_settings_anti_cheat_description)
             is StringResource.StringSettings.MinCorrectAnswerTitle -> string(R.string.test_settings_min_correct_answer_title)
+            is StringResource.StringSettings.MinCorrectAnswerHint -> string(R.string.test_settings_min_correct_answer_hint)
             is StringResource.StringSettings.PreShowQuestionTitle -> string(R.string.test_settings_show_question_title)
             is StringResource.StringSettings.QuestionOrderTitle -> string(R.string.test_settings_order_title)
             is StringResource.StringSettings.TestAvailabilityTitle -> string(R.string.test_settings_availability_title)

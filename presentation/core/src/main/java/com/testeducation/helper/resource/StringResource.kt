@@ -17,6 +17,8 @@ sealed interface StringResource {
         object CommonNext : Common
 
         object CommonSave : Common
+
+        object Close: Common
     }
 
     sealed interface Error : StringResource {
@@ -44,6 +46,11 @@ sealed interface StringResource {
         data class MaxLengthAnswer(val count: Int) : Question
     }
 
+    sealed interface BugReport: StringResource {
+        object TitleInfoSuccess: BugReport
+        object DescriptionInfoSuccess: BugReport
+    }
+
     sealed interface StringSettings : StringResource {
         object TestTitle : StringSettings
         object DesignTitle : StringSettings
@@ -51,6 +58,7 @@ sealed interface StringResource {
         object TestAvailabilityTitle : StringSettings
         object QuestionOrderTitle : StringSettings
         object MinCorrectAnswerTitle : StringSettings
+        object MinCorrectAnswerHint : StringSettings
         object PreShowQuestionTitle : StringSettings
         object AntiCheatTitle : StringSettings
         object AntiCheatDescription : StringSettings

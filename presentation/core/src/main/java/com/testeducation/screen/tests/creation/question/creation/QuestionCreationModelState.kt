@@ -9,5 +9,6 @@ data class QuestionCreationModelState(
     val questionText: String = "",
     val selectedDropElement: InputAnswer? = null,
     val visibleAddFooter: Boolean = true,
-    val time: Long = 0
+    val time: Long = 0,
+    val loadingScreen: Boolean = false,
 )

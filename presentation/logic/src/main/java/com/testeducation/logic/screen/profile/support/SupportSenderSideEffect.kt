@@ -1,3 +1,5 @@
 package com.testeducation.logic.screen.profile.support
 
-sealed interface SupportSenderSideEffect
+sealed interface SupportSenderSideEffect {
+    object ClearFocus: SupportSenderSideEffect
+}

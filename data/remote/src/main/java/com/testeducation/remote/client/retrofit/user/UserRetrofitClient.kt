@@ -20,7 +20,7 @@ interface UserRetrofitClient {
     @POST("/api/app/account/avatar")
     suspend fun setAvatar(@Body avatar: SetAvatarRequest): RemoteResponse<Unit>
 
-    @POST("/api/app/main/bug-report")
+    @POST("/api/app/main/feedback")
     suspend fun sendBugReport(@Body request: BugReportRequest): RemoteResponse<Unit>
 
 }

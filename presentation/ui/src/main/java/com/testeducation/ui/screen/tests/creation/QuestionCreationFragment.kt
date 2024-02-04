@@ -2,6 +2,7 @@ package com.testeducation.ui.screen.tests.creation
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
@@ -114,6 +115,11 @@ class QuestionCreationFragment :
     private fun render(questionCreationState: QuestionCreationState) = binding {
         questionAdapter.items = questionCreationState.answerItemUiList
 
+        containerQuestionType.isVisible = !questionCreationState.loadingScreen
+        containerTimer.isVisible = !questionCreationState.loadingScreen
+        containerContentAnswer.isVisible = !questionCreationState.loadingScreen
+        loadingShimmer.isVisible = questionCreationState.loadingScreen
+
         tvTime.text = questionCreationState.time
         if (etQuestion.text.toString().isEmpty()) {
             etQuestion.setText(questionCreationState.questionText)
@@ -153,6 +159,10 @@ class QuestionCreationFragment :
             is QuestionCreationSideEffect.LoaderInvisible -> {
                 dialogLoader?.dismiss()
                 dialogLoader = null
+            }
+
+            is QuestionCreationSideEffect.ClearFocus -> {
+                binding.etQuestion.clearFocus()
             }
         }
     }

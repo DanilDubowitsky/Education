@@ -63,6 +63,10 @@ class TestEditorViewModel(
         }
     }
 
+    fun onExit() {
+        router.navigateTo(NavigationScreen.Main.Home, false)
+    }
+
     fun deleteQuestion(questionId: String) = intent {
         val modelState = getModelState()
         modelState.test?.id?.let { idNotNull ->

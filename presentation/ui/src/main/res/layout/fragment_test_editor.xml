@@ -143,31 +143,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:background="@drawable/background_toolbar"
-                android:backgroundTint="@color/colorGrayBlueDisabled" />
+                android:backgroundTint="@color/colorGrayBlueDisabled">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_white_rounded_large"
-                android:backgroundTint="@color/colorGrayBlueDisabled" />
+                <FrameLayout
+                    android:id="@+id/frameLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/background_white_rounded_large"
+                    android:backgroundTint="@color/colorGrayBlueTextDisabled"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_white_rounded_large"
-                android:backgroundTint="@color/colorGrayBlueDisabled" />
+                <FrameLayout
+                    android:layout_width="74dp"
+                    android:layout_height="34dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:background="@drawable/background_white_rounded_large"
+                    android:backgroundTint="@color/colorGrayBlueTextDisabled"
+                    app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/shimmer_item_test_editor" android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_white_rounded_large"
-                android:backgroundTint="@color/colorGrayBlueDisabled" />
+                android:layout_height="wrap_content" />
+
+            <include layout="@layout/shimmer_item_test_editor" android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include layout="@layout/shimmer_item_test_editor" android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

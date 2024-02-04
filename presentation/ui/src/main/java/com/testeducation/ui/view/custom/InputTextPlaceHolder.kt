@@ -103,6 +103,12 @@ class InputTextPlaceHolder @JvmOverloads constructor(
         setInputState(InputState.Error(errorMsg))
     }
 
+    fun setHint(hint: String) {
+        this.hint = hint
+        editText.hint = hint
+        binding.tvLabel.text = hint
+    }
+
     private fun onEditTextChanged() {
         editText.addTextChangedListener {
             if (editText.isEnabled) {

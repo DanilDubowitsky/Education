@@ -8,5 +8,6 @@ data class QuestionCreationState(
     val questionTypeUiItem: QuestionTypeUiItem,
     val visibleIndicator: Boolean,
     val time: String,
-    val questionText: String
+    val questionText: String,
+    val loadingScreen: Boolean
 )

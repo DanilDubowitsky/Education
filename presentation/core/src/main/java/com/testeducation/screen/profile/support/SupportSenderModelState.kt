@@ -4,6 +4,6 @@ import com.testeducation.domain.model.profile.CategorySupport
 
 data class SupportSenderModelState(
     val text: String = "",
-    val categorySupport: CategorySupport = CategorySupport.Bug,
+    val categorySupport: CategorySupport = CategorySupport.Message,
     val isLoading: Boolean = false
 )

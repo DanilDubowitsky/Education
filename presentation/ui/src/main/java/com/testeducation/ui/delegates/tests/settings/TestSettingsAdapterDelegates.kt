@@ -23,12 +23,13 @@ fun testSettingsInputTest(update: (Int, String) -> Unit) =
             ViewHolderSettingsInputTextBinding>(
         ViewHolderSettingsInputTextBinding::inflate
     ) {
-        binding {
+        binding.invoke {
             edText.doOnTextChanged { text, start, before, count ->
                 update(item.id, text.toString())
             }
             bind {
                 tvTitle.text = item.title
+                edTextPlaceHolder.setHint(item.hint)
                 if (edText.text.isEmpty()) {
                     edText.setText(item.valueInput)
                 }

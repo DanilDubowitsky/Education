@@ -71,6 +71,11 @@ class QuestionCreationViewModel(
 
     private fun getQuestionDetails() {
         intent {
+            updateModelState {
+                copy(
+                    loadingScreen = true
+                )
+            }
             getQuestionDetails.invoke(testId, questionId).also { result ->
                 val answers = when (result) {
                     is Question.Choice -> result.answers
@@ -86,7 +91,8 @@ class QuestionCreationViewModel(
                             ::getTrueColor
                         ).plus(InputAnswer.FooterPlusAdd()),
                         questionText = result.title,
-                        time = result.time
+                        time = result.time,
+                        loadingScreen = false
                     )
                 }
             }
@@ -290,6 +296,7 @@ class QuestionCreationViewModel(
 
                     else -> Pair("", 0)
                 }
+                postSideEffect(QuestionCreationSideEffect.ClearFocus)
                 router.navigateTo(
                     NavigationScreen.Questions.AnswerInput(
                         textAndColorPair.first,

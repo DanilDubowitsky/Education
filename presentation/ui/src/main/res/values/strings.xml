@@ -118,12 +118,14 @@
     <string name="test_settings_title">Настройки теста</string>
     <string name="test_settings_test_design">Обложка</string>
     <string name="test_style_color">Выберите цвет</string>
+    <string name="test_settings_input_text">Название теста</string>
 
     <string name="test_settings_test_title">Название теста</string>
     <string name="test_settings_theme_title">Тема</string>
     <string name="test_settings_availability_title">Доступ к тесту</string>
     <string name="test_settings_order_title">Порядок вопросов</string>
     <string name="test_settings_min_correct_answer_title">Минимум правильных ответов для успешного прохождения теста</string>
+    <string name="test_settings_min_correct_answer_hint">Количество ответов</string>
     <string name="test_settings_show_question_title">Предварительный просмотр вопросов</string>
     <string name="test_settings_anti_cheat_title">Антисписывание</string>
     <string name="test_settings_anti_cheat_description">Включенный режим “Антисписывание” позволяет фиксировать факт выхода приложения в фоновый режим. В таком режиме прохождение теста будет автоматически завершено.</string>
@@ -176,7 +178,7 @@
     <string name="profile_achive_title">Достижения</string>
     <string name="profile_create_test_title">Создано тестов</string>
     <string name="profile_police_title">Конфиденциальность</string>
-    <string name="profile_problem_title">Сообщить о проблеме</string>
+    <string name="profile_problem_title">Обратная связь</string>
     <string name="profile_about_app_title">О приложении</string>
     <string name="profile_test_passed_title">Пройдено тестов</string>
     <string name="profile_edit_change_avatar"><u>Изменить аватар</u></string>
@@ -189,10 +191,13 @@
 
     <!--Support-->
     <string name="support_chip_bug">Баг</string>
+    <string name="support_chip_message">Сообщение</string>
     <string name="support_chip_wish">Пожелания</string>
     <string name="support_title_category">Выберите категорию проблемы</string>
-    <string name="support_title_toolbar">Сообщить о проблеме</string>
+    <string name="support_title_toolbar">Обратная связь</string>
     <string name="test_pass_custom_answer_hint">Введите развернутый ответ</string>
+    <string name="support_success_title">Сообщение отправлено!</string>
+    <string name="support_success_description">Наши сотрудники ознакомятся с Вашим обращением  в ближайшее время и свяжуться с Вами.</string>
 
     <string name="code_share_description">Используйте этот код, чтобы поделиться тестом с другими</string>
     <string name="code_share_copy">Скопировать код</string>
