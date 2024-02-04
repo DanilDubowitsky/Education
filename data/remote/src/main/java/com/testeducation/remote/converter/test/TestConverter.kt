@@ -55,6 +55,7 @@ fun TestOrderField.toRemote() = when (this) {
     TestOrderField.TITLE -> TITLE
     TestOrderField.CREATION -> CREATION
     TestOrderField.QUESTIONS -> QUESTIONS
+    TestOrderField.PUBLISHED -> PUBLISHED
 }
 
 fun RemotePage<RemoteTestShort>.toModel() = Page(

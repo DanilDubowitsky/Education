@@ -4,7 +4,6 @@ import com.testeducation.logic.model.auth.ConfirmationType
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.model.test.TestFiltersUI
-import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.model.test.TestLibraryGetTypeUI
 import com.testeducation.logic.model.test.TestShortUI
 import com.testeducation.navigation.core.ResultKey
@@ -174,6 +173,19 @@ sealed interface NavigationScreen : Serializable {
         data class FullAnswer(
             val text: String
         ) : Tests
+
+        data class TestSort(
+            val orderField: String,
+            val direction: String
+        ) : Tests {
+
+            object OnSortChanged : ResultKey<SortValues>
+
+            data class SortValues(
+                val orderField: String,
+                val direction: String
+            )
+        }
     }
 
     sealed interface Questions : NavigationScreen {

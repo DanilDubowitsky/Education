@@ -10,6 +10,7 @@ import com.testeducation.education.di.modules.screen.tests.pass.TestPassResultMo
 import com.testeducation.education.di.modules.screen.tests.question.QuestionModule
 import com.testeducation.education.di.modules.screen.tests.question.input.AnswerInputModule
 import com.testeducation.education.di.modules.screen.tests.question.time.TimeQuestionModule
+import com.testeducation.education.di.modules.screen.tests.sort.TestSortModule
 import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
@@ -23,6 +24,7 @@ import com.testeducation.ui.screen.tests.creation.time.TimeQuestionDialog
 import com.testeducation.ui.screen.tests.pass.answer.FullAnswerTextDialog
 import com.testeducation.ui.screen.tests.pass.result.TestFailedPassDialog
 import com.testeducation.ui.screen.tests.pass.result.TestPassResultDialog
+import com.testeducation.ui.screen.tests.sort.TestSortDialog
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -67,4 +69,7 @@ interface DialogsModule {
 
     @ContributesAndroidInjector(modules = [FullAnswerTextModule::class])
     fun testFullAnswerDialog(): FullAnswerTextDialog
+
+    @ContributesAndroidInjector(modules = [TestSortModule::class])
+    fun testSortDialog(): TestSortDialog
 }
