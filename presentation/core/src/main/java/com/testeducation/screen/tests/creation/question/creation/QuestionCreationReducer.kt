@@ -15,7 +15,8 @@ class QuestionCreationReducer(private val timeConverterLongToString: ITimeConver
             questionTypeUiItem = modelState.questionTypeItem.questionType.toUiModel(),
             visibleIndicator = modelState.questionTypeItem.questionType == QuestionType.REORDER,
             time = timeConverterLongToString.convert(modelState.time),
-            questionText = modelState.questionText
+            questionText = modelState.questionText,
+            loadingScreen = modelState.loadingScreen
         )
     }
 }
