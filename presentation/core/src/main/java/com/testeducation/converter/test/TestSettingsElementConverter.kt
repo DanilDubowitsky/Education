@@ -10,7 +10,8 @@ fun List<TestSettingsElement>.toUi() = map {
             TestSettingsElementUi.TestInput(
                 id = it.id,
                 title = it.title,
-                valueInput = it.valueInput
+                valueInput = it.valueInput,
+                hint = it.hint
             )
         }
 

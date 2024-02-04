@@ -1,6 +1,5 @@
 package com.testeducation.ui.delegates.tests.settings
 
-import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestSettingsElementUi
@@ -13,7 +12,6 @@ import com.testeducation.ui.databinding.ViewHolderSettingsInputTextBinding
 import com.testeducation.ui.databinding.ViewHolderSettingsSelectableBinding
 import com.testeducation.ui.databinding.ViewHolderSettingsTestDesignBinding
 import com.testeducation.ui.delegates.tests.createThemeShortSettingsAdapterDelegate
-import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 import com.testeducation.ui.utils.simpleDiffUtil
 
@@ -29,6 +27,7 @@ fun testSettingsInputTest(update: (Int, String) -> Unit) =
             }
             bind {
                 tvTitle.text = item.title
+                edTextPlaceHolder.setHint(item.hint)
                 if (edText.text.isEmpty()) {
                     edText.setText(item.valueInput)
                 }

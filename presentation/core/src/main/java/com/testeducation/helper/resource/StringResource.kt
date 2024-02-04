@@ -51,6 +51,7 @@ sealed interface StringResource {
         object TestAvailabilityTitle : StringSettings
         object QuestionOrderTitle : StringSettings
         object MinCorrectAnswerTitle : StringSettings
+        object MinCorrectAnswerHint : StringSettings
         object PreShowQuestionTitle : StringSettings
         object AntiCheatTitle : StringSettings
         object AntiCheatDescription : StringSettings

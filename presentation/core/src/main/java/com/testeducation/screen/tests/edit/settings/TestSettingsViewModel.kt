@@ -318,7 +318,8 @@ class TestSettingsViewModel(
         val textInputSettings = TestSettingsElement.TestInput(
             id = TITLE_TEST_NAME_POSITION,
             title = StringResource.StringSettings.TestTitle.getString(resourceHelper),
-            valueInput = titleTest
+            valueInput = titleTest,
+            hint = StringResource.StringSettings.TestTitle.getString(resourceHelper)
         )
         val designTest = TestSettingsElement.Design(
             id = DESIGN_ID,
@@ -364,7 +365,8 @@ class TestSettingsViewModel(
         val textInputMinAnswer = TestSettingsElement.TestInput(
             id = TITLE_MIN_CURRENT_ANSWER_ID,
             title = StringResource.StringSettings.MinCorrectAnswerTitle.getString(resourceHelper),
-            valueInput = testSettingsItem.minCorrectAnswer.toString()
+            valueInput = testSettingsItem.minCorrectAnswer.toString(),
+            StringResource.StringSettings.MinCorrectAnswerHint.getString(resourceHelper)
         )
         val selectableShow = TestSettingsElement.Selectable(
             id = PREVIEW_SELECTABLE_ID,

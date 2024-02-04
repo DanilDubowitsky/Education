@@ -6,7 +6,8 @@ sealed class TestSettingsElementUi {
     data class TestInput(
         override val id: Int,
         val title: String,
-        val valueInput: String
+        val valueInput: String,
+        val hint: String,
     ) : TestSettingsElementUi()
 
     data class Design(

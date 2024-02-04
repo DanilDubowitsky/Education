@@ -151,6 +151,7 @@ class ResourceHelper(
             is StringResource.StringSettings.AntiCheatTitle -> string(R.string.test_settings_anti_cheat_title)
             is StringResource.StringSettings.AntiCheatDescription -> string(R.string.test_settings_anti_cheat_description)
             is StringResource.StringSettings.MinCorrectAnswerTitle -> string(R.string.test_settings_min_correct_answer_title)
+            is StringResource.StringSettings.MinCorrectAnswerHint -> string(R.string.test_settings_min_correct_answer_hint)
             is StringResource.StringSettings.PreShowQuestionTitle -> string(R.string.test_settings_show_question_title)
             is StringResource.StringSettings.QuestionOrderTitle -> string(R.string.test_settings_order_title)
             is StringResource.StringSettings.TestAvailabilityTitle -> string(R.string.test_settings_availability_title)
