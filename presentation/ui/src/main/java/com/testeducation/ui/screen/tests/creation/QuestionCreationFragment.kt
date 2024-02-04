@@ -160,6 +160,10 @@ class QuestionCreationFragment :
                 dialogLoader?.dismiss()
                 dialogLoader = null
             }
+
+            is QuestionCreationSideEffect.ClearFocus -> {
+                binding.etQuestion.clearFocus()
+            }
         }
     }
 }

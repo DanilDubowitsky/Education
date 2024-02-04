@@ -296,6 +296,7 @@ class QuestionCreationViewModel(
 
                     else -> Pair("", 0)
                 }
+                postSideEffect(QuestionCreationSideEffect.ClearFocus)
                 router.navigateTo(
                     NavigationScreen.Questions.AnswerInput(
                         textAndColorPair.first,
