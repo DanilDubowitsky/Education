@@ -1,6 +1,7 @@
 package com.testeducation.ui.activity
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import com.testeducation.activity.main.MainActivityViewModel
 import com.testeducation.navigation.core.AnimationSet
 import com.testeducation.navigation.core.IScreenAdapter
@@ -47,6 +48,7 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
         setTheme(R.style.Theme_Education)
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) viewModel.prepare()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     private fun setNavigator() {
