@@ -7,4 +7,5 @@ interface NavigationRouter : IResultWire {
     fun exit(key: String? = null)
     fun replace(screen: NavigationScreen, key: String? = null)
     fun newRootChain(screen: NavigationScreen, key: String? = null)
+    fun homeNavigateTo(screen: NavigationScreen, key: String? = null)
 }

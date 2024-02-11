@@ -2,6 +2,7 @@ package com.testeducation.screen.tests.preview
 
 import com.testeducation.converter.test.toUIModels
 import com.testeducation.core.IReducer
+import com.testeducation.domain.model.test.Test
 import com.testeducation.helper.avatar.IAvatarHelper
 import com.testeducation.logic.screen.tests.preview.TestPreviewState
 import com.testeducation.utils.DAY_MONTH_YEAR_FULL
@@ -17,6 +18,7 @@ class TestPreviewReducer(
 
         val timeLimit = test?.settings?.timeLimit ?: 0
         val avatarRes = avatarHelper.getAvatarDrawable(test?.creator?.avatarId)
+        val questionsCount = modelState.test?.questionsCount ?: 0
 
         TestPreviewState(
             isLoading = loadingState == TestPreviewModelState.LoadingState.LOADING,
@@ -33,7 +35,9 @@ class TestPreviewReducer(
             timeLimit = getElapsedTime(timeLimit),
             authorTests = authorTests.toUIModels(),
             hideTestTimeLimit = timeLimit == 0,
-            avatarResource = avatarRes
+            avatarResource = avatarRes,
+            isPassVisible = questionsCount > 0,
+            isShareAvailable = test?.status == Test.Status.PUBLISHED
         )
     }
 

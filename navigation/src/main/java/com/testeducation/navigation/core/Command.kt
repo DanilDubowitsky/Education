@@ -10,4 +10,5 @@ sealed interface Command {
     data class Replace(val screen: NavigationScreen) : Command
     object Back : Command
     data class NewRootChain(val screen: NavigationScreen) : Command
+    data class HomeForward(val screen: NavigationScreen) : Command
 }

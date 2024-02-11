@@ -3,6 +3,7 @@ package com.testeducation.screen.tests.preview
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.cases.test.GetTestByCode
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.model.test.TestGetType
@@ -20,10 +21,12 @@ class TestPreviewViewModel(
     exceptionHandler: IExceptionHandler,
     private val testHelper: ITestHelper,
     private val router: NavigationRouter,
-    private val testId: String,
+    private val testId: String?,
+    private val testCode: String?,
     private val getTest: GetTest,
     private val likeTest: ToggleTestLike,
-    private val getTests: GetTests
+    private val getTests: GetTests,
+    private val getTestByCode: GetTestByCode
 ) : BaseViewModel<TestPreviewModelState,
         TestPreviewState, TestPreviewSideEffect>(reducer, exceptionHandler) {
 
@@ -76,17 +79,23 @@ class TestPreviewViewModel(
     }
 
     fun openTestPassingScreen() = intent {
-        val screen = NavigationScreen.Tests.Passing(testId)
+        val modelState = getModelState()
+        val screen = NavigationScreen.Tests.Passing(modelState.test?.id.orEmpty())
         router.navigateTo(screen)
     }
 
     fun openCodeScreen() = intent {
-        val screen = NavigationScreen.Tests.ShareCode(testId)
+        val modelState = getModelState()
+        val screen = NavigationScreen.Tests.ShareCode(modelState.test?.id.orEmpty())
         router.navigateTo(screen)
     }
 
     private fun loadData() = intent {
-        val test = getTest(testId)
+        val test = if (testCode != null) {
+            getTestByCode(testCode)
+        } else {
+            getTest(testId!!)
+        }
         val testsPage = getTests(
             limit = TESTS_PAGE_SIZE,
             offset = 0,

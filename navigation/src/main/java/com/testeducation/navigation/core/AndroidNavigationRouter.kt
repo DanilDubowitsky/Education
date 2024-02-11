@@ -33,4 +33,8 @@ class AndroidNavigationRouter(
     override fun <T> sendResult(key: ResultKey<T>, data: T, needRemoveListener: Boolean) {
         resultWire.sendResult(key, data, needRemoveListener)
     }
+
+    override fun homeNavigateTo(screen: NavigationScreen, key: String?) {
+        navigationHost.executeCommand(Command.HomeForward(screen), key)
+    }
 }

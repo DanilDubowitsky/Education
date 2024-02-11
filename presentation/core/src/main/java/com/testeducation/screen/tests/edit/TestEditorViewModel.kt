@@ -64,7 +64,7 @@ class TestEditorViewModel(
     }
 
     fun onExit() {
-        router.navigateTo(NavigationScreen.Main.Home, false)
+        router.newRootChain(NavigationScreen.Main.Home)
     }
 
     fun deleteQuestion(questionId: String) = intent {

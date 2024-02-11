@@ -67,10 +67,10 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         contentAppBar.isGone = state.isLoading
         rootScroll.isGone = state.isLoading
         txtUserDisplayName.text = state.creatorName
-        btnShare.isGone = state.isLoading
+        btnShare.isGone = state.isLoading || !state.isShareAvailable
         btnFavorite.isGone = state.isLoading
         authorTestsAdapter.items = state.authorTests
-        btnPassTest.isGone = state.isLoading
+        btnPassTest.isGone = state.isLoading || !state.isPassVisible
         renderTestDetails(state)
     }
 
