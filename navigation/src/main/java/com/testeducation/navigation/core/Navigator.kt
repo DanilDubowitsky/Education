@@ -26,6 +26,21 @@ class Navigator(
             is Command.Forward -> executeForwardCommand(command)
             is Command.Replace -> executeReplaceCommand(command)
             is Command.NewRootChain -> executeRootChainCommand(command)
+            is Command.HomeForward -> executeHomeForward(command, )
+        }
+    }
+
+    private fun executeHomeForward(command: Command.HomeForward) {
+        when (val screen: Screen = screenAdapter.createPlatformScreen(command.screen)) {
+            is Screen.ActivityScreen -> {
+                // TODO: add activity support
+            }
+
+            is Screen.DialogScreen -> moveDialog(screen)
+            is Screen.FragmentScreen -> {
+                copyStackToLocal()
+                moveFragment(screen, addToBackStack = true, getPrevScreen = true)
+            }
         }
     }
 
@@ -38,7 +53,7 @@ class Navigator(
             is Screen.DialogScreen -> moveDialog(screen)
             is Screen.FragmentScreen -> {
                 copyStackToLocal()
-                moveFragment(screen, command.addToBackStack)
+                moveFragment(screen, command.addToBackStack,)
             }
         }
     }
@@ -99,6 +114,7 @@ class Navigator(
             is Screen.ActivityScreen -> {
                 // TODO: add activity support
             }
+
             is Screen.DialogScreen -> moveDialog(screen)
             is Screen.FragmentScreen -> {
                 copyStackToLocal()
@@ -107,9 +123,13 @@ class Navigator(
         }
     }
 
-    private fun moveFragment(screen: Screen.FragmentScreen, addToBackStack: Boolean) {
+    private fun moveFragment(
+        screen: Screen.FragmentScreen,
+        addToBackStack: Boolean,
+        getPrevScreen: Boolean = false
+    ) {
         val existingFragment = fragmentManager.findFragmentByTag(screen.screenKey)
-        if (existingFragment != null) {
+        if (existingFragment != null && getPrevScreen) {
             fragmentManager.commit {
                 replace(containerId, existingFragment)
             }

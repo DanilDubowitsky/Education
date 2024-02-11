@@ -1,6 +1,5 @@
 package com.testeducation.screen.tests.pass
 
-import com.testeducation.converter.test.question.toPreviewUI
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.GetQuestions
@@ -11,6 +10,7 @@ import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.TestPassResult
 import com.testeducation.domain.model.question.input.InputUserAnswerData
+import com.testeducation.domain.model.test.Test
 import com.testeducation.domain.utils.SECOND_IN_MILLIS
 import com.testeducation.helper.answer.toPassingQuestions
 import com.testeducation.helper.error.IExceptionHandler
@@ -151,7 +151,9 @@ class TestPassingViewModel(
         router.setResultListener(NavigationScreen.Tests.Result.OpenMainPage) {
             router.exit()
         }
-        passTest(testId, answers, spentTime, isCheating, result)
+        if (test.status != Test.Status.DRAFT) {
+            passTest(testId, answers, spentTime, isCheating, result)
+        }
     }
 
     fun increaseResumeCount(testRemainingTime: Long) = intent {

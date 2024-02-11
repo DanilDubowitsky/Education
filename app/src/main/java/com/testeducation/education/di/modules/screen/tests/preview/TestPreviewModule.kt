@@ -3,6 +3,7 @@ package com.testeducation.education.di.modules.screen.tests.preview
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTest
+import com.testeducation.domain.cases.test.GetTestByCode
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.education.di.viewmodel.ViewModelKey
@@ -54,7 +55,8 @@ interface TestPreviewModule {
             getTest: GetTest,
             likeTest: ToggleTestLike,
             getTests: GetTests,
-            testHelper: ITestHelper
+            testHelper: ITestHelper,
+            getTestByCode: GetTestByCode
         ): TestPreviewViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Preview>()
             return TestPreviewViewModel(
@@ -63,9 +65,11 @@ interface TestPreviewModule {
                 testHelper,
                 router,
                 screen.id,
+                screen.code,
                 getTest,
                 likeTest,
-                getTests
+                getTests,
+                getTestByCode
             )
         }
     }

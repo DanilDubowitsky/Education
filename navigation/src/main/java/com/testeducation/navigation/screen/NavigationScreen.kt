@@ -122,7 +122,8 @@ sealed interface NavigationScreen : Serializable {
         }
 
         data class Preview(
-            val id: String
+            val id: String?,
+            val code: String? = null
         ) : Tests
 
         data class Passing(

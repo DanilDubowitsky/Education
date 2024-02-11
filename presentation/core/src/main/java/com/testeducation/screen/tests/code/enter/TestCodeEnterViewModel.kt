@@ -43,9 +43,8 @@ class TestCodeEnterViewModel(
         updateModelState {
             copy(isLoading = true)
         }
-        val test = getTestByCode(modelState.testCode)
         router.exit()
-        val screen = NavigationScreen.Tests.Preview(test.id)
+        val screen = NavigationScreen.Tests.Preview(null, modelState.testCode)
         router.navigateTo(screen)
         updateModelState {
             copy(isLoading = false)
