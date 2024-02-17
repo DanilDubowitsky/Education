@@ -85,11 +85,14 @@ class CircleLoader@JvmOverloads constructor(
 
     fun setVisibility(isVisible: Boolean) {
         visibility = if (isVisible) {
-            startAnimation(rotateAnimation)
             VISIBLE
         } else {
-            rotateAnimation.cancel()
             GONE
+        }
+        if (isVisible) {
+            startAnimation(rotateAnimation)
+        } else {
+            rotateAnimation.cancel()
         }
     }
 }

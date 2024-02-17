@@ -63,6 +63,7 @@ class ProfileEditViewModel(
         updateModelState {
             copy(
                 user = currentUser,
+                isLoading = false
             )
         }
     }

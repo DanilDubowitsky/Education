@@ -2,6 +2,7 @@ package com.testeducation.ui.screen.profile
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import com.testeducation.logic.screen.profile.edit.ProfileEditState
 import com.testeducation.screen.profile.edit.ProfileEditViewModel
 import com.testeducation.ui.R
@@ -37,5 +38,14 @@ class ProfileEditFragment : ViewModelHostFragment<ProfileEditViewModel, Fragment
         editTextEmail.setText(state.email)
         editTextNickName.setText(state.nickName)
         imgAvatar.setImageResource(state.avatar)
+        setLoading(state.isLoading)
+    }
+
+    private fun setLoading(isLoading: Boolean) = binding {
+        imgAvatar.isVisible = !isLoading
+        tvChangeAvatar.isVisible = !isLoading
+        tvChangeAvatar.isVisible = !isLoading
+        scrollView2.isVisible = !isLoading
+        loadingIndicator.setVisibility(isLoading)
     }
 }
