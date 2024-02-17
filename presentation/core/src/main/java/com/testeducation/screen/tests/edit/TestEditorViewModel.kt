@@ -1,6 +1,7 @@
 package com.testeducation.screen.tests.edit
 
 import com.testeducation.converter.test.answer.toInputAnswers
+import com.testeducation.converter.test.question.toUiModel
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.DeleteQuestion
@@ -79,14 +80,17 @@ class TestEditorViewModel(
         intent {
             val modelState = getModelState()
             modelState.test?.id?.let { idNotNull ->
-                router.navigateTo(
-                    NavigationScreen.Questions.QuestionEditor(
-                        questionTypeUiItem = QuestionTypeUiItem(QuestionTypeUi.DEFAULT),
-                        testId = testId,
-                        orderQuestion = modelState.questionDetails.size,
-                        questionId = questionId
+                val itemQuestion = modelState.questionDetails.find { it.id == questionId }
+                if (itemQuestion is QuestionDetails.QuestionItemDetails) {
+                    router.navigateTo(
+                        NavigationScreen.Questions.QuestionEditor(
+                            questionTypeUiItem = itemQuestion.question.type.toUiModel(),
+                            testId = testId,
+                            orderQuestion = modelState.questionDetails.size,
+                            questionId = questionId
+                        )
                     )
-                )
+                }
             }
         }
     }
