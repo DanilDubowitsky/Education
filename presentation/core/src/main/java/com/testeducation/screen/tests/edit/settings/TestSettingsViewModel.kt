@@ -346,8 +346,8 @@ class TestSettingsViewModel(
             ),
             itemSecond = TestSettingsElement.Choice.Item(
                 title = StringResource.StringSettings.AvailabilityValueLink.getString(resourceHelper),
-                value = TestAvailability.Private.toString(),
-                isSelected = testSettingsItem.availability == TestAvailability.Private
+                value = TestAvailability.ViaLinkAll.toString(),
+                isSelected = testSettingsItem.availability == TestAvailability.ViaLinkAll
             )
         )
         val choiceOrder = TestSettingsElement.Choice(

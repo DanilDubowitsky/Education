@@ -37,12 +37,12 @@ fun TestSettingsItem.toRemote(): RemoteTestSettingsItem {
 
 private fun RemoteTestAvailability.toModels() = when (this) {
     RemoteTestAvailability.Public -> TestAvailability.Public
-    else -> TestAvailability.Private
+    else -> TestAvailability.ViaLinkAll
 }
 
 private fun TestAvailability.toRemote() = when (this) {
     TestAvailability.Public -> RemoteTestAvailability.Public
-    else -> RemoteTestAvailability.Private
+    else -> RemoteTestAvailability.ViaLinkAll
 }
 
 private fun RemoteTestQuestionOrder.toModels() = when (this) {
