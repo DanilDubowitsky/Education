@@ -19,6 +19,7 @@ import com.testeducation.logic.screen.tests.creation.question.creation.QuestionC
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.screen.tests.creation.question.creation.utils.validateAnswerTrueAndFalse
 import com.testeducation.utils.getColor
 import com.testeducation.utils.getString
 import com.testeducation.utils.isEmptyOrBlank
@@ -468,6 +469,12 @@ class QuestionCreationViewModel(
                     router.navigateTo(screen)
                     return@intent
                 }
+
+                state.answerItem.validateAnswerTrueAndFalse(resourceHelper) { error ->
+                    router.navigateTo(error)
+                    return@intent
+                }
+
             }
 
             QuestionType.REORDER -> {
