@@ -5,7 +5,6 @@ import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.helper.answer.IAnswerColorExtractor
 import com.testeducation.logic.model.test.AnswerUI
-import com.testeducation.screen.tests.pass.TestPassingModelState
 
 fun List<Answer>.toUIModels(
     answerColorExtractor: IAnswerColorExtractor,
@@ -67,7 +66,7 @@ fun List<Answer>.toInputAnswers(getColor: ((Int) -> Int)? = null, getTrueColor: 
             is Answer.TextAnswer -> {
                 InputAnswer.TextAnswer(
                     id = itemAnswer.id,
-                    text = itemAnswer.questionId
+                    text = itemAnswer.correctText
                 )
             }
         }

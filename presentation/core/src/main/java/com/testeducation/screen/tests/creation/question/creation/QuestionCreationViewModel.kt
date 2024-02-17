@@ -82,7 +82,7 @@ class QuestionCreationViewModel(
                     is Question.Choice -> result.answers
                     is Question.Match -> result.answers
                     is Question.Order -> result.answers
-                    is Question.Text -> emptyList()
+                    is Question.Text -> result.answers
                 }
 
                 updateModelState {
