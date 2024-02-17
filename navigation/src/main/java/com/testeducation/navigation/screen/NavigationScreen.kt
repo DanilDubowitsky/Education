@@ -116,7 +116,8 @@ sealed interface NavigationScreen : Serializable {
             val colorTest: String,
             val imageTest: String,
             val idTheme: String,
-            val themeName: String
+            val themeName: String,
+            val countQuestion: Int,
         ) : Tests {
             object OnTestSettingsResult : ResultKey<Unit>
         }

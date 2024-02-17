@@ -31,11 +31,11 @@ class QuestionRemoteClient(
         questionRetrofitClient.createQuestion(
             id = testId,
             request = request
-        )
+        ).getResult()
     }
 
     override suspend fun deleteQuestion(testId: String, questionId: String) {
-        questionRetrofitClient.deleteQuestion(testId = testId, questionId = questionId)
+        questionRetrofitClient.deleteQuestion(testId = testId, questionId = questionId).getResult()
     }
 
     override suspend fun getQuestion(testId: String, questionId: String): Question {
@@ -62,6 +62,6 @@ class QuestionRemoteClient(
             id = testId,
             questionId = questionId,
             request = request
-        )
+        ).getResult()
     }
 }

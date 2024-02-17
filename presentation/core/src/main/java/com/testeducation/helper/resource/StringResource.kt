@@ -18,7 +18,7 @@ sealed interface StringResource {
 
         object CommonSave : Common
 
-        object Close: Common
+        object Close : Common
     }
 
     sealed interface Error : StringResource {
@@ -46,9 +46,9 @@ sealed interface StringResource {
         data class MaxLengthAnswer(val count: Int) : Question
     }
 
-    sealed interface BugReport: StringResource {
-        object TitleInfoSuccess: BugReport
-        object DescriptionInfoSuccess: BugReport
+    sealed interface BugReport : StringResource {
+        object TitleInfoSuccess : BugReport
+        object DescriptionInfoSuccess : BugReport
     }
 
     sealed interface StringSettings : StringResource {
@@ -71,13 +71,14 @@ sealed interface StringResource {
     sealed interface Validate : StringResource {
         object TestEditErrorTitle : Validate
         object QuestionCreationErrorTitle : Validate
+        object MinFalseAnswerDescription : Validate
         data class MaxQuestionValue(val count: Int) : Validate
         object EmptyQuestionCreation : Validate
         object OneAnswerQuestionCreation : Validate
         data class MinCountAnswer(val count: Int) : Validate
         object MinOneTrueAnswer : Validate
-        object AnswerIsEmpty: Validate
-        object RegistrationEmptyData: Validate
-        object ValidateTitleAttention: Validate
+        object AnswerIsEmpty : Validate
+        object RegistrationEmptyData : Validate
+        object ValidateTitleAttention : Validate
     }
 }

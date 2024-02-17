@@ -58,7 +58,8 @@ interface TestSettingsModule {
                 imageTest = screen.imageTest,
                 idTheme = screen.idTheme,
                 getThemes = getThemes,
-                themeName = screen.themeName
+                themeName = screen.themeName,
+                countQuestion = screen.countQuestion
             )
         }
     }

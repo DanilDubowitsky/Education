@@ -8,6 +8,7 @@ sealed class TestSettingsElementUi {
         val title: String,
         val valueInput: String,
         val hint: String,
+        val inputType: Int
     ) : TestSettingsElementUi()
 
     data class Design(

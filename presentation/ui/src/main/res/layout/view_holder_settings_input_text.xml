@@ -31,8 +31,7 @@
             android:id="@+id/edText"
             style="@style/EditText.Input.Simple"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+            android:layout_height="wrap_content" />
 
     </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 

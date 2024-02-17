@@ -4,4 +4,5 @@ import com.testeducation.domain.model.user.User
 
 data class ProfileEditModelState(
     val user: User? = null,
+    val isLoading: Boolean = true
 )

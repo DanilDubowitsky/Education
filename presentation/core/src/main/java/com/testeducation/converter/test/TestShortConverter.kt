@@ -1,12 +1,10 @@
 package com.testeducation.converter.test
 
-import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestSettings
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.test.TestStyle
 import com.testeducation.logic.model.test.CardTestStyle
-import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
 
@@ -83,10 +81,10 @@ private fun TestShortUI.Test.Settings.toModel() = TestSettings(
 
 private fun TestSettings.Availability.toUI() = when (this) {
     TestSettings.Availability.PUBLIC -> TestShortUI.Test.Settings.Availability.PUBLIC
-    TestSettings.Availability.PRIVATE -> TestShortUI.Test.Settings.Availability.PRIVATE
+    TestSettings.Availability.ViaLinkAll -> TestShortUI.Test.Settings.Availability.PRIVATE
 }
 
 private fun TestShortUI.Test.Settings.Availability.toModel() = when (this) {
     TestShortUI.Test.Settings.Availability.PUBLIC -> TestSettings.Availability.PUBLIC
-    TestShortUI.Test.Settings.Availability.PRIVATE -> TestSettings.Availability.PRIVATE
+    TestShortUI.Test.Settings.Availability.PRIVATE -> TestSettings.Availability.ViaLinkAll
 }

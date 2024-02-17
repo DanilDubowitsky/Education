@@ -1,5 +1,6 @@
 package com.testeducation.ui.delegates.tests.settings
 
+import android.os.Handler
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
@@ -17,6 +18,7 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 import com.testeducation.ui.utils.simpleDiffUtil
 
+
 fun testSettingsInputTest(update: (Int, String) -> Unit) =
     simpleDelegateAdapter<TestSettingsElementUi.TestInput,
             TestSettingsElementUi,
@@ -33,6 +35,7 @@ fun testSettingsInputTest(update: (Int, String) -> Unit) =
                 if (edText.text.isEmpty()) {
                     edText.setText(item.valueInput)
                 }
+                edText.inputType = item.inputType
             }
         }
     }
@@ -68,7 +71,7 @@ fun testSettingsDesign(openTestStyleChanger: () -> Unit) =
         }
     }
 
-fun testSettingsHorizontalScroll(update: (Int, String) -> Unit) =
+fun testSettingsHorizontalScroll(handler: Handler, update: (Int, String) -> Unit) =
     simpleDelegateAdapter<TestSettingsElementUi.HorizontalScroll,
             TestSettingsElementUi,
             ViewHolderSettingsHorizontalScrollBinding>(
@@ -91,7 +94,10 @@ fun testSettingsHorizontalScroll(update: (Int, String) -> Unit) =
                     itemAnimator = null
                 }
                 themesAdapter.items = item.list
-                rvHorizontalScroll.smoothScrollToPosition(0)
+                handler.post {
+                    Thread.sleep(100)
+                    rvHorizontalScroll.scrollToPosition(0)
+                }
             }
         }
     }

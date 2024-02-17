@@ -6,5 +6,6 @@ import com.testeducation.domain.model.test.TestSettingsItem
 data class TestSettingsModelState(
     val testElementList: List<TestSettingsElement> = emptyList(),
     val originalTestSettings: TestSettingsItem = TestSettingsItem(),
-    val changedIdList: Set<Int> = emptySet()
+    val changedIdList: Set<Int> = emptySet(),
+    val isLoading: Boolean = true
 )
