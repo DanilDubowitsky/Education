@@ -18,6 +18,7 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.simpleDelegateAdapter
 import com.testeducation.ui.utils.simpleDiffUtil
 
+
 fun testSettingsInputTest(update: (Int, String) -> Unit) =
     simpleDelegateAdapter<TestSettingsElementUi.TestInput,
             TestSettingsElementUi,
@@ -34,6 +35,7 @@ fun testSettingsInputTest(update: (Int, String) -> Unit) =
                 if (edText.text.isEmpty()) {
                     edText.setText(item.valueInput)
                 }
+                edText.inputType = item.inputType
             }
         }
     }
