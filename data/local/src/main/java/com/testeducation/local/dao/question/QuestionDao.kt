@@ -36,12 +36,16 @@ interface QuestionDao {
 
     @Transaction
     suspend fun removeAndAddQuestions(testId: String, questions: List<QuestionWithAnswers>) {
+        removeAnswer(questions.map { it.question.id })
         removeQuestions(testId)
         insertOrUpdate(questions)
     }
 
     @Query("DELETE FROM QuestionEntity WHERE testId = :testId")
     suspend fun removeQuestions(testId: String)
+
+    @Query("DELETE FROM AnswerEntity WHERE questionId in (:questionList)")
+    suspend fun removeAnswer(questionList: List<String>)
 
     @Query("SELECT EXISTS (SELECT 1 FROM QuestionEntity WHERE testId = :testId)")
     suspend fun hasEntries(testId: String): Boolean
