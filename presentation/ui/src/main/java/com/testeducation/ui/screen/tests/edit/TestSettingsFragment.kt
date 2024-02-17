@@ -1,6 +1,8 @@
 package com.testeducation.ui.screen.tests.edit
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
@@ -27,12 +29,13 @@ class TestSettingsFragment :
         FragmentTestSettingsBinding::inflate
     ) {
 
+    private val handler: Handler = Handler(Looper.getMainLooper())
     private val settingsAdapter by lazy {
         AsyncListDifferDelegationAdapter(
             simpleDiffUtil(TestSettingsElementUi::id),
             testSettingsInputTest(viewModel::updateTextInput),
             testSettingsDesign(viewModel::openTestStyleChanger),
-            testSettingsHorizontalScroll(viewModel::updateHorizontal),
+            testSettingsHorizontalScroll(handler, viewModel::updateHorizontal),
             testSettingsChoice(viewModel::updateChoice),
             testSettingsSelectable(viewModel::updateSelectable)
         )
