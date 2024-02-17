@@ -1,7 +1,9 @@
 package com.testeducation.ui.screen.tests.edit
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestSettingsElementUi
@@ -59,6 +61,14 @@ class TestSettingsFragment :
 
     private fun render(state: TestSettingsState) = binding {
         settingsAdapter.items = state.testSettingsElements
+        setLoading(state.isLoading)
+    }
+
+    private fun setLoading(isLoading: Boolean) = binding {
+        loadingIndicator.setVisibility(isLoading)
+        rvSettings.isVisible = !isLoading
+        btnSave.isVisible = !isLoading
+        Log.e("TAG1", "loadingIndicator = ${isLoading}")
     }
 
 }

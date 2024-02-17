@@ -68,7 +68,8 @@ class TestSettingsViewModel(
                                 testElementList = prepareTestElement(
                                     response, themes
                                 ),
-                                originalTestSettings = response
+                                originalTestSettings = response,
+                                isLoading = false
                             )
                         }
                     } else {
@@ -76,7 +77,8 @@ class TestSettingsViewModel(
                             copy(
                                 testElementList = prepareTestElement(
                                     modelState.originalTestSettings, themes
-                                )
+                                ),
+                                isLoading = false
                             )
                         }
                     }
