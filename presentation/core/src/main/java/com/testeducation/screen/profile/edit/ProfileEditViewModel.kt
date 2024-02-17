@@ -33,7 +33,7 @@ class ProfileEditViewModel(
     fun logOut() {
         intent {
             logOut.invoke()
-            router.navigateTo(NavigationScreen.Auth.Login, false)
+            router.newRootChain(NavigationScreen.Auth.Login)
         }
     }
 
