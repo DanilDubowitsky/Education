@@ -7,7 +7,6 @@ import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestSettings
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.test.TestStyle
-import com.testeducation.remote.converter.question.toModels
 import com.testeducation.remote.converter.user.toModel
 import com.testeducation.remote.model.test.RemoteCreationTest
 import com.testeducation.remote.model.test.RemotePage
@@ -112,9 +111,9 @@ private fun RemoteTestSettings.QuestionsOrder.toModel() = when (this) {
 
 private fun String.toTestAvailability() = when (this) {
     AVAILABLE_STATUS_PUBLIC -> TestSettings.Availability.PUBLIC
-    AVAILABLE_STATUS_PRIVATE -> TestSettings.Availability.PRIVATE
+    AVAILABLE_STATUS_PRIVATE -> TestSettings.Availability.ViaLinkAll
     else -> throw InvalidParameterException("$this is invalid")
 }
 
 private const val AVAILABLE_STATUS_PUBLIC = "Public"
-private const val AVAILABLE_STATUS_PRIVATE = "Private"
+private const val AVAILABLE_STATUS_PRIVATE = "ViaLinkAll"

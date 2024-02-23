@@ -1,5 +1,6 @@
 package com.testeducation.converter.test
 
+import android.text.InputType
 import com.testeducation.domain.model.test.TestSettingsElement
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.TestSettingsElementUi
@@ -7,11 +8,16 @@ import com.testeducation.logic.model.test.TestSettingsElementUi
 fun List<TestSettingsElement>.toUi() = map {
     when (it) {
         is TestSettingsElement.TestInput -> {
+            val finishTypeInput = when (it.inputType) {
+                TestSettingsElement.TestInput.InputType.NUMBER -> InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                else -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+            }
             TestSettingsElementUi.TestInput(
                 id = it.id,
                 title = it.title,
                 valueInput = it.valueInput,
-                hint = it.hint
+                hint = it.hint,
+                inputType = finishTypeInput
             )
         }
 

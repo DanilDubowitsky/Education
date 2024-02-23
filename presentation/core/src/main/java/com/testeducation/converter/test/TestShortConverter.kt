@@ -83,10 +83,10 @@ private fun TestShortUI.Test.Settings.toModel() = TestSettings(
 
 private fun TestSettings.Availability.toUI() = when (this) {
     TestSettings.Availability.PUBLIC -> TestShortUI.Test.Settings.Availability.PUBLIC
-    TestSettings.Availability.PRIVATE -> TestShortUI.Test.Settings.Availability.PRIVATE
+    TestSettings.Availability.ViaLinkAll -> TestShortUI.Test.Settings.Availability.PRIVATE
 }
 
 private fun TestShortUI.Test.Settings.Availability.toModel() = when (this) {
     TestShortUI.Test.Settings.Availability.PUBLIC -> TestSettings.Availability.PUBLIC
-    TestShortUI.Test.Settings.Availability.PRIVATE -> TestSettings.Availability.PRIVATE
+    TestShortUI.Test.Settings.Availability.PRIVATE -> TestSettings.Availability.ViaLinkAll
 }

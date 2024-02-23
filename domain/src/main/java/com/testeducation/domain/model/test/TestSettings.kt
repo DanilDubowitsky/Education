@@ -16,6 +16,6 @@ data class TestSettings(
 
     enum class Availability {
         PUBLIC,
-        PRIVATE
+        ViaLinkAll
     }
 }

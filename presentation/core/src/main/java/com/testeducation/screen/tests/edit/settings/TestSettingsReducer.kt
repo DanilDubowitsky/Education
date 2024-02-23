@@ -8,7 +8,8 @@ class TestSettingsReducer : IReducer<TestSettingsModelState, TestSettingsState> 
     override fun reduce(modelState: TestSettingsModelState): TestSettingsState {
         val testElementListUi = modelState.testElementList.toUi().toMutableList()
         return TestSettingsState(
-            testSettingsElements = testElementListUi
+            testSettingsElements = testElementListUi,
+            isLoading = modelState.isLoading
         )
     }
 

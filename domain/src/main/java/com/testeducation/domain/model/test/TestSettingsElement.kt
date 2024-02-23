@@ -8,7 +8,12 @@ sealed class TestSettingsElement {
         val title: String,
         val valueInput: String,
         val hint: String,
-    ) : TestSettingsElement()
+        val inputType: InputType
+    ) : TestSettingsElement() {
+        enum class InputType {
+            TEXT, NUMBER
+        }
+    }
 
     data class Design(
         override val id: Int,

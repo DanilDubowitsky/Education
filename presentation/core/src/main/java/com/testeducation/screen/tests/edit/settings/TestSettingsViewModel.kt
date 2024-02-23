@@ -32,6 +32,7 @@ class TestSettingsViewModel(
     private val imageTest: String,
     private val idTheme: String,
     private val themeName: String,
+    private val countQuestion: Int,
     private val router: NavigationRouter,
     private val getTestSettings: GetTestSettings,
     private val updateTestSettings: UpdateTestSettings,
@@ -68,7 +69,8 @@ class TestSettingsViewModel(
                                 testElementList = prepareTestElement(
                                     response, themes
                                 ),
-                                originalTestSettings = response
+                                originalTestSettings = response,
+                                isLoading = false
                             )
                         }
                     } else {
@@ -76,7 +78,8 @@ class TestSettingsViewModel(
                             copy(
                                 testElementList = prepareTestElement(
                                     modelState.originalTestSettings, themes
-                                )
+                                ),
+                                isLoading = false
                             )
                         }
                     }
@@ -190,8 +193,9 @@ class TestSettingsViewModel(
 
                         else -> {
                             if (itemSettings.valueInput != original.minCorrectAnswer.toString()) {
+                                val finishValue = if (itemSettings.valueInput.toInt() > countQuestion) countQuestion else itemSettings.valueInput.toInt()
                                 testSettingsItem =
-                                    testSettingsItem.copy(minCorrectAnswer = itemSettings.valueInput.toInt())
+                                    testSettingsItem.copy(minCorrectAnswer = finishValue)
                             }
                         }
                     }
@@ -319,7 +323,8 @@ class TestSettingsViewModel(
             id = TITLE_TEST_NAME_POSITION,
             title = StringResource.StringSettings.TestTitle.getString(resourceHelper),
             valueInput = titleTest,
-            hint = StringResource.StringSettings.TestTitle.getString(resourceHelper)
+            hint = StringResource.StringSettings.TestTitle.getString(resourceHelper),
+            inputType = TestSettingsElement.TestInput.InputType.TEXT
         )
         val designTest = TestSettingsElement.Design(
             id = DESIGN_ID,
@@ -344,8 +349,8 @@ class TestSettingsViewModel(
             ),
             itemSecond = TestSettingsElement.Choice.Item(
                 title = StringResource.StringSettings.AvailabilityValueLink.getString(resourceHelper),
-                value = TestAvailability.Private.toString(),
-                isSelected = testSettingsItem.availability == TestAvailability.Private
+                value = TestAvailability.ViaLinkAll.toString(),
+                isSelected = testSettingsItem.availability == TestAvailability.ViaLinkAll
             )
         )
         val choiceOrder = TestSettingsElement.Choice(
@@ -366,7 +371,8 @@ class TestSettingsViewModel(
             id = TITLE_MIN_CURRENT_ANSWER_ID,
             title = StringResource.StringSettings.MinCorrectAnswerTitle.getString(resourceHelper),
             valueInput = testSettingsItem.minCorrectAnswer.toString(),
-            StringResource.StringSettings.MinCorrectAnswerHint.getString(resourceHelper)
+            StringResource.StringSettings.MinCorrectAnswerHint.getString(resourceHelper),
+            inputType = TestSettingsElement.TestInput.InputType.NUMBER
         )
         val selectableShow = TestSettingsElement.Selectable(
             id = PREVIEW_SELECTABLE_ID,
