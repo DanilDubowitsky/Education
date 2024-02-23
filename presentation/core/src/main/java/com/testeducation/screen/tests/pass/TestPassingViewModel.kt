@@ -11,6 +11,7 @@ import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.TestPassResult
 import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.model.test.Test
+import com.testeducation.domain.model.test.TestSettings
 import com.testeducation.domain.utils.SECOND_IN_MILLIS
 import com.testeducation.helper.answer.toPassingQuestions
 import com.testeducation.helper.error.IExceptionHandler
@@ -346,7 +347,10 @@ class TestPassingViewModel(
 
     private fun loadData() = intent {
         val test = getTest(testId)
-        val questions = getQuestions(testId).toPassingQuestions()
+        var questions = getQuestions(testId).toPassingQuestions()
+        if (test.settings.questionsOrder == TestSettings.QuestionsOrder.SHUFFLED) {
+           questions = questions.shuffled()
+        }
         val currentQuestion = questions.first()
         updateModelState {
             copy(

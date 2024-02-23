@@ -12,5 +12,13 @@ data class RemoteTestSettings(
     @SerializedName("anti_cheating")
     val antiCheating: Boolean,
     @SerializedName("time_limit")
-    val timeLimit: Int
-)
+    val timeLimit: Int,
+    @SerializedName("questions_order")
+    val questionsOrder: QuestionsOrder
+) {
+
+    enum class QuestionsOrder {
+        Sequencial,
+        Shuffled
+    }
+}

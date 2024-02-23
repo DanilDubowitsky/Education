@@ -10,7 +10,7 @@ fun Question.toPassingQuestion(
     spentTime: Long = 0L,
     answers: List<String> = emptyList()
 ) = PassingQuestion(
-    question = this,
+    question = this.randomAnswers(),
     state = state,
     answers = answers,
     timeSpent = spentTime,
@@ -19,4 +19,11 @@ fun Question.toPassingQuestion(
 
 fun List<Question>.toPassingQuestions() = map { question ->
     question.toPassingQuestion()
+}
+
+private fun Question.randomAnswers() = when (this) {
+    is Question.Choice -> this.copy(answers = answers.shuffled())
+    is Question.Match -> this.copy(answers = answers.shuffled())
+    is Question.Order -> this.copy(answers = answers.shuffled())
+    is Question.Text -> this
 }

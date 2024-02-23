@@ -29,7 +29,8 @@ class TestCreationReducer : IReducer<TestCreationModelState, TestCreationState> 
                     true,
                     0,
                     false,
-                    0
+                    0,
+                    "SHUFFLED"
                 )
             ),
             btnCancelText = modelState.backBtnText,

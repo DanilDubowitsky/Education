@@ -1,12 +1,10 @@
 package com.testeducation.converter.test
 
-import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
 import com.testeducation.domain.model.test.TestSettings
 import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.test.TestStyle
 import com.testeducation.logic.model.test.CardTestStyle
-import com.testeducation.logic.model.test.TestGetTypeUI
 import com.testeducation.logic.model.test.TestOrderFieldUI
 import com.testeducation.logic.model.test.TestShortUI
 
@@ -70,7 +68,8 @@ fun TestSettings.toUI() = TestShortUI.Test.Settings(
     previewQuestions,
     minCorrectAnswers,
     antiCheating,
-    timeLimit
+    timeLimit,
+    questionsOrder.name
 )
 
 private fun TestShortUI.Test.Settings.toModel() = TestSettings(
@@ -78,7 +77,8 @@ private fun TestShortUI.Test.Settings.toModel() = TestSettings(
     previewQuestions,
     minCorrectAnswers,
     antiCheating,
-    timeLimit
+    timeLimit,
+    TestSettings.QuestionsOrder.valueOf(questionsOrder)
 )
 
 private fun TestSettings.Availability.toUI() = when (this) {

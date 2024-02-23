@@ -22,7 +22,8 @@ sealed interface TestShortUI {
             val previewQuestions: Boolean,
             val minCorrectAnswers: Int,
             val antiCheating: Boolean,
-            val timeLimit: Int
+            val timeLimit: Int,
+            val questionsOrder: String
         ) {
 
             enum class Availability {
