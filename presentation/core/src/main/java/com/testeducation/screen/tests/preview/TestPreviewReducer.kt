@@ -36,7 +36,7 @@ class TestPreviewReducer(
             authorTests = authorTests.toUIModels(),
             hideTestTimeLimit = timeLimit == 0,
             avatarResource = avatarRes,
-            isPassVisible = questionsCount > 0,
+            isPassVisible = questionsCount > 0 && currentUser?.id != test?.creator?.id,
             isShareAvailable = test?.status == Test.Status.PUBLISHED
         )
     }

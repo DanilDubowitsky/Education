@@ -67,7 +67,8 @@ interface TestPassingModule {
             reducer: IReducer<TestPassingModelState, TestPassingState>,
             exceptionHandler: IExceptionHandler,
             fragment: TestPassingFragment,
-            getQuestions: GetQuestions
+            getQuestions: GetQuestions,
+            getCurrentUser: GetCurrentUser
         ): TestPassingViewModel {
             val testId = fragment.getScreen<NavigationScreen.Tests.Passing>().id
             return TestPassingViewModel(
@@ -77,7 +78,8 @@ interface TestPassingModule {
                 testId,
                 getTest,
                 passTest,
-                getQuestions
+                getQuestions,
+                getCurrentUser
             )
         }
     }

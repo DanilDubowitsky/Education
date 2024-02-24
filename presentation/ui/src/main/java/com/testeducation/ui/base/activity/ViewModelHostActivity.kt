@@ -19,11 +19,13 @@ abstract class ViewModelHostActivity<VM : ViewModel, VB : ViewBinding>(
 
     protected lateinit var viewModel: VM
 
+    protected lateinit var viewBinding: VB
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val vb = onBind(layoutInflater)
+        viewBinding = onBind(layoutInflater)
         viewModel = ViewModelProvider(this, viewModelFactory)[viewModelClass.java]
-        setContentView(vb.root)
+        setContentView(viewBinding.root)
     }
 
 }

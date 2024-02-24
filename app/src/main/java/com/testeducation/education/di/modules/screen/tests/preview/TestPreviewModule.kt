@@ -6,6 +6,7 @@ import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTestByCode
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
+import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.avatar.AvatarHelper
 import com.testeducation.helper.avatar.IAvatarHelper
@@ -56,7 +57,8 @@ interface TestPreviewModule {
             likeTest: ToggleTestLike,
             getTests: GetTests,
             testHelper: ITestHelper,
-            getTestByCode: GetTestByCode
+            getTestByCode: GetTestByCode,
+            getCurrentUser: GetCurrentUser
         ): TestPreviewViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Preview>()
             return TestPreviewViewModel(
@@ -69,7 +71,8 @@ interface TestPreviewModule {
                 getTest,
                 likeTest,
                 getTests,
-                getTestByCode
+                getTestByCode,
+                getCurrentUser
             )
         }
     }

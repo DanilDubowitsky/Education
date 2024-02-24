@@ -35,8 +35,8 @@ fun choiceAnsweredQuestionDelegate() =
                 binding.txtAnswerIndicator,
                 binding.imgAnswerIndicator,
                 null,
-                listOf(item.chosenAnswer),
-                listOf(item.correctAnswer),
+                item.chosenAnswer,
+                item.correctAnswer,
                 item.state,
                 binding.answerChipGroup,
                 binding.trueAnswerChip,
@@ -201,10 +201,12 @@ private fun bindSimpleData(
     correctAnswersLayout?.isVisible = isCorrectVisible
     correctAnswersLayout?.let {
         if (answer !is AnswerUI.ChoiceAnswer) return
-        val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
-        item.root.text = (correctAnswers.first() as AnswerUI.ChoiceAnswer).title
-        item.root.createLayoutParams()
-        correctAnswersLayout.addView(item.root)
+        correctAnswers.forEach { answerUI ->
+            val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
+            item.root.text = (answerUI as AnswerUI.ChoiceAnswer).title
+            item.root.createLayoutParams()
+            correctAnswersLayout.addView(item.root)
+        }
     }
 }
 

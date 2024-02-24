@@ -3,6 +3,7 @@ package com.testeducation.screen.tests.pass
 import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.test.Test
+import com.testeducation.domain.model.user.User
 
 data class TestPassingModelState(
     val questions: List<PassingQuestion> = emptyList(),
@@ -11,14 +12,15 @@ data class TestPassingModelState(
     val currentQuestion: PassingQuestion? = null,
     val test: Test? = null,
     val resumeCount: Int = 0,
-    val isLoading: Boolean = true
+    val isLoading: Boolean = true,
+    val currentUser: User? = null
 ) {
 
     sealed interface SelectedQuestionState {
         val question: Question?
 
         data class Choice(
-            val selectedAnswerIndex: Int? = null,
+            val selectedIds: List<String> = emptyList(),
             override val question: Question.Choice? = null
         ) : SelectedQuestionState
 

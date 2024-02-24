@@ -3,6 +3,7 @@ package com.testeducation.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import com.testeducation.activity.main.MainActivityViewModel
+import com.testeducation.logic.activity.MainActivitySideEffect
 import com.testeducation.navigation.core.AnimationSet
 import com.testeducation.navigation.core.IScreenAdapter
 import com.testeducation.navigation.core.NavigationHost
@@ -11,6 +12,8 @@ import com.testeducation.ui.R
 
 import com.testeducation.ui.base.activity.ViewModelHostActivity
 import com.testeducation.ui.databinding.ActivityMainBinding
+import com.testeducation.ui.utils.loadDrawable
+import org.orbitmvi.orbit.viewmodel.observe
 import javax.inject.Inject
 
 class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBinding>(
@@ -47,8 +50,20 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Education)
         super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) viewModel.prepare()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        if (savedInstanceState == null) {
+            viewBinding.root.background = loadDrawable(R.drawable.drawable_testoria_splash)
+            viewModel.prepare()
+        }
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        observeData()
+    }
+
+    private fun observeData() = viewModel.observe(this, sideEffect = ::handleSideEffect)
+
+    private fun handleSideEffect(sideEffect: MainActivitySideEffect) = when (sideEffect) {
+        MainActivitySideEffect.OnDataLoaded -> {
+            viewBinding.root.background = null
+        }
     }
 
     private fun setNavigator() {

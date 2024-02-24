@@ -9,7 +9,7 @@ import com.testeducation.logic.model.test.AnswerUI
 fun List<Answer>.toUIModels(
     answerColorExtractor: IAnswerColorExtractor,
     state: PassingQuestion.AnswerState,
-    selectedId: String? = null
+    selectedAnswersIds: List<String> = emptyList()
 ): List<AnswerUI> {
     val simpleColors = answerColorExtractor.extractAnswersColors()
     val alphaColors = answerColorExtractor.extractAnswersColors(withAlpha = true)
@@ -22,12 +22,12 @@ fun List<Answer>.toUIModels(
         } else {
             simpleColors[index]
         }
-        answer.toUI(color, selectedId)
+        answer.toUI(color, selectedAnswersIds.contains(answer.id))
     }
 }
 
 fun List<Answer>.toSimpleUIModels() = map { answer ->
-    answer.toUI(0, null)
+    answer.toUI(0, false)
 }
 
 fun List<Answer>.toInputAnswers(getColor: ((Int) -> Int)? = null, getTrueColor: ((Boolean) -> Int)? = null) =
@@ -72,14 +72,14 @@ fun List<Answer>.toInputAnswers(getColor: ((Int) -> Int)? = null, getTrueColor: 
         }
     }
 
-fun Answer.toUI(color: Int, selectedId: String?) = when (this) {
+fun Answer.toUI(color: Int, isSelected: Boolean) = when (this) {
     is Answer.ChoiceAnswer -> {
         AnswerUI.ChoiceAnswer(
             id = id,
             title = title,
             isTrue = isTrue,
             color = color,
-            isSelected = selectedId == id
+            isSelected = isSelected
         )
     }
 
