@@ -5,8 +5,14 @@ data class TestSettings(
     val previewQuestions: Boolean,
     val minCorrectAnswers: Int,
     val antiCheating: Boolean,
-    val timeLimit: Int
+    val timeLimit: Int,
+    val questionsOrder: QuestionsOrder
 ) {
+
+    enum class QuestionsOrder {
+        SEQUENTIAL,
+        SHUFFLED
+    }
 
     enum class Availability {
         PUBLIC,

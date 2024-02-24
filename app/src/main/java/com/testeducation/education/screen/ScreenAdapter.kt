@@ -19,6 +19,7 @@ import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
 import com.testeducation.ui.screen.profile.SupportSenderFragment
 import com.testeducation.ui.screen.questions.QuestionsPreviewDialog
+import com.testeducation.ui.screen.tests.action.TestActionDialog
 import com.testeducation.ui.screen.tests.code.TestCodeEnterDialog
 import com.testeducation.ui.screen.tests.code.TestCodeShareDialog
 import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
@@ -190,6 +191,10 @@ class ScreenAdapter : IScreenAdapter {
 
         is NavigationScreen.Tests.TestSort -> Screen.DialogScreen {
             TestSortDialog().withScreen(screen)
+        }
+
+        is NavigationScreen.Tests.Action -> Screen.DialogScreen {
+            TestActionDialog().withScreen(screen)
         }
     }
 

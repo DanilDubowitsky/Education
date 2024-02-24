@@ -5,6 +5,7 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.model.test.Test
 import com.testeducation.domain.model.test.TestGetType
+import com.testeducation.domain.model.test.TestShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestGetTypeUI
@@ -14,6 +15,7 @@ import com.testeducation.logic.screen.tests.library.LibraryState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.home.library.LibraryHomeViewModel.Companion.LIBRARY_NAVIGATOR_KEY
+import com.testeducation.utils.firstByConditionOrNull
 import kotlinx.coroutines.async
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -46,9 +48,16 @@ class LibraryViewModel(
         navigateToTestsLibrary(TestLibraryGetTypeUI.DRAFT)
     }
 
-    fun openTestPreview(id: String) {
-        val screen = NavigationScreen.Tests.Preview(id)
-        router.navigateTo(screen)
+    fun openTestPreview(id: String) = intent {
+        val draftTests = getModelState().draftsTests
+        val testInDraft = draftTests.firstByConditionOrNull(TestShort::id, id)
+        if (testInDraft != null) {
+            val screen = NavigationScreen.Tests.Action(testInDraft.id, testInDraft.title)
+            router.navigateTo(screen)
+        } else {
+            val screen = NavigationScreen.Tests.Preview(id)
+            router.navigateTo(screen)
+        }
     }
 
     fun toggleTestLike(position: Int, type: TestGetTypeUI) = intent {
@@ -124,7 +133,8 @@ class LibraryViewModel(
                     publishedTests = publishedTests.tests,
                     passedTests = passedTests.tests,
                     draftsTests = draftTests.tests,
-                    loadingState = LibraryModelState.LoadingState.IDLE
+                    loadingState = LibraryModelState.LoadingState.IDLE,
+                    totalTests = publishedTests.tests + passedTests.tests + draftTests.tests
                 )
             }
         }

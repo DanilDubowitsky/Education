@@ -6,6 +6,7 @@ import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTestByCode
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
+import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
@@ -26,7 +27,8 @@ class TestPreviewViewModel(
     private val getTest: GetTest,
     private val likeTest: ToggleTestLike,
     private val getTests: GetTests,
-    private val getTestByCode: GetTestByCode
+    private val getTestByCode: GetTestByCode,
+    private val getCurrentUser: GetCurrentUser
 ) : BaseViewModel<TestPreviewModelState,
         TestPreviewState, TestPreviewSideEffect>(reducer, exceptionHandler) {
 
@@ -96,6 +98,7 @@ class TestPreviewViewModel(
         } else {
             getTest(testId!!)
         }
+        val user = getCurrentUser()
         val testsPage = getTests(
             limit = TESTS_PAGE_SIZE,
             offset = 0,
@@ -109,7 +112,8 @@ class TestPreviewViewModel(
                 test = test,
                 authorTests = testsPage.tests.filter { testShort ->
                     testShort.id != testId
-                }
+                },
+                currentUser = user
             )
         }
     }

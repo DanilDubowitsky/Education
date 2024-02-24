@@ -13,6 +13,7 @@ import com.testeducation.logic.activity.MainActivityState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
 class MainActivityViewModel(
     private val router: NavigationRouter,
@@ -29,7 +30,7 @@ class MainActivityViewModel(
 
     override val initialModelState: MainActivityModelState = MainActivityModelState()
 
-    fun prepare() = intent {
+    fun prepare() = singleIntent("") {
         val isUpdateRequired = isAppVersionUpdateRequired()
 
         if (isUpdateRequired) {
@@ -40,10 +41,11 @@ class MainActivityViewModel(
                 title
             )
             router.navigateTo(informationScreen)
-            return@intent
+            return@singleIntent
         }
 
         val isExpired = userConfigInteractor.isRefreshTokenExpired()
+        postSideEffect(MainActivitySideEffect.OnDataLoaded)
         val screen = if (isExpired) NavigationScreen.Auth.Login
         else NavigationScreen.Main.Home
         router.replace(screen)

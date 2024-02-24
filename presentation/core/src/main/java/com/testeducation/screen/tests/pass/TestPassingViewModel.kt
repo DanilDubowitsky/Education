@@ -5,12 +5,14 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.PassTest
+import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.TestPassResult
 import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.model.test.Test
+import com.testeducation.domain.model.test.TestSettings
 import com.testeducation.domain.utils.SECOND_IN_MILLIS
 import com.testeducation.helper.answer.toPassingQuestions
 import com.testeducation.helper.error.IExceptionHandler
@@ -32,7 +34,8 @@ class TestPassingViewModel(
     private val testId: String,
     private val getTest: GetTest,
     private val passTest: PassTest,
-    private val getQuestions: GetQuestions
+    private val getQuestions: GetQuestions,
+    private val getCurrentUser: GetCurrentUser
 ) : BaseViewModel<TestPassingModelState, TestPassingState, TestPassingSideEffect>(
     reducer,
     exceptionHandler
@@ -46,8 +49,14 @@ class TestPassingViewModel(
 
     fun selectChoiceAnswer(index: Int) = intent {
         val state = getModelState().selectedQuestionState.toChoice()
+        val selectedAnswer = state.question?.answers?.get(index) ?: return@intent
+        val newList = if (state.selectedIds.contains(selectedAnswer.id)) {
+            state.selectedIds.minus(selectedAnswer.id)
+        } else {
+            state.selectedIds.plus(selectedAnswer.id)
+        }
         updateModelState {
-            copy(selectedQuestionState = state.copy(selectedAnswerIndex = index))
+            copy(selectedQuestionState = state.copy(selectedIds = newList))
         }
     }
 
@@ -151,7 +160,7 @@ class TestPassingViewModel(
         router.setResultListener(NavigationScreen.Tests.Result.OpenMainPage) {
             router.exit()
         }
-        if (test.status != Test.Status.DRAFT) {
+        if (test.status != Test.Status.DRAFT && test.creator.id != modelState.currentUser?.id) {
             passTest(testId, answers, spentTime, isCheating, result)
         }
     }
@@ -316,22 +325,22 @@ class TestPassingViewModel(
     private suspend fun Syntax.checkChoiceAnswer(remainingTime: Long) {
         val modelState = getModelState()
         val questionState = modelState.selectedQuestionState.toChoice()
-        val index = questionState.selectedAnswerIndex
-        val selectedAnswer = if (index != null) {
-            questionState.question?.answers?.get(index)
-        } else null
-        val state = if (selectedAnswer?.isTrue == true) {
+        val selectedAnswers = questionState.question!!.answers.filter { answer ->
+            questionState.selectedIds.contains(answer.id)
+        }
+        val isIncorrect = selectedAnswers.any { answer ->
+            !answer.isTrue
+        }
+        val state = if (!isIncorrect) {
             PassingQuestion.AnswerState.CORRECT
         } else {
             PassingQuestion.AnswerState.INCORRECT
         }
         val spentTime = modelState.currentQuestion!!.question.time - remainingTime
-
         val questions = modelState.questions.toMutableList()
-
         val newQuestion = modelState.currentQuestion.copy(
             state = state,
-            answers = listOf(selectedAnswer?.id.orEmpty()),
+            answers = questionState.selectedIds,
             timeSpent = spentTime
         )
         questions[modelState.currentQuestionIndex] = newQuestion
@@ -346,14 +355,19 @@ class TestPassingViewModel(
 
     private fun loadData() = intent {
         val test = getTest(testId)
-        val questions = getQuestions(testId).toPassingQuestions()
+        val currentUser = getCurrentUser()
+        var questions = getQuestions(testId).toPassingQuestions(isInitial = true)
+        if (test.settings.questionsOrder == TestSettings.QuestionsOrder.SHUFFLED) {
+            questions = questions.shuffled()
+        }
         val currentQuestion = questions.first()
         updateModelState {
             copy(
                 test = test,
                 questions = questions,
                 currentQuestion = questions.first(),
-                isLoading = false
+                isLoading = false,
+                currentUser = currentUser
             )
         }
         val selectedQuestionState = extractQuestionState()
