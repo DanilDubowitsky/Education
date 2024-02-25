@@ -9,7 +9,6 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.testeducation.logic.model.question.AnswerStateUI
 import com.testeducation.logic.model.question.QuestionUI
@@ -172,9 +171,9 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         imgCorrectIndicator.setImageDrawable(statusImage)
         if (questionUI is QuestionUI.Choice) {
             txtCorrectAnswer.isVisible = questionUI.answerState == AnswerStateUI.INCORRECT
-            val correctText = questionUI.answers.first { choiceAnswer ->
-                choiceAnswer.isTrue
-            }.title
+            val correctText =
+                questionUI.answers.filter(AnswerUI.ChoiceAnswer::isTrue)
+                    .joinToString(transform = AnswerUI.ChoiceAnswer::title)
             val displayCorrectText = getString(R.string.test_pass_true_answer_label, correctText)
             txtCorrectAnswer.text = displayCorrectText
         }
@@ -219,6 +218,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
                 0f
             ) {
                 setAnswersData()
+                answerText.text = null
                 rootScroll.animateTranslationXAndAlpha(ANIMATION_DURATION, 0f, 1f)
             }
         } else {

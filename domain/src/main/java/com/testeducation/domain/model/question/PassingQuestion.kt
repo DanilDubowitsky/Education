@@ -5,7 +5,8 @@ data class PassingQuestion(
     val answers: List<String> = emptyList(),
     val timeSpent: Long = 0L,
     val customAnswer: String,
-    val question: Question
+    val question: Question,
+    val matchData: List<String>
 ) {
 
     enum class AnswerState {

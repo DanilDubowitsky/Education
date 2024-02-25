@@ -22,12 +22,17 @@ fun List<Answer>.toUIModels(
         } else {
             simpleColors[index]
         }
-        answer.toUI(color, selectedAnswersIds.contains(answer.id))
+        println("CURRENT_QUESTIION_STATE: $state")
+        answer.toUI(
+            color,
+            selectedAnswersIds.contains(answer.id),
+            state == PassingQuestion.AnswerState.NONE
+        )
     }
 }
 
 fun List<Answer>.toSimpleUIModels() = map { answer ->
-    answer.toUI(0, false)
+    answer.toUI(0, isSelected = false, canSelect = true)
 }
 
 fun List<Answer>.toInputAnswers(getColor: ((Int) -> Int)? = null, getTrueColor: ((Boolean) -> Int)? = null) =
@@ -72,14 +77,19 @@ fun List<Answer>.toInputAnswers(getColor: ((Int) -> Int)? = null, getTrueColor: 
         }
     }
 
-fun Answer.toUI(color: Int, isSelected: Boolean) = when (this) {
+fun Answer.toUI(
+    color: Int,
+    isSelected: Boolean,
+    canSelect: Boolean
+) = when (this) {
     is Answer.ChoiceAnswer -> {
         AnswerUI.ChoiceAnswer(
             id = id,
             title = title,
             isTrue = isTrue,
             color = color,
-            isSelected = isSelected
+            isSelected = isSelected,
+            canSelect = canSelect
         )
     }
 

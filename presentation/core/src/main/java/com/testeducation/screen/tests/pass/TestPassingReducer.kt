@@ -35,10 +35,10 @@ class TestPassingReducer(
         val matchDataUI = when {
             currentState is TestPassingModelState.SelectedQuestionState.Match &&
                     questionUI is QuestionUI.Match -> {
-                questionUI.answers.mapIndexed { index, matchAnswer ->
+                modelState.currentQuestion!!.matchData.mapIndexed { index, matchAnswer ->
                     TestPassingState.MatchDataUI(
-                        currentState.matchData[index],
-                        matchAnswer.color
+                        matchAnswer,
+                        questionUI.answers[index].color
                     )
                 }
             }

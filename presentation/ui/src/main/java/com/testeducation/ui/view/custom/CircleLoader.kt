@@ -52,7 +52,7 @@ class CircleLoader@JvmOverloads constructor(
         secondPaint = Paint()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         secondPaint.apply {

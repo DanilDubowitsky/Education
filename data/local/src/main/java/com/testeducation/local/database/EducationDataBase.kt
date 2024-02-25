@@ -23,7 +23,8 @@ import com.testeducation.local.entity.theme.ThemeShortEntity
         TestLocalLiveTimeEntity::class,
         AnsweredQuestionEntity::class
     ],
-    version = DATA_BASE_VERSION
+    version = DATA_BASE_VERSION,
+    exportSchema = false
 )
 @TypeConverters(DataBaseTypeConverters::class)
 abstract class EducationDataBase : RoomDatabase() {

@@ -5,5 +5,6 @@ data class InputUserAnswerData(
     val answerIds: List<String>,
     val isCorrect: Boolean?,
     val spentTime: Long,
-    val customAnswer: String?
+    val customAnswer: String?,
+    val matchData: List<String>
 )

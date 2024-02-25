@@ -2,6 +2,8 @@ package com.testeducation.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.isVisible
 import com.testeducation.activity.main.MainActivityViewModel
 import com.testeducation.logic.activity.MainActivitySideEffect
 import com.testeducation.navigation.core.AnimationSet
@@ -51,7 +53,6 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
         setTheme(R.style.Theme_Education)
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
-            viewBinding.root.background = loadDrawable(R.drawable.drawable_testoria_splash)
             viewModel.prepare()
         }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -62,7 +63,7 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
 
     private fun handleSideEffect(sideEffect: MainActivitySideEffect) = when (sideEffect) {
         MainActivitySideEffect.OnDataLoaded -> {
-            viewBinding.root.background = null
+            viewBinding.screenPlaceholder.isVisible = false
         }
     }
 

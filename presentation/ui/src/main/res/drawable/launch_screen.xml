@@ -4,7 +4,7 @@
     <item android:drawable="@color/colorBackground" />
     <item>
         <bitmap
-            android:gravity="center"
-            android:src="@drawable/ic_splash_icon" />
+            android:gravity="fill"
+            android:src="@drawable/drawable_testoria_splash" />
     </item>
 </layer-list>
