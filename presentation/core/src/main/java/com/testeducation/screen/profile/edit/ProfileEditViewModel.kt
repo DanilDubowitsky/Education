@@ -58,6 +58,10 @@ class ProfileEditViewModel(
         }
     }
 
+    fun deleteAccount() {
+        router.navigateTo(NavigationScreen.Common.ConfirmCode("Удаление аккаунта", "Описание"))
+    }
+
     private fun initDataProfile() = intent {
         val currentUser = getCurrentUser.invoke()
         updateModelState {

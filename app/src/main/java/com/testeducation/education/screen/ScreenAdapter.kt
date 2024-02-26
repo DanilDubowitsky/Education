@@ -8,12 +8,12 @@ import com.testeducation.ui.screen.auth.login.LoginFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
 import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
 import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
+import com.testeducation.ui.screen.common.ConfirmCodeDialog
 import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.home.library.LibraryHomeFragment
-import com.testeducation.ui.screen.tests.library.test.TestLibraryFragment
 import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
 import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
@@ -31,6 +31,7 @@ import com.testeducation.ui.screen.tests.edit.TestSettingsFragment
 import com.testeducation.ui.screen.tests.edit.TestStyleChangerFragment
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
 import com.testeducation.ui.screen.tests.library.LibraryFragment
+import com.testeducation.ui.screen.tests.library.test.TestLibraryFragment
 import com.testeducation.ui.screen.tests.liked.LikedTestsFragment
 import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.screen.tests.pass.TestPassingFragment
@@ -96,6 +97,10 @@ class ScreenAdapter : IScreenAdapter {
 
             is NavigationScreen.Common.WebView -> Screen.FragmentScreen {
                 WebViewFragment().withScreen(screen)
+            }
+
+            is NavigationScreen.Common.ConfirmCode -> Screen.DialogScreen {
+                ConfirmCodeDialog().withScreen(screen)
             }
         }
 
