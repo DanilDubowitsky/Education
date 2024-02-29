@@ -7,7 +7,8 @@ data class LibraryModelState(
     val passedTests: List<TestShort> = emptyList(),
     val draftsTests: List<TestShort> = emptyList(),
     val loadingState: LoadingState = LoadingState.LOADING,
-    val totalTests: List<TestShort> = emptyList()
+    val totalTests: List<TestShort> = emptyList(),
+    val isRefreshing: Boolean = false
 ) {
 
     enum class LoadingState {

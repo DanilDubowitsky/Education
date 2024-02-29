@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.testeducation.education"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.testeducation.education"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "0.0.1"
 

@@ -3,6 +3,7 @@ package com.testeducation.navigation.core
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.MainThread
+import java.util.concurrent.ConcurrentLinkedQueue
 
 class NavigationHost {
 

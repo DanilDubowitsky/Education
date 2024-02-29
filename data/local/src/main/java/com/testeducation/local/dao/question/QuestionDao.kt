@@ -15,6 +15,7 @@ interface QuestionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrUpdate(question: QuestionEntity)
 
+    @Transaction
     @Query("SELECT * FROM QuestionEntity WHERE testId = :testId")
     suspend fun getQuestions(testId: String): List<QuestionWithAnswers>
 

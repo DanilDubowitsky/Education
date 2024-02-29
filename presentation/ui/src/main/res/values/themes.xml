@@ -19,7 +19,7 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
-    <style name="Theme.Education.SplashScreen">
+    <style name="Theme.Education.SplashScreen" parent="Theme.SplashScreen">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 

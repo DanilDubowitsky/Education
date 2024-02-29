@@ -20,8 +20,7 @@ class TestCodeEnterViewModel(
     reducer: IReducer<TestCodeEnterModelState, TestCodeEnterState>,
     exceptionHandler: IExceptionHandler,
     private val router: NavigationRouter,
-    private val resourceHelper: IResourceHelper,
-    private val getTestByCode: GetTestByCode
+    private val resourceHelper: IResourceHelper
 ) : BaseViewModel<TestCodeEnterModelState, TestCodeEnterState, TestCodeEnterSideEffect>(
     reducer, exceptionHandler
 ) {

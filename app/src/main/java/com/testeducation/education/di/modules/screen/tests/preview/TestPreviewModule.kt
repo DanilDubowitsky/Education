@@ -58,7 +58,6 @@ interface TestPreviewModule {
             getTests: GetTests,
             testHelper: ITestHelper,
             getTestByCode: GetTestByCode,
-            getCurrentUser: GetCurrentUser
         ): TestPreviewViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Preview>()
             return TestPreviewViewModel(
@@ -71,8 +70,7 @@ interface TestPreviewModule {
                 getTest,
                 likeTest,
                 getTests,
-                getTestByCode,
-                getCurrentUser
+                getTestByCode
             )
         }
     }

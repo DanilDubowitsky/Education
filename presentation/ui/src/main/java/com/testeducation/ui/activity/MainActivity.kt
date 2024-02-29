@@ -2,6 +2,8 @@ package com.testeducation.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.isVisible
 import com.testeducation.activity.main.MainActivityViewModel
 import com.testeducation.logic.activity.MainActivitySideEffect
 import com.testeducation.navigation.core.AnimationSet
@@ -12,6 +14,7 @@ import com.testeducation.ui.R
 
 import com.testeducation.ui.base.activity.ViewModelHostActivity
 import com.testeducation.ui.databinding.ActivityMainBinding
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.loadDrawable
 import org.orbitmvi.orbit.viewmodel.observe
 import javax.inject.Inject
@@ -49,9 +52,10 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Education)
+        window.statusBarColor = loadColor(R.color.colorBlue)
+        window.navigationBarColor = loadColor(R.color.colorBlue)
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
-            viewBinding.root.background = loadDrawable(R.drawable.drawable_testoria_splash)
             viewModel.prepare()
         }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -62,7 +66,9 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
 
     private fun handleSideEffect(sideEffect: MainActivitySideEffect) = when (sideEffect) {
         MainActivitySideEffect.OnDataLoaded -> {
-            viewBinding.root.background = null
+            window.statusBarColor = loadColor(android.R.color.transparent)
+            window.navigationBarColor = loadColor(android.R.color.transparent)
+            viewBinding.screenPlaceholder.isVisible = false
         }
     }
 

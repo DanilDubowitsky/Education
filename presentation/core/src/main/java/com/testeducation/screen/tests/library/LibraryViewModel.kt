@@ -16,6 +16,7 @@ import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.home.library.LibraryHomeViewModel.Companion.LIBRARY_NAVIGATOR_KEY
 import com.testeducation.utils.firstByConditionOrNull
+import com.testeducation.utils.isNotEmptyOrBlank
 import kotlinx.coroutines.async
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -91,13 +92,39 @@ class LibraryViewModel(
         }
     }
 
-    private fun navigateToTestsLibrary(type: TestLibraryGetTypeUI) {
-        val screen = NavigationScreen.Tests.Library(type)
-        router.navigateTo(screen, key = LIBRARY_NAVIGATOR_KEY)
+    fun openConstructor() = intent {
+        val screen = NavigationScreen.Main.CreationTest
+        router.setResultListener(
+            NavigationScreen.Main.CreationTest.OnCreationTestResult
+        ) { idTest ->
+            if (idTest.isNotEmptyOrBlank()) {
+                val screenSelectionQuestion = NavigationScreen.Main.SelectionTest(idTest)
+                router.navigateTo(screenSelectionQuestion)
+            }
+        }
+        router.navigateTo(screen)
     }
 
-    private fun loadData() = intent {
+    fun openCatalog() = intent {
+        router.sendResult(
+            NavigationScreen.Main.HomeLibrary.OnTestsSelected,
+            Unit,
+            needRemoveListener = false
+        )
+    }
+
+    fun refresh() = intent {
+        updateModelState {
+            copy(isRefreshing = true)
+        }
+        loadData()
+    }
+
+    fun loadData() = intent {
         launchJob {
+            updateModelState {
+                copy(loadingState = LibraryModelState.LoadingState.LOADING)
+            }
             val publishedTestsDeferred = async {
                 getTests(
                     limit = TEST_LIBRARY_LIMIT,
@@ -132,12 +159,18 @@ class LibraryViewModel(
                 copy(
                     publishedTests = publishedTests.tests,
                     passedTests = passedTests.tests,
-                    draftsTests = draftTests.tests,
+                    draftsTests = draftsTests,
                     loadingState = LibraryModelState.LoadingState.IDLE,
-                    totalTests = publishedTests.tests + passedTests.tests + draftTests.tests
+                    totalTests = publishedTests.tests + passedTests.tests + draftTests.tests,
+                    isRefreshing = false
                 )
             }
         }
+    }
+
+    private fun navigateToTestsLibrary(type: TestLibraryGetTypeUI) {
+        val screen = NavigationScreen.Tests.Library(type)
+        router.navigateTo(screen, key = LIBRARY_NAVIGATOR_KEY)
     }
 
     private companion object {

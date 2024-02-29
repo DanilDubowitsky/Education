@@ -84,7 +84,10 @@ sealed interface NavigationScreen : Serializable {
 
         object Library : Main
 
-        object HomeLibrary : Main
+        object HomeLibrary : Main {
+
+            object OnTestsSelected : ResultKey<Unit>
+        }
     }
 
     sealed interface Tests : NavigationScreen {

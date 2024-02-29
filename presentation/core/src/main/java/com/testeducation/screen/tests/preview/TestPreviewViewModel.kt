@@ -27,8 +27,7 @@ class TestPreviewViewModel(
     private val getTest: GetTest,
     private val likeTest: ToggleTestLike,
     private val getTests: GetTests,
-    private val getTestByCode: GetTestByCode,
-    private val getCurrentUser: GetCurrentUser
+    private val getTestByCode: GetTestByCode
 ) : BaseViewModel<TestPreviewModelState,
         TestPreviewState, TestPreviewSideEffect>(reducer, exceptionHandler) {
 
@@ -98,7 +97,6 @@ class TestPreviewViewModel(
         } else {
             getTest(testId!!)
         }
-        val user = getCurrentUser()
         val testsPage = getTests(
             limit = TESTS_PAGE_SIZE,
             offset = 0,
@@ -112,8 +110,7 @@ class TestPreviewViewModel(
                 test = test,
                 authorTests = testsPage.tests.filter { testShort ->
                     testShort.id != testId
-                },
-                currentUser = user
+                }
             )
         }
     }

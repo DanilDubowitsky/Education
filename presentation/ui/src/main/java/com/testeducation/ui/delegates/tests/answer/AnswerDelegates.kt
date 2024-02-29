@@ -26,6 +26,7 @@ fun createChoiceAnswerDelegate(
         onSelectAnswer(absoluteAdapterPosition)
     }
     bind {
+        binding.checkBoxAnswer.isEnabled = item.canSelect
         binding.bindChoiceAnswer(item)
     }
 }

@@ -35,7 +35,6 @@ interface TestCodeEnterModule {
             reducer: IReducer<TestCodeEnterModelState, TestCodeEnterState>,
             exceptionHandler: IExceptionHandler,
             router: NavigationRouter,
-            getTestByCode: GetTestByCode,
             resourceHelper: IResourceHelper
         ): TestCodeEnterViewModel {
 
@@ -43,8 +42,7 @@ interface TestCodeEnterModule {
                 reducer,
                 exceptionHandler,
                 router,
-                resourceHelper,
-                getTestByCode
+                resourceHelper
             )
         }
     }

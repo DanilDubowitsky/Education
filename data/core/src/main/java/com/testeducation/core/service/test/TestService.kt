@@ -6,6 +6,7 @@ import com.testeducation.domain.model.question.TestPassResult
 import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.model.test.TestCreationShort
 import com.testeducation.domain.service.test.ITestService
+import kotlinx.coroutines.delay
 
 class TestService(
     private val testRemoteClient: ITestRemoteClient,
@@ -32,15 +33,18 @@ class TestService(
         answers: List<InputUserAnswerData>,
         spentTime: Long,
         isCheating: Boolean,
-        result: TestPassResult
+        result: TestPassResult,
+        sendToStatistic: Boolean
     ) {
-        testRemoteClient.passTest(
-            testId,
-            answers,
-            spentTime,
-            isCheating,
-            result
-        )
         answeredQuestionLocalSource.addAnsweredQuestions(testId, answers)
+        if (sendToStatistic) {
+            testRemoteClient.passTest(
+                testId,
+                answers,
+                spentTime,
+                isCheating,
+                result
+            )
+        }
     }
 }

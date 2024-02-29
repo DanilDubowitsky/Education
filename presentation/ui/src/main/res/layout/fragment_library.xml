@@ -26,124 +26,189 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:layout_marginTop="32dp"
+        android:nestedScrollingEnabled="true"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/loadingShimmer"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
-                <include layout="@layout/layout_library_shimmer" />
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/loadingShimmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                    <include layout="@layout/layout_library_shimmer" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/contentGroop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="txtPublished, imgPublishedArrow,
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/contentGroop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="txtPublished, imgPublishedArrow,
                  txtDrafts, txtPassed, imgDrafts, imgPassed,
                   draftsPager, publishedPager, passedPager" />
 
-            <TextView
-                android:id="@+id/txtPublished"
-                style="@style/Text.Label.SemiBold"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/library_published_title"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/txtPublished"
+                    style="@style/Text.Label.SemiBold"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/library_published_title"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imgPublishedArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_right_arrow"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtPublished"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtPublished" />
+                <ImageView
+                    android:id="@+id/imgPublishedArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtPublished"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtPublished" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/publishedPager"
-                app:layout_constraintTop_toBottomOf="@+id/txtPublished"
-                android:layout_marginTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/publishedPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="121dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txtPublished" />
 
-            <TextView
-                android:id="@+id/txtPassed"
-                style="@style/Text.Label.SemiBold"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/library_passed_title"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/publishedPager" />
+                <TextView
+                    android:id="@+id/txtPassed"
+                    style="@style/Text.Label.SemiBold"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/library_passed_title"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/publishedPager" />
 
-            <ImageView
-                android:id="@+id/imgPassed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_right_arrow"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtPassed"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtPassed" />
+                <ImageView
+                    android:id="@+id/imgPassed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtPassed"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtPassed" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/passedPager"
-                app:layout_constraintTop_toBottomOf="@+id/txtPassed"
-                android:layout_marginTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/passedPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="121dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txtPassed" />
 
-            <TextView
-                android:id="@+id/txtDrafts"
-                style="@style/Text.Label.SemiBold"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/library_draft_title"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passedPager" />
+                <TextView
+                    android:id="@+id/txtDrafts"
+                    style="@style/Text.Label.SemiBold"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/library_draft_title"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgPublishedArrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/passedPager" />
 
-            <ImageView
-                android:id="@+id/imgDrafts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_right_arrow"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtDrafts"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtDrafts" />
+                <ImageView
+                    android:id="@+id/imgDrafts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtDrafts"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtDrafts" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/draftsPager"
-                app:layout_constraintTop_toBottomOf="@+id/txtDrafts"
-                android:layout_marginTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/draftsPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="121dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDrafts" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:id="@+id/emptyLibraryLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/txtEmptyLibrary"
+                        style="@style/Text.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/library_empty_title"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtEmptyLibraryDescription"
+                        style="@style/Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="24dp"
+                        android:gravity="center"
+                        android:text="@string/library_empty_description"
+                        android:textColor="@color/colorTextGray"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnGoToConstructor"
+                        style="@style/Button.Normal.Green"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="60dp"
+                        android:backgroundTint="@color/colorOrange"
+                        android:text="@string/library_go_to_constructor" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnGoToCatalog"
+                        style="@style/Button.Normal.Green"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/library_go_to_catalog" />
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </ScrollView>
 

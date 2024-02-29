@@ -1,6 +1,7 @@
 package com.testeducation.navigation.core
 
 import com.testeducation.navigation.screen.NavigationScreen
+import java.util.concurrent.ConcurrentLinkedQueue
 
 class AndroidNavigationRouter(
     private val navigationHost: NavigationHost,
