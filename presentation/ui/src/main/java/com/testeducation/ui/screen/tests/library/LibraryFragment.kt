@@ -106,7 +106,7 @@ class LibraryFragment : ViewModelHostFragment<LibraryViewModel, FragmentLibraryB
     private fun FragmentLibraryBinding.renderSectionsVisibility(
         isDraftsEmpty: Boolean,
         isPublishedEmpty: Boolean,
-        isPassedEmpty: Boolean,
+        isPassedEmpty: Boolean
     ) {
         draftsPager.isVisible = !isDraftsEmpty
         imgDrafts.isVisible = !isDraftsEmpty

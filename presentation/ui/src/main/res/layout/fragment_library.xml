@@ -26,6 +26,7 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:layout_marginTop="32dp"
+        android:nestedScrollingEnabled="true"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -82,7 +83,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/publishedPager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="121dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/txtPublished" />
 
@@ -113,7 +114,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/passedPager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="121dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/txtPassed" />
 
@@ -144,7 +145,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/draftsPager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="121dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/txtDrafts" />
 
