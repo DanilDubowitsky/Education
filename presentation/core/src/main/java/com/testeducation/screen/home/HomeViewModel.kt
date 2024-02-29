@@ -65,6 +65,9 @@ class HomeViewModel(
         updateModelState {
             copy(selectedScreen = HomeModelState.BottomNavigationItems.LIBRARY)
         }
+        router.setResultListener(NavigationScreen.Main.HomeLibrary.OnTestsSelected) {
+            navigateToTests()
+        }
         router.homeNavigateTo(screen, HOME_NAVIGATOR_KEY)
     }
 

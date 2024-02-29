@@ -76,21 +76,29 @@ class LibraryFragment : ViewModelHostFragment<LibraryViewModel, FragmentLibraryB
         txtPublished.setClickListener(viewModel::openPublishedTests)
         txtDrafts.setClickListener(viewModel::openDraftTests)
         txtPassed.setClickListener(viewModel::openPassedTests)
+        btnGoToConstructor.setClickListener(viewModel::openConstructor)
+        btnGoToCatalog.setClickListener(viewModel::openCatalog)
+        swipeToRefresh.setOnRefreshListener(viewModel::loadData)
     }
 
     private fun render(state: LibraryState) = binding {
+        swipeToRefresh.isRefreshing = state.isRefreshing
         loadingShimmer.isShimmerHide = !state.isLoading
         contentGroop.isVisible = !state.isLoading
 
         draftsTestsAdapter.items = state.draftsTests
         passedTestsAdapter.items = state.passedTests
         publishedTestsAdapter.items = state.publishedTests
+        emptyLibraryLayout.isVisible =
+            state.draftsTests.isEmpty() &&
+                    state.publishedTests.isEmpty() &&
+                    state.passedTests.isEmpty() && !state.isLoading
 
         if (!state.isLoading) {
             renderSectionsVisibility(
                 state.draftsTests.isEmpty(),
                 state.publishedTests.isEmpty(),
-                state.passedTests.isEmpty()
+                state.passedTests.isEmpty(),
             )
         }
     }
@@ -98,7 +106,7 @@ class LibraryFragment : ViewModelHostFragment<LibraryViewModel, FragmentLibraryB
     private fun FragmentLibraryBinding.renderSectionsVisibility(
         isDraftsEmpty: Boolean,
         isPublishedEmpty: Boolean,
-        isPassedEmpty: Boolean
+        isPassedEmpty: Boolean,
     ) {
         draftsPager.isVisible = !isDraftsEmpty
         imgDrafts.isVisible = !isDraftsEmpty

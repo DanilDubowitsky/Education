@@ -103,6 +103,10 @@
     <string name="library_published_title">Опубликованные</string>
     <string name="library_passed_title">Пройденные</string>
     <string name="library_draft_title">Черновики</string>
+    <string name="library_empty_title">Ваша библиотека пуста</string>
+    <string name="library_empty_description">Создавайте и публикуйте созданные тесты или проходите тесты из каталога</string>
+    <string name="library_go_to_constructor">Перейти в конструктор</string>
+    <string name="library_go_to_catalog">Перейти в каталог</string>
 
     <string name="test_preview_about_test_label">О тесте</string>
     <string name="test_preview_show_more">Показать полностью</string>

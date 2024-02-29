@@ -14,6 +14,7 @@ import com.testeducation.ui.R
 
 import com.testeducation.ui.base.activity.ViewModelHostActivity
 import com.testeducation.ui.databinding.ActivityMainBinding
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.loadDrawable
 import org.orbitmvi.orbit.viewmodel.observe
 import javax.inject.Inject
@@ -51,6 +52,8 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Education)
+        window.statusBarColor = loadColor(R.color.colorBlue)
+        window.navigationBarColor = loadColor(R.color.colorBlue)
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             viewModel.prepare()
@@ -63,6 +66,8 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
 
     private fun handleSideEffect(sideEffect: MainActivitySideEffect) = when (sideEffect) {
         MainActivitySideEffect.OnDataLoaded -> {
+            window.statusBarColor = loadColor(android.R.color.transparent)
+            window.navigationBarColor = loadColor(android.R.color.transparent)
             viewBinding.screenPlaceholder.isVisible = false
         }
     }

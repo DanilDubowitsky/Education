@@ -6,5 +6,6 @@ data class LibraryState(
     val isLoading: Boolean,
     val draftsTests: List<TestShortUI>,
     val publishedTests: List<TestShortUI>,
-    val passedTests: List<TestShortUI>
+    val passedTests: List<TestShortUI>,
+    val isRefreshing: Boolean
 )

@@ -12,6 +12,7 @@ import com.testeducation.logic.activity.MainActivitySideEffect
 import com.testeducation.logic.activity.MainActivityState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
