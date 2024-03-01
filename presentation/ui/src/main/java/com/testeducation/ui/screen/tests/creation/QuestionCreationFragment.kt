@@ -152,8 +152,7 @@ class QuestionCreationFragment :
             is QuestionCreationSideEffect.LoaderVisible -> {
                 dialogLoader?.dismiss()
                 dialogLoader = LoaderDialog.Builder(requireContext())
-                    .setTitleText(getString(R.string.question_creation_save_data))
-                    .setAnimation(R.raw.animation_lmal9dt8).show()
+                    .setTitleText(getString(R.string.question_creation_save_data)).show()
             }
 
             is QuestionCreationSideEffect.LoaderInvisible -> {
