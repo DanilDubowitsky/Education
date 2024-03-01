@@ -9,6 +9,12 @@ sealed interface DrawableResource {
     sealed interface Avatar : DrawableResource {
         object First : Avatar
         object Second : Avatar
+        object Three : Avatar
+        object Four : Avatar
+        object Five : Avatar
+        object Six : Avatar
+        object Seven : Avatar
+        object Eight : Avatar
         object Default : Avatar
     }
 }

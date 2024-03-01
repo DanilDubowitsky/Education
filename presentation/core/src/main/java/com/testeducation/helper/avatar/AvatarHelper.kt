@@ -25,6 +25,12 @@ class AvatarHelper(
         return when(avatarId) {
             1 -> resourceHelper.extractDrawableResource(DrawableResource.Avatar.First)
             2 -> resourceHelper.extractDrawableResource(DrawableResource.Avatar.Second)
+            3 -> resourceHelper.extractDrawableResource(DrawableResource.Avatar.Three)
+            4 -> resourceHelper.extractDrawableResource(DrawableResource.Avatar.Four)
+            5 -> resourceHelper.extractDrawableResource(DrawableResource.Avatar.Five)
+            6 -> resourceHelper.extractDrawableResource(DrawableResource.Avatar.Six)
+            7 -> resourceHelper.extractDrawableResource(DrawableResource.Avatar.Seven)
+            8 -> resourceHelper.extractDrawableResource(DrawableResource.Avatar.Eight)
             else -> resourceHelper.extractDrawableResource(DrawableResource.Avatar.Default)
         }
     }
