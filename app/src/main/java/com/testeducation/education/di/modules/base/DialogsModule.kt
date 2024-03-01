@@ -1,5 +1,6 @@
 package com.testeducation.education.di.modules.base
 
+import com.testeducation.education.di.modules.screen.common.ConfirmCodeModule
 import com.testeducation.education.di.modules.screen.question.QuestionsPreviewModule
 import com.testeducation.education.di.modules.screen.tests.action.TestActionModule
 import com.testeducation.education.di.modules.screen.tests.code.enter.TestCodeEnterModule
@@ -12,6 +13,8 @@ import com.testeducation.education.di.modules.screen.tests.question.QuestionModu
 import com.testeducation.education.di.modules.screen.tests.question.input.AnswerInputModule
 import com.testeducation.education.di.modules.screen.tests.question.time.TimeQuestionModule
 import com.testeducation.education.di.modules.screen.tests.sort.TestSortModule
+import com.testeducation.ui.screen.common.ConfirmCodeDialog
+import com.testeducation.ui.screen.common.ConfirmationBottomDialog
 import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
@@ -38,6 +41,9 @@ interface DialogsModule {
 
     @ContributesAndroidInjector
     fun informationDialog(): InformationDialog
+
+    @ContributesAndroidInjector
+    fun confirmationBottomDialog(): ConfirmationBottomDialog
 
     @ContributesAndroidInjector
     fun informationAlertDialog(): InformationAlertDialog
@@ -77,4 +83,7 @@ interface DialogsModule {
 
     @ContributesAndroidInjector(modules = [TestActionModule::class])
     fun testActionDialog(): TestActionDialog
+
+    @ContributesAndroidInjector(modules = [ConfirmCodeModule::class])
+    fun confirmCodeDialog(): ConfirmCodeDialog
 }

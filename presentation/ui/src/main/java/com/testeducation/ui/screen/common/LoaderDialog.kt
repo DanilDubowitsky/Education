@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.KeyEvent
-import androidx.annotation.RawRes
 import androidx.core.view.isVisible
 import com.testeducation.ui.R
 import com.testeducation.ui.databinding.DialogLoaderBinding
@@ -46,10 +45,6 @@ class LoaderDialog(
         binding.tvTitle.isVisible = true
     }
 
-    fun setAnimationLottie(@RawRes rawId: Int) {
-        binding.animationView.setAnimation(rawId)
-    }
-
     class Builder(val context: Context) {
 
         var dialog: LoaderDialog = LoaderDialog(context)
@@ -70,11 +65,6 @@ class LoaderDialog(
 
         fun setTitleText(textTitle: String): Builder {
             dialog.setTitleText(textTitle)
-            return this
-        }
-
-        fun setAnimation(@RawRes rawId: Int) : Builder {
-            dialog.setAnimationLottie(rawId)
             return this
         }
 

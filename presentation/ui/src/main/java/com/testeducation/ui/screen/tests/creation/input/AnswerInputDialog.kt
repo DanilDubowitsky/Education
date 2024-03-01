@@ -23,7 +23,7 @@ class AnswerInputDialog:
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.observe(this, ::render)
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         binding {
             etAnswer.doOnTextChanged { text, start, before, count ->
                 viewModel.updateAnswerText(text.toString())

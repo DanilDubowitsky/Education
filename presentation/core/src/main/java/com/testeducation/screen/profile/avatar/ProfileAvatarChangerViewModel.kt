@@ -38,6 +38,24 @@ class ProfileAvatarChangerViewModel(
                         AvatarData(
                             2, avatarId == 2
                         ),
+                        AvatarData(
+                            3, avatarId == 3
+                        ),
+                        AvatarData(
+                            4, avatarId == 4
+                        ),
+                        AvatarData(
+                            5, avatarId == 5
+                        ),
+                        AvatarData(
+                            6, avatarId == 6
+                        ),
+                        AvatarData(
+                            7, avatarId == 7
+                        ),
+                        AvatarData(
+                            8, avatarId == 8
+                        ),
                     )
                 )
             }

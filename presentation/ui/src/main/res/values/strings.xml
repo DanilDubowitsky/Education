@@ -49,6 +49,7 @@
     <string name="common_apply">Применить</string>
     <string name="common_send">Отправить</string>
     <string name="common_share">Поделиться</string>
+    <string name="common_delete">Удалить</string>
 
     <string name="tests_filters_label">Фильтры</string>
 
@@ -193,6 +194,13 @@
     <string name="profile_edit_email_title">Электронная почта</string>
     <string name="profile_edit_toolbar_title">Данные профиля</string>
     <string name="profile_avatar_changer_title_toolbar">Аватар</string>
+    <string name="profile_detele_confirm_title">Вы уверены что хотите удалить аккаунт?</string>
+    <string name="profile_detele_confirm_description">Все ваши данные, статистика и тесты будут полностью удалены без возможности восстановления.</string>
+    <string name="profile_detele_confirm_delete_description">Вам на почту отправлен код для удаления аккаунта</string>
+    <string name="confirm_input_code_title">Введите код</string>
+    <string name="about_app">О приложении</string>
+    <string name="about_app_social_title">Мы в социальных сетях</string>
+    <string name="about_app_version">Версия: %s</string>
 
     <!--Support-->
     <string name="support_chip_bug">Баг</string>
