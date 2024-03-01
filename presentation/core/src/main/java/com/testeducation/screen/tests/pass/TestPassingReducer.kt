@@ -21,22 +21,24 @@ class TestPassingReducer(
         val answers = modelState.currentQuestion?.answers ?: emptyList()
         val timeSpent = modelState.currentQuestion?.timeSpent ?: 0L
         val choiceState = currentState as? TestPassingModelState.SelectedQuestionState.Choice
-        val selectedAnswer =
-            choiceState?.selectedAnswerIndex?.let { choiceState.question?.answers?.get(it) }
 
         val questionUI = currentState.question?.toPassingQuestion(
             spentTime = timeSpent,
             state = state,
             answers = answers
-        )?.toUI(answerColorExtractor, timeConverterLongToString, selectedAnswer?.id)
+        )?.toUI(
+            answerColorExtractor,
+            timeConverterLongToString,
+            choiceState?.selectedIds ?: emptyList()
+        )
 
         val matchDataUI = when {
             currentState is TestPassingModelState.SelectedQuestionState.Match &&
                     questionUI is QuestionUI.Match -> {
-                questionUI.answers.mapIndexed { index, matchAnswer ->
+                modelState.currentQuestion!!.matchData.mapIndexed { index, matchAnswer ->
                     TestPassingState.MatchDataUI(
-                        currentState.matchData[index],
-                        matchAnswer.color
+                        matchAnswer,
+                        questionUI.answers[index].color
                     )
                 }
             }

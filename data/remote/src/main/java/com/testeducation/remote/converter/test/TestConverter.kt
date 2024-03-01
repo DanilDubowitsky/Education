@@ -100,8 +100,14 @@ private fun RemoteTestSettings.toModel() = TestSettings(
     previewQuestions,
     minCorrectAnswers,
     antiCheating,
-    timeLimit
+    timeLimit,
+    questionsOrder.toModel()
 )
+
+private fun RemoteTestSettings.QuestionsOrder.toModel() = when (this) {
+    RemoteTestSettings.QuestionsOrder.Sequencial -> TestSettings.QuestionsOrder.SEQUENTIAL
+    RemoteTestSettings.QuestionsOrder.Shuffled -> TestSettings.QuestionsOrder.SHUFFLED
+}
 
 private fun String.toTestAvailability() = when (this) {
     AVAILABLE_STATUS_PUBLIC -> TestSettings.Availability.PUBLIC

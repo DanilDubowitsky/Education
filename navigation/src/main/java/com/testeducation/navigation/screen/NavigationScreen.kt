@@ -103,7 +103,10 @@ sealed interface NavigationScreen : Serializable {
 
         object Library : Main
 
-        object HomeLibrary : Main
+        object HomeLibrary : Main {
+
+            object OnTestsSelected : ResultKey<Unit>
+        }
     }
 
     sealed interface Tests : NavigationScreen {
@@ -207,6 +210,11 @@ sealed interface NavigationScreen : Serializable {
                 val direction: String
             )
         }
+
+        data class Action(
+            val testId: String,
+            val testTitle: String
+        ) : Tests
     }
 
     sealed interface Questions : NavigationScreen {

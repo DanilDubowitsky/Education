@@ -13,12 +13,14 @@ class PassTest(
         answers: List<InputUserAnswerData>,
         spentTime: Long,
         isCheating: Boolean,
-        result: TestPassResult
+        result: TestPassResult,
+        sendToStatistic: Boolean
     ) = testService.passTest(
         testId,
         answers,
         spentTime,
         isCheating,
-        result
+        result,
+        sendToStatistic
     )
 }

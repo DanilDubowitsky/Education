@@ -4,11 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.forEach
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.google.android.flexbox.FlexboxLayout
-import com.google.android.material.chip.Chip
 import com.testeducation.logic.model.question.AnswerStateUI
 import com.testeducation.logic.model.question.AnsweredQuestionUI
 import com.testeducation.logic.model.test.AnswerUI
@@ -16,6 +14,7 @@ import com.testeducation.ui.R
 import com.testeducation.ui.databinding.ViewAnswerAnsweredQuestionBinding
 import com.testeducation.ui.databinding.ViewHolderAnsweredMatchQuestionBinding
 import com.testeducation.ui.databinding.ViewHolderSimpleResultBinding
+import com.testeducation.ui.databinding.ViewTestResultAnswerBinding
 import com.testeducation.ui.databinding.ViewTestResultsAnswerItemBinding
 import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.loadColor
@@ -32,15 +31,13 @@ fun choiceAnsweredQuestionDelegate() =
                 item.title,
                 binding.txtTitle,
                 item.numberQuestion,
-                binding.txtAnswerIndicator,
                 binding.imgAnswerIndicator,
                 null,
-                listOf(item.chosenAnswer),
-                listOf(item.correctAnswer),
+                item.chosenAnswer,
+                item.correctAnswer,
                 item.state,
                 binding.answerChipGroup,
                 binding.trueAnswerChip,
-                binding.txtTrueAnswer
             )
         }
     }
@@ -55,7 +52,6 @@ fun orderAnsweredQuestionDelegate() =
                 item.title,
                 binding.txtTitle,
                 item.numberQuestion,
-                binding.txtAnswerIndicator,
                 binding.imgAnswerIndicator,
                 null,
                 item.answeredAnswers,
@@ -63,7 +59,6 @@ fun orderAnsweredQuestionDelegate() =
                 item.state,
                 binding.answerChipGroup,
                 binding.trueAnswerChip,
-                binding.txtTrueAnswer
             )
         }
     }
@@ -75,7 +70,6 @@ fun textAnswerDelegate() = simpleDelegateAdapter<AnsweredQuestionUI.Text, Answer
             item.title,
             binding.txtTitle,
             item.numberQuestion,
-            binding.txtAnswerIndicator,
             binding.imgAnswerIndicator,
             item.answered,
             emptyList(),
@@ -83,7 +77,6 @@ fun textAnswerDelegate() = simpleDelegateAdapter<AnsweredQuestionUI.Text, Answer
             item.state,
             binding.answerChipGroup,
             binding.trueAnswerChip,
-            binding.txtTrueAnswer
         )
     }
 }
@@ -115,7 +108,6 @@ fun matchAnsweredQuestionDelegate(
                 item.title,
                 txtTitle,
                 item.numberQuestion,
-                txtAnswerIndicator,
                 imgAnswerIndicator,
                 null,
                 emptyList(),
@@ -123,7 +115,7 @@ fun matchAnsweredQuestionDelegate(
                 item.state,
                 null,
                 null,
-                null
+                txtAnswerIndicator
             )
         }
     }
@@ -133,7 +125,6 @@ private fun bindSimpleData(
     title: String,
     txtTitle: TextView,
     number: Int,
-    txtAnswerIndicator: TextView,
     imgAnswerIndicator: ImageView,
     customAnswer: String?,
     answers: List<AnswerUI?>,
@@ -141,16 +132,25 @@ private fun bindSimpleData(
     stateUI: AnswerStateUI,
     answersLayout: FlexboxLayout?,
     correctAnswersLayout: FlexboxLayout?,
-    txtCorrectAnswer: TextView?
+    answerTextView: TextView? = null
 ) {
     val inflater = LayoutInflater.from(txtTitle.context)
     val answer = answers.firstOrNull()
-    answersLayout?.forEach { view ->
-        if (view is Chip) answersLayout.removeView(view)
+    var txtAnswerIndicator = answerTextView
+
+    answersLayout?.removeAllViews()
+    correctAnswersLayout?.removeAllViews()
+
+    if (txtAnswerIndicator == null) {
+        txtAnswerIndicator = ViewTestResultAnswerBinding.inflate(inflater).root
     }
-    correctAnswersLayout?.forEach { view ->
-        if (view is Chip) correctAnswersLayout.removeView(view)
-    }
+    val txtCorrectAnswer = ViewTestResultAnswerBinding.inflate(inflater).root
+    txtCorrectAnswer.text =
+        txtCorrectAnswer.context.getString(R.string.test_pass_results_correct_answer)
+    txtCorrectAnswer.setTextColor(txtCorrectAnswer.context.loadColor(R.color.colorDarkGreen))
+
+    answersLayout?.addView(txtAnswerIndicator)
+    correctAnswersLayout?.addView(txtCorrectAnswer)
 
     if (customAnswer != null) {
         val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
@@ -197,14 +197,16 @@ private fun bindSimpleData(
         }
     }
     val isCorrectVisible = answer is AnswerUI.ChoiceAnswer && stateUI == AnswerStateUI.INCORRECT
-    txtCorrectAnswer?.isVisible = isCorrectVisible
+    txtCorrectAnswer.isVisible = isCorrectVisible
     correctAnswersLayout?.isVisible = isCorrectVisible
     correctAnswersLayout?.let {
         if (answer !is AnswerUI.ChoiceAnswer) return
-        val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
-        item.root.text = (correctAnswers.first() as AnswerUI.ChoiceAnswer).title
-        item.root.createLayoutParams()
-        correctAnswersLayout.addView(item.root)
+        correctAnswers.forEach { answerUI ->
+            val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
+            item.root.text = (answerUI as AnswerUI.ChoiceAnswer).title
+            item.root.createLayoutParams()
+            correctAnswersLayout.addView(item.root)
+        }
     }
 }
 

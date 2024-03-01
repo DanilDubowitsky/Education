@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace = "com.testeducation.ui"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -91,4 +91,7 @@ dependencies {
     // Layout
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    // Splash screen
+    implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
 }

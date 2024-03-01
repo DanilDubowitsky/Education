@@ -20,6 +20,7 @@ interface ITestService {
         answers: List<InputUserAnswerData>,
         spentTime: Long,
         isCheating: Boolean,
-        result: TestPassResult
+        result: TestPassResult,
+        sendToStatistic: Boolean
     )
 }

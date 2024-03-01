@@ -12,7 +12,8 @@ class LibraryReducer : IReducer<LibraryModelState, LibraryState> {
             isLoading = loadingState == LibraryModelState.LoadingState.LOADING,
             draftsTests = draftsTests.toUIModels(),
             publishedTests = publishedTests.toUIModels(),
-            passedTests = passedTests.toUIModels()
+            passedTests = passedTests.toUIModels(),
+            isRefreshing = isRefreshing
         )
     }
 }

@@ -45,8 +45,12 @@ private fun AnsweredQuestion.Choose.toUI() = AnsweredQuestionUI.Choose(
     title,
     state.toUI(),
     numberQuestion,
-    chosenAnswer?.toUI(0, null) as? AnswerUI.ChoiceAnswer,
-    correctAnswer?.toUI(0, null) as? AnswerUI.ChoiceAnswer
+    chosenAnswers.map { choice ->
+        choice.toUI(0, false, canSelect = true) as? AnswerUI.ChoiceAnswer
+    },
+    correctAnswers.map { correct ->
+        correct.toUI(0, false, canSelect = true) as? AnswerUI.ChoiceAnswer
+    }
 )
 
 private fun AnsweredQuestion.Text.toUI() = AnsweredQuestionUI.Text(

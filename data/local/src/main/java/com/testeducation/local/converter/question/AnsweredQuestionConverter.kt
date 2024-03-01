@@ -25,19 +25,21 @@ fun InputUserAnswerData.toEntity(testId: String): AnsweredQuestionEntity {
         testId,
         answerIds,
         state.toEnumEntity(),
-        customAnswer
+        customAnswer,
+        matchData
     )
 }
 
 fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
     return when (val domainQuestion = question.toModel()) {
         is Question.Choice -> {
-            val chosenAnswer = domainQuestion.answers.firstOrNull {
-                it.id == answeredQuestion.answeredIds.first()
+            val chosenAnswer: ArrayList<Answer.ChoiceAnswer> = ArrayList()
+            domainQuestion.answers.forEach { choiceAnswer ->
+                if (answeredQuestion.answeredIds.contains(choiceAnswer.id)) {
+                    chosenAnswer.add(choiceAnswer)
+                }
             }
-            val correctAnswer = domainQuestion.answers.firstOrNull {
-                it.isTrue
-            }
+            val correctAnswer = domainQuestion.answers.filter(Answer.ChoiceAnswer::isTrue)
             AnsweredQuestion.Choose(
                 domainQuestion.id,
                 domainQuestion.title,
@@ -49,9 +51,6 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
         }
 
         is Question.Match -> {
-            val matchData = domainQuestion.answers.map {
-                it.matchedCorrectText
-            }
             val matchedAnswers = answeredQuestion.answeredIds.map { id ->
                 domainQuestion.answers.first {
                     it.id == id
@@ -63,7 +62,7 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
                 domainQuestion.title,
                 answeredQuestion.answerState.toEnumModel(),
                 question.question.numberQuestion,
-                matchData,
+                answeredQuestion.matchData,
                 matchedAnswers
             )
         }

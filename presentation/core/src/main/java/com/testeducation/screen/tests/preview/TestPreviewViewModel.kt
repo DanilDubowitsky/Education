@@ -6,6 +6,7 @@ import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTestByCode
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
+import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper

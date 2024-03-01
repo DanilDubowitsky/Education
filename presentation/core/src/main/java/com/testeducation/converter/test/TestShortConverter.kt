@@ -68,7 +68,8 @@ fun TestSettings.toUI() = TestShortUI.Test.Settings(
     previewQuestions,
     minCorrectAnswers,
     antiCheating,
-    timeLimit
+    timeLimit,
+    questionsOrder.name
 )
 
 private fun TestShortUI.Test.Settings.toModel() = TestSettings(
@@ -76,7 +77,8 @@ private fun TestShortUI.Test.Settings.toModel() = TestSettings(
     previewQuestions,
     minCorrectAnswers,
     antiCheating,
-    timeLimit
+    timeLimit,
+    TestSettings.QuestionsOrder.valueOf(questionsOrder)
 )
 
 private fun TestSettings.Availability.toUI() = when (this) {

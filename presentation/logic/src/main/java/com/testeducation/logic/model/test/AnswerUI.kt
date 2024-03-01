@@ -8,7 +8,8 @@ sealed interface AnswerUI {
         val title: String,
         val isTrue: Boolean,
         val color: Int,
-        val isSelected: Boolean
+        val isSelected: Boolean,
+        val canSelect: Boolean
     ) : AnswerUI
 
     data class TextAnswer(
