@@ -153,15 +153,15 @@ class LibraryViewModel(
 
             val publishedTests = publishedTestsDeferred.await()
             val passedTests = passedTestsDeferred.await()
-            val draftTests = draftTestsDeferred.await()
+            val remoteDraftTests = draftTestsDeferred.await()
 
             updateModelState {
                 copy(
                     publishedTests = publishedTests.tests,
                     passedTests = passedTests.tests,
-                    draftsTests = draftsTests,
+                    draftsTests = remoteDraftTests.tests,
                     loadingState = LibraryModelState.LoadingState.IDLE,
-                    totalTests = publishedTests.tests + passedTests.tests + draftTests.tests,
+                    totalTests = publishedTests.tests + passedTests.tests + remoteDraftTests.tests,
                     isRefreshing = false
                 )
             }
