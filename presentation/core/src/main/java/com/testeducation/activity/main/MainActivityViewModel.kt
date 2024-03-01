@@ -31,7 +31,7 @@ class MainActivityViewModel(
 
     override val initialModelState: MainActivityModelState = MainActivityModelState()
 
-    fun prepare() = singleIntent("") {
+    fun prepare() = intent {
         val isUpdateRequired = isAppVersionUpdateRequired()
 
         if (isUpdateRequired) {
@@ -41,8 +41,9 @@ class MainActivityViewModel(
             val informationScreen = NavigationScreen.Common.PopUpInformation(
                 title
             )
+            postSideEffect(MainActivitySideEffect.OnDataLoaded)
             router.navigateTo(informationScreen)
-            return@singleIntent
+            return@intent
         }
 
         val isExpired = userConfigInteractor.isRefreshTokenExpired()
