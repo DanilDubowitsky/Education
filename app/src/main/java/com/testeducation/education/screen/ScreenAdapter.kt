@@ -9,6 +9,7 @@ import com.testeducation.ui.screen.auth.registration.RegistrationFragment
 import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
 import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
 import com.testeducation.ui.screen.common.ConfirmCodeDialog
+import com.testeducation.ui.screen.common.ConfirmationBottomDialog
 import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
@@ -101,6 +102,10 @@ class ScreenAdapter : IScreenAdapter {
 
             is NavigationScreen.Common.ConfirmCode -> Screen.DialogScreen {
                 ConfirmCodeDialog().withScreen(screen)
+            }
+
+            is NavigationScreen.Common.ConfirmationBottom -> Screen.DialogScreen {
+                ConfirmationBottomDialog().withScreen(screen)
             }
         }
 

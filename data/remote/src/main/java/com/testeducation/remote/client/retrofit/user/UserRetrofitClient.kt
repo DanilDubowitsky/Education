@@ -1,6 +1,7 @@
 package com.testeducation.remote.client.retrofit.user
 
 import com.testeducation.remote.model.global.RemoteResponse
+import com.testeducation.remote.model.user.ConfirmUserRemote
 import com.testeducation.remote.model.user.RemoteUser
 import com.testeducation.remote.model.user.RemoteUserStatistics
 import com.testeducation.remote.request.user.BugReportRequest
@@ -22,5 +23,11 @@ interface UserRetrofitClient {
 
     @POST("/api/app/main/feedback")
     suspend fun sendBugReport(@Body request: BugReportRequest): RemoteResponse<Unit>
+
+    @POST("/api/app/account/delete")
+    suspend fun deleteUser(): RemoteResponse<String>
+
+    @POST("/api/app/account/confirm-delete")
+    suspend fun confirmDeleteUser(@Body bodyRequest: ConfirmUserRemote): RemoteResponse<Unit>
 
 }

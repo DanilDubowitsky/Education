@@ -30,6 +30,7 @@ class ResourceHelper(
         is CodeStringResource -> string(resource.extractResourceId())
         is SortStringResource -> string(resource.extractResourceId())
         is StringResource.BugReport -> string(resource.getText())
+        is StringResource.Profile -> string(resource.extractResourceId())
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {
@@ -84,6 +85,7 @@ class ResourceHelper(
         StringResource.Common.CommonSave -> string(R.string.common_save)
         StringResource.Common.CommonSave -> string(R.string.common_save)
         StringResource.Common.Close -> string(R.string.common_close)
+        StringResource.Common.Delete -> string(R.string.common_delete)
     }
 
     private fun extractErrorStringResource(resource: StringResource.Error): String =

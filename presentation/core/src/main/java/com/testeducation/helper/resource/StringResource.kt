@@ -19,6 +19,8 @@ sealed interface StringResource {
         object CommonSave : Common
 
         object Close : Common
+
+        object Delete : Common
     }
 
     sealed interface Error : StringResource {
@@ -80,5 +82,11 @@ sealed interface StringResource {
         object AnswerIsEmpty : Validate
         object RegistrationEmptyData : Validate
         object ValidateTitleAttention : Validate
+    }
+
+    sealed interface Profile : StringResource {
+        object DeleteConfirmTitle : Profile
+        object DeleteConfirmDescription : Profile
+        object DeleteCodeConfirm: Profile
     }
 }

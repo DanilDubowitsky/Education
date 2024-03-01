@@ -13,6 +13,7 @@ import com.testeducation.education.di.modules.screen.tests.question.input.Answer
 import com.testeducation.education.di.modules.screen.tests.question.time.TimeQuestionModule
 import com.testeducation.education.di.modules.screen.tests.sort.TestSortModule
 import com.testeducation.ui.screen.common.ConfirmCodeDialog
+import com.testeducation.ui.screen.common.ConfirmationBottomDialog
 import com.testeducation.ui.screen.common.ConfirmationDialog
 import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
@@ -38,6 +39,9 @@ interface DialogsModule {
 
     @ContributesAndroidInjector
     fun informationDialog(): InformationDialog
+
+    @ContributesAndroidInjector
+    fun confirmationBottomDialog(): ConfirmationBottomDialog
 
     @ContributesAndroidInjector
     fun informationAlertDialog(): InformationAlertDialog

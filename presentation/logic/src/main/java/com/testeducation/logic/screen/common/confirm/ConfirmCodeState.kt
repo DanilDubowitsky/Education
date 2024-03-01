@@ -1,7 +1,9 @@
 package com.testeducation.logic.screen.common.confirm
 
-class ConfirmCodeState(
+data class ConfirmCodeState(
     val code: String,
     val title: String,
-    val description: String
+    val description: String,
+    val isSendCodeRetry: Boolean,
+    val isLoading: Boolean
 )

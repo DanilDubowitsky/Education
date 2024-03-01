@@ -2,9 +2,13 @@ package com.testeducation.education.di.modules.screen.common
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.user.DeleteUser
+import com.testeducation.domain.cases.user.DeleteUserConfirm
+import com.testeducation.domain.config.user.IConfirmCodeConfig
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.common.confirm.ConfirmCodeState
+import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.common.confirm.ConfirmCodeModelState
 import com.testeducation.screen.common.confirm.ConfirmCodeReducer
@@ -33,14 +37,22 @@ interface ConfirmCodeModule {
         fun provideViewModel(
             reducer: IReducer<ConfirmCodeModelState, ConfirmCodeState>,
             exceptionHandler: IExceptionHandler,
-            dialog: ConfirmCodeDialog
+            dialog: ConfirmCodeDialog,
+            deleteUser: DeleteUser,
+            confirmDeleteUser: DeleteUserConfirm,
+            confirmCodeConfig: IConfirmCodeConfig,
+            router: NavigationRouter
         ): ConfirmCodeViewModel {
             val screen = dialog.getScreen<NavigationScreen.Common.ConfirmCode>()
             return ConfirmCodeViewModel(
                 reducer = reducer,
                 exceptionHandler = exceptionHandler,
                 title = screen.title,
-                description = screen.description
+                description = screen.description,
+                deleteUser = deleteUser,
+                confirmDeleteUser = confirmDeleteUser,
+                confirmCodeConfig = confirmCodeConfig,
+                router = router
             )
         }
     }

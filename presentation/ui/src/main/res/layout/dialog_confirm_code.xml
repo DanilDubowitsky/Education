@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp">
 
         <ImageView
@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/description"
             style="@style/Text.Default"
-            android:layout_width="363dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
@@ -55,7 +55,6 @@
             android:id="@+id/codeConfirmationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,29 +72,51 @@
             tools:text="Осталось времени: 50 сек" />
 
         <TextView
-            android:id="@+id/tvSendCodeAgain"
+            android:id="@+id/tvSendCode"
             style="@style/Text.Label.Medium"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
             android:text="@string/email_confirmation_send_code_again"
             android:textColor="@color/colorBlue"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tvExpireTime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvExpireTime" />
+            app:layout_constraintTop_toBottomOf="@+id/codeConfirmationView" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnConfirmEmail"
             style="@style/Button.Normal.Green"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="84dp"
             android:text="@string/common_apply"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvExpireTime" />
+            app:layout_constraintTop_toBottomOf="@+id/codeConfirmationView" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/btnConfirmEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topImage"
+            app:layout_constraintVertical_bias="1.0">
+
+            <com.testeducation.ui.view.custom.CircleLoader
+                android:id="@+id/loadingIndicator"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.core.widget.NestedScrollView>

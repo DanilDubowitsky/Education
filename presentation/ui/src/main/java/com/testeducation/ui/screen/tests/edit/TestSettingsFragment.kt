@@ -3,7 +3,6 @@ package com.testeducation.ui.screen.tests.edit
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -71,7 +70,6 @@ class TestSettingsFragment :
         loadingIndicator.setVisibility(isLoading)
         rvSettings.isVisible = !isLoading
         btnSave.isVisible = !isLoading
-        Log.e("TAG1", "loadingIndicator = ${isLoading}")
     }
 
 }

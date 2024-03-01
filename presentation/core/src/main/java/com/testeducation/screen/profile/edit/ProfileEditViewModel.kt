@@ -5,11 +5,15 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.auth.LogOut
 import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.helper.error.IExceptionHandler
+import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.screen.profile.ProfileSideEffect
 import com.testeducation.logic.screen.profile.edit.ProfileEditState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.utils.getColor
+import com.testeducation.utils.getString
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class ProfileEditViewModel(
@@ -59,7 +63,24 @@ class ProfileEditViewModel(
     }
 
     fun deleteAccount() {
-        router.navigateTo(NavigationScreen.Common.ConfirmCode("Удаление аккаунта", "Описание"))
+        router.setResultListener(NavigationScreen.Common.ConfirmCode.OnConfirm) {
+            logOut()
+        }
+        router.setResultListener(NavigationScreen.Common.ConfirmationBottom.ButtonLeft) {
+            router.navigateTo(NavigationScreen.Common.ConfirmCode("", StringResource.Profile.DeleteCodeConfirm.getString(resourceHelper)))
+        }
+        router.navigateTo(NavigationScreen.Common.ConfirmationBottom(
+            title = StringResource.Profile.DeleteConfirmTitle.getString(resourceHelper),
+            description = StringResource.Profile.DeleteConfirmDescription.getString(resourceHelper),
+            buttonLeft = NavigationScreen.Common.ConfirmationBottom.Button(
+                text = StringResource.Common.Delete.getString(resourceHelper),
+                color = ColorResource.Main.Red.getColor(resourceHelper)
+            ),
+            buttonRight = NavigationScreen.Common.ConfirmationBottom.Button(
+                text = StringResource.Common.CommonCancel.getString(resourceHelper),
+                color = ColorResource.Main.Green.getColor(resourceHelper)
+            ),
+        ))
     }
 
     private fun initDataProfile() = intent {
