@@ -15,6 +15,7 @@ import com.testeducation.ui.screen.common.InformationAlertDialog
 import com.testeducation.ui.screen.common.InformationDialog
 import com.testeducation.ui.screen.home.FragmentHome
 import com.testeducation.ui.screen.home.library.LibraryHomeFragment
+import com.testeducation.ui.screen.profile.AboutAppFragment
 import com.testeducation.ui.screen.profile.ProfileAvatarChangerFragment
 import com.testeducation.ui.screen.profile.ProfileEditFragment
 import com.testeducation.ui.screen.profile.ProfileFragment
@@ -208,10 +209,11 @@ class ScreenAdapter : IScreenAdapter {
         }
     }
 
-    private fun createPlatformScreen(screen: NavigationScreen.Questions) = when(screen) {
+    private fun createPlatformScreen(screen: NavigationScreen.Questions) = when (screen) {
         is NavigationScreen.Questions.QuestionEditor -> Screen.FragmentScreen {
             QuestionCreationFragment().withScreen(screen)
         }
+
         is NavigationScreen.Questions.TimeQuestion -> Screen.DialogScreen {
             TimeQuestionDialog().withScreen(screen)
         }
@@ -225,13 +227,19 @@ class ScreenAdapter : IScreenAdapter {
         }
     }
 
-    private fun createPlatformScreen(screen: NavigationScreen.Profile) = when(screen) {
+    private fun createPlatformScreen(screen: NavigationScreen.Profile) = when (screen) {
         NavigationScreen.Profile.Editor -> Screen.FragmentScreen {
             ProfileEditFragment().withScreen(screen)
         }
+
         is NavigationScreen.Profile.Avatar -> Screen.FragmentScreen {
             ProfileAvatarChangerFragment().withScreen(screen)
         }
+
+        NavigationScreen.Profile.AboutApp -> Screen.FragmentScreen {
+            AboutAppFragment().withScreen(screen)
+        }
+
         NavigationScreen.Profile.Support -> Screen.FragmentScreen {
             SupportSenderFragment().withScreen(screen)
         }

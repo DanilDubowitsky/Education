@@ -61,7 +61,7 @@ sealed interface NavigationScreen : Serializable {
         data class WebView(val url: String) : Common
 
         data class ConfirmCode(val title: String, val description: String) : Common {
-            object OnConfirm: ResultKey<Unit>
+            object OnConfirm : ResultKey<Unit>
         }
 
         data class ConfirmationBottom(
@@ -74,6 +74,7 @@ sealed interface NavigationScreen : Serializable {
                 val text: String,
                 @ColorInt val color: Int
             )
+
             object ButtonLeft : ResultKey<Unit>
             object ButtonRight : ResultKey<Unit>
         }
@@ -253,6 +254,7 @@ sealed interface NavigationScreen : Serializable {
     sealed interface Profile : NavigationScreen {
         object Editor : Profile
         object Support : Profile
+        object AboutApp : Profile
         data class Avatar(val avatarId: Int) : Profile {
             object OnAvatarUpdated : ResultKey<Int>
         }

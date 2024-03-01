@@ -27,6 +27,7 @@ class ProfileFragment: ViewModelHostFragment<ProfileViewModel, FragmentProfileBi
             tvSecurityTitle.setClickListener {
                 viewModel.navigateToPolicies()
             }
+            aboutAppContainer.setClickListener(viewModel::navigateAboutApp)
         }
     }
 
