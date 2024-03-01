@@ -30,6 +30,7 @@
         <EditText
             android:id="@+id/edText"
             style="@style/EditText.Input.Simple"
+            android:imeOptions="actionDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
