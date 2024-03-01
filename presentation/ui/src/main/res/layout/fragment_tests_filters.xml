@@ -97,6 +97,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="12dp"
                 app:layout_constraintEnd_toStartOf="@+id/etPlaceHolderToQuestionsCount"
                 app:layout_constraintStart_toStartOf="@+id/tvQuestionsCount"
                 app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount">
@@ -119,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginStart="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/etPlaceHolderFromQuestionsCount"
                 app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount">
@@ -178,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:hint="@string/common_from"
-                app:layout_constraintEnd_toStartOf="@+id/etPlaceHolderToQuestionsCount"
+                app:layout_constraintEnd_toEndOf="@+id/etPlaceHolderFromQuestionsCount"
                 app:layout_constraintStart_toStartOf="@+id/tvQuestionsCount"
                 app:layout_constraintTop_toBottomOf="@+id/questionsLimitChipGroup">
 
@@ -187,10 +189,10 @@
                     style="@style/EditText.Input.Simple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="2"
                     android:background="@drawable/selector_input_text"
-                    android:hint="@string/common_from" />
+                    android:hint="@string/common_from"
+                    android:inputType="number"
+                    android:maxLength="2" />
 
             </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
@@ -202,7 +204,7 @@
                 android:layout_marginEnd="24dp"
                 app:hint="@string/common_to"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/etPlaceHolderFromTime"
+                app:layout_constraintStart_toStartOf="@+id/etPlaceHolderToQuestionsCount"
                 app:layout_constraintTop_toBottomOf="@+id/questionsLimitChipGroup">
 
                 <EditText
@@ -210,10 +212,10 @@
                     style="@style/EditText.Input.Simple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="2"
                     android:background="@drawable/selector_input_text"
-                    android:hint="@string/common_to" />
+                    android:hint="@string/common_to"
+                    android:inputType="number"
+                    android:maxLength="2" />
 
             </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
