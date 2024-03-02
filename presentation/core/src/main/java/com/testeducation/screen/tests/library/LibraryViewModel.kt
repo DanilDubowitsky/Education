@@ -50,15 +50,25 @@ class LibraryViewModel(
     }
 
     fun openTestPreview(id: String) = intent {
-        val draftTests = getModelState().draftsTests
+        val modelState = getModelState()
+        val draftTests = modelState.draftsTests
+        val publishedTests = modelState.publishedTests
         val testInDraft = draftTests.firstByConditionOrNull(TestShort::id, id)
-        if (testInDraft != null) {
-            val screen = NavigationScreen.Tests.Action(testInDraft.id, testInDraft.title)
-            router.navigateTo(screen)
-        } else {
-            val screen = NavigationScreen.Tests.Preview(id)
-            router.navigateTo(screen)
+        val testInPublished = publishedTests.firstByConditionOrNull(TestShort::id, id)
+        val screen = when {
+            testInDraft != null -> {
+                NavigationScreen.Tests.Action(testInDraft.id, testInDraft.title)
+            }
+
+            testInPublished != null -> {
+                NavigationScreen.Tests.Action(testInPublished.id, testInPublished.title)
+            }
+
+            else -> {
+                NavigationScreen.Tests.Preview(id)
+            }
         }
+        router.navigateTo(screen)
     }
 
     fun toggleTestLike(position: Int, type: TestGetTypeUI) = intent {
