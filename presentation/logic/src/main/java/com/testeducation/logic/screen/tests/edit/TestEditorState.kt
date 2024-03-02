@@ -7,7 +7,8 @@ sealed class TestEditorState {
     data class Content(
         val testDetails: TestDetailsUi,
         val questionDetailsUi: List<QuestionDetailsUi>,
-        val visibleLoadingPublish: Boolean
+        val visibleLoadingPublish: Boolean,
+        val btnPublishText: String
     ) : TestEditorState()
 
     object NoInit : TestEditorState()

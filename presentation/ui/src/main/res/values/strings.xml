@@ -82,6 +82,8 @@
 
     <string name="test_favorites_title">Мне нравится</string>
     <string name="test_library_title">Моя библиотека</string>
+    <string name="test_favorites_empty">Ваша библиотека избранных тестов пуста</string>
+    <string name="test_favorites_empty_description">Выбирайте понравившиеся тесты на главной странице и добавляйте в избранное</string>
 
     <!--Question-->
     <string name="question_type_match">Соотвествие</string>

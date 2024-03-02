@@ -89,4 +89,8 @@ sealed interface StringResource {
         object DeleteConfirmDescription : Profile
         object DeleteCodeConfirm: Profile
     }
+
+    sealed interface Test : StringResource {
+        object PublishTitle: Test
+    }
 }

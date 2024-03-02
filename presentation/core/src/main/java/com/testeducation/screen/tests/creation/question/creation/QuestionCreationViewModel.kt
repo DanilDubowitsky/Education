@@ -84,13 +84,16 @@ class QuestionCreationViewModel(
                     is Question.Order -> result.answers.sortedBy { it.order }
                     is Question.Text -> result.answers
                 }
-
+                var answersQuestion = answers.toInputAnswers(
+                    ::getColorAnswer,
+                    ::getTrueColor
+                )
+                if (result !is Question.Text) {
+                    answersQuestion = answersQuestion.plus(InputAnswer.FooterPlusAdd())
+                }
                 updateModelState {
                     copy(
-                        answerItem = answers.toInputAnswers(
-                            ::getColorAnswer,
-                            ::getTrueColor
-                        ).plus(InputAnswer.FooterPlusAdd()),
+                        answerItem = answersQuestion,
                         questionText = result.title,
                         time = result.time,
                         loadingScreen = false
@@ -127,7 +130,12 @@ class QuestionCreationViewModel(
                         orderQuestion = orderQuestion
                     )
                 }
-                router.navigateTo(NavigationScreen.Tests.Details(testId), false)
+                router.navigateTo(
+                    NavigationScreen.Tests.Details(
+                        testId,
+                        navigateFrom = NavigationScreen.Tests.Details.NavigateFrom.Create
+                    ), false
+                )
                 postSideEffect(
                     QuestionCreationSideEffect.LoaderInvisible
                 )
@@ -287,9 +295,11 @@ class QuestionCreationViewModel(
                     is InputAnswer.DefaultAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
                     is InputAnswer.OrderAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
                     is InputAnswer.MatchAnswer -> {
-                        val answer = if (firstAnswer) itemAnswer.firstAnswer else itemAnswer.secondAnswer
+                        val answer =
+                            if (firstAnswer) itemAnswer.firstAnswer else itemAnswer.secondAnswer
                         Pair(answer, itemAnswer.color)
                     }
+
                     is InputAnswer.TextAnswer -> Pair(
                         itemAnswer.text,
                         ColorResource.MainLight.Green.getColor(resourceHelper)

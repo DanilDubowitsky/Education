@@ -11,12 +11,14 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.question.QuestionDetailsUi
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 import com.testeducation.screen.tests.edit.TestEditorViewModel
+import com.testeducation.ui.R
 import com.testeducation.ui.base.fragment.ViewModelHostFragment
 import com.testeducation.ui.databinding.FragmentTestEditorBinding
 import com.testeducation.ui.delegates.tests.answersDisplayDelegateDefault
 import com.testeducation.ui.delegates.tests.footerQuestionDetailsPlusAddDelegate
 import com.testeducation.ui.utils.addOnBackPressListener
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.simpleDiffUtil
 
@@ -44,6 +46,7 @@ class TestEditorFragment :
                 layoutManager = LinearLayoutManager(requireContext())
                 itemAnimator = null
             }
+            requireActivity().window.statusBarColor = requireContext().loadColor(R.color.colorGrayBlueDisabled)
             imgEdit.setOnClickListener {
                 viewModel.openTestSettings()
             }
@@ -78,7 +81,10 @@ class TestEditorFragment :
                 tvTypeTest.text = state.testDetails.theme.title
                 val colorTest = Color.parseColor(state.testDetails.style.color)
                 toolbar.backgroundTintList = ColorStateList.valueOf(colorTest)
-                btnCreate.backgroundTintList = ColorStateList.valueOf(colorTest)
+                btnCreate.apply {
+                    backgroundTintList = ColorStateList.valueOf(colorTest)
+                    text = state.btnPublishText
+                }
                 requireActivity().window.statusBarColor = colorTest
                 rootGroup.isVisible = !state.visibleLoadingPublish
                 loadingShimmer.isVisible = false

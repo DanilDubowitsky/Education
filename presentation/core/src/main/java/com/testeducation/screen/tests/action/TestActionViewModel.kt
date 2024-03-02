@@ -31,7 +31,10 @@ class TestActionViewModel(
     }
 
     fun onEditClick() = intent {
-        val screen = NavigationScreen.Tests.Details(testId)
+        val screen = NavigationScreen.Tests.Details(
+            testId,
+            navigateFrom = NavigationScreen.Tests.Details.NavigateFrom.MyLibrary
+        )
         router.exit()
         router.navigateTo(screen)
     }

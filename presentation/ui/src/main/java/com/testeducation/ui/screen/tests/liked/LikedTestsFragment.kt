@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.testeducation.logic.model.test.TestOrderFieldUI
@@ -21,7 +21,6 @@ import com.testeducation.ui.delegates.tests.createTestLoadingDelegate
 import com.testeducation.ui.delegates.tests.createTestShortAdapterDelegate
 import com.testeducation.ui.delegates.tests.createThemeShortAdapterDelegate
 import com.testeducation.ui.screen.tests.list.TestShortDiffUtil
-import com.testeducation.ui.screen.tests.list.TestsFragment
 import com.testeducation.ui.utils.addPageScrollListener
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.invoke
@@ -30,7 +29,6 @@ import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
-import org.orbitmvi.orbit.viewmodel.observe
 
 class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLikedTestsBinding>(
     LikedTestsViewModel::class,
@@ -89,7 +87,9 @@ class LikedTestsFragment : ViewModelHostFragment<LikedTestsViewModel, FragmentLi
         themesShimmer.isShimmerHide = !state.isThemesLoading
 
         shimmerLoading.isShimmerHide = !state.isTestsLoading
-        testsRecycler.isInvisible = state.isTestsLoading
+        testsRecycler.isVisible = !state.isTestsLoading && state.tests.isNotEmpty()
+
+        emptyBlock.isVisible = state.tests.isEmpty() && !state.isTestsLoading
     }
 
     private fun onSideEffect(sideEffect: LikedTestsSideEffect) = when (sideEffect) {

@@ -130,8 +130,15 @@ sealed interface NavigationScreen : Serializable {
         ) : Tests
 
         data class Details(
-            val testId: String
-        ) : Tests
+            val testId: String,
+            val navigateFrom: NavigateFrom
+        ) : Tests {
+            enum class NavigateFrom {
+                Create, MyLibrary;
+
+                val fromCreate get() = this == Create
+            }
+        }
 
         data class Settings(
             val testId: String,
