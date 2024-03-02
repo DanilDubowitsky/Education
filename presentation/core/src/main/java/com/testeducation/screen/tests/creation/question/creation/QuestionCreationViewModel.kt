@@ -84,13 +84,16 @@ class QuestionCreationViewModel(
                     is Question.Order -> result.answers.sortedBy { it.order }
                     is Question.Text -> result.answers
                 }
-
+                var answersQuestion = answers.toInputAnswers(
+                    ::getColorAnswer,
+                    ::getTrueColor
+                )
+                if (result !is Question.Text) {
+                    answersQuestion = answersQuestion.plus(InputAnswer.FooterPlusAdd())
+                }
                 updateModelState {
                     copy(
-                        answerItem = answers.toInputAnswers(
-                            ::getColorAnswer,
-                            ::getTrueColor
-                        ).plus(InputAnswer.FooterPlusAdd()),
+                        answerItem = answersQuestion,
                         questionText = result.title,
                         time = result.time,
                         loadingScreen = false
