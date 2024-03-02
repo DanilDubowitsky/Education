@@ -11,6 +11,7 @@ import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.Test
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
+import com.testeducation.domain.model.test.TestShort
 import com.testeducation.domain.model.theme.ThemeShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
@@ -25,6 +26,7 @@ import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.home.library.LibraryHomeViewModel.Companion.LIBRARY_NAVIGATOR_KEY
 import com.testeducation.screen.tests.base.TestsDefaults
 import com.testeducation.screen.tests.liked.LikedTestsModelState
+import com.testeducation.utils.firstByCondition
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
@@ -64,7 +66,18 @@ class TestLibraryViewModel(
     }
 
     fun openTestPreview(id: String) = intent {
-        val screen = NavigationScreen.Tests.Preview(id)
+        val tests = getModelState().tests
+        val selectedTest = tests.firstByCondition(TestShort::id, id)
+        val screen = when (testGetType) {
+            TestLibraryGetTypeUI.PUBLISHED,
+            TestLibraryGetTypeUI.DRAFT -> {
+                NavigationScreen.Tests.Action(selectedTest.id, selectedTest.title)
+            }
+
+            TestLibraryGetTypeUI.PASSED -> {
+                NavigationScreen.Tests.Preview(id)
+            }
+        }
         router.navigateTo(screen)
     }
 
