@@ -107,11 +107,10 @@
         app:layout_constraintTop_toTopOf="@+id/txtTotalTimeLabel"
         tools:text="11:35" />
 
-    <ProgressBar
+    <com.testeducation.ui.view.custom.CircleLoader
         android:id="@+id/loadingProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/colorBlue"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

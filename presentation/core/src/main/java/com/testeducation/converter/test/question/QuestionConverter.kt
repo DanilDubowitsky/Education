@@ -33,6 +33,7 @@ fun PassingQuestion.AnswerState.toUI() = when (this) {
     PassingQuestion.AnswerState.CORRECT -> AnswerStateUI.CORRECT
     PassingQuestion.AnswerState.INCORRECT -> AnswerStateUI.INCORRECT
     PassingQuestion.AnswerState.NONE -> AnswerStateUI.NONE
+    PassingQuestion.AnswerState.TIME_EXPIRED -> AnswerStateUI.TIME_EXPIRED
 }
 
 private fun Question.Order.toOrderUI(

@@ -195,6 +195,12 @@ private fun bindSimpleData(
             imgAnswerIndicator.setImageResource(R.drawable.ic_correct_answer)
             imgAnswerIndicator.setColorFilter(txtTitle.context.loadColor(R.color.colorGrayBlue))
         }
+
+        AnswerStateUI.TIME_EXPIRED -> {
+            txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorRed))
+            imgAnswerIndicator.setImageResource(R.drawable.ic_incorrect_answer)
+            imgAnswerIndicator.colorFilter = null
+        }
     }
     val isCorrectVisible = answer is AnswerUI.ChoiceAnswer && stateUI == AnswerStateUI.INCORRECT
     txtCorrectAnswer.isVisible = isCorrectVisible
