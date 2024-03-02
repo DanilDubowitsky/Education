@@ -60,17 +60,21 @@ class TestPassingViewModel(
         }
     }
 
-    fun submitAnswer(questionRemainingTime: Long, testRemainingTime: Long) = intent {
+    fun submitAnswer(
+        questionRemainingTime: Long,
+        testRemainingTime: Long,
+        isTimeExpired: Boolean
+    ) = intent {
         val currentQuestion = getModelState().currentQuestion ?: return@intent
         val isAnswered =
             currentQuestion.state != PassingQuestion.AnswerState.NONE
         if (!isAnswered) {
             when (currentQuestion.question) {
-                is Question.Choice -> checkChoiceAnswer(questionRemainingTime)
-                is Question.Match -> checkMatchAnswers(questionRemainingTime)
-                is Question.Order -> checkOrderAnswers(questionRemainingTime)
+                is Question.Choice -> checkChoiceAnswer(questionRemainingTime, isTimeExpired)
+                is Question.Match -> checkMatchAnswers(questionRemainingTime, isTimeExpired)
+                is Question.Order -> checkOrderAnswers(questionRemainingTime, isTimeExpired)
                 is Question.Text -> {
-                    applyTextAnswer(questionRemainingTime)
+                    applyTextAnswer(questionRemainingTime, isTimeExpired)
                 }
             }
         } else {
@@ -202,7 +206,7 @@ class TestPassingViewModel(
         router.navigateTo(screen)
     }
 
-    private fun applyTextAnswer(questionRemainingTime: Long) = intent {
+    private fun applyTextAnswer(questionRemainingTime: Long, isTimeExpired: Boolean) = intent {
         val modelState = getModelState()
         val currentQuestion = modelState.currentQuestion ?: return@intent
         val textQuestion = currentQuestion.question as Question.Text
@@ -210,14 +214,20 @@ class TestPassingViewModel(
         val spentTime = modelState.currentQuestion.question.time - questionRemainingTime
         val questions = modelState.questions.toMutableList()
 
-        val answerState =
-            if (textQuestion.answers.first().correctText.lowercase() ==
-                selectedQuestionState.answeredText.lowercase()
-            ) {
+        val answerState = when {
+            textQuestion.answers.first().correctText.lowercase() ==
+                    selectedQuestionState.answeredText.lowercase() && !isTimeExpired -> {
                 PassingQuestion.AnswerState.CORRECT
-            } else {
+            }
+
+            textQuestion.answers.first().correctText.lowercase() !=
+                    selectedQuestionState.answeredText.lowercase() && !isTimeExpired -> {
                 PassingQuestion.AnswerState.INCORRECT
             }
+            else -> {
+                PassingQuestion.AnswerState.TIME_EXPIRED
+            }
+        }
 
         val newQuestion = currentQuestion.copy(
             timeSpent = spentTime,
@@ -235,7 +245,7 @@ class TestPassingViewModel(
         }
     }
 
-    private fun checkMatchAnswers(questionRemainingTime: Long) = intent {
+    private fun checkMatchAnswers(questionRemainingTime: Long, isTimeExpired: Boolean) = intent {
         val modelState = getModelState()
         val state = modelState.selectedQuestionState.toMatch()
         var isCorrect = true
@@ -245,10 +255,18 @@ class TestPassingViewModel(
                 return@forEachIndexed
             }
         }
-        val answerState = if (isCorrect) {
-            PassingQuestion.AnswerState.CORRECT
-        } else {
-            PassingQuestion.AnswerState.INCORRECT
+        val answerState = when {
+            isCorrect && !isTimeExpired -> {
+                PassingQuestion.AnswerState.CORRECT
+            }
+
+            !isCorrect && !isTimeExpired -> {
+                PassingQuestion.AnswerState.INCORRECT
+            }
+
+            else -> {
+                PassingQuestion.AnswerState.TIME_EXPIRED
+            }
         }
         val spentTime = modelState.currentQuestion!!.question.time - questionRemainingTime
         val newQuestion = modelState.currentQuestion.copy(
@@ -263,7 +281,7 @@ class TestPassingViewModel(
         }
     }
 
-    private fun checkOrderAnswers(questionRemainingTime: Long) = intent {
+    private fun checkOrderAnswers(questionRemainingTime: Long, isTimeExpired: Boolean) = intent {
         val modelState = getModelState()
         val questionState = modelState.selectedQuestionState.toOrder()
         val answers = questionState.question?.answers ?: return@intent
@@ -274,10 +292,18 @@ class TestPassingViewModel(
                 return@forEachIndexed
             }
         }
-        val state = if (isCorrect) {
-            PassingQuestion.AnswerState.CORRECT
-        } else {
-            PassingQuestion.AnswerState.INCORRECT
+        val state = when {
+            isCorrect && !isTimeExpired -> {
+                PassingQuestion.AnswerState.CORRECT
+            }
+
+            !isCorrect && !isTimeExpired -> {
+                PassingQuestion.AnswerState.INCORRECT
+            }
+
+            else -> {
+                PassingQuestion.AnswerState.TIME_EXPIRED
+            }
         }
         val spentTime = modelState.currentQuestion!!.question.time - questionRemainingTime
 
@@ -329,7 +355,7 @@ class TestPassingViewModel(
         )
     }
 
-    private suspend fun Syntax.checkChoiceAnswer(remainingTime: Long) {
+    private suspend fun Syntax.checkChoiceAnswer(remainingTime: Long, isTimeExpired: Boolean) {
         val modelState = getModelState()
         val questionState = modelState.selectedQuestionState.toChoice()
         val selectedAnswers = questionState.question!!.answers.filter { answer ->
@@ -338,10 +364,18 @@ class TestPassingViewModel(
         val isIncorrect = selectedAnswers.any { answer ->
             !answer.isTrue
         }
-        val state = if (!isIncorrect) {
-            PassingQuestion.AnswerState.CORRECT
-        } else {
-            PassingQuestion.AnswerState.INCORRECT
+        val state = when {
+            !isIncorrect && !isTimeExpired -> {
+                PassingQuestion.AnswerState.CORRECT
+            }
+
+            isIncorrect && !isTimeExpired -> {
+                PassingQuestion.AnswerState.INCORRECT
+            }
+
+            else -> {
+                PassingQuestion.AnswerState.TIME_EXPIRED
+            }
         }
         val spentTime = modelState.currentQuestion!!.question.time - remainingTime
         val questions = modelState.questions.toMutableList()

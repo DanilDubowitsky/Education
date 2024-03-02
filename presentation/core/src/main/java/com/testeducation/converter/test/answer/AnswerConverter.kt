@@ -13,16 +13,20 @@ fun List<Answer>.toUIModels(
 ): List<AnswerUI> {
     val simpleColors = answerColorExtractor.extractAnswersColors()
     val alphaColors = answerColorExtractor.extractAnswersColors(withAlpha = true)
+    var correctIndex = 0
     return mapIndexed { index, answer ->
+        if (correctIndex > simpleColors.lastIndex) {
+            correctIndex = 0
+        }
         val color = if (answer is Answer.ChoiceAnswer &&
             state != PassingQuestion.AnswerState.NONE
         ) {
-            if (answer.isTrue) simpleColors[index]
-            else alphaColors[index]
+            if (answer.isTrue) simpleColors[correctIndex]
+            else alphaColors[correctIndex]
         } else {
-            simpleColors[index]
+            simpleColors[correctIndex]
         }
-        println("CURRENT_QUESTIION_STATE: $state")
+        correctIndex++
         answer.toUI(
             color,
             selectedAnswersIds.contains(answer.id),

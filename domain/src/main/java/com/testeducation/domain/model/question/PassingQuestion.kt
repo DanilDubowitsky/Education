@@ -6,12 +6,14 @@ data class PassingQuestion(
     val timeSpent: Long = 0L,
     val customAnswer: String,
     val question: Question,
-    val matchData: List<String>
+    val matchData: List<String>,
+    val isTimeExpired: Boolean = false
 ) {
 
     enum class AnswerState {
         CORRECT,
         INCORRECT,
-        NONE
+        NONE,
+        TIME_EXPIRED
     }
 }

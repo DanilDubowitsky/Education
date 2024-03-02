@@ -118,7 +118,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         btnAnswer.setClickListener {
             val time = questionTimer.getRemainingTime()
             questionTimer.release()
-            viewModel.submitAnswer(time, testTimer.getRemainingTime())
+            viewModel.submitAnswer(time, testTimer.getRemainingTime(), false)
         }
         answerText.addTextChangedListener {
             viewModel.onAnswerTextChanged(answerText.trimmedTextOrEmpty)
@@ -129,7 +129,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     @SuppressLint("NotifyDataSetChanged")
     private fun render(state: TestPassingState) = binding {
         rootScroll.isInvisible = state.isLoading
-        loadingProgress.isGone = !state.isLoading
+        loadingProgress.setVisibility(state.isLoading)
         btnAnswer.isGone = state.isLoading
         if (state.currentQuestion != null) {
             renderAnswers(state.currentQuestion!!, state.matchData)
@@ -157,14 +157,28 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         val statusImage: Drawable?
         val textColor: Int
         val statusText: String
-        if (questionUI.answerState == AnswerStateUI.CORRECT) {
-            statusImage = requireContext().loadDrawable(R.drawable.ic_correct_answer)
-            textColor = requireContext().loadColor(R.color.colorDarkGreen)
-            statusText = getString(R.string.test_pass_correct_label)
-        } else {
-            statusImage = requireContext().loadDrawable(R.drawable.ic_incorrect_answer)
-            textColor = requireContext().loadColor(R.color.colorRed)
-            statusText = getString(R.string.test_pass_incorrect_label)
+
+        when (questionUI.answerState) {
+            AnswerStateUI.CORRECT -> {
+                statusImage = requireContext().loadDrawable(R.drawable.ic_correct_answer)
+                textColor = requireContext().loadColor(R.color.colorDarkGreen)
+                statusText = getString(R.string.test_pass_correct_label)
+            }
+            AnswerStateUI.INCORRECT -> {
+                statusImage = requireContext().loadDrawable(R.drawable.ic_incorrect_answer)
+                textColor = requireContext().loadColor(R.color.colorRed)
+                statusText = getString(R.string.test_pass_incorrect_label)
+            }
+            AnswerStateUI.NONE -> {
+                statusImage = requireContext().loadDrawable(R.drawable.ic_incorrect_answer)
+                textColor = requireContext().loadColor(R.color.colorRed)
+                statusText = getString(R.string.test_pass_time_expired)
+            }
+            AnswerStateUI.TIME_EXPIRED -> {
+                statusImage = requireContext().loadDrawable(R.drawable.ic_incorrect_answer)
+                textColor = requireContext().loadColor(R.color.colorRed)
+                statusText = getString(R.string.test_pass_time_expired)
+            }
         }
         txtAnswerStatus.text = statusText
         txtAnswerStatus.setTextColor(textColor)
@@ -256,7 +270,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         }
         questionTimer.setOnExpireListener {
             val remainingTime = questionTimer.getRemainingTime()
-            viewModel.submitAnswer(remainingTime, testTimer.getRemainingTime())
+            viewModel.submitAnswer(remainingTime, testTimer.getRemainingTime(), true)
         }
         questionTimer.start(time, TIME_INTERVAL)
     }
