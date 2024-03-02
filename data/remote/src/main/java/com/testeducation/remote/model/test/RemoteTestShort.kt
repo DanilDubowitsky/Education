@@ -13,7 +13,7 @@ data class RemoteTestShort(
     val isPublic: Boolean,
     @SerializedName("likes")
     val likes: Int,
-    @SerializedName("passes_count")
+    @SerializedName("passes")
     val passesCount: Int,
     @SerializedName("theme")
     val theme: RemoteThemeShort,
