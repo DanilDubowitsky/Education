@@ -5,13 +5,11 @@ import com.testeducation.domain.config.user.IUserConfig
 import com.testeducation.domain.exception.ServerException
 import com.testeducation.remote.ITokenExpirationListener
 import com.testeducation.remote.model.global.GenericResponse
-import com.testeducation.remote.request.auth.SignInRequest
 import com.testeducation.remote.utils.JSONUtils
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import java.net.HttpURLConnection
 
