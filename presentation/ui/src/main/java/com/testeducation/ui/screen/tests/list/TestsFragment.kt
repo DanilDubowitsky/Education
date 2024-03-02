@@ -57,6 +57,8 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
 
     private var pageLoadingListener: RecyclerView.OnScrollListener? = null
 
+    private var testsSize: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -93,6 +95,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     }
 
     private fun render(state: TestsState) = binding {
+        testsSize = state.tests.size
         val orderFieldText = when (state.selectedSortField) {
             TestOrderFieldUI.TITLE -> getString(R.string.tests_list_sort_field_title)
             TestOrderFieldUI.CREATION -> getString(R.string.tests_list_sort_field_creation_date)
@@ -130,9 +133,18 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
     private fun setupListeners() = with(binding) {
         testsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > TestsDefaults.SCROLL_OFFSET) viewModel.onScrollToTop()
+                println("TESTS_SIZE: $testsSize")
+                if (testsSize <= 0) {
+                    println("AAAAA")
+                    return
+                }
+                if (dy > TestsDefaults.SCROLL_OFFSET) {
+                    viewModel.onScrollToTop()
+                }
 
-                if (dy < -TestsDefaults.SCROLL_OFFSET) viewModel.onScrollToBottom()
+                if (dy < -TestsDefaults.SCROLL_OFFSET) {
+                    viewModel.onScrollToBottom()
+                }
 
                 if (!recyclerView.canScrollVertically(-1)) {
                     viewModel.onScrollToBottom()

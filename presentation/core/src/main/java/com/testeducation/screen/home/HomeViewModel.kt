@@ -23,7 +23,7 @@ class HomeViewModel(
 
     init {
         intent {
-            postSideEffect(HomeSideEffect.SlideUpNavigation)
+            postSideEffect(HomeSideEffect.SlideDownNavigation)
             navigateToTests()
         }
     }

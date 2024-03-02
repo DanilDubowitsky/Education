@@ -39,7 +39,6 @@ class TestsViewModel(
     private var resultDisposable: Disposable? = null
 
     init {
-        onScrollToBottom()
         loadTests()
         loadThemes()
         loadUserData()
