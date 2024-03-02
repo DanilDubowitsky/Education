@@ -34,6 +34,10 @@ class ProfileViewModel(
         router.navigateTo(NavigationScreen.Profile.Support)
     }
 
+    fun navigateAboutApp() {
+        router.navigateTo(NavigationScreen.Profile.AboutApp)
+    }
+
     fun navigateToPolicies() {
         router.navigateTo(NavigationScreen.Common.WebView("https://testoria.azurewebsites.net/home/privacy"))
     }

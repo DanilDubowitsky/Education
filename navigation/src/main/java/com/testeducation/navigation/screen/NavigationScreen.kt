@@ -1,5 +1,6 @@
 package com.testeducation.navigation.screen
 
+import androidx.annotation.ColorInt
 import com.testeducation.logic.model.auth.ConfirmationType
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.QuestionTypeUiItem
@@ -57,7 +58,26 @@ sealed interface NavigationScreen : Serializable {
             object OnConfirm : ResultKey<Unit>
         }
 
-        data class WebView(val url: String): Common
+        data class WebView(val url: String) : Common
+
+        data class ConfirmCode(val title: String, val description: String) : Common {
+            object OnConfirm : ResultKey<Unit>
+        }
+
+        data class ConfirmationBottom(
+            val title: String,
+            val description: String,
+            val buttonLeft: Button,
+            val buttonRight: Button
+        ) : Common {
+            data class Button(
+                val text: String,
+                @ColorInt val color: Int
+            )
+
+            object ButtonLeft : ResultKey<Unit>
+            object ButtonRight : ResultKey<Unit>
+        }
     }
 
     sealed interface Main : NavigationScreen {
@@ -234,8 +254,9 @@ sealed interface NavigationScreen : Serializable {
     sealed interface Profile : NavigationScreen {
         object Editor : Profile
         object Support : Profile
+        object AboutApp : Profile
         data class Avatar(val avatarId: Int) : Profile {
-            object OnAvatarUpdated: ResultKey<Int>
+            object OnAvatarUpdated : ResultKey<Int>
         }
     }
 

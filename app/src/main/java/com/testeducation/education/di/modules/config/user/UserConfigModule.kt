@@ -1,10 +1,12 @@
 package com.testeducation.education.di.modules.config.user
 
 import com.testeducation.core.config.IConfigSource
+import com.testeducation.core.config.user.ConfirmCodeConfig
 import com.testeducation.core.config.user.RegistrationConfig
 import com.testeducation.core.config.user.TokenConfirmConfig
 import com.testeducation.core.config.user.UserConfig
 import com.testeducation.core.config.user.UserConfig.Companion.CONFIG_NAME
+import com.testeducation.domain.config.user.IConfirmCodeConfig
 import com.testeducation.domain.config.user.IRegistrationConfig
 import com.testeducation.domain.config.user.ITokenConfirmConfig
 import com.testeducation.domain.config.user.IUserConfig
@@ -34,5 +36,12 @@ object UserConfigModule {
     fun provideConfirmConfig(configProvider: IConfigSource.Provider): ITokenConfirmConfig {
         val configSource = configProvider.provideConfigSourceInstance(TokenConfirmConfig.NAME)
         return TokenConfirmConfig(configSource)
+    }
+
+    @Provides
+    @Reusable
+    fun provideConfirmCodeConfig(configProvider: IConfigSource.Provider): IConfirmCodeConfig {
+        val configSource = configProvider.provideConfigSourceInstance(ConfirmCodeConfig.NAME)
+        return ConfirmCodeConfig(configSource)
     }
 }

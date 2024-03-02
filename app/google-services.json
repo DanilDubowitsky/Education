@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "219443952850",
+    "project_id": "testoria-1f47d",
+    "storage_bucket": "testoria-1f47d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219443952850:android:a38003aaa3ff5dc043010b",
+        "android_client_info": {
+          "package_name": "com.testeducation.education"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEpRot5aQ24A4BqSSOgB4WVU80rka4Tdc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
