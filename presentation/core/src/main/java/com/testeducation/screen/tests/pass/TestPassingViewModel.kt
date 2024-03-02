@@ -206,6 +206,11 @@ class TestPassingViewModel(
         router.navigateTo(screen)
     }
 
+    fun onMatchClick(matchText: String) {
+        val screen = NavigationScreen.Tests.FullAnswer(matchText)
+        router.navigateTo(screen)
+    }
+
     private fun applyTextAnswer(questionRemainingTime: Long, isTimeExpired: Boolean) = intent {
         val modelState = getModelState()
         val currentQuestion = modelState.currentQuestion ?: return@intent

@@ -59,7 +59,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private val orderDragListener: IDragStartListener = DragStartListener()
 
     private val answersMatchAdapter by lazy {
-        ListDelegationAdapter(createMatchDataDelegate())
+        ListDelegationAdapter(createMatchDataDelegate(viewModel::onMatchClick))
     }
 
     private val questionItemTouchHelperCallback by lazy {

@@ -74,15 +74,19 @@ fun createMatchAnswerDelegate(
     }
 }
 
-fun createMatchDataDelegate() =
-    simpleDelegateAdapter<TestPassingState.MatchDataUI, TestPassingState.MatchDataUI,
-            ViewHolderMatchDataBinding>(
-        ViewHolderMatchDataBinding::inflate
-    ) {
-        bind {
-            binding.bind(item)
-        }
+fun createMatchDataDelegate(
+    onMatchClick: (String) -> Unit
+) = simpleDelegateAdapter<TestPassingState.MatchDataUI, TestPassingState.MatchDataUI,
+        ViewHolderMatchDataBinding>(
+    ViewHolderMatchDataBinding::inflate
+) {
+    binding.root.setClickListener {
+        onMatchClick(item.text)
     }
+    bind {
+        binding.bind(item)
+    }
+}
 
 private fun ViewHolderMatchDataBinding.bind(item: TestPassingState.MatchDataUI) {
     txtMatchData.text = item.text
