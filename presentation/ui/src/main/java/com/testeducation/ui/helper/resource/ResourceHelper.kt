@@ -14,6 +14,7 @@ import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.ui.R
 import com.testeducation.ui.helper.extractor.extractResourceId
+import com.testeducation.ui.helper.extractor.getStringId
 import com.testeducation.ui.helper.extractor.getText
 
 class ResourceHelper(
@@ -31,6 +32,7 @@ class ResourceHelper(
         is SortStringResource -> string(resource.extractResourceId())
         is StringResource.BugReport -> string(resource.getText())
         is StringResource.Profile -> string(resource.extractResourceId())
+        is StringResource.Test -> string(resource.getStringId())
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {

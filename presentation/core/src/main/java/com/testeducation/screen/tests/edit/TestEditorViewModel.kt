@@ -30,6 +30,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 class TestEditorViewModel(
     exceptionHandler: IExceptionHandler,
     reducer: IReducer<TestEditorModelState, TestEditorState>,
+    private val navigateFrom: NavigationScreen.Tests.Details.NavigateFrom,
     private val resourceHelper: IResourceHelper,
     private val testId: String,
     private val getTest: GetTest,
@@ -65,7 +66,9 @@ class TestEditorViewModel(
     }
 
     fun onExit() {
-        router.newRootChain(NavigationScreen.Main.Home)
+        if (navigateFrom.fromCreate) {
+            router.newRootChain(NavigationScreen.Main.Home)
+        } else router.exit()
     }
 
     fun deleteQuestion(questionId: String) = intent {
@@ -130,18 +133,21 @@ class TestEditorViewModel(
 
     fun publish() {
         intent {
-            if (validate()) {
-                updateModelState {
-                    copy(
-                        loadingPublish = true
+            val modelState = getModelState()
+            if (modelState.test?.status != Test.Status.PUBLISHED) {
+                if (validate()) {
+                    updateModelState {
+                        copy(
+                            loadingPublish = true
+                        )
+                    }
+                    changeStatusTest.invoke(
+                        testId,
+                        Test.Status.PUBLISHED
                     )
                 }
-                changeStatusTest.invoke(
-                    testId,
-                    Test.Status.PUBLISHED
-                )
-                router.navigateTo(NavigationScreen.Main.Home, false)
             }
+            navigateFinish()
         }
     }
 
@@ -157,17 +163,26 @@ class TestEditorViewModel(
                     testId,
                     Test.Status.DRAFT
                 )
-                router.navigateTo(NavigationScreen.Main.Home, false)
+                navigateFinish()
             }
         }
     }
 
-    private suspend fun validate() : Boolean {
+    private fun navigateFinish() {
+        if (navigateFrom.fromCreate) {
+            router.navigateTo(NavigationScreen.Main.Home, false)
+        } else {
+            router.exit()
+        }
+    }
+
+    private suspend fun validate(): Boolean {
         val modelState = getModelState()
         if (modelState.questionDetails.size - 1 < MIN_QUESTION) {
             val screen = NavigationScreen.Common.Information(
                 titleText = StringResource.Validate.TestEditErrorTitle.getString(resourceHelper),
-                description = StringResource.Validate.MaxQuestionValue(MIN_QUESTION).getString(resourceHelper),
+                description = StringResource.Validate.MaxQuestionValue(MIN_QUESTION)
+                    .getString(resourceHelper),
                 btnText = StringResource.Common.CommonNext.getString(resourceHelper)
             )
             router.navigateTo(screen)

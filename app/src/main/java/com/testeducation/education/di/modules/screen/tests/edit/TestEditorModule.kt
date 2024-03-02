@@ -59,8 +59,8 @@ interface TestEditorModule {
         }
 
         @Provides
-        fun provideReducer(timeConverterLongToString: ITimeConverterLongToString): IReducer<TestEditorModelState, TestEditorState> =
-            TestEditorReducer(timeConverterLongToString)
+        fun provideReducer(timeConverterLongToString: ITimeConverterLongToString, resource: IResourceHelper): IReducer<TestEditorModelState, TestEditorState> =
+            TestEditorReducer(timeConverterLongToString, resource)
 
         @Provides
         fun provideViewModel(
@@ -86,7 +86,8 @@ interface TestEditorModule {
                 router = navigationRouter,
                 deleteQuestion = deleteQuestion,
                 changeStatusTest = changeStatusTest,
-                getQuestions = getQuestions
+                getQuestions = getQuestions,
+                navigateFrom = screen.navigateFrom
             )
         }
     }

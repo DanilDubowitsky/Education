@@ -127,7 +127,12 @@ class QuestionCreationViewModel(
                         orderQuestion = orderQuestion
                     )
                 }
-                router.navigateTo(NavigationScreen.Tests.Details(testId), false)
+                router.navigateTo(
+                    NavigationScreen.Tests.Details(
+                        testId,
+                        navigateFrom = NavigationScreen.Tests.Details.NavigateFrom.Create
+                    ), false
+                )
                 postSideEffect(
                     QuestionCreationSideEffect.LoaderInvisible
                 )
@@ -287,9 +292,11 @@ class QuestionCreationViewModel(
                     is InputAnswer.DefaultAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
                     is InputAnswer.OrderAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
                     is InputAnswer.MatchAnswer -> {
-                        val answer = if (firstAnswer) itemAnswer.firstAnswer else itemAnswer.secondAnswer
+                        val answer =
+                            if (firstAnswer) itemAnswer.firstAnswer else itemAnswer.secondAnswer
                         Pair(answer, itemAnswer.color)
                     }
+
                     is InputAnswer.TextAnswer -> Pair(
                         itemAnswer.text,
                         ColorResource.MainLight.Green.getColor(resourceHelper)

@@ -78,7 +78,10 @@ class TestEditorFragment :
                 tvTypeTest.text = state.testDetails.theme.title
                 val colorTest = Color.parseColor(state.testDetails.style.color)
                 toolbar.backgroundTintList = ColorStateList.valueOf(colorTest)
-                btnCreate.backgroundTintList = ColorStateList.valueOf(colorTest)
+                btnCreate.apply {
+                    backgroundTintList = ColorStateList.valueOf(colorTest)
+                    text = state.btnPublishText
+                }
                 requireActivity().window.statusBarColor = colorTest
                 rootGroup.isVisible = !state.visibleLoadingPublish
                 loadingShimmer.isVisible = false
