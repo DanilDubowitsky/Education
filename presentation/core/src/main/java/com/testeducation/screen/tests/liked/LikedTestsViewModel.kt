@@ -21,7 +21,6 @@ import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.base.TestsDefaults
-import com.testeducation.screen.tests.list.TestsModelState
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
@@ -128,8 +127,15 @@ class LikedTestsViewModel(
     }
 
     fun refreshContent() = intent {
+        val modelState = getModelState()
+        val loadingState = if (modelState.tests.isEmpty()) {
+            LikedTestsModelState.TestsLoadingState.IDLE
+        } else LikedTestsModelState.TestsLoadingState.LOADING
         updateModelState {
-            copy(tests = emptyList())
+            copy(
+                tests = emptyList(),
+                testsLoadingState = loadingState
+            )
         }
         loadTests()
     }
