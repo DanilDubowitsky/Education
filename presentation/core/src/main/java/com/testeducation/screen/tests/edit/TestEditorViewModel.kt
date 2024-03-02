@@ -200,7 +200,7 @@ class TestEditorViewModel(
             is Question.Choice -> itemQuestion.answers
             is Question.Match -> itemQuestion.answers
             is Question.Order -> itemQuestion.answers
-            is Question.Text -> emptyList()
+            is Question.Text -> itemQuestion.answers
         }.toInputAnswers()
 
         if (answers.all { it is InputAnswer.OrderAnswer }) {

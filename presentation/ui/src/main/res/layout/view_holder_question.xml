@@ -12,7 +12,7 @@
         android:id="@+id/header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_dialog_drawable"
+        android:background="@drawable/background_dialog_drawable_16_radius"
         android:backgroundTint="@color/colorSmokyWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
