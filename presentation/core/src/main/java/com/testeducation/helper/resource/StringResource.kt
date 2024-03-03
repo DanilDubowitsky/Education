@@ -96,5 +96,7 @@ sealed interface StringResource {
 
     sealed interface Test : StringResource {
         object PublishTitle: Test
+        object TestEditExitTitle: Test
+        data class TestEditExitDescription(val isDraft: Boolean): Test
     }
 }

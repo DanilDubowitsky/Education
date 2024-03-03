@@ -143,6 +143,10 @@
 
     <string name="test_draft">В черновик</string>
     <string name="test_publish">Опубликовать</string>
+    <string name="test_exit_edit_title">Выход из редактирования теста</string>
+    <string name="test_exit_edit_description">Вы уверены, что хотите покинуть страницу редактирования? Тест останется в статусе \"%s\"</string>
+    <string name="test_exit_edit_draft">Черновик</string>
+    <string name="test_exit_edit_ready">Опубликованный</string>
 
     <!--Validate-->
     <string name="test_edit_error_title">Ошибка при создании теста</string>

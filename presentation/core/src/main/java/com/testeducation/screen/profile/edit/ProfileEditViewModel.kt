@@ -35,14 +35,12 @@ class ProfileEditViewModel(
     }
 
     fun logOut() {
-
         router.setResultListener(NavigationScreen.Common.ConfirmationBottom.ButtonLeft) {
             intent {
                 logOut.invoke()
                 router.newRootChain(NavigationScreen.Auth.Login)
             }
         }
-
         router.navigateTo(NavigationScreen.Common.ConfirmationBottom(
             title = StringResource.Profile.LogoutTitle.getString(resourceHelper),
             description = StringResource.Profile.LogoutDescription.getString(resourceHelper),

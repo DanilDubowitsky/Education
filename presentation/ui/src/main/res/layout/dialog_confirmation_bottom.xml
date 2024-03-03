@@ -33,7 +33,7 @@
     <TextView
         android:id="@+id/description"
         style="@style/Text.Default"
-        android:layout_width="363dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:gravity="center"
@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="Вам на почту отправлен код для сброса электронной почты" />
+        tools:text="@string/test_exit_edit_description" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLeft"

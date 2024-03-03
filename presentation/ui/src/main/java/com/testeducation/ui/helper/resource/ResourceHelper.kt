@@ -32,7 +32,7 @@ class ResourceHelper(
         is SortStringResource -> string(resource.extractResourceId())
         is StringResource.BugReport -> string(resource.getText())
         is StringResource.Profile -> string(resource.extractResourceId())
-        is StringResource.Test -> string(resource.getStringId())
+        is StringResource.Test -> resource.getStringId(context)
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {

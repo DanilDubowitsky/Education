@@ -16,13 +16,17 @@ import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.domain.model.test.Test
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionResourceHelper
+import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
+import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.edit.TestEditorSideEffect
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.utils.getColor
+import com.testeducation.utils.getString
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestEditorViewModel(
@@ -60,9 +64,27 @@ class TestEditorViewModel(
     }
 
     fun onExit() {
-        if (navigateFrom.fromCreate) {
-            router.newRootChain(NavigationScreen.Main.Home)
-        } else router.exit()
+        router.setResultListener(NavigationScreen.Common.ConfirmationBottom.ButtonRight) {
+            if (navigateFrom.fromCreate) {
+                router.newRootChain(NavigationScreen.Main.Home)
+            } else router.exit()
+        }
+        intent {
+            val modelState = getModelState()
+            val isDraft = modelState.test?.status == Test.Status.DRAFT
+            router.navigateTo(NavigationScreen.Common.ConfirmationBottom(
+                title = StringResource.Test.TestEditExitTitle.getString(resourceHelper),
+                description = StringResource.Test.TestEditExitDescription(isDraft).getString(resourceHelper),
+                buttonLeft = NavigationScreen.Common.ConfirmationBottom.Button(
+                    text = StringResource.Common.CommonCancel.getString(resourceHelper),
+                    color = ColorResource.Main.Red.getColor(resourceHelper)
+                ),
+                buttonRight = NavigationScreen.Common.ConfirmationBottom.Button(
+                    text = StringResource.Common.CommonNext.getString(resourceHelper),
+                    color = ColorResource.Main.Green.getColor(resourceHelper)
+                ),
+            ))
+        }
     }
 
     fun deleteQuestion(questionId: String) = intent {
