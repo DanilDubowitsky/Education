@@ -11,8 +11,9 @@ class AboutAppViewModel(
     private val router: NavigationRouter,
     reducer: IReducer<AboutAppModelState, AboutAppState>,
     errorHandler: IExceptionHandler,
+    version: String
 ) : BaseViewModel<AboutAppModelState, AboutAppState, AboutAppSideEffect>(reducer, errorHandler) {
-    override val initialModelState: AboutAppModelState = AboutAppModelState()
+    override val initialModelState: AboutAppModelState = AboutAppModelState(version)
 
     fun close() {
         router.exit()

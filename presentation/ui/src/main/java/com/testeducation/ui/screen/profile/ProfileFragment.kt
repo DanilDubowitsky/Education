@@ -21,13 +21,9 @@ class ProfileFragment: ViewModelHostFragment<ProfileViewModel, FragmentProfileBi
         viewModel.initDataProfile()
         requireActivity().window.statusBarColor = requireContext().getColor(R.color.colorDarkGreen)
         binding {
-            tvEdit.setOnClickListener {
-                viewModel.navigateToEdit()
-            }
-            tvProblemTitle.setClickListener(viewModel::navigateToSupport)
-            tvSecurityTitle.setClickListener {
-                viewModel.navigateToPolicies()
-            }
+            tvEdit.setClickListener(viewModel::navigateToEdit)
+            problemContainer.setClickListener(viewModel::navigateToSupport)
+            securityContainer.setClickListener(viewModel::navigateToPolicies)
             aboutAppContainer.setClickListener(viewModel::navigateAboutApp)
         }
     }

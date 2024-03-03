@@ -24,7 +24,6 @@ class AboutAppFragment: ViewModelHostFragment<AboutAppViewModel, FragmentAboutAp
         requireActivity().window.statusBarColor = requireContext().getColor(R.color.colorWhite)
         binding {
             btnClose.setClickListener(viewModel::close)
-            tvVersion.text = getString(R.string.about_app_version, "1.0")
             btnVk.setOnClickListener {
                 val startIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/testoria_app"))
                 startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -41,7 +40,7 @@ class AboutAppFragment: ViewModelHostFragment<AboutAppViewModel, FragmentAboutAp
     private fun observeData() = viewModel.observe(this, ::render, ::sideEffect)
 
     private fun render(state: AboutAppState) = binding {
-
+        tvVersion.text = getString(R.string.about_app_version, state.version)
     }
 
     private fun sideEffect(effect: AboutAppSideEffect) {
