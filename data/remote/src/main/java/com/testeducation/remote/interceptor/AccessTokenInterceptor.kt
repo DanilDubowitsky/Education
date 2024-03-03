@@ -30,11 +30,13 @@ class AccessTokenInterceptor(
 
         val response = chain.proceed(newRequestWithAccessToken(userToken, request))
         val responseBodyString = response.body?.string().orEmpty()
-        val errorJson = JSONUtils.toJsonObject<GenericResponse<Unit>>(
-            responseBodyString
-        )
+        val errorJson = runCatching {
+            JSONUtils.toJsonObject<GenericResponse<Unit>>(
+                responseBodyString
+            )
+        }.getOrNull()
         if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED &&
-            errorJson.status?.code != STATUS_CODE_ERROR_FIELDS
+            errorJson?.status?.code != STATUS_CODE_ERROR_FIELDS
         ) {
             response.close()
             val newToken = getNewToken()
