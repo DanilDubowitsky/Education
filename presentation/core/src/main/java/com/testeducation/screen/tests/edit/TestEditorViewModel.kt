@@ -88,11 +88,24 @@ class TestEditorViewModel(
     }
 
     fun deleteQuestion(questionId: String) = intent {
-        val modelState = getModelState()
-        modelState.test?.id?.let { idNotNull ->
-            deleteQuestion.invoke(testId = idNotNull, questionId = questionId)
-            getTestDetails(idNotNull)
+        router.setResultListener(NavigationScreen.Common.Confirmation.OnConfirm) {
+           intent {
+               val modelState = getModelState()
+               modelState.test?.id?.let { idNotNull ->
+                   deleteQuestion.invoke(testId = idNotNull, questionId = questionId)
+                   getTestDetails(idNotNull)
+               }
+           }
+
         }
+        router.navigateTo(
+            NavigationScreen.Common.Confirmation(
+                StringResource.Test.TestQuestionDeleteDescription.getString(resourceHelper),
+                StringResource.Test.TestQuestionDeleteTitle.getString(resourceHelper),
+                StringResource.Common.Delete.getString(resourceHelper),
+                StringResource.Common.CommonCancel.getString(resourceHelper)
+            )
+        )
     }
 
     fun openEditQuestion(questionId: String) {

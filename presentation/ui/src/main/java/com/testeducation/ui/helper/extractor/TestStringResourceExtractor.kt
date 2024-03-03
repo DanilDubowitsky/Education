@@ -7,6 +7,8 @@ import com.testeducation.ui.R
 fun StringResource.Test.getStringId(context: Context) = when (this) {
     is StringResource.Test.PublishTitle -> context.getString(R.string.test_publish)
     is StringResource.Test.TestEditExitTitle -> context.getString(R.string.test_exit_edit_title)
+    is StringResource.Test.TestQuestionDeleteTitle -> context.getString(R.string.test_question_delete_title)
+    is StringResource.Test.TestQuestionDeleteDescription -> context.getString(R.string.test_question_delete_description)
     is StringResource.Test.TestEditExitDescription -> {
         val type = if (this.isDraft) {
             context.getString(R.string.test_exit_edit_draft)

@@ -147,6 +147,8 @@
     <string name="test_exit_edit_description">Вы уверены, что хотите покинуть страницу редактирования? Тест останется в статусе \"%s\"</string>
     <string name="test_exit_edit_draft">Черновик</string>
     <string name="test_exit_edit_ready">Опубликованный</string>
+    <string name="test_question_delete_title">Вы действительно хотите удалить вопрос?</string>
+    <string name="test_question_delete_description">Восстановить удаленный вопрос будет невозможно</string>
 
     <!--Validate-->
     <string name="test_edit_error_title">Ошибка при создании теста</string>
