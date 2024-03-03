@@ -1,8 +1,9 @@
 package com.testeducation.ui.activity
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import com.testeducation.activity.main.MainActivityViewModel
 import com.testeducation.logic.activity.MainActivitySideEffect
@@ -11,13 +12,13 @@ import com.testeducation.navigation.core.IScreenAdapter
 import com.testeducation.navigation.core.NavigationHost
 import com.testeducation.navigation.core.Navigator
 import com.testeducation.ui.R
-
 import com.testeducation.ui.base.activity.ViewModelHostActivity
 import com.testeducation.ui.databinding.ActivityMainBinding
 import com.testeducation.ui.utils.loadColor
-import com.testeducation.ui.utils.loadDrawable
 import org.orbitmvi.orbit.viewmodel.observe
+import java.util.Locale
 import javax.inject.Inject
+
 
 class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBinding>(
     MainActivityViewModel::class,
@@ -48,6 +49,19 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
                 com.testeducation.navigation.R.anim.fade_out
             )
         )
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(updateLocale(newBase))
+    }
+
+    private fun updateLocale(context: Context): Context? {
+        val ruLocale = Locale("ru")
+        Locale.setDefault(ruLocale)
+        val configuration: Configuration = context.resources.configuration
+        configuration.setLocale(ruLocale)
+        configuration.setLayoutDirection(ruLocale)
+        return context.createConfigurationContext(configuration)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
