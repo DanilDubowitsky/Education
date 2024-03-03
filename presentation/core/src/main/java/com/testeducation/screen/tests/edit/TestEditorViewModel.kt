@@ -16,6 +16,7 @@ import com.testeducation.domain.model.question.input.InputQuestion
 import com.testeducation.domain.model.test.Test
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionResourceHelper
+import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.QuestionTypeUi
@@ -24,6 +25,7 @@ import com.testeducation.logic.screen.tests.edit.TestEditorSideEffect
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.utils.getColor
 import com.testeducation.utils.getString
 import org.orbitmvi.orbit.syntax.simple.intent
 
@@ -44,10 +46,6 @@ class TestEditorViewModel(
     exceptionHandler
 ) {
 
-    companion object {
-        private const val MIN_QUESTION = 2
-    }
-
     override val initialModelState: TestEditorModelState = TestEditorModelState()
 
     init {
@@ -59,24 +57,64 @@ class TestEditorViewModel(
         intent {
             updateModelState {
                 copy(
-                    loadingPublish = true
+                    loadingPublish = false
                 )
             }
         }
     }
 
     fun onExit() {
-        if (navigateFrom.fromCreate) {
-            router.newRootChain(NavigationScreen.Main.Home)
-        } else router.exit()
+        router.setResultListener(NavigationScreen.Common.ConfirmationBottom.ButtonRight) {
+            if (navigateFrom.fromCreate) {
+                router.newRootChain(NavigationScreen.Main.Home)
+            } else router.exit()
+        }
+        intent {
+            val modelState = getModelState()
+            val isDraft = modelState.test?.status == Test.Status.DRAFT
+            router.navigateTo(NavigationScreen.Common.ConfirmationBottom(
+                title = StringResource.Test.TestEditExitTitle.getString(resourceHelper),
+                description = StringResource.Test.TestEditExitDescription(isDraft).getString(resourceHelper),
+                buttonLeft = NavigationScreen.Common.ConfirmationBottom.Button(
+                    text = StringResource.Common.CommonCancel.getString(resourceHelper),
+                    color = ColorResource.Main.Red.getColor(resourceHelper)
+                ),
+                buttonRight = NavigationScreen.Common.ConfirmationBottom.Button(
+                    text = StringResource.Common.CommonNext.getString(resourceHelper),
+                    color = ColorResource.Main.Green.getColor(resourceHelper)
+                ),
+            ))
+        }
     }
 
     fun deleteQuestion(questionId: String) = intent {
-        val modelState = getModelState()
-        modelState.test?.id?.let { idNotNull ->
-            deleteQuestion.invoke(testId = idNotNull, questionId = questionId)
-            getTestDetails(idNotNull)
+        router.setResultListener(NavigationScreen.Common.Confirmation.OnConfirm) {
+           intent {
+               val modelState = getModelState()
+               modelState.test?.id?.let { idNotNull ->
+                   deleteQuestion.invoke(testId = idNotNull, questionId = questionId)
+                   updateModelState {
+                       copy(
+                           questionDetails = modelState.questionDetails.toMutableList().mapNotNull {
+                               if (questionId == it.id) {
+                                   null
+                               } else it
+                           }
+                       )
+                   }
+                   getTestDetails(idNotNull)
+               }
+           }
+
         }
+        router.navigateTo(
+            NavigationScreen.Common.Confirmation(
+                StringResource.Test.TestQuestionDeleteDescription.getString(resourceHelper),
+                StringResource.Test.TestQuestionDeleteTitle.getString(resourceHelper),
+                StringResource.Common.Delete.getString(resourceHelper),
+                StringResource.Common.CommonCancel.getString(resourceHelper)
+            )
+        )
     }
 
     fun openEditQuestion(questionId: String) {
@@ -135,25 +173,6 @@ class TestEditorViewModel(
         intent {
             val modelState = getModelState()
             if (modelState.test?.status != Test.Status.PUBLISHED) {
-                if (validate()) {
-                    updateModelState {
-                        copy(
-                            loadingPublish = true
-                        )
-                    }
-                    changeStatusTest.invoke(
-                        testId,
-                        Test.Status.PUBLISHED
-                    )
-                }
-            }
-            navigateFinish()
-        }
-    }
-
-    fun draft() {
-        intent {
-            if (validate()) {
                 updateModelState {
                     copy(
                         loadingPublish = true
@@ -161,10 +180,25 @@ class TestEditorViewModel(
                 }
                 changeStatusTest.invoke(
                     testId,
-                    Test.Status.DRAFT
+                    Test.Status.PUBLISHED
                 )
-                navigateFinish()
             }
+            navigateFinish()
+        }
+    }
+
+    fun draft() {
+        intent {
+            updateModelState {
+                copy(
+                    loadingPublish = true
+                )
+            }
+            changeStatusTest.invoke(
+                testId,
+                Test.Status.DRAFT
+            )
+            navigateFinish()
         }
     }
 
@@ -174,21 +208,6 @@ class TestEditorViewModel(
         } else {
             router.exit()
         }
-    }
-
-    private suspend fun validate(): Boolean {
-        val modelState = getModelState()
-        if (modelState.questionDetails.size - 1 < MIN_QUESTION) {
-            val screen = NavigationScreen.Common.Information(
-                titleText = StringResource.Validate.TestEditErrorTitle.getString(resourceHelper),
-                description = StringResource.Validate.MaxQuestionValue(MIN_QUESTION)
-                    .getString(resourceHelper),
-                btnText = StringResource.Common.CommonNext.getString(resourceHelper)
-            )
-            router.navigateTo(screen)
-            return false
-        }
-        return true
     }
 
     private fun initData() = getTestDetails(testId = testId)

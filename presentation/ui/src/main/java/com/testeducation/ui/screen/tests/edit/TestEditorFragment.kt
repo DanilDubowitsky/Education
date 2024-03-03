@@ -88,7 +88,7 @@ class TestEditorFragment :
                 requireActivity().window.statusBarColor = colorTest
                 rootGroup.isVisible = !state.visibleLoadingPublish
                 loadingShimmer.isVisible = false
-                loadingProgress.isVisible = state.visibleLoadingPublish
+                loadingProgress.setVisibility(state.visibleLoadingPublish)
             }
 
             is TestEditorState.NoInit -> {

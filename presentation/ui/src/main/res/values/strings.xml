@@ -143,6 +143,12 @@
 
     <string name="test_draft">В черновик</string>
     <string name="test_publish">Опубликовать</string>
+    <string name="test_exit_edit_title">Выход из редактирования теста</string>
+    <string name="test_exit_edit_description">Вы уверены, что хотите покинуть страницу редактирования? Тест останется в статусе \"%s\"</string>
+    <string name="test_exit_edit_draft">Черновик</string>
+    <string name="test_exit_edit_ready">Опубликованный</string>
+    <string name="test_question_delete_title">Вы действительно хотите удалить вопрос?</string>
+    <string name="test_question_delete_description">Восстановить удаленный вопрос будет невозможно</string>
 
     <!--Validate-->
     <string name="test_edit_error_title">Ошибка при создании теста</string>
@@ -200,6 +206,10 @@
     <string name="profile_detele_confirm_title">Вы уверены что хотите удалить аккаунт?</string>
     <string name="profile_detele_confirm_description">Все ваши данные, статистика и тесты будут полностью удалены без возможности восстановления.</string>
     <string name="profile_detele_confirm_delete_description">Вам на почту отправлен код для удаления аккаунта</string>
+    <string name="profile_logout_title">Вы уверены что хотите выйти из аккаунта?</string>
+    <string name="profile_logout_description">Ваши данные будут сохраненны</string>
+    <string name="profile_logout_button_submit">Выйти</string>
+    <string name="profile_logout_button_cancel">Остаться</string>
     <string name="confirm_input_code_title">Введите код</string>
     <string name="about_app">О приложении</string>
     <string name="about_app_social_title">Мы в социальных сетях</string>

@@ -18,6 +18,7 @@ class ProfileFragment: ViewModelHostFragment<ProfileViewModel, FragmentProfileBi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+        viewModel.initDataProfile()
         requireActivity().window.statusBarColor = requireContext().getColor(R.color.colorDarkGreen)
         binding {
             tvEdit.setOnClickListener {

@@ -88,9 +88,17 @@ sealed interface StringResource {
         object DeleteConfirmTitle : Profile
         object DeleteConfirmDescription : Profile
         object DeleteCodeConfirm: Profile
+        object LogoutTitle: Profile
+        object LogoutDescription: Profile
+        object LogoutSubmit: Profile
+        object LogoutCancel: Profile
     }
 
     sealed interface Test : StringResource {
         object PublishTitle: Test
+        object TestEditExitTitle: Test
+        data class TestEditExitDescription(val isDraft: Boolean): Test
+        object TestQuestionDeleteTitle: Test
+        object TestQuestionDeleteDescription: Test
     }
 }

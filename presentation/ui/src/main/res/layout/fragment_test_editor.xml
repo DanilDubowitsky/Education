@@ -113,11 +113,10 @@
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="btnDraft, btnCreate, rvQuestion, toolbar" />
 
-    <ProgressBar
+    <com.testeducation.ui.view.custom.CircleLoader
         android:id="@+id/loadingProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/colorDarkGreen"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
