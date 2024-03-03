@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:219443952850:android:a38003aaa3ff5dc043010b",
+        "mobilesdk_app_id": "1:219443952850:android:1167773d24e3c57e43010b",
         "android_client_info": {
-          "package_name": "com.testeducation.education"
+          "package_name": "com.testoria.app"
         }
       },
       "oauth_client": [],
