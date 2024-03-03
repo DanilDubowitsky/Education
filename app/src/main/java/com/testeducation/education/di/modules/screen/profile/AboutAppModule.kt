@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.screen.profile
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.core.app.IAppBuildConfigHelper
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.profile.about.AboutAppState
@@ -31,11 +32,13 @@ interface AboutAppModule {
             router: NavigationRouter,
             reducer: IReducer<AboutAppModelState, AboutAppState>,
             errorHandler: IExceptionHandler,
+            version: IAppBuildConfigHelper
         ): AboutAppViewModel {
             return AboutAppViewModel(
                 router = router,
                 reducer = reducer,
                 errorHandler = errorHandler,
+                version = version.getAppVersion()
             )
         }
     }

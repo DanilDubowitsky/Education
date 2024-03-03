@@ -1,4 +1,5 @@
 package com.testeducation.logic.screen.profile.about
 
-class AboutAppState {
-}
+data class AboutAppState(
+    val version: String
+)

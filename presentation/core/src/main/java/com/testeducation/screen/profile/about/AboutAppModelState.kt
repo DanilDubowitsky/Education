@@ -1,4 +1,5 @@
 package com.testeducation.screen.profile.about
 
-class AboutAppModelState {
-}
+data class AboutAppModelState(
+    val version: String
+)

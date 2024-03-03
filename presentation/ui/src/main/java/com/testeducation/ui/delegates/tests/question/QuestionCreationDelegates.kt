@@ -12,6 +12,7 @@ import com.testeducation.ui.databinding.ViewHolderAnswerOrderBinding
 import com.testeducation.ui.databinding.ViewHolderAnswerWriteBinding
 import com.testeducation.ui.listener.drag.IDragStartListener
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDelegateAdapter
 
 
@@ -144,7 +145,7 @@ fun footerPlusAddDelegate(
     ) {
         bind {
             binding {
-                imgPlus.setOnClickListener {
+                imgPlus.setClickListener {
                     onClickAdd()
                 }
             }
