@@ -93,6 +93,15 @@ class TestEditorViewModel(
                val modelState = getModelState()
                modelState.test?.id?.let { idNotNull ->
                    deleteQuestion.invoke(testId = idNotNull, questionId = questionId)
+                   updateModelState {
+                       copy(
+                           questionDetails = modelState.questionDetails.toMutableList().mapNotNull {
+                               if (questionId == it.id) {
+                                   null
+                               } else it
+                           }
+                       )
+                   }
                    getTestDetails(idNotNull)
                }
            }
