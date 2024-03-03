@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -230,4 +231,8 @@ fun ViewPropertyAnimator.setListener(
             onRepeat?.invoke()
         }
     })
+}
+
+fun Fragment.hideKeyboard() {
+    view?.hideKeyboard()
 }

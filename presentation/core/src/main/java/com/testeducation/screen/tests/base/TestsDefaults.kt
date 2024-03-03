@@ -1,9 +1,9 @@
 package com.testeducation.screen.tests.base
 
 object TestsDefaults {
-    const val DEFAULT_QUESTIONS_MIN = "1"
+    const val DEFAULT_QUESTIONS_MIN = "0"
     const val DEFAULT_QUESTIONS_MAX = "50"
-    const val DEFAULT_TIME_MIN = "1"
+    const val DEFAULT_TIME_MIN = "0"
     const val DEFAULT_TIME_MAX = "60"
     const val DEFAULT_HAS_LIMIT = false
     const val TESTS_PAGE_SIZE = 20

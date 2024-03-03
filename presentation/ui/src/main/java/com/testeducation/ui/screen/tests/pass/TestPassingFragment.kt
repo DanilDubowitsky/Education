@@ -29,6 +29,7 @@ import com.testeducation.ui.listener.drag.DragStartListener
 import com.testeducation.ui.listener.drag.IDragStartListener
 import com.testeducation.ui.utils.animateTranslationXAndAlpha
 import com.testeducation.ui.utils.disableChangeAnimation
+import com.testeducation.ui.utils.hideKeyboard
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.loadDrawable
@@ -226,6 +227,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         }
 
         if (currentQuestionId != null && currentQuestionId != question.id) {
+            hideKeyboard()
             rootScroll.animateTranslationXAndAlpha(
                 ANIMATION_DURATION,
                 -TRANSLATION_X,

@@ -366,8 +366,12 @@ class TestPassingViewModel(
         val selectedAnswers = questionState.question!!.answers.filter { answer ->
             questionState.selectedIds.contains(answer.id)
         }
-        val isIncorrect = selectedAnswers.any { answer ->
-            !answer.isTrue
+        var isIncorrect = false
+        val correctAnswers = questionState.question.answers.filter(Answer.ChoiceAnswer::isTrue)
+        correctAnswers.forEach { answer ->
+            if (!selectedAnswers.contains(answer)) {
+                isIncorrect = true
+            }
         }
         val state = when {
             !isIncorrect && !isTimeExpired -> {
