@@ -17,14 +17,12 @@ import com.testeducation.domain.model.test.Test
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.question.IQuestionResourceHelper
 import com.testeducation.helper.resource.IResourceHelper
-import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.edit.TestEditorSideEffect
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
-import com.testeducation.utils.getString
 import org.orbitmvi.orbit.syntax.simple.intent
 
 class TestEditorViewModel(
@@ -44,10 +42,6 @@ class TestEditorViewModel(
     exceptionHandler
 ) {
 
-    companion object {
-        private const val MIN_QUESTION = 2
-    }
-
     override val initialModelState: TestEditorModelState = TestEditorModelState()
 
     init {
@@ -59,7 +53,7 @@ class TestEditorViewModel(
         intent {
             updateModelState {
                 copy(
-                    loadingPublish = true
+                    loadingPublish = false
                 )
             }
         }
@@ -135,25 +129,6 @@ class TestEditorViewModel(
         intent {
             val modelState = getModelState()
             if (modelState.test?.status != Test.Status.PUBLISHED) {
-                if (validate()) {
-                    updateModelState {
-                        copy(
-                            loadingPublish = true
-                        )
-                    }
-                    changeStatusTest.invoke(
-                        testId,
-                        Test.Status.PUBLISHED
-                    )
-                }
-            }
-            navigateFinish()
-        }
-    }
-
-    fun draft() {
-        intent {
-            if (validate()) {
                 updateModelState {
                     copy(
                         loadingPublish = true
@@ -161,10 +136,25 @@ class TestEditorViewModel(
                 }
                 changeStatusTest.invoke(
                     testId,
-                    Test.Status.DRAFT
+                    Test.Status.PUBLISHED
                 )
-                navigateFinish()
             }
+            navigateFinish()
+        }
+    }
+
+    fun draft() {
+        intent {
+            updateModelState {
+                copy(
+                    loadingPublish = true
+                )
+            }
+            changeStatusTest.invoke(
+                testId,
+                Test.Status.DRAFT
+            )
+            navigateFinish()
         }
     }
 
@@ -174,21 +164,6 @@ class TestEditorViewModel(
         } else {
             router.exit()
         }
-    }
-
-    private suspend fun validate(): Boolean {
-        val modelState = getModelState()
-        if (modelState.questionDetails.size - 1 < MIN_QUESTION) {
-            val screen = NavigationScreen.Common.Information(
-                titleText = StringResource.Validate.TestEditErrorTitle.getString(resourceHelper),
-                description = StringResource.Validate.MaxQuestionValue(MIN_QUESTION)
-                    .getString(resourceHelper),
-                btnText = StringResource.Common.CommonNext.getString(resourceHelper)
-            )
-            router.navigateTo(screen)
-            return false
-        }
-        return true
     }
 
     private fun initData() = getTestDetails(testId = testId)
