@@ -106,7 +106,7 @@ class CreationTestDialogFragment :
     }
 
     private fun changeVisibleProgressBar(isVisibleProgressBar: Boolean) = binding {
-        loadingProgress.isVisible = isVisibleProgressBar
+        loadingProgress.setVisibility(isVisibleProgressBar)
         if (isVisibleProgressBar) {
             containerFirst.isVisible = false
             containerSecond.isVisible = false
