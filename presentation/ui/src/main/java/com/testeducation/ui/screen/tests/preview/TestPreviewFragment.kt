@@ -79,7 +79,7 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
             needDisable = false,
             viewModel::openQuestionsScreen
         )
-        txtShowMore.setClickListener(needDisable = false, viewModel::toggleDescriptionExpand)
+        //txtShowMore.setClickListener(needDisable = false, viewModel::toggleDescriptionExpand)
         appBar.addOnOffsetChangedListener { _, _ ->
             val rect = Rect()
             txtTitle.getGlobalVisibleRect(rect)
@@ -96,13 +96,13 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         txtTestPassTime.text = state.timeLimit
         imgAvatar.setImageResource(state.avatarResource)
         imgAvatar2.setImageResource(state.avatarResource)
-        if (state.isExpand) {
-            txtDescription.maxLines = Int.MAX_VALUE
-        } else {
-            txtDescription.maxLines = MAX_DESCRIPTION_LINES
-        }
+//        if (state.isExpand) {
+//            txtDescription.maxLines = Int.MAX_VALUE
+//        } else {
+//            txtDescription.maxLines = MAX_DESCRIPTION_LINES
+//        }
         txtToolbarTitle.text = state.title
-        txtDescription.text = state.description
+        //txtDescription.text = state.description
         txtTheme.text = state.theme
         txtDate.text = state.createdDate
         txtTitle.text = state.title
@@ -122,12 +122,12 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         txtAuthorTests.isGone = state.authorTests.isEmpty()
         imgAuthorTests.isGone = state.authorTests.isEmpty()
 
-        txtShowMore.isGone = !state.isExpandButtonVisible
-        txtShowMore.text = if (state.isExpand) {
-            getString(R.string.test_preview_hide)
-        } else {
-            getString(R.string.test_preview_show_more)
-        }
+//        txtShowMore.isGone = !state.isExpandButtonVisible
+//        txtShowMore.text = if (state.isExpand) {
+//            getString(R.string.test_preview_hide)
+//        } else {
+//            getString(R.string.test_preview_show_more)
+//        }
     }
 
     private companion object {
@@ -135,7 +135,6 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
         const val LEFT_PAGER_PADDING = 24
         const val PAGE_MARGIN = 12
         const val PAGES_PADDING = 66
-
     }
 
 }

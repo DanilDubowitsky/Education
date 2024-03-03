@@ -68,7 +68,7 @@ class TestPreviewViewModel(
 
     fun onTestClick(id: String) = intent {
         val screen = NavigationScreen.Tests.Preview(id)
-        router.navigateTo(screen, key = HOME_NAVIGATOR_KEY)
+        router.navigateTo(screen)
     }
 
     fun onLikeClick(position: Int) = intent {
