@@ -369,7 +369,10 @@ class TestPassingViewModel(
         var isIncorrect = false
         val correctAnswers = questionState.question.answers.filter(Answer.ChoiceAnswer::isTrue)
         correctAnswers.forEach { answer ->
-            if (!selectedAnswers.contains(answer)) {
+            val containsSelectedAnswer = selectedAnswers.firstOrNull { selectedAnswer ->
+                selectedAnswer.id == answer.id
+            }
+            if (containsSelectedAnswer == null) {
                 isIncorrect = true
             }
         }
