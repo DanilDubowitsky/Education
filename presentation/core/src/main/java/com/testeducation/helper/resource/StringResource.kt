@@ -88,6 +88,10 @@ sealed interface StringResource {
         object DeleteConfirmTitle : Profile
         object DeleteConfirmDescription : Profile
         object DeleteCodeConfirm: Profile
+        object LogoutTitle: Profile
+        object LogoutDescription: Profile
+        object LogoutSubmit: Profile
+        object LogoutCancel: Profile
     }
 
     sealed interface Test : StringResource {

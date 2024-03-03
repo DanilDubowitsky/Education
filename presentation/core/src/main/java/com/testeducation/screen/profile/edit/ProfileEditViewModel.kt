@@ -35,10 +35,26 @@ class ProfileEditViewModel(
     }
 
     fun logOut() {
-        intent {
-            logOut.invoke()
-            router.newRootChain(NavigationScreen.Auth.Login)
+
+        router.setResultListener(NavigationScreen.Common.ConfirmationBottom.ButtonLeft) {
+            intent {
+                logOut.invoke()
+                router.newRootChain(NavigationScreen.Auth.Login)
+            }
         }
+
+        router.navigateTo(NavigationScreen.Common.ConfirmationBottom(
+            title = StringResource.Profile.LogoutTitle.getString(resourceHelper),
+            description = StringResource.Profile.LogoutDescription.getString(resourceHelper),
+            buttonLeft = NavigationScreen.Common.ConfirmationBottom.Button(
+                text = StringResource.Profile.LogoutSubmit.getString(resourceHelper),
+                color = ColorResource.Main.Red.getColor(resourceHelper)
+            ),
+            buttonRight = NavigationScreen.Common.ConfirmationBottom.Button(
+                text = StringResource.Profile.LogoutCancel.getString(resourceHelper),
+                color = ColorResource.Main.Green.getColor(resourceHelper)
+            ),
+        ))
     }
 
     fun goToAvatarChangerScreen() {

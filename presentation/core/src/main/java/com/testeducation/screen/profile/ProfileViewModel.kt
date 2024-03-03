@@ -22,10 +22,6 @@ class ProfileViewModel(
 ) : BaseViewModel<ProfileModelState, ProfileState, ProfileSideEffect>(reducer, errorHandler) {
     override val initialModelState: ProfileModelState = ProfileModelState()
 
-    init {
-        initDataProfile()
-    }
-
     fun navigateToEdit() {
         router.navigateTo(NavigationScreen.Profile.Editor)
     }
@@ -42,7 +38,7 @@ class ProfileViewModel(
         router.navigateTo(NavigationScreen.Common.WebView("https://testoria.azurewebsites.net/home/privacy"))
     }
 
-    private fun initDataProfile() = intent {
+    fun initDataProfile() = intent {
         val currentUser = getCurrentUser.invoke()
         val userStatistics = getUserStatistics.invoke()
         updateModelState {

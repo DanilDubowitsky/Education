@@ -200,6 +200,10 @@
     <string name="profile_detele_confirm_title">Вы уверены что хотите удалить аккаунт?</string>
     <string name="profile_detele_confirm_description">Все ваши данные, статистика и тесты будут полностью удалены без возможности восстановления.</string>
     <string name="profile_detele_confirm_delete_description">Вам на почту отправлен код для удаления аккаунта</string>
+    <string name="profile_logout_title">Вы уверены что хотите выйти из аккаунта?</string>
+    <string name="profile_logout_description">Ваши данные будут сохраненны</string>
+    <string name="profile_logout_button_submit">Выйти</string>
+    <string name="profile_logout_button_cancel">Остаться</string>
     <string name="confirm_input_code_title">Введите код</string>
     <string name="about_app">О приложении</string>
     <string name="about_app_social_title">Мы в социальных сетях</string>
