@@ -14,6 +14,7 @@ import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.ColorResource
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.resource.StringResource
+import com.testeducation.logic.model.test.QuestionTypeUi
 import com.testeducation.logic.model.test.QuestionTypeUiItem
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationSideEffect
 import com.testeducation.logic.screen.tests.creation.question.creation.QuestionCreationState
@@ -195,7 +196,8 @@ class QuestionCreationViewModel(
                 updateModelState {
                     copy(
                         questionTypeItem = questionTypeItem,
-                        answerItem = emptyList()
+                        answerItem = emptyList(),
+                        visibleAddFooter = questionTypeUiItem.type != QuestionTypeUi.WRITE_ANSWER
                     )
                 }
                 initQuestionType(questionTypeItem.questionType)
