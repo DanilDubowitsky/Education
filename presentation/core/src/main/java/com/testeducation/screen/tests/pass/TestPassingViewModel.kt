@@ -193,16 +193,8 @@ class TestPassingViewModel(
         router.exit()
     }
 
-    fun onAnswerClick(position: Int) = intent {
-        val modelState = getModelState()
-        val answer = when (val question = modelState.currentQuestion?.question) {
-            is Question.Choice -> question.answers[position]
-            is Question.Match -> question.answers[position]
-            is Question.Order -> question.answers[position]
-            is Question.Text,
-            null -> return@intent
-        }
-        val screen = NavigationScreen.Tests.FullAnswer(answer.extractText())
+    fun onAnswerClick(text: String) = intent {
+        val screen = NavigationScreen.Tests.FullAnswer(text)
         router.navigateTo(screen)
     }
 

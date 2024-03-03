@@ -15,12 +15,12 @@ import com.testeducation.ui.utils.simpleDelegateAdapter
 
 fun createChoiceAnswerDelegate(
     onSelectAnswer: (Int) -> Unit,
-    onAnswerClick: (Int) -> Unit
+    onAnswerClick: (String) -> Unit
 ) = simpleDelegateAdapter<AnswerUI.ChoiceAnswer, AnswerUI, ViewHolderAnswerChoiceBinding>(
     ViewHolderAnswerChoiceBinding::inflate
 ) {
     binding.root.setClickListener {
-        onAnswerClick(absoluteAdapterPosition)
+        onAnswerClick(item.title)
     }
     binding.checkBoxAnswer.setClickListener(needDisable = false) {
         onSelectAnswer(absoluteAdapterPosition)
@@ -34,12 +34,12 @@ fun createChoiceAnswerDelegate(
 @SuppressLint("ClickableViewAccessibility")
 fun createOrderAnswerDelegate(
     onDragListener: IDragStartListener,
-    onAnswerClick: (Int) -> Unit
+    onAnswerClick: (String) -> Unit
 ) = simpleDelegateAdapter<AnswerUI.OrderAnswer, AnswerUI, ViewHolderAnswerOrderPassBinding>(
     ViewHolderAnswerOrderPassBinding::inflate
 ) {
     binding.root.setClickListener {
-        onAnswerClick(absoluteAdapterPosition)
+        onAnswerClick(item.title)
     }
     bind {
         binding.root.setOnTouchListener { v, event ->
@@ -55,13 +55,13 @@ fun createOrderAnswerDelegate(
 @SuppressLint("ClickableViewAccessibility")
 fun createMatchAnswerDelegate(
     onDragListener: IDragStartListener,
-    onAnswerClick: (Int) -> Unit
+    onAnswerClick: (String) -> Unit
 ) = simpleDelegateAdapter<AnswerUI.MatchAnswer, AnswerUI,
         ViewHolderAnswerMatchPassBinding>(
     ViewHolderAnswerMatchPassBinding::inflate
 ) {
     binding.root.setClickListener {
-        onAnswerClick(absoluteAdapterPosition)
+        onAnswerClick(item.title)
     }
     bind {
         binding.root.setOnTouchListener { v, event ->

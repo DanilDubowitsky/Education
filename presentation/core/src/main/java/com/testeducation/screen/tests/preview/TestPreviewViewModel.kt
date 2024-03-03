@@ -109,7 +109,7 @@ class TestPreviewViewModel(
                 loadingState = TestPreviewModelState.LoadingState.IDLE,
                 test = test,
                 authorTests = testsPage.tests.filter { testShort ->
-                    testShort.id != testId
+                    testShort.id != test.id
                 }
             )
         }

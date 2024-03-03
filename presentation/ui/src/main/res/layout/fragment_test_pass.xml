@@ -183,10 +183,12 @@
                 <EditText
                     android:id="@+id/answerText"
                     style="@style/EditText.Input.Simple"
+                    android:inputType="textMultiLine"
+                    android:minLines="5"
+                    android:maxLines="5"
                     android:layout_width="match_parent"
                     android:hint="@string/test_pass_custom_answer_hint"
                     android:layout_height="120dp"
-                    android:gravity="start|top"
                     app:layout_constraintTop_toBottomOf="@+id/txtQuestion" />
 
             </com.testeducation.ui.view.custom.InputTextPlaceHolder>
