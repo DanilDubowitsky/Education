@@ -98,5 +98,6 @@ dependencies {
     implementation(project(":presentation:core"))
     implementation(project(":presentation:ui"))
     implementation(project(":presentation:logic"))
+    implementation("io.appmetrica.analytics:analytics:6.2.1")
 
 }
