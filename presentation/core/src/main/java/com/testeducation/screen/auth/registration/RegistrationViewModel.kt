@@ -49,6 +49,19 @@ class RegistrationViewModel(
             )
             return@intent
         }
+        if (modelState.password != modelState.confirmPassword) {
+            router.navigateTo(
+                NavigationScreen.Common.Information(
+                    StringResource.Validate.PasswordNotMatch.getString(
+                        resourceHelper = resourceHelper
+                    ),
+                    titleText = StringResource.Validate.ValidateTitleAttention.getString(
+                        resourceHelper
+                    )
+                )
+            )
+            return@intent
+        }
         updateModelState {
             copy(loadingState = RegistrationModelState.LoadingState.LOADING)
         }
@@ -105,7 +118,6 @@ class RegistrationViewModel(
         }
     }
 
-    //todo Переписать валидацию
     private fun validate(
         nickName: String?,
         password: String?,
@@ -115,7 +127,7 @@ class RegistrationViewModel(
         !nickName.isNullOrEmpty()
                 && !password.isNullOrEmpty()
                 && !userName.isNullOrEmpty()
-                && password == repeatedPassword
+                && !repeatedPassword.isNullOrEmpty()
 
     private companion object {
         const val REGISTRATION_CODE_ALREADY_SEND_ERROR = "Registration code has already been sent"

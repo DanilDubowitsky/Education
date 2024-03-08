@@ -81,6 +81,7 @@ sealed interface StringResource {
         object MinOneTrueAnswer : Validate
         object AnswerIsEmpty : Validate
         object RegistrationEmptyData : Validate
+        object PasswordNotMatch: Validate
         object ValidateTitleAttention : Validate
     }
 
