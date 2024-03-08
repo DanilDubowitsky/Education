@@ -46,8 +46,7 @@ class QuestionCreationViewModel(
 ) {
 
     companion object {
-        private const val ERROR_NUMBER_TEXT = "The number cannot be more than 2"
-        private const val MAX_ANSWER = 7
+        private const val MAX_ANSWER = 6
     }
 
     override val initialModelState: QuestionCreationModelState = QuestionCreationModelState(
@@ -89,15 +88,13 @@ class QuestionCreationViewModel(
                     ::getColorAnswer,
                     ::getTrueColor
                 )
-                if (result !is Question.Text) {
-                    answersQuestion = answersQuestion.plus(InputAnswer.FooterPlusAdd())
-                }
                 updateModelState {
                     copy(
                         answerItem = answersQuestion,
                         questionText = result.title,
                         time = result.time,
-                        loadingScreen = false
+                        loadingScreen = false,
+                        visibleAddFooter = answersQuestion.size < MAX_ANSWER
                     )
                 }
             }
@@ -209,7 +206,7 @@ class QuestionCreationViewModel(
     fun addAnswer() = intent {
         val modelState = getModelState()
         val answerItems = modelState.answerItem
-        val index = answerItems.size - 1
+        val index = answerItems.size
         val answer = createAnswer(
             index, getModelState().questionTypeItem.questionType
         )
@@ -290,9 +287,6 @@ class QuestionCreationViewModel(
         }
         intent {
             getModelState().answerItem.find { it.id == answerId }?.let { itemAnswer ->
-                if (itemAnswer is InputAnswer.FooterPlusAdd) {
-                    return@intent
-                }
                 val textAndColorPair = when (itemAnswer) {
                     is InputAnswer.DefaultAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
                     is InputAnswer.OrderAnswer -> Pair(itemAnswer.answerText, itemAnswer.color)
@@ -321,36 +315,6 @@ class QuestionCreationViewModel(
         }
     }
 
-    fun answerMatchChanger(answerId: String, number: Int, text: String) = intent {
-        if (number > 2) throw IllegalArgumentException(ERROR_NUMBER_TEXT)
-
-        var answerItems = getModelState().answerItem
-        answerItems = answerItems.map { answerItem ->
-            if (answerItem.id == answerId &&
-                number == InputAnswer.MatchAnswer.FIRST_ANSWER_MATCH &&
-                answerItem is InputAnswer.MatchAnswer
-            ) {
-                answerItem.copy(
-                    firstAnswer = text
-                )
-            } else if (
-                answerItem.id == answerId &&
-                number == InputAnswer.MatchAnswer.SECOND_ANSWER_MATCH &&
-                answerItem is InputAnswer.MatchAnswer
-            ) {
-                answerItem.copy(
-                    secondAnswer = text
-                )
-            } else answerItem
-        }
-        updateModelState {
-            copy(
-                answerItem = answerItems
-            )
-        }
-
-    }
-
     fun changeCheckedAnswer(selectedId: String) = intent {
         var answerItems = getModelState().answerItem
         answerItems = answerItems.map { answerItem ->
@@ -375,15 +339,11 @@ class QuestionCreationViewModel(
     fun updatePosition(positionCurrent: Int, targetPosition: Int) = intent {
         val modelState = getModelState()
         val answerItems = modelState.answerItem.toMutableList()
+        if (targetPosition >= answerItems.size) {
+            return@intent
+        }
         val selectedElement = modelState.selectedDropElement
-
         if (selectedElement == answerItems[targetPosition]) {
-            return@intent
-        }
-        if (positionCurrent + 1 == answerItems.size) {
-            return@intent
-        }
-        if (targetPosition + 1 == answerItems.size) {
             return@intent
         }
         Collections.swap(answerItems, positionCurrent, targetPosition)
@@ -445,7 +405,7 @@ class QuestionCreationViewModel(
         }
         when (state.questionTypeItem.questionType) {
             QuestionType.CHOICE -> {
-                if (state.answerItem.size - 1 < 2) {
+                if (state.answerItem.size < 2) {
                     val screen = NavigationScreen.Common.Information(
                         titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(
                             resourceHelper
@@ -490,7 +450,7 @@ class QuestionCreationViewModel(
             }
 
             QuestionType.REORDER -> {
-                if (state.answerItem.size - 1 < 3) {
+                if (state.answerItem.size < 3) {
                     val screen = NavigationScreen.Common.Information(
                         titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(
                             resourceHelper
@@ -516,7 +476,7 @@ class QuestionCreationViewModel(
             }
 
             QuestionType.MATCH -> {
-                if (state.answerItem.size - 1 < 3) {
+                if (state.answerItem.size < 3) {
                     val screen = NavigationScreen.Common.Information(
                         titleText = StringResource.Validate.QuestionCreationErrorTitle.getString(
                             resourceHelper
@@ -626,8 +586,7 @@ class QuestionCreationViewModel(
         updateModelState {
             copy(
                 answerItem = listOf(
-                    answer,
-                    InputAnswer.FooterPlusAdd()
+                    answer
                 )
             )
         }
@@ -649,8 +608,7 @@ class QuestionCreationViewModel(
         updateModelState {
             copy(
                 answerItem = listOf(
-                    answer,
-                    InputAnswer.FooterPlusAdd(isOrderAnswer = true)
+                    answer
                 ),
             )
         }
@@ -663,8 +621,7 @@ class QuestionCreationViewModel(
         updateModelState {
             copy(
                 answerItem = listOf(
-                    answer,
-                    InputAnswer.FooterPlusAdd()
+                    answer
                 )
             )
         }

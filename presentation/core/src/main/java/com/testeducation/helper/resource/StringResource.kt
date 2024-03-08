@@ -81,6 +81,7 @@ sealed interface StringResource {
         object MinOneTrueAnswer : Validate
         object AnswerIsEmpty : Validate
         object RegistrationEmptyData : Validate
+        object PasswordNotMatch: Validate
         object ValidateTitleAttention : Validate
     }
 
@@ -100,5 +101,6 @@ sealed interface StringResource {
         data class TestEditExitDescription(val isDraft: Boolean): Test
         object TestQuestionDeleteTitle: Test
         object TestQuestionDeleteDescription: Test
+        data class QuestionCountTitle(val count: Int): Test
     }
 }

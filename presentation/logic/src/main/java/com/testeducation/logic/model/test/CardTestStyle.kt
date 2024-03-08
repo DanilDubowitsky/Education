@@ -4,5 +4,7 @@ enum class CardTestStyle {
     X,
     O,
     DOTTED,
-    ELLIPSE
+    ELLIPSE,
+    STAR,
+    ARROW
 }

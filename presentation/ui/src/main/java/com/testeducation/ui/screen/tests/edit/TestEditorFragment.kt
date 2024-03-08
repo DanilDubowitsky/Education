@@ -59,6 +59,7 @@ class TestEditorFragment :
             imgBack.setOnClickListener {
                 viewModel.onExit()
             }
+            refreshLayout.setOnRefreshListener(viewModel::swipeOnRefresh)
 
             view.setOnKeyListener { _, keyCode, _ ->
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -76,6 +77,8 @@ class TestEditorFragment :
     private fun render(state: TestEditorState) = binding {
         when (state) {
             is TestEditorState.Content -> {
+                refreshLayout.isRefreshing = state.isRefreshing
+                tvQuestionCount.text = state.titleCountQuestion
                 questionAdapter.items = state.questionDetailsUi
                 tvTitleTest.text = state.testDetails.title
                 tvTypeTest.text = state.testDetails.theme.title
@@ -92,6 +95,7 @@ class TestEditorFragment :
             }
 
             is TestEditorState.NoInit -> {
+                refreshLayout.isRefreshing = false
                 loadingShimmer.isVisible = true
                 rootGroup.isVisible = false
             }

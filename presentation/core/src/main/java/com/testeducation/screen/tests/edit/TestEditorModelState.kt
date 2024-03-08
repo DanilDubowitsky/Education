@@ -7,5 +7,6 @@ data class TestEditorModelState(
     val test: Test? = null,
     val loading: Boolean = true,
     val questionDetails: List<QuestionDetails> = emptyList(),
-    val loadingPublish: Boolean = false
+    val loadingPublish: Boolean = false,
+    val isRefreshing: Boolean = false,
 )

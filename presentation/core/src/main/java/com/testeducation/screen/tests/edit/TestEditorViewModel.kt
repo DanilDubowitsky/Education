@@ -202,6 +202,15 @@ class TestEditorViewModel(
         }
     }
 
+    fun swipeOnRefresh() = intent {
+        updateModelState {
+            copy(
+                isRefreshing = true
+            )
+        }
+        initData()
+    }
+
     private fun navigateFinish() {
         if (navigateFrom.fromCreate) {
             router.navigateTo(NavigationScreen.Main.Home, false)
@@ -223,7 +232,8 @@ class TestEditorViewModel(
         updateModelState {
             copy(
                 test = details,
-                questionDetails = questionDetails
+                questionDetails = questionDetails,
+                isRefreshing = false
             )
         }
     }

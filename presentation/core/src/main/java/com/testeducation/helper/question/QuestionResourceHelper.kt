@@ -54,10 +54,6 @@ class QuestionResourceHelper(
                 color = getColorAnswer(index)
             )
         }
-
-        is InputAnswer.FooterPlusAdd -> {
-            this
-        }
     }
 
     //TODO Убрать когда появится общий класс

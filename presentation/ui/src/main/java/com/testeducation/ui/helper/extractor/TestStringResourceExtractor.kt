@@ -15,4 +15,5 @@ fun StringResource.Test.getStringId(context: Context) = when (this) {
         } else  context.getString(R.string.test_exit_edit_ready)
         context.getString(R.string.test_exit_edit_description, type)
     }
+    is StringResource.Test.QuestionCountTitle -> context.resources.getQuantityString(R.plurals.questions_count_plurals, this.count, this.count)
 }
