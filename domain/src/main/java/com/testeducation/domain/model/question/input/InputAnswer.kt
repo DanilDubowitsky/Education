@@ -32,6 +32,4 @@ sealed class InputAnswer {
         val order: Int,
         val color: Int = 0
     ) : InputAnswer()
-
-    data class FooterPlusAdd(override val id: String = "-1", val isOrderAnswer: Boolean = false) : InputAnswer()
 }
