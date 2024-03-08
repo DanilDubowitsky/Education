@@ -56,14 +56,28 @@ class CardTest @JvmOverloads constructor(
             cardX.hideView()
             ellipsesLayout.hideView()
             fiveEllipse.hideView()
+            cardStar.hideView()
+            cardStarLittle.hideView()
+            cardCircleLittle.hideView()
+            cardArrow.hideView()
 
             when (style) {
                 CardTestStyle.X -> cardX.showView()
-                CardTestStyle.O -> cardCircle.showView()
+                CardTestStyle.O -> {
+                    cardCircle.showView()
+                    cardCircleLittle.showView()
+                }
                 CardTestStyle.DOTTED -> cardDots.showView()
                 CardTestStyle.ELLIPSE -> {
                     ellipsesLayout.showView()
                     fiveEllipse.showView()
+                }
+                CardTestStyle.STAR -> {
+                    cardStar.showView()
+                    cardStarLittle.showView()
+                }
+                CardTestStyle.ARROW -> {
+                    cardArrow.showView()
                 }
             }
         }

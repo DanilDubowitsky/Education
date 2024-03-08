@@ -1,6 +1,5 @@
 package com.testeducation.screen.tests.edit
 
-import com.testeducation.converter.test.getTestStyle
 import com.testeducation.converter.test.question.toUi
 import com.testeducation.converter.test.toUI
 import com.testeducation.core.IReducer
@@ -8,6 +7,7 @@ import com.testeducation.domain.model.test.Test
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.resource.StringResource
+import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.logic.model.test.TestDetailsUi
 import com.testeducation.logic.model.test.TestStyleUi
 import com.testeducation.logic.screen.tests.edit.TestEditorState
@@ -28,7 +28,7 @@ class TestEditorReducer(
                 title = test.title,
                 style = TestStyleUi(
                     color = test.style.color,
-                    background = getTestStyle(test.style.background)
+                    background = CardTestStyle.valueOf(test.style.background)
                 ),
                 settings = test.settings.toUI(),
                 questions = emptyList(),

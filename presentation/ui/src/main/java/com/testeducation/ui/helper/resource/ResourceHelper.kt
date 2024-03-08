@@ -79,6 +79,14 @@ class ResourceHelper(
         CardTestStyle.ELLIPSE -> {
             R.drawable.ic_card_ellipse
         }
+
+        CardTestStyle.ARROW -> {
+            R.drawable.ic_card_arrow
+        }
+
+        CardTestStyle.STAR -> {
+            R.drawable.ic_card_star
+        }
     }
 
     private fun extractResource(resource: StringResource.Common): String = when (resource) {
