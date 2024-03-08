@@ -46,7 +46,6 @@ class QuestionCreationViewModel(
 ) {
 
     companion object {
-        private const val ERROR_NUMBER_TEXT = "The number cannot be more than 2"
         private const val MAX_ANSWER = 7
     }
 
@@ -320,36 +319,6 @@ class QuestionCreationViewModel(
                 )
             }
         }
-    }
-
-    fun answerMatchChanger(answerId: String, number: Int, text: String) = intent {
-        if (number > 2) throw IllegalArgumentException(ERROR_NUMBER_TEXT)
-
-        var answerItems = getModelState().answerItem
-        answerItems = answerItems.map { answerItem ->
-            if (answerItem.id == answerId &&
-                number == InputAnswer.MatchAnswer.FIRST_ANSWER_MATCH &&
-                answerItem is InputAnswer.MatchAnswer
-            ) {
-                answerItem.copy(
-                    firstAnswer = text
-                )
-            } else if (
-                answerItem.id == answerId &&
-                number == InputAnswer.MatchAnswer.SECOND_ANSWER_MATCH &&
-                answerItem is InputAnswer.MatchAnswer
-            ) {
-                answerItem.copy(
-                    secondAnswer = text
-                )
-            } else answerItem
-        }
-        updateModelState {
-            copy(
-                answerItem = answerItems
-            )
-        }
-
     }
 
     fun changeCheckedAnswer(selectedId: String) = intent {
