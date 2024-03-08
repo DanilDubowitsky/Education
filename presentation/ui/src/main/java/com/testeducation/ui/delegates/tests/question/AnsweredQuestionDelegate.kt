@@ -99,6 +99,18 @@ fun matchAnsweredQuestionDelegate(
     }
     bind {
         with(binding) {
+            if (item.isTrueExpanded) {
+                btnExpandTrueAnswer.scaleY = -1f
+            } else {
+                btnExpandTrueAnswer.scaleY = 1f
+            }
+
+            if (item.isExpanded) {
+                btnExpand.scaleY = -1f
+            } else {
+                btnExpand.scaleY = 1f
+            }
+
             matchDataLayout.isGone = !item.isExpanded
             trueMatchDataLayout.isGone = !item.isTrueExpanded || item.state == AnswerStateUI.CORRECT
             val inflater = LayoutInflater.from(root.context)

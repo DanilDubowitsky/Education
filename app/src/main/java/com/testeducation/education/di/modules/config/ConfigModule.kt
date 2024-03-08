@@ -24,15 +24,19 @@ object ConfigModule {
             }
 
             override fun provideEncryptedConfigSourceInstance(name: String): IConfigSource {
-                val masterKey = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-                val sharedPreferences = EncryptedSharedPreferences.create(
-                    name,
-                    masterKey,
-                    context,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-                )
-                return ConfigSource(sharedPreferences)
+                return runCatching {
+                    val masterKey = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+                    val sharedPreferences = EncryptedSharedPreferences.create(
+                        name,
+                        masterKey,
+                        context,
+                        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                    )
+                    ConfigSource(sharedPreferences)
+                }.getOrElse {
+                    provideConfigSourceInstance(name)
+                }
             }
         }
 

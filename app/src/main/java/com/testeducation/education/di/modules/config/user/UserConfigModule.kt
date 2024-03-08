@@ -20,7 +20,7 @@ object UserConfigModule {
     @Provides
     @Reusable
     fun provideUserConfig(configProvider: IConfigSource.Provider): IUserConfig {
-        val configSource = configProvider.provideConfigSourceInstance(CONFIG_NAME)
+        val configSource = configProvider.provideEncryptedConfigSourceInstance(CONFIG_NAME)
         return UserConfig(configSource)
     }
 
