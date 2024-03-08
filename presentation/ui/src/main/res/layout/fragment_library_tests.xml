@@ -42,6 +42,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
+            app:elevation="0dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             app:layout_constraintTop_toTopOf="parent">

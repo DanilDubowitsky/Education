@@ -39,8 +39,7 @@ sealed class AnswerCreationUI {
     }
 
     data class FooterPlusAdd(
-        override val id: String,
-        val isOrderAnswer: Boolean = false
+        override val id: String
     ) : AnswerCreationUI()
 
 }
