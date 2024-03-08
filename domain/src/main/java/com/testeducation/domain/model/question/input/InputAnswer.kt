@@ -24,12 +24,7 @@ sealed class InputAnswer {
         val firstAnswer: String = "",
         val secondAnswer: String = "",
         val color: Int = 0
-    ) : InputAnswer() {
-        companion object {
-            const val FIRST_ANSWER_MATCH = 1
-            const val SECOND_ANSWER_MATCH = 2
-        }
-    }
+    ) : InputAnswer()
 
     data class OrderAnswer(
         override val id: String,
