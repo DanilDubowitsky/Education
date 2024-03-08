@@ -32,6 +32,7 @@ import com.testeducation.ui.utils.animateTranslationXAndAlpha
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.hideKeyboard
 import com.testeducation.ui.utils.invoke
+import com.testeducation.ui.utils.isFadeGone
 import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.loadDrawable
 import com.testeducation.ui.utils.observe
@@ -133,6 +134,8 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         rootScroll.isInvisible = state.isLoading
         loadingProgress.setVisibility(state.isLoading)
         btnAnswer.isGone = state.isLoading
+        answerStatusLayout.isFadeGone =
+            state.currentQuestion?.answerState == AnswerStateUI.NONE || state.isLoading
         if (state.currentQuestion != null) {
             renderAnswers(state.currentQuestion!!, state.matchData)
             bindQuestionAnswerStatus(state.currentQuestion!!)
@@ -150,15 +153,14 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
                 (state.currentQuestionPosition.toFloat() / state.questionsCount.toFloat()) * 100
             questionsProgress.setProgress(progress.toInt(), true)
         }
-        answerStatusLayout.isGone =
-            state.currentQuestion?.answerState == AnswerStateUI.NONE
+        backgroundView.isGone = state.isLoading
     }
 
     private fun FragmentTestPassBinding.bindQuestionAnswerStatus(questionUI: QuestionUI) {
         txtCorrectAnswer.isGone = true
         val statusImage: Drawable?
         val textColor: Int
-        val statusText: String
+        val statusText: String?
 
         when (questionUI.answerState) {
             AnswerStateUI.CORRECT -> {
@@ -172,9 +174,9 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
                 statusText = getString(R.string.test_pass_incorrect_label)
             }
             AnswerStateUI.NONE -> {
-                statusImage = requireContext().loadDrawable(R.drawable.ic_incorrect_answer)
+                statusImage = null
                 textColor = requireContext().loadColor(R.color.colorRed)
-                statusText = getString(R.string.test_pass_time_expired)
+                statusText = null
             }
             AnswerStateUI.TIME_EXPIRED -> {
                 statusImage = requireContext().loadDrawable(R.drawable.ic_incorrect_answer)

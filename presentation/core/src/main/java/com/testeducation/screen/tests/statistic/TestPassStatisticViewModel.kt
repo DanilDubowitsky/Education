@@ -31,6 +31,18 @@ class TestPassStatisticViewModel(
         router.exit()
     }
 
+    fun changeTrueAnswerExpandState(id: String) = intent {
+        val modelState = getModelState()
+        val newList = if (modelState.trueAnswersExpanded.contains(id)) {
+            modelState.trueAnswersExpanded - id
+        } else {
+            modelState.trueAnswersExpanded + id
+        }
+        updateModelState {
+            copy(trueAnswersExpanded = newList)
+        }
+    }
+
     fun changeItemExpandState(id: String) = intent {
         val modelState = getModelState()
         val newList = if (modelState.expandedItems.contains(id)) {

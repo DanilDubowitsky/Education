@@ -29,7 +29,10 @@ class TestPassStatisticFragment :
             simpleDiffUtil(AnsweredQuestionUI::id),
             orderAnsweredQuestionDelegate(),
             choiceAnsweredQuestionDelegate(),
-            matchAnsweredQuestionDelegate(viewModel::changeItemExpandState),
+            matchAnsweredQuestionDelegate(
+                viewModel::changeItemExpandState,
+                viewModel::changeTrueAnswerExpandState
+            ),
             textAnswerDelegate()
         )
     }

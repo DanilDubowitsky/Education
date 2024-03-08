@@ -122,8 +122,9 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="20dp"
+        app:layout_goneMarginBottom="90dp"
         android:background="@drawable/background_dialog_drawable"
-        app:layout_constraintBottom_toTopOf="@+id/btnAnswer"
+        app:layout_constraintBottom_toTopOf="@+id/answerStatusLayout"
         app:layout_constraintTop_toBottomOf="@+id/txtTotalTimeLabel">
 
         <androidx.constraintlayout.widget.ConstraintLayout

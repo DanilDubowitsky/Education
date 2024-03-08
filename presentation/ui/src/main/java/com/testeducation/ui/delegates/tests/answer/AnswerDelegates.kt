@@ -43,7 +43,7 @@ fun createOrderAnswerDelegate(
     }
     bind {
         binding.root.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
+            if (event.action == MotionEvent.ACTION_DOWN && item.touchable) {
                 onDragListener.oDragStarted(this)
             }
             false
@@ -65,7 +65,7 @@ fun createMatchAnswerDelegate(
     }
     bind {
         binding.root.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
+            if (event.action == MotionEvent.ACTION_DOWN && item.touchable) {
                 onDragListener.oDragStarted(this)
             }
             false

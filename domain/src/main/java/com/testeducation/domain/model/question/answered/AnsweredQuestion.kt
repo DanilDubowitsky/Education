@@ -33,6 +33,7 @@ sealed interface AnsweredQuestion {
         override val state: PassingQuestion.AnswerState,
         override val numberQuestion: Int,
         val answered: String,
+        val answer: Answer.TextAnswer
     ) : AnsweredQuestion
 
     data class Match(
@@ -42,6 +43,7 @@ sealed interface AnsweredQuestion {
         override val numberQuestion: Int,
         val matchValues: List<String>,
         val matchAnswers: List<Answer.MatchAnswer>,
+        val correctAnswers: List<Answer.MatchAnswer>
     ) : AnsweredQuestion
 
 }
