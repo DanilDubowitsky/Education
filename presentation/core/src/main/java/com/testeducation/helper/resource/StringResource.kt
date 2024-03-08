@@ -100,5 +100,6 @@ sealed interface StringResource {
         data class TestEditExitDescription(val isDraft: Boolean): Test
         object TestQuestionDeleteTitle: Test
         object TestQuestionDeleteDescription: Test
+        data class QuestionCountTitle(val count: Int): Test
     }
 }

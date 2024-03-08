@@ -13,8 +13,10 @@ import com.testeducation.logic.model.test.TestStyleUi
 import com.testeducation.logic.screen.tests.edit.TestEditorState
 import com.testeducation.utils.getString
 
-class TestEditorReducer(private val timeConverterLongToString: ITimeConverterLongToString,
-    private val resource: IResourceHelper) :
+class TestEditorReducer(
+    private val timeConverterLongToString: ITimeConverterLongToString,
+    private val resource: IResourceHelper
+) :
     IReducer<TestEditorModelState, TestEditorState> {
     override fun reduce(modelState: TestEditorModelState): TestEditorState {
         val test = modelState.test
@@ -43,7 +45,9 @@ class TestEditorReducer(private val timeConverterLongToString: ITimeConverterLon
                 StringResource.Common.CommonSave.getString(resource)
             } else {
                 StringResource.Test.PublishTitle.getString(resource)
-            }
+            },
+            titleCountQuestion = StringResource.Test.QuestionCountTitle(modelState.questionDetails.size - 1).getString(resource),
+            isRefreshing = modelState.isRefreshing
         )
     }
 }
