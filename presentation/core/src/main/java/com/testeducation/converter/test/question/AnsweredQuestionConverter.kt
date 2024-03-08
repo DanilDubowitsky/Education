@@ -7,28 +7,35 @@ import com.testeducation.logic.model.question.AnsweredQuestionUI
 import com.testeducation.logic.model.test.AnswerUI
 
 fun AnsweredQuestion.toUI(
-    isExpanded: Boolean
+    isExpanded: Boolean,
+    isTrueAnswerExpanded: Boolean
 ) = when (this) {
     is AnsweredQuestion.Choose -> toUI()
-    is AnsweredQuestion.Match -> toUI(isExpanded)
+    is AnsweredQuestion.Match -> toUI(isExpanded, isTrueAnswerExpanded)
     is AnsweredQuestion.Order -> toUI()
     is AnsweredQuestion.Text -> toUI()
 }
 
 fun List<AnsweredQuestion>.toUIModels(
-    isExpanded: Boolean
+    isExpanded: Boolean,
+    isTrueAnswerExpanded: Boolean
 ) = map { question ->
-    question.toUI(isExpanded)
+    question.toUI(isExpanded, isTrueAnswerExpanded)
 }
 
-private fun AnsweredQuestion.Match.toUI(isExpanded: Boolean) = AnsweredQuestionUI.Match(
+private fun AnsweredQuestion.Match.toUI(
+    isExpanded: Boolean,
+    isTrueAnswerExpanded: Boolean
+) = AnsweredQuestionUI.Match(
     id,
     title,
     state.toUI(),
     numberQuestion,
     matchValues,
     matchAnswers.toSimpleUIModels() as List<AnswerUI.MatchAnswer>,
-    isExpanded
+    correctAnswers.toSimpleUIModels() as List<AnswerUI.MatchAnswer>,
+    isExpanded,
+    isTrueAnswerExpanded
 )
 
 private fun AnsweredQuestion.Order.toUI() = AnsweredQuestionUI.Order(
@@ -58,5 +65,6 @@ private fun AnsweredQuestion.Text.toUI() = AnsweredQuestionUI.Text(
     title,
     state.toUI(),
     numberQuestion,
-    answered
+    answered,
+    answer.toUI(0, false, canSelect = false) as AnswerUI.TextAnswer
 )

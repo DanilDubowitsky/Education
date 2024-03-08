@@ -32,6 +32,7 @@ sealed interface AnsweredQuestionUI {
         override val state: AnswerStateUI,
         override val numberQuestion: Int,
         val answered: String,
+        val correctAnswer: AnswerUI.TextAnswer
     ) : AnsweredQuestionUI
 
     data class Match(
@@ -41,6 +42,8 @@ sealed interface AnsweredQuestionUI {
         override val numberQuestion: Int,
         val matchValues: List<String>,
         val matchAnswers: List<AnswerUI.MatchAnswer>,
-        val isExpanded: Boolean = false
+        val correctAnswers: List<AnswerUI.MatchAnswer>,
+        val isExpanded: Boolean = false,
+        val isTrueExpanded: Boolean = false
     ) : AnsweredQuestionUI
 }

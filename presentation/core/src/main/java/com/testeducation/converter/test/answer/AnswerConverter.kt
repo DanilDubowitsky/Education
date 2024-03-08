@@ -100,7 +100,8 @@ fun Answer.toUI(
     is Answer.TextAnswer -> {
         AnswerUI.TextAnswer(
             id = id,
-            color = color
+            color = color,
+            correctText = correctText
         )
     }
 
@@ -109,7 +110,8 @@ fun Answer.toUI(
             id = id,
             matchedCorrectText = matchedCorrectText,
             title = title,
-            color = color
+            color = color,
+            touchable = canSelect
         )
     }
 
@@ -118,7 +120,8 @@ fun Answer.toUI(
             id = id,
             title = title,
             order = order,
-            color = color
+            color = color,
+            touchable = canSelect
         )
     }
 }

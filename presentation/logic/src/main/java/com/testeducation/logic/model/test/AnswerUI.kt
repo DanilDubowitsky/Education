@@ -14,20 +14,23 @@ sealed interface AnswerUI {
 
     data class TextAnswer(
         override val id: String,
-        val color: Int
+        val color: Int,
+        val correctText: String
     ) : AnswerUI
 
     data class MatchAnswer(
         override val id: String,
         val title: String,
         val matchedCorrectText: String,
-        val color: Int
+        val color: Int,
+        val touchable: Boolean
     ) : AnswerUI
 
     data class OrderAnswer(
         override val id: String,
         val title: String,
         val order: Int,
-        val color: Int
+        val color: Int,
+        val touchable: Boolean
     ) : AnswerUI
 }

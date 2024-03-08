@@ -63,7 +63,8 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
                 answeredQuestion.answerState.toEnumModel(),
                 question.question.numberQuestion,
                 answeredQuestion.matchData,
-                matchedAnswers
+                matchedAnswers,
+                domainQuestion.answers
             )
         }
 
@@ -91,7 +92,8 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
                 domainQuestion.title,
                 answeredQuestion.answerState.toEnumModel(),
                 question.question.numberQuestion,
-                answeredQuestion.customAnswer.orEmpty()
+                answeredQuestion.customAnswer.orEmpty(),
+                answer = domainQuestion.answers.first()
             )
         }
     }

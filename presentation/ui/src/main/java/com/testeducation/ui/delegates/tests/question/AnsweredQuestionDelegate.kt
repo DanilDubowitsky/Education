@@ -73,7 +73,7 @@ fun textAnswerDelegate() = simpleDelegateAdapter<AnsweredQuestionUI.Text, Answer
             binding.imgAnswerIndicator,
             item.answered,
             emptyList(),
-            emptyList(),
+            listOf(item.correctAnswer),
             item.state,
             binding.answerChipGroup,
             binding.trueAnswerChip,
@@ -82,7 +82,8 @@ fun textAnswerDelegate() = simpleDelegateAdapter<AnsweredQuestionUI.Text, Answer
 }
 
 fun matchAnsweredQuestionDelegate(
-    onClick: (String) -> Unit
+    onClick: (String) -> Unit,
+    onTrueExpandClick: (String) -> Unit
 ) = simpleDelegateAdapter<AnsweredQuestionUI.Match, AnsweredQuestionUI,
         ViewHolderAnsweredMatchQuestionBinding>(
     ViewHolderAnsweredMatchQuestionBinding::inflate
@@ -93,17 +94,37 @@ fun matchAnsweredQuestionDelegate(
     binding.btnExpand.setClickListener {
         onClick(item.id)
     }
+    binding.btnExpandTrueAnswer.setClickListener {
+        onTrueExpandClick(item.id)
+    }
     bind {
         with(binding) {
             matchDataLayout.isGone = !item.isExpanded
+            trueMatchDataLayout.isGone = !item.isTrueExpanded || item.state == AnswerStateUI.CORRECT
             val inflater = LayoutInflater.from(root.context)
             matchDataLayout.removeAllViews()
+            trueMatchDataLayout.removeAllViews()
             item.matchValues.forEachIndexed { index, value ->
                 val view = ViewAnswerAnsweredQuestionBinding.inflate(inflater)
                 view.matchDataText.root.text = value
                 view.answerDataText.root.text = item.matchAnswers[index].title
                 matchDataLayout.addView(view.root)
             }
+
+            if (item.state == AnswerStateUI.INCORRECT) {
+                txtTrueAnswer.isGone = false
+                btnExpandTrueAnswer.isGone = false
+                item.correctAnswers.forEach { item ->
+                    val view = ViewAnswerAnsweredQuestionBinding.inflate(inflater)
+                    view.matchDataText.root.text = item.matchedCorrectText
+                    view.answerDataText.root.text = item.title
+                    trueMatchDataLayout.addView(view.root)
+                }
+            } else {
+                txtTrueAnswer.isGone = true
+                btnExpandTrueAnswer.isGone = true
+            }
+
             bindSimpleData(
                 item.title,
                 txtTitle,
@@ -202,14 +223,21 @@ private fun bindSimpleData(
             imgAnswerIndicator.colorFilter = null
         }
     }
-    val isCorrectVisible = answer is AnswerUI.ChoiceAnswer && stateUI == AnswerStateUI.INCORRECT
+    val isCorrectVisible = stateUI == AnswerStateUI.INCORRECT
     txtCorrectAnswer.isVisible = isCorrectVisible
     correctAnswersLayout?.isVisible = isCorrectVisible
     correctAnswersLayout?.let {
-        if (answer !is AnswerUI.ChoiceAnswer) return
-        correctAnswers.forEach { answerUI ->
+        correctAnswers.forEachIndexed { index, answerUI ->
             val item = ViewTestResultsAnswerItemBinding.inflate(inflater)
-            item.root.text = (answerUI as AnswerUI.ChoiceAnswer).title
+            val answerTitle = when (answerUI) {
+                is AnswerUI.ChoiceAnswer -> answerUI.title
+                is AnswerUI.MatchAnswer -> answerUI.title
+                is AnswerUI.OrderAnswer -> "${index + 1}. ${answerUI.title}"
+                is AnswerUI.TextAnswer -> answerUI.correctText
+
+                else -> return@forEachIndexed
+            }
+            item.root.text = answerTitle
             item.root.createLayoutParams()
             correctAnswersLayout.addView(item.root)
         }
@@ -221,6 +249,6 @@ private fun View.createLayoutParams() {
         FlexboxLayout.LayoutParams.WRAP_CONTENT,
         FlexboxLayout.LayoutParams.WRAP_CONTENT
     ).apply {
-        setMargins(8.dp, 5.dp, 8.dp, 0)
+        setMargins(8.dp, 0.dp, 8.dp, 5.dp)
     }
 }
