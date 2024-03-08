@@ -97,7 +97,8 @@ class QuestionCreationViewModel(
                         answerItem = answersQuestion,
                         questionText = result.title,
                         time = result.time,
-                        loadingScreen = false
+                        loadingScreen = false,
+                        visibleAddFooter = answersQuestion.size < MAX_ANSWER
                     )
                 }
             }
