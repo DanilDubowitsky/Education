@@ -240,7 +240,10 @@ class TestEditorViewModel(
     private fun exit() {
         if (navigateFrom.fromCreate) {
             router.newRootChain(NavigationScreen.Main.Home)
-        } else router.exit()
+        } else {
+            router.sendResult(NavigationScreen.Tests.Details.OnTestEditorUpdated, Unit)
+            router.exit()
+        }
     }
 
     private fun navigateFinish() {

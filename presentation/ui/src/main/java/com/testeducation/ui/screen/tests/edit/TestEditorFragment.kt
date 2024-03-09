@@ -23,7 +23,6 @@ import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
 
-
 class TestEditorFragment :
     ViewModelHostFragment<TestEditorViewModel, FragmentTestEditorBinding>(
         TestEditorViewModel::class,
