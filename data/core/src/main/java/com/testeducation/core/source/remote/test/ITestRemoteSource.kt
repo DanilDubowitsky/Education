@@ -41,4 +41,5 @@ interface ITestRemoteSource {
 
     suspend fun getTestByCode(code: String): Test
 
+    suspend fun deleteTest(testId: String)
 }

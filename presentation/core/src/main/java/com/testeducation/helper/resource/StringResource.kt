@@ -102,5 +102,7 @@ sealed interface StringResource {
         object TestQuestionDeleteTitle: Test
         object TestQuestionDeleteDescription: Test
         data class QuestionCountTitle(val count: Int): Test
+        object TestDeleteTitle: Test
+        object TestDeleteDescription: Test
     }
 }

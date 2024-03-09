@@ -117,4 +117,7 @@ interface TestRetrofitClient {
 
     @GET("/api/app/content/tests/code/{code}")
     suspend fun getTestByCode(@Path("code") code: String) : RemoteResponse<RemoteTest>
+
+    @DELETE("/api/app/content/tests/{id}")
+    suspend fun deleteTestById(@Path("id") testId: String) : RemoteResponse<Unit>
 }

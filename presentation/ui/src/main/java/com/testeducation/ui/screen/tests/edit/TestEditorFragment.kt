@@ -20,6 +20,7 @@ import com.testeducation.ui.utils.addOnBackPressListener
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
+import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.simpleDiffUtil
 
 
@@ -47,18 +48,19 @@ class TestEditorFragment :
                 itemAnimator = null
             }
             requireActivity().window.statusBarColor = requireContext().loadColor(R.color.colorGrayBlueDisabled)
-            imgEdit.setOnClickListener {
+            imgEdit.setClickListener {
                 viewModel.openTestSettings()
             }
-            btnCreate.setOnClickListener {
+            btnCreate.setClickListener {
                 viewModel.publish()
             }
-            btnDraft.setOnClickListener {
+            btnDraft.setClickListener {
                 viewModel.draft()
             }
-            imgBack.setOnClickListener {
+            imgBack.setClickListener {
                 viewModel.onExit()
             }
+            imgDelete.setClickListener(viewModel::deleteText)
             refreshLayout.setOnRefreshListener(viewModel::swipeOnRefresh)
 
             view.setOnKeyListener { _, keyCode, _ ->
@@ -89,7 +91,7 @@ class TestEditorFragment :
                     text = state.btnPublishText
                 }
                 requireActivity().window.statusBarColor = colorTest
-                rootGroup.isVisible = !state.visibleLoadingPublish
+                visibleContent(!state.visibleLoadingPublish)
                 loadingShimmer.isVisible = false
                 loadingProgress.setVisibility(state.visibleLoadingPublish)
             }
@@ -97,9 +99,16 @@ class TestEditorFragment :
             is TestEditorState.NoInit -> {
                 refreshLayout.isRefreshing = false
                 loadingShimmer.isVisible = true
-                rootGroup.isVisible = false
+                visibleContent(false)
             }
         }
     }
 
+
+    private fun visibleContent(isVisible: Boolean) = binding {
+        toolbar.isVisible = isVisible
+        coordinator.isVisible = isVisible
+        btnCreate.isVisible = isVisible
+        btnDraft.isVisible = isVisible
+    }
 }
