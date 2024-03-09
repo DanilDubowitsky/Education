@@ -25,7 +25,6 @@ import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.home.library.LibraryHomeViewModel.Companion.LIBRARY_NAVIGATOR_KEY
 import com.testeducation.screen.tests.base.TestsDefaults
-import com.testeducation.screen.tests.liked.LikedTestsModelState
 import com.testeducation.utils.firstByCondition
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -68,6 +67,9 @@ class TestLibraryViewModel(
     fun openTestPreview(id: String) = intent {
         val tests = getModelState().tests
         val selectedTest = tests.firstByCondition(TestShort::id, id)
+        router.setResultListener(NavigationScreen.Tests.Details.OnTestEditorUpdated) {
+            refresh()
+        }
         val screen = when (testGetType) {
             TestLibraryGetTypeUI.PUBLISHED,
             TestLibraryGetTypeUI.DRAFT -> {

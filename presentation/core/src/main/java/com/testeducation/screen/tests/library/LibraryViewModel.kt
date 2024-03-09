@@ -50,6 +50,9 @@ class LibraryViewModel(
     }
 
     fun openTestPreview(id: String) = intent {
+        router.setResultListener(NavigationScreen.Tests.Details.OnTestEditorUpdated) {
+            refresh()
+        }
         val modelState = getModelState()
         val draftTests = modelState.draftsTests
         val publishedTests = modelState.publishedTests

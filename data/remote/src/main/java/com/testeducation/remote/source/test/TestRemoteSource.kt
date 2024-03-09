@@ -130,4 +130,8 @@ class TestRemoteSource(
 
     override suspend fun getTestByCode(code: String): Test =
         testRetrofitClient.getTestByCode(code).getResult().data.toModel()
+
+    override suspend fun deleteTest(testId: String) {
+        testRetrofitClient.deleteTestById(testId).getResult()
+    }
 }

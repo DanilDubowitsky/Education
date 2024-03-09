@@ -5,6 +5,7 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.DeleteQuestion
 import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.domain.cases.test.ChangeStatusTest
+import com.testeducation.domain.cases.test.DeleteTest
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
@@ -59,7 +60,10 @@ interface TestEditorModule {
         }
 
         @Provides
-        fun provideReducer(timeConverterLongToString: ITimeConverterLongToString, resource: IResourceHelper): IReducer<TestEditorModelState, TestEditorState> =
+        fun provideReducer(
+            timeConverterLongToString: ITimeConverterLongToString,
+            resource: IResourceHelper
+        ): IReducer<TestEditorModelState, TestEditorState> =
             TestEditorReducer(timeConverterLongToString, resource)
 
         @Provides
@@ -73,7 +77,8 @@ interface TestEditorModule {
             navigationRouter: NavigationRouter,
             deleteQuestion: DeleteQuestion,
             changeStatusTest: ChangeStatusTest,
-            getQuestions: GetQuestions
+            getQuestions: GetQuestions,
+            deleteTest: DeleteTest
         ): TestEditorViewModel {
             val screen = fragment.getScreen<NavigationScreen.Tests.Details>()
             return TestEditorViewModel(
@@ -87,7 +92,8 @@ interface TestEditorModule {
                 deleteQuestion = deleteQuestion,
                 changeStatusTest = changeStatusTest,
                 getQuestions = getQuestions,
-                navigateFrom = screen.navigateFrom
+                navigateFrom = screen.navigateFrom,
+                deleteTest = deleteTest
             )
         }
     }

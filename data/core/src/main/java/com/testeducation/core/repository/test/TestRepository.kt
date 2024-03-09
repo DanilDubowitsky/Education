@@ -69,4 +69,6 @@ class TestRepository(
     override suspend fun getTestCode(id: String): String = testRemoteSource.getTestCode(id)
 
     override suspend fun getTestByCode(code: String): Test = testRemoteSource.getTestByCode(code)
+
+    override suspend fun deleteTest(testId: String) = testRemoteSource.deleteTest(testId)
 }
