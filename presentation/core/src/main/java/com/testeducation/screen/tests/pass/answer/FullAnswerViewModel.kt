@@ -9,10 +9,11 @@ import com.testeducation.logic.screen.tests.pass.answer.FullAnswerState
 class FullAnswerViewModel(
     reducer: IReducer<FullAnswerModelState, FullAnswerState>,
     exceptionHandler: IExceptionHandler,
-    answerText: String
+    answerText: String,
+    color: Int
 ) : BaseViewModel<FullAnswerModelState,
         FullAnswerState, FullAnswerSideEffect>(reducer, exceptionHandler) {
 
-    override val initialModelState: FullAnswerModelState = FullAnswerModelState(answerText)
+    override val initialModelState: FullAnswerModelState = FullAnswerModelState(answerText, color)
 
 }

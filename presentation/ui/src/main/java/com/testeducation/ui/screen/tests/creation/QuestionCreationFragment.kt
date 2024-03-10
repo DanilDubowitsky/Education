@@ -39,7 +39,9 @@ class QuestionCreationFragment :
     private val questionItemTouchHelperCallback by lazy {
         QuestionItemTouchHelperCallback(
             updateResultMove = viewModel::updatePosition,
-            onClearView = viewModel::clearSelectedDropElement
+            onClearView = {
+                viewModel.clearSelectedDropElement()
+            }
         )
     }
 

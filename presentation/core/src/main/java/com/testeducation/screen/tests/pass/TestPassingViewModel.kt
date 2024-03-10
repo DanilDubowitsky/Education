@@ -193,13 +193,13 @@ class TestPassingViewModel(
         router.exit()
     }
 
-    fun onAnswerClick(text: String) = intent {
-        val screen = NavigationScreen.Tests.FullAnswer(text)
+    fun onAnswerClick(text: String, color: Int) = intent {
+        val screen = NavigationScreen.Tests.FullAnswer(text, color)
         router.navigateTo(screen)
     }
 
-    fun onMatchClick(matchText: String) {
-        val screen = NavigationScreen.Tests.FullAnswer(matchText)
+    fun onMatchClick(matchText: String, color: Int) {
+        val screen = NavigationScreen.Tests.FullAnswer(matchText, color)
         router.navigateTo(screen)
     }
 

@@ -39,7 +39,8 @@ interface FullAnswerTextModule {
             return FullAnswerViewModel(
                 reducer,
                 exceptionHandler,
-                screen.text
+                screen.text,
+                screen.color
             )
         }
     }
