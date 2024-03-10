@@ -204,7 +204,8 @@ sealed interface NavigationScreen : Serializable {
         object EnterCode : Tests
 
         data class FullAnswer(
-            val text: String
+            val text: String,
+            val color: Int
         ) : Tests
 
         data class TestSort(

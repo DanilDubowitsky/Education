@@ -4,25 +4,27 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_DRAG
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_IDLE
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 class QuestionItemTouchHelperCallback(
     private val updateResultMove: (Int, Int) -> Unit,
-    private val onClearView: () -> Unit,
-    private val onDragStateChanged: ((Boolean, Int, Int) -> Unit)? = null
+    private val onClearView: (ViewHolder) -> Unit,
+    private val onDragStateChanged: ((Boolean, Int, Int) -> Unit)? = null,
+    private val onSelectChanged: ((ViewHolder) -> Unit)? = null
 ) : ItemTouchHelper.Callback() {
 
     private var targetPosition: Int = 0
     private var oldPosition: Int = 0
     private var isItemMoved: Boolean = false
 
-    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-        onClearView()
+    override fun clearView(recyclerView: RecyclerView, viewHolder: ViewHolder) {
+        onClearView(viewHolder)
         super.clearView(recyclerView, viewHolder)
     }
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder
+        viewHolder: ViewHolder
     ): Int {
         val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         val swipeFlags = ACTION_STATE_IDLE
@@ -31,8 +33,8 @@ class QuestionItemTouchHelperCallback(
 
     override fun onMove(
         recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
+        viewHolder: ViewHolder,
+        target: ViewHolder
     ): Boolean {
         targetPosition = target.absoluteAdapterPosition
         oldPosition = viewHolder.absoluteAdapterPosition
@@ -41,15 +43,18 @@ class QuestionItemTouchHelperCallback(
         return true
     }
 
-    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+    override fun onSelectedChanged(viewHolder: ViewHolder?, actionState: Int) {
         super.onSelectedChanged(viewHolder, actionState)
+        if (viewHolder != null) {
+            onSelectChanged?.invoke(viewHolder)
+        }
         if (actionState == ACTION_STATE_IDLE && isItemMoved) {
             onDragStateChanged?.invoke(false, oldPosition, targetPosition)
             isItemMoved = false
         }
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
+    override fun onSwiped(viewHolder: ViewHolder, direction: Int) = Unit
 
     override fun isLongPressDragEnabled(): Boolean {
         return false

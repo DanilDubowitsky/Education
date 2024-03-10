@@ -15,12 +15,12 @@ import com.testeducation.ui.utils.simpleDelegateAdapter
 
 fun createChoiceAnswerDelegate(
     onSelectAnswer: (Int) -> Unit,
-    onAnswerClick: (String) -> Unit
+    onAnswerClick: (String, Int) -> Unit
 ) = simpleDelegateAdapter<AnswerUI.ChoiceAnswer, AnswerUI, ViewHolderAnswerChoiceBinding>(
     ViewHolderAnswerChoiceBinding::inflate
 ) {
     binding.root.setClickListener {
-        onAnswerClick(item.title)
+        onAnswerClick(item.title, binding.root.backgroundTintList?.defaultColor ?: 0)
     }
     binding.checkBoxAnswer.setClickListener(needDisable = false) {
         onSelectAnswer(absoluteAdapterPosition)
@@ -34,19 +34,17 @@ fun createChoiceAnswerDelegate(
 @SuppressLint("ClickableViewAccessibility")
 fun createOrderAnswerDelegate(
     onDragListener: IDragStartListener,
-    onAnswerClick: (String) -> Unit
+    onAnswerClick: (String, Int) -> Unit
 ) = simpleDelegateAdapter<AnswerUI.OrderAnswer, AnswerUI, ViewHolderAnswerOrderPassBinding>(
     ViewHolderAnswerOrderPassBinding::inflate
 ) {
     binding.root.setClickListener {
-        onAnswerClick(item.title)
+        onAnswerClick(item.title, binding.root.backgroundTintList?.defaultColor ?: 0)
     }
     bind {
-        binding.root.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN && item.touchable) {
-                onDragListener.oDragStarted(this)
-            }
-            false
+        binding.root.setOnLongClickListener {
+            onDragListener.oDragStarted(this)
+            true
         }
         binding.bindOrderAnswer(item)
     }
@@ -55,33 +53,31 @@ fun createOrderAnswerDelegate(
 @SuppressLint("ClickableViewAccessibility")
 fun createMatchAnswerDelegate(
     onDragListener: IDragStartListener,
-    onAnswerClick: (String) -> Unit
+    onAnswerClick: (String, Int) -> Unit
 ) = simpleDelegateAdapter<AnswerUI.MatchAnswer, AnswerUI,
         ViewHolderAnswerMatchPassBinding>(
     ViewHolderAnswerMatchPassBinding::inflate
 ) {
     binding.root.setClickListener {
-        onAnswerClick(item.title)
+        onAnswerClick(item.title, binding.root.backgroundTintList?.defaultColor ?: 0)
     }
     bind {
-        binding.root.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN && item.touchable) {
-                onDragListener.oDragStarted(this)
-            }
-            false
+        binding.root.setOnLongClickListener {
+            onDragListener.oDragStarted(this)
+            true
         }
         binding.bindMatchAnswer(item)
     }
 }
 
 fun createMatchDataDelegate(
-    onMatchClick: (String) -> Unit
+    onMatchClick: (String, Int) -> Unit
 ) = simpleDelegateAdapter<TestPassingState.MatchDataUI, TestPassingState.MatchDataUI,
         ViewHolderMatchDataBinding>(
     ViewHolderMatchDataBinding::inflate
 ) {
     binding.root.setClickListener {
-        onMatchClick(item.text)
+        onMatchClick(item.text, binding.root.backgroundTintList?.defaultColor ?: 0)
     }
     bind {
         binding.bind(item)

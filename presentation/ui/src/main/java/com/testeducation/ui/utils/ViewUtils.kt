@@ -166,7 +166,7 @@ fun View.hideKeyboard() {
     val inputMethodService = context.getSystemService(
         Context.INPUT_METHOD_SERVICE
     ) as InputMethodManager
-    inputMethodService.hideSoftInputFromWindow(windowToken, InputMethodManager.SHOW_IMPLICIT)
+    inputMethodService.hideSoftInputFromWindow(windowToken, 0)
 }
 
 fun TextView.isEllipsized(): Boolean {
