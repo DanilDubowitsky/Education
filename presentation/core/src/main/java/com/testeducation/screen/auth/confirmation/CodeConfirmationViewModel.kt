@@ -5,6 +5,8 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.auth.ConfirmEmail
 import com.testeducation.domain.cases.auth.GetResetPasswordToken
 import com.testeducation.domain.cases.auth.SendCodeAgain
+import com.testeducation.domain.cases.auth.SignIn
+import com.testeducation.domain.config.user.IRegistrationConfig
 import com.testeducation.domain.utils.MINUTE_IN_MILLIS
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
@@ -14,6 +16,7 @@ import com.testeducation.logic.screen.auth.confirmation.CodeConfirmationSideEffe
 import com.testeducation.logic.screen.auth.confirmation.CodeConfirmationState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
+import com.testeducation.utils.isEmptyOrBlank
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -25,6 +28,8 @@ class CodeConfirmationViewModel(
     private val router: NavigationRouter,
     private val confirmEmail: ConfirmEmail,
     private val sendCodeAgain: SendCodeAgain,
+    private val signIn: SignIn,
+    private val registrationConfig: IRegistrationConfig,
     private val getResetPasswordToken: GetResetPasswordToken,
     reducer: IReducer<CodeConfirmationModelState, CodeConfirmationState>,
     errorHandler: IExceptionHandler,
@@ -92,8 +97,17 @@ class CodeConfirmationViewModel(
             copy(loadingState = CodeConfirmationModelState.LoadingState.LOADING)
         }
         confirmEmail(modelState.code, email, token)
+        login()
         postSideEffect(CodeConfirmationSideEffect.RegistrationSuccess)
-        router.newRootChain(NavigationScreen.Auth.Login)
+    }
+
+    private fun login() = intent {
+        val registrationConfig = registrationConfig.getAll()
+        if (registrationConfig.email.isEmptyOrBlank() && registrationConfig.password.isEmptyOrBlank()) {
+            return@intent
+        }
+        signIn(registrationConfig.email, registrationConfig.password)
+        router.newRootChain(NavigationScreen.Main.Home)
     }
 
     private suspend fun SimpleSyntax<CodeConfirmationState, CodeConfirmationSideEffect>.confirmPasswordReset() {

@@ -12,4 +12,6 @@ interface IRegistrationConfig {
     )
 
     fun getAll(): RegistrationConfigData
+
+    fun clear()
 }

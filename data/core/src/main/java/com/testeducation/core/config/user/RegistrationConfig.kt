@@ -42,4 +42,8 @@ class RegistrationConfig(
             configSource.getLong(TIME_CREATED_KEY),
         )
     }
+
+    override fun clear() {
+        set("", "", "", "", "")
+    }
 }
