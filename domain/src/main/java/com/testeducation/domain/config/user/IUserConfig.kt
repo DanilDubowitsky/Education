@@ -8,4 +8,6 @@ interface IUserConfig {
     fun isRefreshTokenExpired(): Boolean
     fun setLastRefreshTokenUpdateTime(time: Long)
     fun getLastRefreshTokenUpdateTime(): Long
+    fun setAvatarVisibleScreen(visible: Boolean)
+    fun getAvatarVisibleScreen(): Boolean
 }

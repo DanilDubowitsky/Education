@@ -6,6 +6,8 @@ import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.test.ToggleTestLike
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.cases.user.GetCurrentUser
+import com.testeducation.domain.cases.user.IsVisibleAvatar
+import com.testeducation.domain.cases.user.SetVisibleAvatar
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.avatar.AvatarHelper
 import com.testeducation.helper.avatar.IAvatarHelper
@@ -53,16 +55,20 @@ interface TestsModule {
             getThemes: GetThemes,
             testHelper: ITestHelper,
             reducer: IReducer<TestsModelState, TestsState>,
-            exceptionHandler: IExceptionHandler
-        ): TestsViewModel{
+            exceptionHandler: IExceptionHandler,
+            isVisibleAvatar: IsVisibleAvatar,
+            setVisibleAvatar: SetVisibleAvatar
+        ): TestsViewModel {
             return TestsViewModel(
                 router,
                 getTests,
                 getThemes,
                 getCurrentUser,
                 testHelper,
+                isVisibleAvatar,
+                setVisibleAvatar,
                 reducer,
-                exceptionHandler
+                exceptionHandler,
             )
         }
     }

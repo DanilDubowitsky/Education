@@ -7,6 +7,7 @@ import com.testeducation.domain.cases.auth.GetResetPasswordToken
 import com.testeducation.domain.cases.auth.SendCodeAgain
 import com.testeducation.domain.cases.auth.SignIn
 import com.testeducation.domain.config.user.IRegistrationConfig
+import com.testeducation.domain.config.user.IUserConfig
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
@@ -46,6 +47,7 @@ interface CodeConfirmationModule {
             reducer: IReducer<CodeConfirmationModelState, CodeConfirmationState>,
             errorHandler: IExceptionHandler,
             registrationConfig: IRegistrationConfig,
+            userConfig: IUserConfig,
             signIn: SignIn
         ): CodeConfirmationViewModel {
             val screen = fragment.getScreen<NavigationScreen.Auth.CodeConfirmation>()
@@ -61,7 +63,8 @@ interface CodeConfirmationModule {
                 errorHandler = errorHandler,
                 token = screen.token,
                 signIn = signIn,
-                registrationConfig = registrationConfig
+                registrationConfig = registrationConfig,
+                userConfig = userConfig
             )
         }
     }

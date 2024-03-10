@@ -22,14 +22,15 @@ class RegistrationConfig(
         password: String,
         passwordConfirm: String,
         token: String,
-        userName: String
+        userName: String,
+        time: Long
     ) {
         configSource.setString(EMAIL_KEY, email)
         configSource.setString(PASSWORD_KEY, password)
         configSource.setString(PASSWORD_CONFIRM_KEY, passwordConfirm)
         configSource.setString(TOKEN_KEY, token)
         configSource.setString(USERNAME_KEY, userName)
-        configSource.setLong(TIME_CREATED_KEY, System.currentTimeMillis())
+        configSource.setLong(TIME_CREATED_KEY, time)
     }
 
     override fun getAll(): RegistrationConfigData {
@@ -44,6 +45,6 @@ class RegistrationConfig(
     }
 
     override fun clear() {
-        set("", "", "", "", "")
+        set("", "", "", "", "", -1)
     }
 }

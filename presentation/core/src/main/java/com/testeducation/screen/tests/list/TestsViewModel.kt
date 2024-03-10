@@ -8,6 +8,8 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.test.GetTests
 import com.testeducation.domain.cases.theme.GetThemes
 import com.testeducation.domain.cases.user.GetCurrentUser
+import com.testeducation.domain.cases.user.IsVisibleAvatar
+import com.testeducation.domain.cases.user.SetVisibleAvatar
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
@@ -29,6 +31,8 @@ class TestsViewModel(
     private val getThemes: GetThemes,
     private val getCurrentUser: GetCurrentUser,
     private val testHelper: ITestHelper,
+    private val isVisibleAvatar: IsVisibleAvatar,
+    private val setVisibleAvatar: SetVisibleAvatar,
     reducer: IReducer<TestsModelState, TestsState>,
     errorHandler: IExceptionHandler
 ) : BaseViewModel<TestsModelState, TestsState, TestsSideEffect>(reducer, errorHandler) {
@@ -41,6 +45,14 @@ class TestsViewModel(
     init {
         loadTests()
         loadThemes()
+        loadUserData()
+    }
+
+    fun updateAvatarAndVisibleAvatarChanger() {
+        if (isVisibleAvatar()) {
+            setVisibleAvatar(false)
+            router.navigateTo(NavigationScreen.Profile.Avatar(0))
+        }
         loadUserData()
     }
 

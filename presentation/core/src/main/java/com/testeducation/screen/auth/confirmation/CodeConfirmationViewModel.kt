@@ -7,6 +7,7 @@ import com.testeducation.domain.cases.auth.GetResetPasswordToken
 import com.testeducation.domain.cases.auth.SendCodeAgain
 import com.testeducation.domain.cases.auth.SignIn
 import com.testeducation.domain.config.user.IRegistrationConfig
+import com.testeducation.domain.config.user.IUserConfig
 import com.testeducation.domain.utils.MINUTE_IN_MILLIS
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
@@ -30,6 +31,7 @@ class CodeConfirmationViewModel(
     private val sendCodeAgain: SendCodeAgain,
     private val signIn: SignIn,
     private val registrationConfig: IRegistrationConfig,
+    private val userConfig: IUserConfig,
     private val getResetPasswordToken: GetResetPasswordToken,
     reducer: IReducer<CodeConfirmationModelState, CodeConfirmationState>,
     errorHandler: IExceptionHandler,
@@ -102,11 +104,13 @@ class CodeConfirmationViewModel(
     }
 
     private fun login() = intent {
-        val registrationConfig = registrationConfig.getAll()
-        if (registrationConfig.email.isEmptyOrBlank() && registrationConfig.password.isEmptyOrBlank()) {
+        val registrationConfigData = registrationConfig.getAll()
+        if (registrationConfigData.email.isEmptyOrBlank() && registrationConfigData.password.isEmptyOrBlank()) {
             return@intent
         }
-        signIn(registrationConfig.email, registrationConfig.password)
+        signIn(registrationConfigData.email, registrationConfigData.password)
+        registrationConfig.clear()
+        userConfig.setAvatarVisibleScreen(true)
         router.newRootChain(NavigationScreen.Main.Home)
     }
 
@@ -120,6 +124,7 @@ class CodeConfirmationViewModel(
             copy(loadingState = CodeConfirmationModelState.LoadingState.LOADING)
         }
         val screen = NavigationScreen.Auth.NewPassword(email, modelState.code)
+        registrationConfig.clear()
         router.navigateTo(screen, false)
         updateModelState {
             copy(loadingState = CodeConfirmationModelState.LoadingState.IDLE)

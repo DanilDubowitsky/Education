@@ -8,5 +8,6 @@ class LogOut(
     suspend operator fun invoke() {
         userConfig.setRefreshToken("")
         userConfig.setToken("")
+        userConfig.setAvatarVisibleScreen(false)
     }
 }
