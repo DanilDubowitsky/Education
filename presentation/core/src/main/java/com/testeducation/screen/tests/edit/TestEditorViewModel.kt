@@ -7,6 +7,7 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.question.DeleteQuestion
 import com.testeducation.domain.cases.question.GetQuestions
 import com.testeducation.domain.cases.test.ChangeStatusTest
+import com.testeducation.domain.cases.test.DeleteTest
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionDetails
@@ -40,7 +41,8 @@ class TestEditorViewModel(
     private val questionResourceHelper: IQuestionResourceHelper,
     private val router: NavigationRouter,
     private val changeStatusTest: ChangeStatusTest,
-    private val getQuestions: GetQuestions
+    private val getQuestions: GetQuestions,
+    private val deleteTest: DeleteTest
 ) : BaseViewModel<TestEditorModelState, TestEditorState, TestEditorSideEffect>(
     reducer,
     exceptionHandler
@@ -65,9 +67,7 @@ class TestEditorViewModel(
 
     fun onExit() {
         router.setResultListener(NavigationScreen.Common.ConfirmationBottom.ButtonRight) {
-            if (navigateFrom.fromCreate) {
-                router.newRootChain(NavigationScreen.Main.Home)
-            } else router.exit()
+            exit()
         }
         intent {
             val modelState = getModelState()
@@ -85,6 +85,32 @@ class TestEditorViewModel(
                 ),
             ))
         }
+    }
+
+    fun deleteText() {
+        router.setResultListener(NavigationScreen.Common.ConfirmationBottom.ButtonLeft) {
+            intent {
+                updateModelState {
+                    copy(
+                        loadingPublish = true
+                    )
+                }
+                deleteTest(testId)
+                exit()
+            }
+        }
+        router.navigateTo(NavigationScreen.Common.ConfirmationBottom(
+            title = StringResource.Test.TestDeleteTitle.getString(resourceHelper),
+            description = StringResource.Test.TestDeleteDescription.getString(resourceHelper),
+            buttonLeft = NavigationScreen.Common.ConfirmationBottom.Button(
+                text = StringResource.Common.Delete.getString(resourceHelper),
+                color = ColorResource.Main.Red.getColor(resourceHelper)
+            ),
+            buttonRight = NavigationScreen.Common.ConfirmationBottom.Button(
+                text = StringResource.Common.CommonCancel.getString(resourceHelper),
+                color = ColorResource.Main.Green.getColor(resourceHelper)
+            )
+        ))
     }
 
     fun deleteQuestion(questionId: String) = intent {
@@ -209,6 +235,15 @@ class TestEditorViewModel(
             )
         }
         initData()
+    }
+
+    private fun exit() {
+        if (navigateFrom.fromCreate) {
+            router.newRootChain(NavigationScreen.Main.Home)
+        } else {
+            router.sendResult(NavigationScreen.Tests.Details.OnTestEditorUpdated, Unit)
+            router.exit()
+        }
     }
 
     private fun navigateFinish() {

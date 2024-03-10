@@ -2,6 +2,7 @@ package com.testeducation.education.di.modules.domain.usecase.test
 
 import com.testeducation.domain.cases.test.ChangeStatusTest
 import com.testeducation.domain.cases.test.CreateTest
+import com.testeducation.domain.cases.test.DeleteTest
 import com.testeducation.domain.cases.test.GetTest
 import com.testeducation.domain.cases.test.GetTestByCode
 import com.testeducation.domain.cases.test.GetTestCode
@@ -85,5 +86,11 @@ object TestUseCaseModule {
     fun provideGetTestByCode(
         testRepository: ITestRepository
     ): GetTestByCode = GetTestByCode(testRepository)
+
+    @Provides
+    @Reusable
+    fun provideDeleteTest(
+        testRepository: ITestRepository
+    ): DeleteTest = DeleteTest(testRepository)
 
 }
