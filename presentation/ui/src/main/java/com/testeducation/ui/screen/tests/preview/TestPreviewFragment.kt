@@ -1,5 +1,7 @@
 package com.testeducation.ui.screen.tests.preview
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -17,7 +19,6 @@ import com.testeducation.ui.utils.dp
 import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.isFadeGone
 import com.testeducation.ui.utils.isShimmerHide
-import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 
@@ -38,7 +39,6 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().window.statusBarColor = requireContext().loadColor(R.color.colorDarkGreen)
         observeData()
         setupViews()
         setupListeners()
@@ -63,6 +63,13 @@ class TestPreviewFragment : ViewModelHostFragment<TestPreviewViewModel, Fragment
     private fun observeData() = viewModel.observe(this, ::render)
 
     private fun render(state: TestPreviewState) = binding {
+        requireActivity().window.statusBarColor = Color.parseColor(state.color)
+        rootAppBar.backgroundTintList = ColorStateList.valueOf(Color.parseColor(state.color))
+        appBar.backgroundTintList = ColorStateList.valueOf(Color.parseColor(state.color))
+        roundCornersBottomView.backgroundTintList =
+            ColorStateList.valueOf(Color.parseColor(state.color))
+        btnPassTest.backgroundTintList = ColorStateList.valueOf(Color.parseColor(state.color))
+
         shimmerLayout.isShimmerHide = !state.isLoading
         contentAppBar.isGone = state.isLoading
         rootScroll.isGone = state.isLoading
