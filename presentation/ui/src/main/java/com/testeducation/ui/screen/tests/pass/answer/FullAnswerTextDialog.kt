@@ -1,11 +1,13 @@
 package com.testeducation.ui.screen.tests.pass.answer
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import com.testeducation.logic.screen.tests.pass.answer.FullAnswerState
 import com.testeducation.screen.tests.pass.answer.FullAnswerViewModel
 import com.testeducation.ui.base.dialog.bottom.ViewModelHostBottomSheetDialog
 import com.testeducation.ui.databinding.DialogFullAnswerBinding
+import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.observe
 
 class FullAnswerTextDialog :
@@ -21,8 +23,9 @@ class FullAnswerTextDialog :
 
     private fun observeData() = viewModel.observe(this, ::render)
 
-    private fun render(state: FullAnswerState) {
-        binding.etAnswer.text = state.answerText
+    private fun render(state: FullAnswerState) = binding {
+        etAnswer.text = state.answerText
+        containerEditText.backgroundTintList = ColorStateList.valueOf(state.color)
     }
 
 }

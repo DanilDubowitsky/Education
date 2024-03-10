@@ -6,6 +6,6 @@ import com.testeducation.logic.screen.tests.pass.answer.FullAnswerState
 class FullAnswerReducer : IReducer<FullAnswerModelState, FullAnswerState> {
 
     override fun reduce(modelState: FullAnswerModelState): FullAnswerState {
-        return FullAnswerState(modelState.answerText)
+        return FullAnswerState(modelState.answerText, modelState.color)
     }
 }

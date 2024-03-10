@@ -1,10 +1,10 @@
 package com.testeducation.ui.screen.tests.pass
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -50,10 +50,14 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private val questionTimer = TimeHandler()
     private val testTimer = TimeHandler()
     private var currentQuestionId: String? = null
+    private var backgroundTint: ColorStateList? = null
 
     private val answersAdapter by lazy {
         ListDelegationAdapter(
-            createChoiceAnswerDelegate(viewModel::selectChoiceAnswer, viewModel::onAnswerClick),
+            createChoiceAnswerDelegate(
+                viewModel::selectChoiceAnswer,
+                viewModel::onAnswerClick
+            ),
             createOrderAnswerDelegate(orderDragListener, viewModel::onAnswerClick),
             createMatchAnswerDelegate(orderDragListener, viewModel::onAnswerClick)
         )
@@ -73,7 +77,16 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
                 answersAdapter.notifyItemMoved(oldPosition, newPosition)
                 answersAdapter.items = mutableItems
             },
-            onClearView = {},
+            onClearView = { holder ->
+                holder.itemView.backgroundTintList = backgroundTint
+            },
+            onSelectChanged = { holder ->
+                backgroundTint = holder.itemView.backgroundTintList
+                holder.itemView.backgroundTintList =
+                    ColorStateList.valueOf(
+                        requireContext().loadColor(R.color.colorGrayBlueDisabled)
+                    )
+            },
             onDragStateChanged = { _, _, _ ->
                 val ids = answersAdapter.items!!.map(AnswerUI::id)
                 viewModel.swapAnswers(ids)
@@ -133,6 +146,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private fun render(state: TestPassingState) = binding {
         rootScroll.isInvisible = state.isLoading
         loadingProgress.setVisibility(state.isLoading)
+        answerText.isEnabled = state.currentQuestion?.isAnswered()?.not() ?: true
         btnAnswer.isGone = state.isLoading
         answerStatusLayout.isFadeGone =
             state.currentQuestion?.answerState == AnswerStateUI.NONE || state.isLoading
@@ -187,6 +201,7 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         txtAnswerStatus.text = statusText
         txtAnswerStatus.setTextColor(textColor)
         imgCorrectIndicator.setImageDrawable(statusImage)
+        answerText.hideKeyboard()
         if (questionUI is QuestionUI.Choice) {
             txtCorrectAnswer.isVisible = questionUI.answerState == AnswerStateUI.INCORRECT
             val correctText =
@@ -230,7 +245,6 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
         }
 
         if (currentQuestionId != null && currentQuestionId != question.id) {
-            hideKeyboard()
             rootScroll.animateTranslationXAndAlpha(
                 ANIMATION_DURATION,
                 -TRANSLATION_X,
