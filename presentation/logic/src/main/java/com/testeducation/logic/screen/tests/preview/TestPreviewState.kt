@@ -19,5 +19,6 @@ data class TestPreviewState(
     val hideTestTimeLimit: Boolean,
     val avatarResource: Int,
     val isPassVisible: Boolean,
-    val isShareAvailable: Boolean
+    val isShareAvailable: Boolean,
+    val color: String
 )

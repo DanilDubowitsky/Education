@@ -37,11 +37,13 @@ class TestPreviewReducer(
             hideTestTimeLimit = timeLimit == 0,
             avatarResource = avatarRes,
             isPassVisible = questionsCount > 0,
-            isShareAvailable = test?.status == Test.Status.PUBLISHED
+            isShareAvailable = test?.status == Test.Status.PUBLISHED,
+            color = modelState.test?.style?.color ?: DEFAULT_COLOR
         )
     }
 
     private companion object {
+        const val DEFAULT_COLOR = "#1CCD9D"
         const val MAX_DESCRIPTION_LENGTH = 250
     }
 }
