@@ -20,7 +20,7 @@ fun createChoiceAnswerDelegate(
     ViewHolderAnswerChoiceBinding::inflate
 ) {
     binding.root.setClickListener {
-        onAnswerClick(item.title, binding.root.backgroundTintList?.defaultColor ?: 0)
+        onAnswerClick(item.title, item.color)
     }
     binding.checkBoxAnswer.setClickListener(needDisable = false) {
         onSelectAnswer(absoluteAdapterPosition)
@@ -39,12 +39,14 @@ fun createOrderAnswerDelegate(
     ViewHolderAnswerOrderPassBinding::inflate
 ) {
     binding.root.setClickListener {
-        onAnswerClick(item.title, binding.root.backgroundTintList?.defaultColor ?: 0)
+        onAnswerClick(item.title, item.color)
     }
     bind {
-        binding.root.setOnLongClickListener {
-            onDragListener.oDragStarted(this)
-            true
+        binding.root.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN && item.touchable) {
+                onDragListener.oDragStarted(this)
+            }
+            false
         }
         binding.bindOrderAnswer(item)
     }
@@ -59,12 +61,14 @@ fun createMatchAnswerDelegate(
     ViewHolderAnswerMatchPassBinding::inflate
 ) {
     binding.root.setClickListener {
-        onAnswerClick(item.title, binding.root.backgroundTintList?.defaultColor ?: 0)
+        onAnswerClick(item.title, item.color)
     }
     bind {
-        binding.root.setOnLongClickListener {
-            onDragListener.oDragStarted(this)
-            true
+        binding.root.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN && item.touchable) {
+                onDragListener.oDragStarted(this)
+            }
+            false
         }
         binding.bindMatchAnswer(item)
     }
@@ -77,7 +81,7 @@ fun createMatchDataDelegate(
     ViewHolderMatchDataBinding::inflate
 ) {
     binding.root.setClickListener {
-        onMatchClick(item.text, binding.root.backgroundTintList?.defaultColor ?: 0)
+        onMatchClick(item.text, item.color)
     }
     bind {
         binding.bind(item)
