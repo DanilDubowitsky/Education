@@ -8,8 +8,11 @@ interface IRegistrationConfig {
         password: String,
         passwordConfirm: String,
         token: String,
-        userName: String
+        userName: String,
+        time: Long = System.currentTimeMillis()
     )
 
     fun getAll(): RegistrationConfigData
+
+    fun clear()
 }

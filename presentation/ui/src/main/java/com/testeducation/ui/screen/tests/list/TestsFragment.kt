@@ -75,6 +75,7 @@ class TestsFragment : ViewModelHostFragment<TestsViewModel, FragmentTestsBinding
         setupRecycler()
         observeData()
         setupListeners()
+        viewModel.updateAvatarAndVisibleAvatarChanger()
     }
 
     private fun observeData() {

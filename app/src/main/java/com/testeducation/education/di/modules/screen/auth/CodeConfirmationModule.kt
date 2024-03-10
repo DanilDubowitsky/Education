@@ -5,6 +5,9 @@ import com.testeducation.core.IReducer
 import com.testeducation.domain.cases.auth.ConfirmEmail
 import com.testeducation.domain.cases.auth.GetResetPasswordToken
 import com.testeducation.domain.cases.auth.SendCodeAgain
+import com.testeducation.domain.cases.auth.SignIn
+import com.testeducation.domain.config.user.IRegistrationConfig
+import com.testeducation.domain.config.user.IUserConfig
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
@@ -42,20 +45,26 @@ interface CodeConfirmationModule {
             getResetPasswordToken: GetResetPasswordToken,
             sendCodeAgain: SendCodeAgain,
             reducer: IReducer<CodeConfirmationModelState, CodeConfirmationState>,
-            errorHandler: IExceptionHandler
+            errorHandler: IExceptionHandler,
+            registrationConfig: IRegistrationConfig,
+            userConfig: IUserConfig,
+            signIn: SignIn
         ): CodeConfirmationViewModel {
             val screen = fragment.getScreen<NavigationScreen.Auth.CodeConfirmation>()
             return CodeConfirmationViewModel(
-                screen.confirmationType,
-                screen.email,
-                resourceHelper,
-                router,
-                confirmEmail,
-                sendCodeAgain,
-                getResetPasswordToken,
-                reducer,
-                errorHandler,
-                screen.token
+                confirmationType = screen.confirmationType,
+                email = screen.email,
+                resourceHelper = resourceHelper,
+                router = router,
+                confirmEmail = confirmEmail,
+                sendCodeAgain = sendCodeAgain,
+                getResetPasswordToken = getResetPasswordToken,
+                reducer = reducer,
+                errorHandler = errorHandler,
+                token = screen.token,
+                signIn = signIn,
+                registrationConfig = registrationConfig,
+                userConfig = userConfig
             )
         }
     }

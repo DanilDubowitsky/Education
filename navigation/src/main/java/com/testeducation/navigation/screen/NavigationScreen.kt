@@ -138,6 +138,7 @@ sealed interface NavigationScreen : Serializable {
 
                 val fromCreate get() = this == Create
             }
+
             object OnTestEditorUpdated : ResultKey<Unit>
         }
 
