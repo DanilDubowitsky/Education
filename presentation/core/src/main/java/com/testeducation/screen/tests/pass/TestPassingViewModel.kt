@@ -208,7 +208,10 @@ class TestPassingViewModel(
         val currentQuestion = modelState.currentQuestion ?: return@intent
         val textQuestion = currentQuestion.question as Question.Text
         val selectedQuestionState = modelState.selectedQuestionState.toText() ?: return@intent
-        val spentTime = modelState.currentQuestion.question.time - questionRemainingTime
+
+        val questionTimeInMillis = modelState.currentQuestion.question.time * SECOND_IN_MILLIS
+        val spentTime = questionTimeInMillis - questionRemainingTime
+
         val questions = modelState.questions.toMutableList()
 
         val answerState = when {
@@ -265,7 +268,8 @@ class TestPassingViewModel(
                 PassingQuestion.AnswerState.TIME_EXPIRED
             }
         }
-        val spentTime = modelState.currentQuestion!!.question.time - questionRemainingTime
+        val questionTimeInMillis = modelState.currentQuestion!!.question.time * SECOND_IN_MILLIS
+        val spentTime = questionTimeInMillis - questionRemainingTime
         val newQuestion = modelState.currentQuestion.copy(
             state = answerState,
             answers = state.question!!.answers.map(Answer::id),
@@ -302,7 +306,8 @@ class TestPassingViewModel(
                 PassingQuestion.AnswerState.TIME_EXPIRED
             }
         }
-        val spentTime = modelState.currentQuestion!!.question.time - questionRemainingTime
+        val questionTimeInMillis = modelState.currentQuestion!!.question.time * SECOND_IN_MILLIS
+        val spentTime = questionTimeInMillis - questionRemainingTime
 
         val questions = modelState.questions.toMutableList()
 
@@ -375,7 +380,8 @@ class TestPassingViewModel(
                 PassingQuestion.AnswerState.TIME_EXPIRED
             }
         }
-        val spentTime = modelState.currentQuestion!!.question.time - remainingTime
+        val questionTimeInMillis = modelState.currentQuestion!!.question.time * SECOND_IN_MILLIS
+        val spentTime = questionTimeInMillis - remainingTime
         val questions = modelState.questions.toMutableList()
         val newQuestion = modelState.currentQuestion.copy(
             state = state,
@@ -473,13 +479,6 @@ class TestPassingViewModel(
 
     private fun List<PassingQuestion>.toInputAnswers() = map {
         it.toInputAnswer()
-    }
-
-    private fun Answer.extractText() = when (this) {
-        is Answer.ChoiceAnswer -> title
-        is Answer.MatchAnswer -> title
-        is Answer.OrderAnswer -> title
-        is Answer.TextAnswer -> ""
     }
 
     private companion object {
