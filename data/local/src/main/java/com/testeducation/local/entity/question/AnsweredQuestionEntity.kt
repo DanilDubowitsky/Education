@@ -10,6 +10,5 @@ data class AnsweredQuestionEntity(
     val testId: String,
     val answeredIds: List<String>,
     val answerState: String,
-    val customAnswer: String?,
-    val matchData: List<String>
+    val customAnswer: String?
 )

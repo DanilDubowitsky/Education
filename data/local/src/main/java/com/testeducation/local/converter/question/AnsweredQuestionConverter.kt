@@ -25,8 +25,7 @@ fun InputUserAnswerData.toEntity(testId: String): AnsweredQuestionEntity {
         testId,
         answerIds,
         state.toEnumEntity(),
-        customAnswer,
-        matchData
+        customAnswer
     )
 }
 
@@ -56,13 +55,14 @@ fun AnsweredQuestionWithAnswers.toModel(): AnsweredQuestion {
                     it.id == id
                 }
             }
+            val matchData = domainQuestion.answers.map(Answer.MatchAnswer::matchedCorrectText)
 
             AnsweredQuestion.Match(
                 domainQuestion.id,
                 domainQuestion.title,
                 answeredQuestion.answerState.toEnumModel(),
                 question.question.numberQuestion,
-                answeredQuestion.matchData,
+                matchData,
                 matchedAnswers,
                 domainQuestion.answers
             )

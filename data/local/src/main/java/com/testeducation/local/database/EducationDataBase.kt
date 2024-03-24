@@ -36,6 +36,6 @@ abstract class EducationDataBase : RoomDatabase() {
 
     companion object {
         const val DATA_BASE_NAME = "EDUCATION_DATABASE"
-        const val DATA_BASE_VERSION = 2
+        const val DATA_BASE_VERSION = 3
     }
 }
