@@ -210,7 +210,11 @@ class TestPassingViewModel(
         val selectedQuestionState = modelState.selectedQuestionState.toText() ?: return@intent
 
         val questionTimeInMillis = modelState.currentQuestion.question.time * SECOND_IN_MILLIS
-        val spentTime = questionTimeInMillis - questionRemainingTime
+        val spentTime = if (questionTimeInMillis <= 0) {
+            0
+        } else {
+            questionTimeInMillis - questionRemainingTime
+        }
 
         val questions = modelState.questions.toMutableList()
 
@@ -269,7 +273,11 @@ class TestPassingViewModel(
             }
         }
         val questionTimeInMillis = modelState.currentQuestion!!.question.time * SECOND_IN_MILLIS
-        val spentTime = questionTimeInMillis - questionRemainingTime
+        val spentTime = if (questionTimeInMillis <= 0) {
+            0
+        } else {
+            questionTimeInMillis - questionRemainingTime
+        }
         val newQuestion = modelState.currentQuestion.copy(
             state = answerState,
             answers = state.question!!.answers.map(Answer::id),
@@ -307,7 +315,11 @@ class TestPassingViewModel(
             }
         }
         val questionTimeInMillis = modelState.currentQuestion!!.question.time * SECOND_IN_MILLIS
-        val spentTime = questionTimeInMillis - questionRemainingTime
+        val spentTime = if (questionTimeInMillis <= 0) {
+            0
+        } else {
+            questionTimeInMillis - questionRemainingTime
+        }
 
         val questions = modelState.questions.toMutableList()
 
@@ -381,7 +393,11 @@ class TestPassingViewModel(
             }
         }
         val questionTimeInMillis = modelState.currentQuestion!!.question.time * SECOND_IN_MILLIS
-        val spentTime = questionTimeInMillis - remainingTime
+        val spentTime = if (questionTimeInMillis <= 0) {
+            0
+        } else {
+            questionTimeInMillis - remainingTime
+        }
         val questions = modelState.questions.toMutableList()
         val newQuestion = modelState.currentQuestion.copy(
             state = state,
