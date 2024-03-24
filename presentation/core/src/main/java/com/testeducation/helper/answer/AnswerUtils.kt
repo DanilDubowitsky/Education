@@ -12,7 +12,7 @@ fun Question.toPassingQuestion(
     isInitial: Boolean = false
 ): PassingQuestion {
     val matchData = if (isInitial && this is Question.Match) {
-        this.answers.map(Answer.MatchAnswer::matchedCorrectText).shuffled()
+        this.answers.map(Answer.MatchAnswer::matchedCorrectText)
     } else emptyList()
 
     return PassingQuestion(
@@ -35,7 +35,7 @@ fun List<Question>.toPassingQuestions(isInitial: Boolean = false) = map { questi
 
 private fun Question.randomAnswers() = when (this) {
     is Question.Choice -> this.copy(answers = answers.shuffled())
-    is Question.Match -> this
+    is Question.Match -> this.copy(answers = answers.shuffled())
     is Question.Order -> this.copy(answers = answers.shuffled())
     is Question.Text -> this
 }

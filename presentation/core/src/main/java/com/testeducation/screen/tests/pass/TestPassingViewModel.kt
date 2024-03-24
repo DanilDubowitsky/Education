@@ -444,9 +444,6 @@ class TestPassingViewModel(
         }
     }
 
-    private fun List<Answer.MatchAnswer>.extractMatchData() =
-        map(Answer.MatchAnswer::matchedCorrectText)
-
     private fun TestPassingModelState.SelectedQuestionState.toChoice(): TestPassingModelState.SelectedQuestionState.Choice =
         this as TestPassingModelState.SelectedQuestionState.Choice
 
@@ -466,20 +463,12 @@ class TestPassingViewModel(
             answers,
             isCorrect,
             timeSpent,
-            customAnswer,
-            matchData
+            customAnswer
         )
     }
 
     private fun List<PassingQuestion>.toInputAnswers() = map {
         it.toInputAnswer()
-    }
-
-    private fun Answer.extractText() = when (this) {
-        is Answer.ChoiceAnswer -> title
-        is Answer.MatchAnswer -> title
-        is Answer.OrderAnswer -> title
-        is Answer.TextAnswer -> ""
     }
 
     private companion object {
