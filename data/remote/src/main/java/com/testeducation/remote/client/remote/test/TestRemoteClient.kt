@@ -1,7 +1,7 @@
 package com.testeducation.remote.client.remote.test
 
 import com.testeducation.core.client.remote.test.ITestRemoteClient
-import com.testeducation.domain.model.question.TestPassResult
+import com.testeducation.domain.model.question.TestPassResultType
 import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.model.test.TestCreationShort
 import com.testeducation.remote.client.retrofit.test.TestRetrofitClient
@@ -44,7 +44,7 @@ class TestRemoteClient(
         answers: List<InputUserAnswerData>,
         spentTime: Long,
         isCheating: Boolean,
-        result: TestPassResult
+        result: TestPassResultType
     ) {
         val remoteAnswers = answers.toRemotes()
         val request = PassTestRequest(

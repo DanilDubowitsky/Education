@@ -31,4 +31,8 @@ class QuestionLocalSource(
 
     override suspend fun getLastCacheTime(testId: String): Long? =
         testLocalLiveTimeDao.getTestLiveTime(testId)
+
+    override suspend fun deleteAndAddQuestions(testId: String, questions: List<Question>) {
+        questionDao.removeAndAddQuestions(testId, questions.toQuestionsWithAnswers(testId))
+    }
 }

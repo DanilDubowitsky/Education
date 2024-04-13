@@ -5,6 +5,7 @@
     <color name="colorWhite">#FFFF</color>
     <color name="colorLightGrey">#B9C3D3</color>
     <color name="colorDarkGreen">#1CCD9D</color>
+    <color name="colorDarkGreenHalfVisible">#801CCD9D</color>
     <color name="colorDarkGreenLight">#21F1B8</color>
     <color name="colorBlue">#4B9FFF</color>
     <color name="colorBlueLight">#76B6FF</color>

@@ -1,7 +1,9 @@
-package com.testeducation.local.entity.question
+package com.testeducation.local.entity.result
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.testeducation.local.entity.question.QuestionEntity
+import com.testeducation.local.entity.question.QuestionWithAnswers
 
 data class AnsweredQuestionWithAnswers(
     @Embedded

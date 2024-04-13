@@ -13,4 +13,6 @@ interface IQuestionLocalSource {
     suspend fun deleteQuestions(testId: String)
 
     suspend fun getLastCacheTime(testId: String): Long?
+
+    suspend fun deleteAndAddQuestions(testId: String, questions: List<Question>)
 }

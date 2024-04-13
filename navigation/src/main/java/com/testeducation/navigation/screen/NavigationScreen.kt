@@ -195,7 +195,10 @@ sealed interface NavigationScreen : Serializable {
         ) : Tests
 
         data class Statistic(
-            val testId: String
+            val testId: String,
+            val isOwner: Boolean,
+            val testTitle: String,
+            val testColor: String
         ) : Tests
 
         data class ShareCode(
@@ -224,7 +227,10 @@ sealed interface NavigationScreen : Serializable {
 
         data class Action(
             val testId: String,
-            val testTitle: String
+            val testTitle: String,
+            val isOwner: Boolean,
+            val isPassed: Boolean,
+            val color: String
         ) : Tests
     }
 

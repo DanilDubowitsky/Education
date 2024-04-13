@@ -1,16 +1,20 @@
 package com.testeducation.core.service.test
 
 import com.testeducation.core.client.remote.test.ITestRemoteClient
-import com.testeducation.core.source.local.question.IAnsweredQuestionLocalSource
-import com.testeducation.domain.model.question.TestPassResult
+import com.testeducation.core.source.local.question.ITestPassResultLocalSource
+import com.testeducation.domain.model.question.Question
+import com.testeducation.domain.model.question.TestPassResultType
 import com.testeducation.domain.model.question.input.InputUserAnswerData
+import com.testeducation.domain.model.result.TestPassResult
+import com.testeducation.domain.model.result.UserAnswer
 import com.testeducation.domain.model.test.TestCreationShort
+import com.testeducation.domain.repository.question.IQuestionRepository
 import com.testeducation.domain.service.test.ITestService
-import kotlinx.coroutines.delay
 
 class TestService(
     private val testRemoteClient: ITestRemoteClient,
-    private val answeredQuestionLocalSource: IAnsweredQuestionLocalSource
+    private val questionRepository: IQuestionRepository,
+    private val testPassResultLocalSource: ITestPassResultLocalSource
 ) : ITestService {
 
     override suspend fun toggleTestLike(id: String, liked: Boolean) =
@@ -33,10 +37,20 @@ class TestService(
         answers: List<InputUserAnswerData>,
         spentTime: Long,
         isCheating: Boolean,
-        result: TestPassResult,
+        result: TestPassResultType,
         sendToStatistic: Boolean
     ) {
-        answeredQuestionLocalSource.addAnsweredQuestions(testId, answers)
+        val questions = questionRepository.getQuestions(testId).associateBy(Question::id)
+        val passResult =
+            TestPassResult(
+                "",
+                testId,
+                answers.toUserAnswers(testId, questions),
+                spentTime,
+                isCheating,
+                result == TestPassResultType.SUCCESSFUL
+            )
+        testPassResultLocalSource.addTestPassResult(testId, passResult)
         if (sendToStatistic) {
             testRemoteClient.passTest(
                 testId,
@@ -47,4 +61,24 @@ class TestService(
             )
         }
     }
+
+    private fun List<InputUserAnswerData>.toUserAnswers(
+        testId: String,
+        questions: Map<String, Question>
+    ) = map { answer ->
+        answer.toUserAnswer(testId, questions)
+    }
+
+    private fun InputUserAnswerData.toUserAnswer(
+        testId: String,
+        questions: Map<String, Question>
+    ) = UserAnswer(
+        "",
+        testId,
+        questions.getValue(questionId),
+        answerIds,
+        customAnswer,
+        spentTime,
+        isCorrect ?: false
+    )
 }

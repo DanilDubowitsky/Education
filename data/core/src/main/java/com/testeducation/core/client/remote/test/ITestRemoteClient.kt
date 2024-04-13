@@ -1,6 +1,6 @@
 package com.testeducation.core.client.remote.test
 
-import com.testeducation.domain.model.question.TestPassResult
+import com.testeducation.domain.model.question.TestPassResultType
 import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.model.test.TestCreationShort
 
@@ -20,6 +20,6 @@ interface ITestRemoteClient {
         answers: List<InputUserAnswerData>,
         spentTime: Long,
         isCheating: Boolean,
-        result: TestPassResult
+        result: TestPassResultType
     )
 }

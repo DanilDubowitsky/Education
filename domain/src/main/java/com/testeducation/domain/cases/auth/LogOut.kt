@@ -5,9 +5,10 @@ import com.testeducation.domain.config.user.IUserConfig
 class LogOut(
     private val userConfig: IUserConfig
 ) {
-    suspend operator fun invoke() {
+    operator fun invoke() {
         userConfig.setRefreshToken("")
         userConfig.setToken("")
+        userConfig.setLastRefreshTokenUpdateTime(0L)
         userConfig.setAvatarVisibleScreen(false)
     }
 }

@@ -9,7 +9,7 @@ import com.testeducation.domain.cases.user.GetCurrentUser
 import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.PassingQuestion
 import com.testeducation.domain.model.question.Question
-import com.testeducation.domain.model.question.TestPassResult
+import com.testeducation.domain.model.question.TestPassResultType
 import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.model.test.Test
 import com.testeducation.domain.model.test.TestSettings
@@ -21,6 +21,8 @@ import com.testeducation.logic.screen.tests.pass.TestPassingState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.firstByCondition
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -139,9 +141,9 @@ class TestPassingViewModel(
 
         val isPassed = correctAnswersCount >= test.settings.minCorrectAnswers
         val result = if (isPassed) {
-            TestPassResult.SUCCESSFUL
+            TestPassResultType.SUCCESSFUL
         } else {
-            TestPassResult.FAILED
+            TestPassResultType.FAILED
         }
         val resultScreen = NavigationScreen.Tests.Result(
             correctAnswersCount,
@@ -157,23 +159,33 @@ class TestPassingViewModel(
         } else {
             router.navigateTo(resultScreen, addToBackStack = false)
         }
+        val isSendToStatistic =
+            test.status != Test.Status.DRAFT && test.creator.id != modelState.currentUser?.id
         router.setResultListener(NavigationScreen.Tests.Result.OpenResults) {
             router.exit()
-            router.navigateTo(NavigationScreen.Tests.Statistic(testId))
+            router.navigateTo(
+                NavigationScreen.Tests.Statistic(
+                    testId,
+                    !isSendToStatistic,
+                    modelState.test.title,
+                    modelState.test.style.color
+                )
+            )
         }
         router.setResultListener(NavigationScreen.Tests.Result.OpenMainPage) {
             router.exit()
         }
-        val isSendToStatistic =
-            test.status != Test.Status.DRAFT && test.creator.id != modelState.currentUser?.id
-        passTest(
-            testId,
-            answers,
-            spentTime,
-            isCheating,
-            result,
-            sendToStatistic = isSendToStatistic
-        )
+
+        withContext(NonCancellable) {
+            passTest(
+                testId,
+                answers,
+                spentTime,
+                isCheating,
+                result,
+                sendToStatistic = isSendToStatistic
+            )
+        }
     }
 
     fun increaseResumeCount(testRemainingTime: Long) = intent {

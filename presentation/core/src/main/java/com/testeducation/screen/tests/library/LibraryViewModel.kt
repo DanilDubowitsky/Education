@@ -58,13 +58,36 @@ class LibraryViewModel(
         val publishedTests = modelState.publishedTests
         val testInDraft = draftTests.firstByConditionOrNull(TestShort::id, id)
         val testInPublished = publishedTests.firstByConditionOrNull(TestShort::id, id)
+        val testInPassed = modelState.passedTests.firstByConditionOrNull(TestShort::id, id)
         val screen = when {
             testInDraft != null -> {
-                NavigationScreen.Tests.Action(testInDraft.id, testInDraft.title)
+                NavigationScreen.Tests.Action(
+                    testInDraft.id,
+                    testInDraft.title,
+                    isOwner = true,
+                    isPassed = false,
+                    testInDraft.style.color
+                )
             }
 
             testInPublished != null -> {
-                NavigationScreen.Tests.Action(testInPublished.id, testInPublished.title)
+                NavigationScreen.Tests.Action(
+                    testInPublished.id,
+                    testInPublished.title,
+                    isOwner = true,
+                    isPassed = false,
+                    testInPublished.style.color
+                )
+            }
+
+            testInPassed != null -> {
+                NavigationScreen.Tests.Action(
+                    testInPassed.id,
+                    testInPassed.title,
+                    isOwner = false,
+                    isPassed = true,
+                    testInPassed.style.color
+                )
             }
 
             else -> {

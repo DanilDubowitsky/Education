@@ -13,6 +13,7 @@ import com.testeducation.domain.cases.user.SetVisibleAvatar
 import com.testeducation.domain.model.global.OrderDirection
 import com.testeducation.domain.model.test.TestGetType
 import com.testeducation.domain.model.test.TestOrderField
+import com.testeducation.domain.model.test.TestShort
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.test.ITestHelper
 import com.testeducation.logic.model.test.TestFiltersUI
@@ -22,6 +23,7 @@ import com.testeducation.navigation.core.Disposable
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.screen.tests.base.TestsDefaults
+import com.testeducation.utils.firstByCondition
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 
@@ -131,7 +133,19 @@ class TestsViewModel(
     }
 
     fun onTestClick(id: String) = intent {
-        val screen = NavigationScreen.Tests.Preview(id)
+        val modelState = getModelState()
+        val test = modelState.tests.firstByCondition(TestShort::id, id)
+        val screen = if (test.passed) {
+            NavigationScreen.Tests.Action(
+                id,
+                test.title,
+                isOwner = false,
+                isPassed = true,
+                test.style.color
+            )
+        } else {
+            NavigationScreen.Tests.Preview(id)
+        }
         router.navigateTo(screen)
     }
 

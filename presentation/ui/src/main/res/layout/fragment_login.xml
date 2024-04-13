@@ -120,21 +120,21 @@
                     android:text="@string/login_forget_password_label"
                     android:textColor="@color/colorBlue" />
 
+                <ProgressBar
+                    android:id="@+id/globalProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateTint="@color/colorBlue"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnLogin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/btnLogin"
+                    tools:visibility="visible" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <ProgressBar
-            android:id="@+id/globalProgress"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:indeterminateTint="@color/colorDarkGreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

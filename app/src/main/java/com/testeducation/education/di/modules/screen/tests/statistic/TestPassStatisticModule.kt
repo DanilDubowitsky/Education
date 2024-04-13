@@ -2,7 +2,7 @@ package com.testeducation.education.di.modules.screen.tests.statistic
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
-import com.testeducation.domain.cases.question.GetTestPassStatistic
+import com.testeducation.domain.cases.question.GetTestPassResult
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.logic.screen.tests.statistic.TestPassStatisticState
@@ -34,7 +34,7 @@ interface TestPassStatisticModule {
         @Provides
         fun provideViewModel(
             fragment: TestPassStatisticFragment,
-            getTestPassStatistic: GetTestPassStatistic,
+            getTestPassResult: GetTestPassResult,
             exceptionHandler: IExceptionHandler,
             router: NavigationRouter,
             reducer: IReducer<TestPassStatisticModelState, TestPassStatisticState>
@@ -45,7 +45,10 @@ interface TestPassStatisticModule {
                 exceptionHandler,
                 router,
                 screen.testId,
-                getTestPassStatistic
+                screen.isOwner,
+                screen.testTitle,
+                screen.testColor,
+                getTestPassResult
             )
         }
     }

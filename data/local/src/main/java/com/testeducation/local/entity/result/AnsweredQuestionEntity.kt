@@ -1,14 +1,14 @@
-package com.testeducation.local.entity.question
+package com.testeducation.local.entity.result
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(primaryKeys = ["questionId", "testId"])
 data class AnsweredQuestionEntity(
-    @PrimaryKey
     val questionId: String,
     val testId: String,
     val answeredIds: List<String>,
-    val answerState: String,
-    val customAnswer: String?
+    val isCorrect: Boolean,
+    val customAnswer: String?,
+    val timeSpent: Long
 )

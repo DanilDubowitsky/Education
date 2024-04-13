@@ -1,6 +1,7 @@
 package com.testeducation.remote.client.retrofit.test
 
 import com.testeducation.remote.model.global.RemoteResponse
+import com.testeducation.remote.model.result.RemotePassResult
 import com.testeducation.remote.model.test.RemoteCreationTest
 import com.testeducation.remote.model.test.RemotePage
 import com.testeducation.remote.model.test.RemoteTest
@@ -120,4 +121,7 @@ interface TestRetrofitClient {
 
     @DELETE("/api/app/content/tests/{id}")
     suspend fun deleteTestById(@Path("id") testId: String) : RemoteResponse<Unit>
+
+    @GET("/api/app/account/tests/passes/{testId}/result")
+    suspend fun getTestPassResult(@Path("testId") id: String) : RemoteResponse<RemotePassResult>
 }

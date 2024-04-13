@@ -14,6 +14,7 @@ import com.testeducation.ui.utils.invoke
 import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
+import com.testeducation.ui.utils.switchHalfVisibleState
 import com.testeducation.ui.utils.trimmedTextOrEmpty
 
 class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding>(
@@ -37,7 +38,12 @@ class LoginFragment : ViewModelHostFragment<LoginViewModel, FragmentLoginBinding
     }
 
     private fun render(state: LoginState) = binding {
-        rootForm.isGone = state.isLoading
+        btnLogin.switchHalfVisibleState(!state.isLoading)
+        txtRegister.isEnabled = !state.isLoading
+        txtEmail.isEnabled = !state.isLoading
+        txtPassword.isEnabled = !state.isLoading
+        tvForgetPassword.isEnabled = !state.isLoading
+
         globalProgress.isGone = !state.isLoading
     }
 

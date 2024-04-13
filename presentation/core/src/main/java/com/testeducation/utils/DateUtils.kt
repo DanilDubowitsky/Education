@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 const val DAY_MONTH_YEAR_FULL = "d MMMM yyyy"
+const val MINUTES_SECONDS_FORMAT = "mm:ss"
 
 fun formatDate(
     format: String,

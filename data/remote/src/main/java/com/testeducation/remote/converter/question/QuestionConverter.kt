@@ -3,7 +3,7 @@ package com.testeducation.remote.converter.question
 import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
-import com.testeducation.domain.model.question.TestPassResult
+import com.testeducation.domain.model.question.TestPassResultType
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.remote.model.answer.AnswerMatch
@@ -130,11 +130,11 @@ fun InputUserAnswerData.toRemote() = InputUserAnswerDataRemote(
 
 fun List<InputUserAnswerData>.toRemotes() = map(InputUserAnswerData::toRemote)
 
-fun TestPassResult.toRemote() = when (this) {
-    TestPassResult.SUCCESSFUL -> TestPassResultRemote.Successful
-    TestPassResult.FAILED,
-    TestPassResult.TIME_OVER,
-    TestPassResult.ANTI_CHEAT_FAILED -> TestPassResultRemote.Failed
+fun TestPassResultType.toRemote() = when (this) {
+    TestPassResultType.SUCCESSFUL -> TestPassResultRemote.Successful
+    TestPassResultType.FAILED,
+    TestPassResultType.TIME_OVER,
+    TestPassResultType.ANTI_CHEAT_FAILED -> TestPassResultRemote.Failed
 }
 
 private fun RemoteAnswer.toMatch(questionId: String) = Answer.MatchAnswer(

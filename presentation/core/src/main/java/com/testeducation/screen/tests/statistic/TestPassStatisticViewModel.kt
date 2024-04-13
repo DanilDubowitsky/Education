@@ -2,9 +2,8 @@ package com.testeducation.screen.tests.statistic
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
-import com.testeducation.domain.cases.question.GetTestPassStatistic
+import com.testeducation.domain.cases.question.GetTestPassResult
 import com.testeducation.helper.error.IExceptionHandler
-import com.testeducation.logic.screen.tests.pass.TestPassingState
 import com.testeducation.logic.screen.tests.statistic.TestPassStatisticSideEffect
 import com.testeducation.logic.screen.tests.statistic.TestPassStatisticState
 import com.testeducation.navigation.core.NavigationRouter
@@ -15,13 +14,19 @@ class TestPassStatisticViewModel(
     exceptionHandler: IExceptionHandler,
     private val router: NavigationRouter,
     private val testId: String,
-    private val getTestPassStatistic: GetTestPassStatistic
+    private val isOwner: Boolean,
+    testTitle: String,
+    testColor: String,
+    private val getTestPassResult: GetTestPassResult
 ) : BaseViewModel<TestPassStatisticModelState, TestPassStatisticState, TestPassStatisticSideEffect>(
     reducer,
     exceptionHandler
 ) {
 
-    override val initialModelState: TestPassStatisticModelState = TestPassStatisticModelState()
+    override val initialModelState: TestPassStatisticModelState = TestPassStatisticModelState(
+        testTitle = testTitle,
+        testColor = testColor
+    )
 
     init {
         loadData()
@@ -56,9 +61,12 @@ class TestPassStatisticViewModel(
     }
 
     private fun loadData() = intent {
-        val statistic = getTestPassStatistic(testId)
+        val statistic = getTestPassResult(testId, isOwner)
         updateModelState {
-            copy(statistic = statistic)
+            copy(
+                testPassResult = statistic,
+                loadingState = TestPassStatisticModelState.LoadingState.IDLE
+            )
         }
     }
 
