@@ -69,17 +69,17 @@ class MainActivity : ViewModelHostActivity<MainActivityViewModel, ActivityMainBi
         window.statusBarColor = loadColor(R.color.colorBlue)
         window.navigationBarColor = loadColor(R.color.colorBlue)
         super.onCreate(savedInstanceState)
-        viewBinding.screenPlaceholder.isVisible = true
-        if (savedInstanceState == null) {
-            viewModel.prepare()
-        } else {
-            hideSplash()
-        }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        viewBinding.screenPlaceholder.isVisible = true
+        viewModel.prepare()
+
         observeData()
     }
 
-    private fun observeData() = viewModel.observe(this, sideEffect = ::handleSideEffect)
+    private fun observeData() = viewModel.observe(
+        this,
+        sideEffect = ::handleSideEffect
+    )
 
     private fun handleSideEffect(sideEffect: MainActivitySideEffect) = when (sideEffect) {
         MainActivitySideEffect.OnDataLoaded -> {

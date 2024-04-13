@@ -46,13 +46,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnShowResults"
         app:layout_constraintTop_toBottomOf="@+id/btnClose">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
             <TextView
                 android:id="@+id/tvQuestionType"
@@ -107,10 +108,10 @@
                     style="@style/EditText.Input.Simple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="2"
                     android:background="@drawable/selector_input_text"
-                    android:hint="@string/common_from" />
+                    android:hint="@string/common_from"
+                    android:inputType="number"
+                    android:maxLength="2" />
 
             </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
@@ -118,9 +119,9 @@
                 android:id="@+id/etPlaceHolderToQuestionsCount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginStart="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/etPlaceHolderFromQuestionsCount"
                 app:layout_constraintTop_toBottomOf="@+id/tvQuestionsCount">
@@ -130,10 +131,10 @@
                     style="@style/EditText.Input.Simple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="2"
                     android:background="@drawable/selector_input_text"
-                    android:hint="@string/common_to" />
+                    android:hint="@string/common_to"
+                    android:inputType="number"
+                    android:maxLength="2" />
 
             </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
@@ -159,15 +160,15 @@
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
-                    style="@style/ChipStyle"
                     android:id="@+id/limited"
+                    style="@style/ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tests_filters_limited" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/ChipStyle"
                     android:id="@+id/unlimited"
+                    style="@style/ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tests_filters_unlimited" />
@@ -225,23 +226,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="23dp"
+                android:layout_marginTop="32dp"
                 android:text="@string/tests_filters_theme_label"
                 android:textSize="18sp"
-                android:layout_marginTop="32dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPlaceHolderFromTime" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/themeChips"
-                android:layout_marginHorizontal="23dp"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
                 app:chipSpacingHorizontal="16dp"
                 app:chipSpacingVertical="4dp"
-                app:singleSelection="true"
-                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTheme" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTheme"
+                app:singleSelection="true" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
