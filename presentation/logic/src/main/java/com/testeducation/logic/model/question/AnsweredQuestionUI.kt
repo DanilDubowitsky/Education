@@ -4,14 +4,14 @@ import com.testeducation.logic.model.test.AnswerUI
 
 sealed interface AnsweredQuestionUI {
     val title: String
-    val state: AnswerStateUI
+    val isCorrect: Boolean
     val id: String
     val numberQuestion: Int
 
     data class Choose(
         override val id: String,
         override val title: String,
-        override val state: AnswerStateUI,
+        override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val chosenAnswer: List<AnswerUI.ChoiceAnswer?>,
         val correctAnswer: List<AnswerUI.ChoiceAnswer?>,
@@ -20,7 +20,7 @@ sealed interface AnsweredQuestionUI {
     data class Order(
         override val id: String,
         override val title: String,
-        override val state: AnswerStateUI,
+        override val isCorrect: Boolean,
         val correctOrderAnswers: List<AnswerUI.OrderAnswer>,
         override val numberQuestion: Int,
         val answeredAnswers: List<AnswerUI.OrderAnswer>,
@@ -29,7 +29,7 @@ sealed interface AnsweredQuestionUI {
     data class Text(
         override val id: String,
         override val title: String,
-        override val state: AnswerStateUI,
+        override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val answered: String,
         val correctAnswer: AnswerUI.TextAnswer
@@ -38,7 +38,7 @@ sealed interface AnsweredQuestionUI {
     data class Match(
         override val id: String,
         override val title: String,
-        override val state: AnswerStateUI,
+        override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val matchValues: List<String>,
         val matchAnswers: List<AnswerUI.MatchAnswer>,

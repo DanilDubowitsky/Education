@@ -1,6 +1,6 @@
 package com.testeducation.domain.cases.test
 
-import com.testeducation.domain.model.question.TestPassResult
+import com.testeducation.domain.model.question.TestPassResultType
 import com.testeducation.domain.model.question.input.InputUserAnswerData
 import com.testeducation.domain.service.test.ITestService
 
@@ -13,7 +13,7 @@ class PassTest(
         answers: List<InputUserAnswerData>,
         spentTime: Long,
         isCheating: Boolean,
-        result: TestPassResult,
+        result: TestPassResultType,
         sendToStatistic: Boolean
     ) = testService.passTest(
         testId,

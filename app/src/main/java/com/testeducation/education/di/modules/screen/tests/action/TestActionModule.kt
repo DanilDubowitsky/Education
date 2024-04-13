@@ -44,7 +44,10 @@ interface TestActionModule {
                 exceptionHandler,
                 router,
                 screen.testTitle,
-                screen.testId
+                screen.testId,
+                screen.isOwner,
+                screen.isPassed,
+                screen.color
             )
         }
     }

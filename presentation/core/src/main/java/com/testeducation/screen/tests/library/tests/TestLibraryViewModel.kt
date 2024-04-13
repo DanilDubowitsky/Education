@@ -73,11 +73,23 @@ class TestLibraryViewModel(
         val screen = when (testGetType) {
             TestLibraryGetTypeUI.PUBLISHED,
             TestLibraryGetTypeUI.DRAFT -> {
-                NavigationScreen.Tests.Action(selectedTest.id, selectedTest.title)
+                NavigationScreen.Tests.Action(
+                    selectedTest.id,
+                    selectedTest.title,
+                    true,
+                    selectedTest.passed,
+                    selectedTest.style.color
+                )
             }
 
             TestLibraryGetTypeUI.PASSED -> {
-                NavigationScreen.Tests.Preview(id)
+                NavigationScreen.Tests.Action(
+                    selectedTest.id,
+                    selectedTest.title,
+                    false,
+                    selectedTest.passed,
+                    selectedTest.style.color
+                )
             }
         }
         router.navigateTo(screen)

@@ -12,13 +12,19 @@ class QuestionRepository(
 ) : IQuestionRepository {
 
     override suspend fun getQuestions(testId: String): List<Question> {
-        syncQuestions(testId)
+        val hasEntries = localSource.hasEntries(testId)
+        val lastCacheTime = localSource.getLastCacheTime(testId) ?: 0
+        val currentTime = System.currentTimeMillis()
+        val isCacheTimeExpired = currentTime - lastCacheTime > TEST_QUESTIONS_CACHE_TIME
+        if (!hasEntries || isCacheTimeExpired) {
+            syncQuestions(testId)
+        }
         return localSource.getQuestions(testId)
     }
 
     private suspend fun syncQuestions(testId: String) {
         val questions = remoteSource.getQuestions(testId)
-        localSource.addQuestions(testId, questions)
+        localSource.deleteAndAddQuestions(testId, questions)
     }
 
     private companion object {

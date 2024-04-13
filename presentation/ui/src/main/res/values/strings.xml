@@ -249,5 +249,10 @@
     
     <string name="test_action_to_redaction">Перейти к редактированию</string>
     <string name="test_action_to_information">Перейти к информации</string>
+    <string name="test_action_to_results">Перейти к результатам</string>
+
+    <string name="test_results_pass_time">Всего затрачено времени:</string>
+    <string name="test_results_true_answers">Верные ответы:</string>
+    <string name="test_results_false_answers">Ошибки: </string>
 
 </resources>

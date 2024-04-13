@@ -1,18 +1,17 @@
 package com.testeducation.domain.model.question.answered
 
 import com.testeducation.domain.model.answer.Answer
-import com.testeducation.domain.model.question.PassingQuestion
 
 sealed interface AnsweredQuestion {
     val id: String
     val title: String
-    val state: PassingQuestion.AnswerState
+    val isCorrect: Boolean
     val numberQuestion: Int
 
     data class Choose(
         override val id: String,
         override val title: String,
-        override val state: PassingQuestion.AnswerState,
+        override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val chosenAnswers: List<Answer.ChoiceAnswer>,
         val correctAnswers: List<Answer.ChoiceAnswer>,
@@ -21,7 +20,7 @@ sealed interface AnsweredQuestion {
     data class Order(
         override val id: String,
         override val title: String,
-        override val state: PassingQuestion.AnswerState,
+        override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val correctOrderAnswers: List<Answer.OrderAnswer>,
         val answeredAnswers: List<Answer.OrderAnswer>,
@@ -30,7 +29,7 @@ sealed interface AnsweredQuestion {
     data class Text(
         override val id: String,
         override val title: String,
-        override val state: PassingQuestion.AnswerState,
+        override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val answered: String,
         val answer: Answer.TextAnswer
@@ -39,7 +38,7 @@ sealed interface AnsweredQuestion {
     data class Match(
         override val id: String,
         override val title: String,
-        override val state: PassingQuestion.AnswerState,
+        override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val matchValues: List<String>,
         val matchAnswers: List<Answer.MatchAnswer>,

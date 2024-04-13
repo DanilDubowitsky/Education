@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/topImage" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnEdit"
+        android:id="@+id/btnAction"
         style="@style/Button.Normal.Green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,6 +51,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

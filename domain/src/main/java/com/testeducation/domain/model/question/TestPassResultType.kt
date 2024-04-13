@@ -1,6 +1,6 @@
 package com.testeducation.domain.model.question
 
-enum class TestPassResult {
+enum class TestPassResultType {
     SUCCESSFUL,
     FAILED,
     TIME_OVER,

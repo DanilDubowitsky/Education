@@ -1,18 +1,19 @@
 package com.testeducation.education.di.modules.core.repository.question
 
 import com.testeducation.core.client.remote.question.IQuestionRemoteClient
-import com.testeducation.core.repository.question.AnsweredQuestionRepository
 import com.testeducation.core.repository.question.QuestionRepository
+import com.testeducation.core.repository.question.TestResultRepository
 import com.testeducation.core.service.question.QuestionService
-import com.testeducation.core.source.local.question.IAnsweredQuestionLocalSource
 import com.testeducation.core.source.local.question.IQuestionLocalSource
+import com.testeducation.core.source.local.question.ITestPassResultLocalSource
 import com.testeducation.core.source.remote.question.IQuestionRemoteSource
-import com.testeducation.domain.repository.question.IAnsweredQuestionRepository
+import com.testeducation.core.source.remote.question.ITestPassResultRemoteSource
 import com.testeducation.domain.repository.question.IQuestionRepository
+import com.testeducation.domain.repository.question.ITestResultRepository
 import com.testeducation.domain.service.question.IQuestionService
 import com.testeducation.local.database.EducationDataBase
-import com.testeducation.local.source.question.AnsweredQuestionLocalSource
 import com.testeducation.local.source.question.QuestionLocalSource
+import com.testeducation.local.source.question.TestPassResultLocalSource
 import com.testeducation.remote.client.remote.question.QuestionRemoteClient
 import com.testeducation.remote.client.retrofit.question.QuestionRetrofitClient
 import dagger.Module
@@ -56,14 +57,16 @@ object QuestionCoreModule {
     @Provides
     @Reusable
     fun provideAnsweredQuestionRepository(
-        answeredQuestionLocalSource: IAnsweredQuestionLocalSource
-    ): IAnsweredQuestionRepository = AnsweredQuestionRepository(answeredQuestionLocalSource)
+        testPassResultLocalSource: ITestPassResultLocalSource,
+        testPassResultRemoteSource: ITestPassResultRemoteSource
+    ): ITestResultRepository =
+        TestResultRepository(testPassResultRemoteSource, testPassResultLocalSource)
 
     @Provides
     @Reusable
     fun provideAnsweredQuestionLocalSource(
         dataBase: EducationDataBase
-    ): IAnsweredQuestionLocalSource =
-        AnsweredQuestionLocalSource(dataBase.answeredQuestionDao)
+    ): ITestPassResultLocalSource =
+        TestPassResultLocalSource(dataBase.answeredQuestionDao)
 
 }

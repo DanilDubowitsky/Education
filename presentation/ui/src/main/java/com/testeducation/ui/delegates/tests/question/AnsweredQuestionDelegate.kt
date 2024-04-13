@@ -35,7 +35,7 @@ fun choiceAnsweredQuestionDelegate() =
                 null,
                 item.chosenAnswer,
                 item.correctAnswer,
-                item.state,
+                item.isCorrect,
                 binding.answerChipGroup,
                 binding.trueAnswerChip,
             )
@@ -56,7 +56,7 @@ fun orderAnsweredQuestionDelegate() =
                 null,
                 item.answeredAnswers,
                 item.correctOrderAnswers,
-                item.state,
+                item.isCorrect,
                 binding.answerChipGroup,
                 binding.trueAnswerChip,
             )
@@ -74,7 +74,7 @@ fun textAnswerDelegate() = simpleDelegateAdapter<AnsweredQuestionUI.Text, Answer
             item.answered,
             emptyList(),
             listOf(item.correctAnswer),
-            item.state,
+            item.isCorrect,
             binding.answerChipGroup,
             binding.trueAnswerChip,
         )
@@ -112,7 +112,7 @@ fun matchAnsweredQuestionDelegate(
             }
 
             matchDataLayout.isGone = !item.isExpanded
-            trueMatchDataLayout.isGone = !item.isTrueExpanded || item.state == AnswerStateUI.CORRECT
+            trueMatchDataLayout.isGone = !item.isTrueExpanded || item.isCorrect
             val inflater = LayoutInflater.from(root.context)
             matchDataLayout.removeAllViews()
             trueMatchDataLayout.removeAllViews()
@@ -123,7 +123,7 @@ fun matchAnsweredQuestionDelegate(
                 matchDataLayout.addView(view.root)
             }
 
-            if (item.state == AnswerStateUI.INCORRECT) {
+            if (!item.isCorrect) {
                 txtTrueAnswer.isGone = false
                 btnExpandTrueAnswer.isGone = false
                 item.correctAnswers.forEach { item ->
@@ -145,7 +145,7 @@ fun matchAnsweredQuestionDelegate(
                 null,
                 emptyList(),
                 emptyList(),
-                item.state,
+                item.isCorrect,
                 null,
                 null,
                 txtAnswerIndicator
@@ -162,7 +162,7 @@ private fun bindSimpleData(
     customAnswer: String?,
     answers: List<AnswerUI?>,
     correctAnswers: List<AnswerUI?>,
-    stateUI: AnswerStateUI,
+    isCorrect: Boolean,
     answersLayout: FlexboxLayout?,
     correctAnswersLayout: FlexboxLayout?,
     answerTextView: TextView? = null
@@ -210,32 +210,16 @@ private fun bindSimpleData(
         number.toString(),
         title
     )
-    when (stateUI) {
-        AnswerStateUI.CORRECT -> {
-            txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorDarkGreenLight))
-            imgAnswerIndicator.setImageResource(R.drawable.ic_correct_answer)
-            imgAnswerIndicator.colorFilter = null
-        }
-
-        AnswerStateUI.INCORRECT -> {
-            txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorRed))
-            imgAnswerIndicator.setImageResource(R.drawable.ic_incorrect_answer)
-            imgAnswerIndicator.colorFilter = null
-        }
-
-        AnswerStateUI.NONE -> {
-            txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorGrayBlue))
-            imgAnswerIndicator.setImageResource(R.drawable.ic_correct_answer)
-            imgAnswerIndicator.setColorFilter(txtTitle.context.loadColor(R.color.colorGrayBlue))
-        }
-
-        AnswerStateUI.TIME_EXPIRED -> {
-            txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorRed))
-            imgAnswerIndicator.setImageResource(R.drawable.ic_incorrect_answer)
-            imgAnswerIndicator.colorFilter = null
-        }
+    if (isCorrect) {
+        txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorDarkGreenLight))
+        imgAnswerIndicator.setImageResource(R.drawable.ic_correct_answer)
+        imgAnswerIndicator.colorFilter = null
+    } else {
+        txtAnswerIndicator.setTextColor(txtTitle.context.loadColor(R.color.colorRed))
+        imgAnswerIndicator.setImageResource(R.drawable.ic_incorrect_answer)
+        imgAnswerIndicator.colorFilter = null
     }
-    val isCorrectVisible = stateUI == AnswerStateUI.INCORRECT
+    val isCorrectVisible = !isCorrect
     txtCorrectAnswer.isVisible = isCorrectVisible
     correctAnswersLayout?.isVisible = isCorrectVisible
     correctAnswersLayout?.let {

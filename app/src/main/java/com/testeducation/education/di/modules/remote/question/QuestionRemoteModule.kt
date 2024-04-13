@@ -15,5 +15,4 @@ object QuestionRemoteModule {
     fun provideQuestionRemoteSource(
         questionRemoteClient: QuestionRetrofitClient
     ): IQuestionRemoteSource = QuestionRemoteSource(questionRemoteClient)
-
 }

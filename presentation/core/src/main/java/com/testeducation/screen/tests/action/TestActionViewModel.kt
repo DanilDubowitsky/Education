@@ -13,15 +13,20 @@ class TestActionViewModel(
     reducer: IReducer<TestActionModelState, TestActionState>,
     exceptionHandler: IExceptionHandler,
     private val router: NavigationRouter,
-    testTitle: String,
-    private val testId: String
+    private val testTitle: String,
+    private val testId: String,
+    private val isOwner: Boolean,
+    isPassed: Boolean,
+    private val color: String,
 ) : BaseViewModel<TestActionModelState, TestActionState, TestActionSideEffect>(
     reducer,
     exceptionHandler
 ) {
 
     override val initialModelState: TestActionModelState = TestActionModelState(
-        testTitle = testTitle
+        testTitle = testTitle,
+        isOwner = isOwner,
+        isPassed = isPassed
     )
 
     fun onInfoClick() = intent {
@@ -30,11 +35,15 @@ class TestActionViewModel(
         router.navigateTo(screen)
     }
 
-    fun onEditClick() = intent {
-        val screen = NavigationScreen.Tests.Details(
-            testId,
-            navigateFrom = NavigationScreen.Tests.Details.NavigateFrom.MyLibrary
-        )
+    fun onActionClick() = intent {
+        val screen = if (isOwner) {
+            NavigationScreen.Tests.Details(
+                testId,
+                navigateFrom = NavigationScreen.Tests.Details.NavigateFrom.MyLibrary
+            )
+        } else {
+            NavigationScreen.Tests.Statistic(testId, false, testTitle, color)
+        }
         router.exit()
         router.navigateTo(screen)
     }
