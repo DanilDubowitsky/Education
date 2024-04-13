@@ -120,16 +120,35 @@
 
                 </com.testeducation.ui.view.custom.InputTextPlaceHolder>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnRegister"
-                    style="@style/Button.Normal.Green"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <FrameLayout
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/registration_btn_title"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnRegister"
+                        style="@style/Button.Normal.Green"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/registration_btn_title"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/globalProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminateTint="@color/colorBlue"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible" />
+
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/termsAndConditionsTxt"
@@ -146,19 +165,6 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.cardview.widget.CardView>
-
-
-        <ProgressBar
-            android:id="@+id/globalProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/colorDarkGreen"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

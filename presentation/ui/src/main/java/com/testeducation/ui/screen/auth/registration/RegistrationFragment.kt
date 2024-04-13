@@ -20,6 +20,7 @@ import com.testeducation.ui.utils.loadColor
 import com.testeducation.ui.utils.observe
 import com.testeducation.ui.utils.setClickListener
 import com.testeducation.ui.utils.showMessage
+import com.testeducation.ui.utils.switchHalfVisibleState
 import com.testeducation.ui.utils.text.CustomClickableSpan
 import com.testeducation.ui.utils.trimmedTextOrEmpty
 
@@ -85,7 +86,11 @@ class RegistrationFragment :
 
     private fun render(state: RegistrationState) = binding {
         globalProgress.isVisible = state.isLoading
-        rootForm.isVisible = !state.isLoading
+        txtEmail.isEnabled = !state.isLoading
+        txtPassword.isEnabled = !state.isLoading
+        txtRepeatPassword.isEnabled = !state.isLoading
+        txtNickName.isEnabled = !state.isLoading
+        btnRegister.switchHalfVisibleState(!state.isLoading)
     }
 
     private fun onSideEffect(sideEffect: RegistrationSideEffect) {
