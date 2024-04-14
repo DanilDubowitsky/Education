@@ -26,7 +26,7 @@ abstract class BaseBottomSheetDialog<VB : ViewBinding>(
         get() = _binding!!
 
     @Inject
-    protected lateinit var androidInjector: DispatchingAndroidInjector<Any>
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     override fun androidInjector(): AndroidInjector<Any> {
         return androidInjector

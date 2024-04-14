@@ -15,7 +15,7 @@ abstract class ViewModelHostBottomSheetDialog<VB : ViewBinding, VM : ViewModel>(
 ) : BaseBottomSheetDialog<VB>(onBind) {
 
     @Inject
-    protected lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     protected lateinit var viewModel: VM
 

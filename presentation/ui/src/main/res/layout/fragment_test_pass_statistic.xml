@@ -44,167 +44,195 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/testPassResultTitle"
-        style="@style/Text.Label.SemiBold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="24dp"
-        android:gravity="start"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topAppBar"
-        android:text="@string/test_pass_congratulations_description" />
-
-    <TextView
-        android:id="@+id/testPassTimeDescription"
-        style="@style/Text.Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="16dp"
-        android:gravity="start"
-        android:text="@string/test_results_pass_time"
-        android:textColor="@color/colorTextGray"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/testPassResultTitle" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/testPassTime"
-        style="@style/Text.Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:gravity="start"
-        android:textColor="@color/colorTextGray"
-        android:textSize="14sp"
-        app:drawableStartCompat="@drawable/ic_timer"
-        app:layout_constraintBottom_toBottomOf="@+id/testPassTimeDescription"
-        app:layout_constraintStart_toEndOf="@+id/testPassTimeDescription"
-        app:layout_constraintTop_toTopOf="@+id/testPassTimeDescription"
-        tools:text="14:30" />
-
-    <LinearLayout
-        android:id="@+id/statsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="16dp"
-        android:baselineAligned="false"
-        app:layout_constraintTop_toBottomOf="@+id/testPassTimeDescription"
-        app:layout_goneMarginTop="16dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/trueAnswersLayout"
-            android:layout_width="0dp"
-            android:layout_height="57dp"
-            android:layout_weight="1"
-            android:background="@drawable/background_grey_rounded_16"
-            android:backgroundTint="@color/colorBlue">
-
-            <TextView
-                android:id="@+id/txtTrueAnswersCount"
-                style="@style/Text.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="28sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="35" />
-
-            <TextView
-                android:id="@+id/txtTrueAnswers"
-                style="@style/Text.Label.Medium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="20dp"
-                android:text="@string/test_results_true_answers"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txtTrueAnswersCount"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imgCorrect"
-                android:layout_width="70dp"
-                android:layout_height="49dp"
-                android:src="@drawable/ic_check_transparent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/falseAnswersLayout"
-            android:layout_width="0dp"
-            android:layout_height="57dp"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/background_grey_rounded_16"
-            android:backgroundTint="@color/colorRed">
-
-            <TextView
-                android:id="@+id/txtFalseAnswersCount"
-                style="@style/Text.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="28sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="35" />
-
-            <TextView
-                android:id="@+id/txtFalseAnswers"
-                style="@style/Text.Label.Medium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txtFalseAnswersCount"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/test_results_false_answers"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imgIncorrect"
-                android:layout_width="70dp"
-                android:layout_height="49dp"
-                android:paddingStart="10dp"
-                android:src="@drawable/ic_x_transparent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/resultsRecycler"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statsLayout"
-        tools:itemCount="4"
-        tools:listitem="@layout/view_holder_simple_result" />
+        app:layout_constraintTop_toBottomOf="@+id/topAppBar">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    app:layout_collapseMode="parallax"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/testPassResultTitle"
+                        style="@style/Text.Label.SemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="24dp"
+                        android:gravity="start"
+                        android:text="@string/test_pass_congratulations_description"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/testPassTimeDescription"
+                        style="@style/Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="16dp"
+                        android:gravity="start"
+                        android:text="@string/test_results_pass_time"
+                        android:textColor="@color/colorTextGray"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/testPassResultTitle" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/testPassTime"
+                        style="@style/Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:gravity="start"
+                        android:textColor="@color/colorTextGray"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_timer"
+                        app:layout_constraintBottom_toBottomOf="@+id/testPassTimeDescription"
+                        app:layout_constraintStart_toEndOf="@+id/testPassTimeDescription"
+                        app:layout_constraintTop_toTopOf="@+id/testPassTimeDescription"
+                        tools:text="14:30" />
+
+                    <LinearLayout
+                        android:id="@+id/statsLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="16dp"
+                        android:baselineAligned="false"
+                        app:layout_constraintTop_toBottomOf="@+id/testPassTimeDescription"
+                        app:layout_goneMarginTop="16dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/trueAnswersLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="57dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_grey_rounded_16"
+                            android:backgroundTint="@color/colorBlue">
+
+                            <TextView
+                                android:id="@+id/txtTrueAnswersCount"
+                                style="@style/Text.Label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="28sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="35" />
+
+                            <TextView
+                                android:id="@+id/txtTrueAnswers"
+                                style="@style/Text.Label.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="20dp"
+                                android:text="@string/test_results_true_answers"
+                                android:textColor="@color/colorWhite"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/txtTrueAnswersCount"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imgCorrect"
+                                android:layout_width="70dp"
+                                android:layout_height="49dp"
+                                android:src="@drawable/ic_check_transparent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/falseAnswersLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="57dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_grey_rounded_16"
+                            android:backgroundTint="@color/colorRed">
+
+                            <TextView
+                                android:id="@+id/txtFalseAnswersCount"
+                                style="@style/Text.Label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="28sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="35" />
+
+                            <TextView
+                                android:id="@+id/txtFalseAnswers"
+                                style="@style/Text.Label.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginBottom="16dp"
+                                android:text="@string/test_results_false_answers"
+                                android:textColor="@color/colorWhite"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/txtFalseAnswersCount"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imgIncorrect"
+                                android:layout_width="70dp"
+                                android:layout_height="49dp"
+                                android:paddingStart="10dp"
+                                android:src="@drawable/ic_x_transparent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/resultsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            tools:itemCount="4"
+            tools:listitem="@layout/view_holder_simple_result" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.testeducation.ui.view.custom.CircleLoader
         android:id="@+id/circularProgress"

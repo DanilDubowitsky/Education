@@ -15,7 +15,7 @@ abstract class ViewModelHostAlertDialog<VB : ViewBinding, VM : ViewModel>(
 ) : BaseAlertDialog<VB>(onBind) {
 
     @Inject
-    protected lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     protected lateinit var viewModel: VM
 

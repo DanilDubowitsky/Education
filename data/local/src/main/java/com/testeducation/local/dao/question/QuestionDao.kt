@@ -16,7 +16,7 @@ interface QuestionDao {
     suspend fun insertOrUpdate(question: QuestionEntity)
 
     @Transaction
-    @Query("SELECT * FROM QuestionEntity WHERE testId = :testId")
+    @Query("SELECT * FROM QuestionEntity WHERE testId = :testId ORDER BY numberQuestion ASC")
     suspend fun getQuestions(testId: String): List<QuestionWithAnswers>
 
     @Transaction
