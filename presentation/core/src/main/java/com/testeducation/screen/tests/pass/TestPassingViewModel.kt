@@ -139,16 +139,20 @@ class TestPassingViewModel(
             it.isCorrect != null && !it.isCorrect!!
         }
 
-        val isPassed = correctAnswersCount >= test.settings.minCorrectAnswers
-        val result = if (isPassed) {
-            TestPassResultType.SUCCESSFUL
-        } else {
-            TestPassResultType.FAILED
+        val result = when {
+            correctAnswersCount < test.settings.minCorrectAnswers -> {
+                TestPassResultType.FAILED_MIN_QUESTION
+            }
+
+            isCheating -> TestPassResultType.ANTI_CHEAT_FAILED
+
+            else -> TestPassResultType.SUCCESSFUL
         }
+
         val resultScreen = NavigationScreen.Tests.Result(
             correctAnswersCount,
             incorrectAnswersCount,
-            isPassed
+            result == TestPassResultType.SUCCESSFUL
         )
 
         if (isCheating || testRemainingTime < 0L) {

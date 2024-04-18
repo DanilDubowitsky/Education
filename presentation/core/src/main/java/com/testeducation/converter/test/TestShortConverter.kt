@@ -33,14 +33,12 @@ fun List<TestShort>.toUIModels(): List<TestShortUI> = this.map(TestShort::toUI)
 
 fun TestOrderField.toUIModel() = when (this) {
     TestOrderField.TITLE -> TestOrderFieldUI.TITLE
-    TestOrderField.CREATION -> TestOrderFieldUI.CREATION
     TestOrderField.QUESTIONS -> TestOrderFieldUI.QUESTIONS
     TestOrderField.PUBLISHED -> TestOrderFieldUI.PUBLISHED
 }
 
 fun TestOrderFieldUI.toModel() = when (this) {
     TestOrderFieldUI.TITLE -> TestOrderField.TITLE
-    TestOrderFieldUI.CREATION -> TestOrderField.CREATION
     TestOrderFieldUI.QUESTIONS -> TestOrderField.QUESTIONS
     TestOrderFieldUI.PUBLISHED -> TestOrderField.PUBLISHED
 }

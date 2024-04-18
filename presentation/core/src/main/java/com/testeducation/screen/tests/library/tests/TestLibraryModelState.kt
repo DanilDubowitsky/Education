@@ -13,7 +13,7 @@ data class TestLibraryModelState(
     val selectedThemeId: String? = null,
     val testsLoadingState: TestsLoadingState = TestsLoadingState.LOADING,
     val themesLoadingState: ThemeLoadingState = ThemeLoadingState.LOADING,
-    val selectedOrderField: TestOrderField = TestOrderField.CREATION,
+    val selectedOrderField: TestOrderField = TestOrderField.PUBLISHED,
     val isTimeLimited: Boolean = TestsDefaults.DEFAULT_HAS_LIMIT,
     val timeLimitFrom: String = TestsDefaults.DEFAULT_TIME_MIN,
     val timeLimitTo: String = TestsDefaults.DEFAULT_TIME_MAX,

@@ -18,6 +18,8 @@ data class RemotePassResult(
 ) {
     enum class Result {
         Successful,
-        Failed
+        Failed,
+        FailedMinQuestions,
+        FailedCheating
     }
 }

@@ -41,6 +41,7 @@ class TestService(
         sendToStatistic: Boolean
     ) {
         val questions = questionRepository.getQuestions(testId).associateBy(Question::id)
+        val testPassResult = result.toPassResultStatus()
         val passResult =
             TestPassResult(
                 "",
@@ -48,7 +49,7 @@ class TestService(
                 answers.toUserAnswers(testId, questions),
                 spentTime,
                 isCheating,
-                result == TestPassResultType.SUCCESSFUL
+                testPassResult
             )
         testPassResultLocalSource.addTestPassResult(testId, passResult)
         if (sendToStatistic) {
@@ -57,7 +58,7 @@ class TestService(
                 answers,
                 spentTime,
                 isCheating,
-                result
+                testPassResult
             )
         }
     }
@@ -67,6 +68,14 @@ class TestService(
         questions: Map<String, Question>
     ) = map { answer ->
         answer.toUserAnswer(testId, questions)
+    }
+
+    private fun TestPassResultType.toPassResultStatus() = when (this) {
+        TestPassResultType.SUCCESSFUL -> TestPassResult.ResultStatus.SUCCESSFUL
+        TestPassResultType.FAILED -> TestPassResult.ResultStatus.FAILED
+        TestPassResultType.FAILED_MIN_QUESTION -> TestPassResult.ResultStatus.FAILED_MIN_QUESTIONS
+        TestPassResultType.TIME_OVER -> TestPassResult.ResultStatus.SUCCESSFUL
+        TestPassResultType.ANTI_CHEAT_FAILED -> TestPassResult.ResultStatus.FAILED_CHEATING
     }
 
     private fun InputUserAnswerData.toUserAnswer(

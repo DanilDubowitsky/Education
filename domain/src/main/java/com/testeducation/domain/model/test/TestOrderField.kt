@@ -2,7 +2,6 @@ package com.testeducation.domain.model.test
 
 enum class TestOrderField {
     TITLE,
-    CREATION,
+    PUBLISHED,
     QUESTIONS,
-    PUBLISHED
 }

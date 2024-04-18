@@ -1,8 +1,9 @@
 package com.testeducation.remote.request.test
 
 import com.google.gson.annotations.SerializedName
+import com.testeducation.domain.model.result.TestPassResult
 import com.testeducation.remote.model.answer.InputUserAnswerDataRemote
-import com.testeducation.remote.model.test.TestPassResultRemote
+import com.testeducation.remote.model.result.RemotePassResult
 
 data class PassTestRequest(
     @SerializedName("test_id")
@@ -14,5 +15,5 @@ data class PassTestRequest(
     @SerializedName("was_cheating")
     val isCheating: Boolean,
     @SerializedName("result")
-    val result: TestPassResultRemote
+    val result: RemotePassResult.Result
 )

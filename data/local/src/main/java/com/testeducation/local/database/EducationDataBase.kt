@@ -3,6 +3,7 @@ package com.testeducation.local.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.testeducation.domain.database.IEducationDatabase
 import com.testeducation.local.dao.question.TestPassResultDao
 import com.testeducation.local.dao.question.QuestionDao
 import com.testeducation.local.dao.question.TestLocalLiveTimeDao
@@ -29,7 +30,11 @@ import com.testeducation.local.entity.theme.ThemeShortEntity
     exportSchema = false
 )
 @TypeConverters(DataBaseTypeConverters::class)
-abstract class EducationDataBase : RoomDatabase() {
+abstract class EducationDataBase : RoomDatabase(), IEducationDatabase {
+
+    override suspend fun clear() {
+        clearAllTables()
+    }
 
     abstract val themeShortDao: ThemeShortDao
     abstract val questionDao: QuestionDao

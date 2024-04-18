@@ -77,10 +77,21 @@ class TestPassStatisticFragment :
         txtTrueAnswersCount.text = state.trueAnswers.toString()
         txtFalseAnswersCount.text = state.falseAnswers.toString()
         testPassTime.text = formatDateInSeconds(MINUTES_SECONDS_FORMAT, state.passTime)
-        if (!state.isSuccess) {
-            testPassResultTitle.text = getString(R.string.test_pass_test_failed_description)
+        val resultText = when (state.result) {
+            TestPassStatisticState.TestPassResultUI.SUCCESSFUL -> {
+                getString(R.string.test_pass_congratulations_description)
+            }
+            TestPassStatisticState.TestPassResultUI.FAILED -> {
+                getString(R.string.test_pass_failed)
+            }
+            TestPassStatisticState.TestPassResultUI.FAILED_MIN_QUESTIONS -> {
+                getString(R.string.test_pass_test_failed_description)
+            }
+            TestPassStatisticState.TestPassResultUI.FAILED_CHEATING -> {
+                getString(R.string.test_pass_failed_cheating)
+            }
         }
+        testPassResultTitle.text = resultText
         adapter.items = state.questions
     }
-
 }

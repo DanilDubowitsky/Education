@@ -2,7 +2,6 @@ package com.testeducation.logic.model.test
 
 enum class TestOrderFieldUI {
     TITLE,
-    CREATION,
+    PUBLISHED,
     QUESTIONS,
-    PUBLISHED
 }

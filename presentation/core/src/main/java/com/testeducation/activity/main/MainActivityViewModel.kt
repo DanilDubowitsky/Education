@@ -31,7 +31,7 @@ class MainActivityViewModel(
 
     override val initialModelState: MainActivityModelState = MainActivityModelState()
 
-    fun prepare() = intent {
+    fun prepare() = singleIntent(PREPARE_JOB) {
         val isUpdateRequired = isAppVersionUpdateRequired()
 
         if (isUpdateRequired) {
@@ -43,7 +43,7 @@ class MainActivityViewModel(
             )
             postSideEffect(MainActivitySideEffect.OnDataLoaded)
             router.navigateTo(informationScreen)
-            return@intent
+            return@singleIntent
         }
 
         val isExpired = userConfigInteractor.isRefreshTokenExpired()
@@ -59,6 +59,10 @@ class MainActivityViewModel(
         userConfigInteractor.setRefreshTokenExpired()
         val screen = NavigationScreen.Auth.Login
         router.replace(screen)
+    }
+
+    private companion object {
+        const val PREPARE_JOB = "prepare_job"
     }
 
 }

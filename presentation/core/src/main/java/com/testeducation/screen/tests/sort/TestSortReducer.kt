@@ -26,7 +26,7 @@ class TestSortReducer(
         direction: OrderDirection
     ): ArrayList<TestSortUI> {
         val testSorts = ArrayList<TestSortUI>()
-        TestOrderField.values().forEach { sort ->
+        TestOrderField.entries.forEach { sort ->
             val isAscending = orderField == sort && direction == OrderDirection.ASCENDING
             val isDescending = orderField == sort && direction == OrderDirection.DESCENDING
             val (ascendingValue, descendingValue) = when (sort) {
@@ -37,22 +37,6 @@ class TestSortReducer(
                         sort.name
                     ) to TestSortUI.OnNameDescending(
                         resourceHelper.extractStringResource(SortStringResource.NameDescending),
-                        isDescending,
-                        sort.name
-                    )
-                }
-
-                TestOrderField.CREATION -> {
-                    TestSortUI.OnCreationDateAscending(
-                        resourceHelper.extractStringResource(
-                            SortStringResource.CreationDateAscending
-                        ),
-                        isAscending,
-                        sort.name
-                    ) to TestSortUI.OnCreationDateDescending(
-                        resourceHelper.extractStringResource(
-                            SortStringResource.CreationDateDescending
-                        ),
                         isDescending,
                         sort.name
                     )

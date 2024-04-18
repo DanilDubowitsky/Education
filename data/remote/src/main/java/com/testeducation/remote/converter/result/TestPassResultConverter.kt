@@ -12,8 +12,15 @@ fun RemotePassResult.toModel() = TestPassResult(
     answers.toModels(testId),
     timeSpent,
     wasCheating,
-    result == RemotePassResult.Result.Successful
+    result.toModel()
 )
+
+private fun RemotePassResult.Result.toModel() = when (this) {
+    RemotePassResult.Result.Successful -> TestPassResult.ResultStatus.SUCCESSFUL
+    RemotePassResult.Result.FailedMinQuestions -> TestPassResult.ResultStatus.FAILED_MIN_QUESTIONS
+    RemotePassResult.Result.FailedCheating -> TestPassResult.ResultStatus.FAILED_CHEATING
+    RemotePassResult.Result.Failed -> TestPassResult.ResultStatus.FAILED
+}
 
 private fun RemoteUserAnswer.toModel(testId: String) =
     UserAnswer(

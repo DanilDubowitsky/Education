@@ -6,5 +6,13 @@ data class TestPassResult(
     val answers: List<UserAnswer>,
     val timeSpent: Long,
     val wasCheating: Boolean,
-    val success: Boolean
-)
+    val result: ResultStatus
+) {
+
+    enum class ResultStatus {
+        SUCCESSFUL,
+        FAILED,
+        FAILED_MIN_QUESTIONS,
+        FAILED_CHEATING
+    }
+}

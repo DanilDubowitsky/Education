@@ -76,7 +76,6 @@ class TestLibraryFragment : ViewModelHostFragment<TestLibraryViewModel, Fragment
     private fun render(state: TestLibraryState) = binding {
         val orderFieldText = when (state.selectedSortField) {
             TestOrderFieldUI.TITLE -> getString(R.string.tests_list_sort_field_title)
-            TestOrderFieldUI.CREATION -> getString(R.string.tests_list_sort_field_creation_date)
             TestOrderFieldUI.QUESTIONS -> getString(R.string.tests_list_sort_field_questions)
             TestOrderFieldUI.PUBLISHED -> getString(R.string.tests_list_sort_field_published_date)
         }

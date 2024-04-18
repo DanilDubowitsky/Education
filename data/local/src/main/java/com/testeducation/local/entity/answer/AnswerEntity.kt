@@ -1,9 +1,7 @@
 package com.testeducation.local.entity.answer
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.testeducation.local.entity.question.QuestionEntity
 
 @Entity
 data class AnswerEntity(

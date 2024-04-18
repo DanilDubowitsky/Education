@@ -10,7 +10,7 @@ class TestPassResultRemoteSource(
     private val questionRetrofitClient: TestRetrofitClient
 ) : ITestPassResultRemoteSource {
 
-    override suspend fun getUserAnswers(testId: String): TestPassResult {
+    override suspend fun getTestPassResult(testId: String): TestPassResult {
         return questionRetrofitClient.getTestPassResult(testId).getResult().data.toModel()
     }
 

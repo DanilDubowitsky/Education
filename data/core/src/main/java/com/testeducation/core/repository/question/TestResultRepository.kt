@@ -12,7 +12,7 @@ class TestResultRepository(
 
     override suspend fun getTestResult(testId: String, isOwner: Boolean): TestPassResult {
         if (!isOwner) {
-            val result = remoteSource.getUserAnswers(testId)
+            val result = remoteSource.getTestPassResult(testId)
             localSource.addTestPassResult(testId, result)
         }
         return localSource.getPassResult(testId)

@@ -3,14 +3,14 @@ package com.testeducation.remote.converter.question
 import com.testeducation.domain.model.answer.Answer
 import com.testeducation.domain.model.question.Question
 import com.testeducation.domain.model.question.QuestionType
-import com.testeducation.domain.model.question.TestPassResultType
 import com.testeducation.domain.model.question.input.InputAnswer
 import com.testeducation.domain.model.question.input.InputUserAnswerData
+import com.testeducation.domain.model.result.TestPassResult
 import com.testeducation.remote.model.answer.AnswerMatch
 import com.testeducation.remote.model.answer.InputUserAnswerDataRemote
 import com.testeducation.remote.model.answer.RemoteAnswer
 import com.testeducation.remote.model.question.RemoteQuestion
-import com.testeducation.remote.model.test.TestPassResultRemote
+import com.testeducation.remote.model.result.RemotePassResult
 import com.testeducation.remote.request.question.answer.AnswerCreateRequest
 
 fun List<InputAnswer>.mapToRequestTypeDefault() = mapNotNull { answer ->
@@ -130,11 +130,11 @@ fun InputUserAnswerData.toRemote() = InputUserAnswerDataRemote(
 
 fun List<InputUserAnswerData>.toRemotes() = map(InputUserAnswerData::toRemote)
 
-fun TestPassResultType.toRemote() = when (this) {
-    TestPassResultType.SUCCESSFUL -> TestPassResultRemote.Successful
-    TestPassResultType.FAILED,
-    TestPassResultType.TIME_OVER,
-    TestPassResultType.ANTI_CHEAT_FAILED -> TestPassResultRemote.Failed
+fun TestPassResult.ResultStatus.toRemote() = when (this) {
+    TestPassResult.ResultStatus.SUCCESSFUL -> RemotePassResult.Result.Successful
+    TestPassResult.ResultStatus.FAILED -> RemotePassResult.Result.Failed
+    TestPassResult.ResultStatus.FAILED_CHEATING -> RemotePassResult.Result.FailedCheating
+    TestPassResult.ResultStatus.FAILED_MIN_QUESTIONS -> RemotePassResult.Result.FailedMinQuestions
 }
 
 private fun RemoteAnswer.toMatch(questionId: String) = Answer.MatchAnswer(

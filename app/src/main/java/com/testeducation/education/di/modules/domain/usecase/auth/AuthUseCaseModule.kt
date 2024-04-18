@@ -10,6 +10,7 @@ import com.testeducation.domain.cases.auth.SendResetPasswordCode
 import com.testeducation.domain.cases.auth.SignIn
 import com.testeducation.domain.cases.auth.SignUp
 import com.testeducation.domain.config.user.IUserConfig
+import com.testeducation.domain.database.IEducationDatabase
 import com.testeducation.domain.service.IRefreshTokenExpirationHandler
 import com.testeducation.domain.service.auth.IAuthService
 import dagger.Module
@@ -41,8 +42,9 @@ object AuthUseCaseModule {
     @Provides
     @Reusable
     fun provideLogOut(
-        config: IUserConfig
-    ): LogOut = LogOut(config)
+        config: IUserConfig,
+        database: IEducationDatabase
+    ): LogOut = LogOut(config, database)
 
     @Provides
     @Reusable

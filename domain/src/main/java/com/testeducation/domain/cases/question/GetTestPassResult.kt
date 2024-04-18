@@ -19,7 +19,7 @@ class GetTestPassResult(
             passResult.answers.toAnsweredQuestions(),
             passResult.timeSpent,
             passResult.wasCheating,
-            passResult.success,
+            passResult.result,
             passResult.answers.count(UserAnswer::isCorrect),
             passResult.answers.count { answer ->
                 !answer.isCorrect
@@ -33,7 +33,7 @@ class GetTestPassResult(
         val answers: List<AnsweredQuestion>,
         val timeSpent: Long,
         val wasCheating: Boolean,
-        val success: Boolean,
+        val result: TestPassResult.ResultStatus,
         val trueAnswers: Int,
         val falseAnswers: Int
     )

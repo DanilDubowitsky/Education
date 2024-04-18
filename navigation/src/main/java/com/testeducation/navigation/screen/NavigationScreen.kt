@@ -52,7 +52,7 @@ sealed interface NavigationScreen : Serializable {
         ) : Common
 
         data class PopUpInformation(
-            val titleText: String,
+            val titleText: String
         ) : Common {
 
             object OnConfirm : ResultKey<Unit>

@@ -47,33 +47,32 @@ android {
 dependencies {
     implementation(kotlin("reflect"))
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.core:core-ktx:1.12.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation(libs.kotlin.coroutines)
+    implementation(libs.lifecycle.ktx)
 
     implementation("com.google.code.gson:gson:2.10.1")
 
     // Dagger
-    implementation("com.google.dagger:dagger:2.51.1")
-    kapt("com.google.dagger:dagger-compiler:2.51.1")
-    implementation("com.google.dagger:dagger-android:2.51.1")
-    implementation("com.google.dagger:dagger-android-support:2.51.1")
-    kapt("com.google.dagger:dagger-android-processor:2.51.1")
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+    implementation(libs.dagger.android)
+    implementation(libs.dagger.android.support)
+    kapt(libs.dagger.android.processor)
 
     // Adapter Delegates
     implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2")
 
     // MVI
-    implementation("org.orbit-mvi:orbit-core:4.6.1")
-    implementation("org.orbit-mvi:orbit-viewmodel:4.6.1")
-    implementation("org.orbit-mvi:orbit-compose:4.6.1")
+    implementation(libs.orbit.core)
+    implementation(libs.orbit.viewmodel)
+    implementation(libs.orbit.compose)
 
     implementation(project(":presentation:core"))
     implementation(project(":presentation:logic"))
@@ -83,14 +82,14 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     // Shimmer
-    implementation("com.facebook.shimmer:shimmer:0.5.0")
+    implementation(libs.shimmer)
 
     //lottie
-    implementation("com.airbnb.android:lottie:5.2.0")
+    implementation(libs.lottie)
 
     // Layout
-    implementation("com.google.android.flexbox:flexbox:3.0.0")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation(libs.flexbox)
+    implementation(libs.swipe.refresh)
 
     // Splash screen
     implementation("androidx.core:core-splashscreen:1.1.0-alpha02")

@@ -15,7 +15,7 @@ data class TestsModelState(
     val profileLoadingState: ProfileLoadingState = ProfileLoadingState.LOADING,
     val themesLoadingState: ThemesLoadingState = ThemesLoadingState.LOADING,
     val selectedThemeId: String? = null,
-    val selectedOrderField: TestOrderField = TestOrderField.CREATION,
+    val selectedOrderField: TestOrderField = TestOrderField.PUBLISHED,
     val isTimeLimited: Boolean = TestsDefaults.DEFAULT_HAS_LIMIT,
     val timeLimitFrom: String = TestsDefaults.DEFAULT_TIME_MIN,
     val timeLimitTo: String = TestsDefaults.DEFAULT_TIME_MAX,

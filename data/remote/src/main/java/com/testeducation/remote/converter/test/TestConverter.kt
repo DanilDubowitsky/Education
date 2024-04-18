@@ -17,7 +17,6 @@ import com.testeducation.remote.model.test.RemoteTestStyle
 import java.security.InvalidParameterException
 
 private const val TITLE = "title"
-private const val CREATION = "creation"
 private const val QUESTIONS = "questions"
 
 private const val DRAFT = "draft"
@@ -47,12 +46,13 @@ fun RemoteTestShort.toModel() = TestShort(
 fun List<RemoteTestShort>.toModels() = this.map(RemoteTestShort::toModel)
 
 fun RemoteCreationTest.toModel() = TestCreationShort(
-    id, title, testStyle
+    id,
+    title,
+    testStyle
 )
 
 fun TestOrderField.toRemote() = when (this) {
     TestOrderField.TITLE -> TITLE
-    TestOrderField.CREATION -> CREATION
     TestOrderField.QUESTIONS -> QUESTIONS
     TestOrderField.PUBLISHED -> PUBLISHED
 }

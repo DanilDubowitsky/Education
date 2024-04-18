@@ -22,7 +22,7 @@ fun TestPassResultCompound.toModel() = TestPassResult(
     },
     passResultEntity.timeSpent,
     passResultEntity.wasCheating,
-    passResultEntity.success
+    passResultEntity.result.toEnumModel()
 )
 
 private fun List<AnsweredQuestionWithAnswers>.toModels() =
@@ -46,7 +46,7 @@ private fun TestPassResult.toEntity(testId: String) = TestPassResultEntity(
     id,
     timeSpent,
     wasCheating,
-    success
+    result.toEnumEntity()
 )
 
 private fun List<UserAnswer>.toCompounds() = this.map(UserAnswer::toCompound)

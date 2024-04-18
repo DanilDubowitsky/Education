@@ -10,5 +10,5 @@ class TestPassResultEntity(
     val id: String? = null,
     val timeSpent: Long,
     val wasCheating: Boolean,
-    val success: Boolean
+    val result: String
 )
