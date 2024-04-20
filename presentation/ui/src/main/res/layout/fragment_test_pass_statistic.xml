@@ -155,8 +155,8 @@
 
                             <ImageView
                                 android:id="@+id/imgCorrect"
-                                android:layout_width="70dp"
-                                android:layout_height="49dp"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
                                 android:src="@drawable/ic_check_transparent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -204,9 +204,8 @@
 
                             <ImageView
                                 android:id="@+id/imgIncorrect"
-                                android:layout_width="70dp"
-                                android:layout_height="49dp"
-                                android:paddingStart="10dp"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
                                 android:src="@drawable/ic_x_transparent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"

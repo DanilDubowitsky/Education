@@ -48,7 +48,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
-    //serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 }

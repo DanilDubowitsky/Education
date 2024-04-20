@@ -45,26 +45,22 @@ android {
 dependencies {
     implementation(kotlin("reflect"))
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.core:core-ktx:1.12.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 
     // MVI
-    implementation("org.orbit-mvi:orbit-core:4.6.1")
-    implementation("org.orbit-mvi:orbit-viewmodel:4.6.1")
-    implementation("org.orbit-mvi:orbit-compose:4.6.1")
+    implementation(libs.orbit.core)
+    implementation(libs.orbit.viewmodel)
+    implementation(libs.orbit.compose)
 
     // Ktx
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation(libs.lifecycle.ktx.viewmodel)
 
     implementation(project(":domain"))
     implementation(project(":presentation:logic"))
     implementation(project(":navigation"))
-
-    //serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 }
