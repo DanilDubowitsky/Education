@@ -179,6 +179,20 @@ sealed interface NavigationScreen : Serializable {
             }
         }
 
+        data class TestPublish(val isPublishTest: Boolean): Tests {
+            object OnTestPublish : ResultKey<OnTestPublish.Result> {
+                data class Result(
+                    val statusPublish: StatusPublish
+                ) {
+                    enum class StatusPublish {
+                        PUBLISH, DRAFT;
+
+                        fun isPublish() = this == PUBLISH
+                    }
+                }
+            }
+        }
+
         data class Result(
             val correctAnswers: Int,
             val incorrectAnswers: Int,

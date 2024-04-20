@@ -3,7 +3,6 @@ package com.testeducation.screen.tests.edit
 import com.testeducation.converter.test.question.toUi
 import com.testeducation.converter.test.toUI
 import com.testeducation.core.IReducer
-import com.testeducation.domain.model.test.Test
 import com.testeducation.helper.question.ITimeConverterLongToString
 import com.testeducation.helper.resource.IResourceHelper
 import com.testeducation.helper.resource.StringResource
@@ -41,11 +40,6 @@ class TestEditorReducer(
             ),
             questionDetailsUi = modelState.questionDetails.toUi(timeConverterLongToString),
             visibleLoadingPublish = modelState.loadingPublish,
-            btnPublishText = if (test.status == Test.Status.PUBLISHED) {
-                StringResource.Common.CommonSave.getString(resource)
-            } else {
-                StringResource.Test.PublishTitle.getString(resource)
-            },
             titleCountQuestion = StringResource.Test.QuestionCountTitle(modelState.questionDetails.size - 1).getString(resource),
             isRefreshing = modelState.isRefreshing
         )

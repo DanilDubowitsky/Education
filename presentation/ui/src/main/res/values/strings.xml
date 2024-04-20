@@ -142,7 +142,10 @@
     <string name="test_settings_availability_link">По коду</string>
 
     <string name="test_draft">В черновик</string>
+    <string name="test_draft_publish_description">Все настройки ваше теста будут сохранены, но он не будет доступен для прохождения. Вы сможете в любое время изменить это в разделе “Моя библиотека - Черновики”.</string>
+    <string name="test_publish_description">После публикации тест станет доступен для прохождения, и вы сможете поделиться им.</string>
     <string name="test_publish">Опубликовать</string>
+    <string name="test_save_test">Сохранить тест</string>
     <string name="test_exit_edit_title">Выход из редактирования теста</string>
     <string name="test_exit_edit_description">Вы уверены, что хотите покинуть страницу редактирования? Тест останется в статусе \"%s\"</string>
     <string name="test_exit_edit_draft">Черновик</string>

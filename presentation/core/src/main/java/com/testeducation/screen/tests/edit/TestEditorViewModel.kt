@@ -195,6 +195,20 @@ class TestEditorViewModel(
         }
     }
 
+    fun saveTestProcess() = intent {
+        val modelState = getModelState()
+        router.setResultListener(NavigationScreen.Tests.TestPublish.OnTestPublish) { status ->
+            if (status.statusPublish.isPublish()) {
+                publish()
+            } else draft()
+        }
+        modelState.test?.let { testItem ->
+            router.navigateTo(NavigationScreen.Tests.TestPublish(
+                isPublishTest = testItem.status == Test.Status.PUBLISHED
+            ))
+        }
+    }
+
     fun publish() {
         intent {
             val modelState = getModelState()
@@ -250,6 +264,7 @@ class TestEditorViewModel(
         if (navigateFrom.fromCreate) {
             router.navigateTo(NavigationScreen.Main.Home, false)
         } else {
+            router.sendResult(NavigationScreen.Tests.Details.OnTestEditorUpdated, Unit)
             router.exit()
         }
     }

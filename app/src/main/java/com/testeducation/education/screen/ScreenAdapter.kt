@@ -32,6 +32,7 @@ import com.testeducation.ui.screen.tests.creation.time.TimeQuestionDialog
 import com.testeducation.ui.screen.tests.edit.TestEditorFragment
 import com.testeducation.ui.screen.tests.edit.TestSettingsFragment
 import com.testeducation.ui.screen.tests.edit.TestStyleChangerFragment
+import com.testeducation.ui.screen.tests.edit.publish.TestPublishDialog
 import com.testeducation.ui.screen.tests.filters.TestsFiltersFragment
 import com.testeducation.ui.screen.tests.library.LibraryFragment
 import com.testeducation.ui.screen.tests.library.test.TestLibraryFragment
@@ -206,6 +207,10 @@ class ScreenAdapter : IScreenAdapter {
 
         is NavigationScreen.Tests.Action -> Screen.DialogScreen {
             TestActionDialog().withScreen(screen)
+        }
+
+        is NavigationScreen.Tests.TestPublish -> Screen.DialogScreen {
+            TestPublishDialog().withScreen(screen)
         }
     }
 
