@@ -155,10 +155,12 @@
 
                             <ImageView
                                 android:id="@+id/imgCorrect"
-                                android:layout_width="70dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="49dp"
+                                android:layout_marginStart="16dp"
                                 android:src="@drawable/ic_check_transparent"
                                 app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/txtTrueAnswers"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -206,11 +208,12 @@
                                 android:id="@+id/imgIncorrect"
                                 android:layout_width="70dp"
                                 android:layout_height="49dp"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginBottom="8dp"
                                 android:paddingStart="10dp"
-                                android:src="@drawable/ic_x_transparent"
+                                android:src="@drawable/ic_card_x"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintStart_toEndOf="@+id/txtFalseAnswers" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
