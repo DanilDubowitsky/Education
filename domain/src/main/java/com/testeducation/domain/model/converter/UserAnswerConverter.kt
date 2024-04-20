@@ -29,7 +29,7 @@ private fun UserAnswer.toAnsweredQuestion(): AnsweredQuestion {
 
         is Question.Match -> {
             val matchedAnswers = answers.map { id ->
-                question.answers.first {
+                question.answers.firstOrNull {
                     it.id == id
                 }
             }
@@ -49,7 +49,7 @@ private fun UserAnswer.toAnsweredQuestion(): AnsweredQuestion {
         is Question.Order -> {
             val correctOrder = question.answers.sortedBy(Answer.OrderAnswer::order)
             val answeredOrder = answers.map { id ->
-                question.answers.first {
+                question.answers.firstOrNull {
                     it.id == id
                 }
             }

@@ -35,8 +35,8 @@ fun List<Answer>.toUIModels(
     }
 }
 
-fun List<Answer>.toSimpleUIModels() = map { answer ->
-    answer.toUI(0, isSelected = false, canSelect = true)
+fun List<Answer?>.toSimpleUIModels() = map { answer ->
+    answer?.toUI(0, isSelected = false, canSelect = true)
 }
 
 fun List<Answer>.toInputAnswers(getColor: ((Int) -> Int)? = null, getTrueColor: ((Boolean) -> Int)? = null) =
