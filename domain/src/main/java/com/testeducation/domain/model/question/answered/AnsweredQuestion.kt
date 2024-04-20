@@ -23,7 +23,7 @@ sealed interface AnsweredQuestion {
         override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val correctOrderAnswers: List<Answer.OrderAnswer>,
-        val answeredAnswers: List<Answer.OrderAnswer>,
+        val answeredAnswers: List<Answer.OrderAnswer?>,
     ) : AnsweredQuestion
 
     data class Text(
@@ -41,7 +41,7 @@ sealed interface AnsweredQuestion {
         override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val matchValues: List<String>,
-        val matchAnswers: List<Answer.MatchAnswer>,
+        val matchAnswers: List<Answer.MatchAnswer?>,
         val correctAnswers: List<Answer.MatchAnswer>
     ) : AnsweredQuestion
 

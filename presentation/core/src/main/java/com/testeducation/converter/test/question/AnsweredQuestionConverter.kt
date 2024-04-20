@@ -32,7 +32,7 @@ private fun AnsweredQuestion.Match.toUI(
     isCorrect,
     numberQuestion,
     matchValues,
-    matchAnswers.toSimpleUIModels() as List<AnswerUI.MatchAnswer>,
+    matchAnswers.toSimpleUIModels() as? List<AnswerUI.MatchAnswer> ?: emptyList(),
     correctAnswers.toSimpleUIModels() as List<AnswerUI.MatchAnswer>,
     isExpanded,
     isTrueAnswerExpanded
@@ -44,7 +44,7 @@ private fun AnsweredQuestion.Order.toUI() = AnsweredQuestionUI.Order(
     isCorrect,
     correctOrderAnswers.toSimpleUIModels() as List<AnswerUI.OrderAnswer>,
     numberQuestion,
-    answeredAnswers.toSimpleUIModels() as List<AnswerUI.OrderAnswer>
+    answeredAnswers.toSimpleUIModels() as? List<AnswerUI.OrderAnswer> ?: emptyList()
 )
 
 private fun AnsweredQuestion.Choose.toUI() = AnsweredQuestionUI.Choose(
