@@ -50,6 +50,7 @@
     <string name="common_send">Отправить</string>
     <string name="common_share">Поделиться</string>
     <string name="common_delete">Удалить</string>
+    <string name="common_saving_process">Сохранение</string>
 
     <string name="tests_filters_label">Фильтры</string>
 

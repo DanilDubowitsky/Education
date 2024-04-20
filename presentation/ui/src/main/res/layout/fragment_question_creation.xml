@@ -148,7 +148,7 @@
                     android:layout_marginBottom="16dp"
                     android:background="@null"
                     android:gravity="center"
-                    android:hint="Введие ваш вопрос здесь..."
+                    android:hint="Введите ваш вопрос здесь..."
                     android:textColor="@color/colorBlueSky"
                     android:textColorHint="@color/colorBlueSky"
                     app:layout_constraintBottom_toTopOf="@+id/tvPhoto"
