@@ -8,7 +8,6 @@ sealed class TestEditorState {
         val testDetails: TestDetailsUi,
         val questionDetailsUi: List<QuestionDetailsUi>,
         val visibleLoadingPublish: Boolean,
-        val btnPublishText: String,
         val titleCountQuestion: String,
         val isRefreshing: Boolean
     ) : TestEditorState()

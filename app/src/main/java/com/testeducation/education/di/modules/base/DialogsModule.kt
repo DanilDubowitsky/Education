@@ -6,6 +6,7 @@ import com.testeducation.education.di.modules.screen.tests.action.TestActionModu
 import com.testeducation.education.di.modules.screen.tests.code.enter.TestCodeEnterModule
 import com.testeducation.education.di.modules.screen.tests.code.share.TestCodeShareModule
 import com.testeducation.education.di.modules.screen.tests.creation.TestCreationModule
+import com.testeducation.education.di.modules.screen.tests.edit.TestPublishModule
 import com.testeducation.education.di.modules.screen.tests.pass.FullAnswerTextModule
 import com.testeducation.education.di.modules.screen.tests.pass.TestFailedPassModule
 import com.testeducation.education.di.modules.screen.tests.pass.TestPassResultModule
@@ -26,6 +27,7 @@ import com.testeducation.ui.screen.tests.creation.CreationTestDialogFragment
 import com.testeducation.ui.screen.tests.creation.SelectionQuestionTypeDialog
 import com.testeducation.ui.screen.tests.creation.input.AnswerInputDialog
 import com.testeducation.ui.screen.tests.creation.time.TimeQuestionDialog
+import com.testeducation.ui.screen.tests.edit.publish.TestPublishDialog
 import com.testeducation.ui.screen.tests.pass.answer.FullAnswerTextDialog
 import com.testeducation.ui.screen.tests.pass.result.TestFailedPassDialog
 import com.testeducation.ui.screen.tests.pass.result.TestPassResultDialog
@@ -86,4 +88,7 @@ interface DialogsModule {
 
     @ContributesAndroidInjector(modules = [ConfirmCodeModule::class])
     fun confirmCodeDialog(): ConfirmCodeDialog
+
+    @ContributesAndroidInjector(modules = [TestPublishModule::class])
+    fun confirmTestPublishDialog(): TestPublishDialog
 }

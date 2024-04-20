@@ -51,10 +51,7 @@ class TestEditorFragment :
                 viewModel.openTestSettings()
             }
             btnCreate.setClickListener {
-                viewModel.publish()
-            }
-            btnDraft.setClickListener {
-                viewModel.draft()
+                viewModel.saveTestProcess()
             }
             imgBack.setClickListener {
                 viewModel.onExit()
@@ -87,7 +84,6 @@ class TestEditorFragment :
                 toolbar.backgroundTintList = ColorStateList.valueOf(colorTest)
                 btnCreate.apply {
                     backgroundTintList = ColorStateList.valueOf(colorTest)
-                    text = state.btnPublishText
                 }
                 requireActivity().window.statusBarColor = colorTest
                 visibleContent(!state.visibleLoadingPublish)
@@ -108,6 +104,5 @@ class TestEditorFragment :
         toolbar.isVisible = isVisible
         coordinator.isVisible = isVisible
         btnCreate.isVisible = isVisible
-        btnDraft.isVisible = isVisible
     }
 }
