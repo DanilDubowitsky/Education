@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
     id("kotlin-kapt")
 }
@@ -57,7 +57,7 @@ dependencies {
     implementation(libs.kotlin.coroutines)
     implementation(libs.lifecycle.ktx)
 
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.gson)
 
     // Dagger
     implementation(libs.dagger)
@@ -67,7 +67,7 @@ dependencies {
     kapt(libs.dagger.android.processor)
 
     // Adapter Delegates
-    implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2")
+    implementation(libs.viewbinding.adapter.delegate)
 
     // MVI
     implementation(libs.orbit.core)
@@ -77,9 +77,6 @@ dependencies {
     implementation(project(":presentation:core"))
     implementation(project(":presentation:logic"))
     implementation(project(":navigation"))
-
-    //serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     // Shimmer
     implementation(libs.shimmer)
@@ -92,5 +89,5 @@ dependencies {
     implementation(libs.swipe.refresh)
 
     // Splash screen
-    implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
+    implementation(libs.splash.screen)
 }
