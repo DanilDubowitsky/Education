@@ -51,7 +51,7 @@ class LoginViewModel(
     }
 
     fun registration() {
-        router.navigateTo(NavigationScreen.Auth.Registration)
+        router.navigateTo(NavigationScreen.Auth.OnBoarding)
     }
 
     override fun handleThrowable(throwable: Throwable) = intent {

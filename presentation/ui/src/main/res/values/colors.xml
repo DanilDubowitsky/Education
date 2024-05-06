@@ -33,4 +33,8 @@
     <color name="colorTextDark">#161E27</color>
     <color name="colorTextGray">#9FA9B8</color>
     <color name="blueLight">#CFDBED</color>
+    <color name="onboarding_green_first">#06BE8C</color>
+    <color name="onboarding_green_second">#4B9FFF</color>
+    <color name="onboarding_green_three">#F0950B</color>
+    <color name="onboarding_green_four">#FF5B41</color>
 </resources>

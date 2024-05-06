@@ -22,4 +22,11 @@ sealed interface ColorResource {
         object ColorGrayBlueDisable: Secondary
         object ColorDarkBlue: Secondary
     }
+
+    sealed interface OnBoarding: ColorResource {
+        object PageFirst: OnBoarding
+        object PageSecond: OnBoarding
+        object PageThree: OnBoarding
+        object PageFour: OnBoarding
+    }
 }

@@ -17,4 +17,11 @@ sealed interface DrawableResource {
         object Eight : Avatar
         object Default : Avatar
     }
+
+    sealed interface OnBoarding: DrawableResource {
+        object PageFirst: OnBoarding
+        object PageSecond: OnBoarding
+        object PageThree: OnBoarding
+        object PageFour: OnBoarding
+    }
 }
