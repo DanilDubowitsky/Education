@@ -23,5 +23,10 @@ sealed interface DrawableResource {
         object PageSecond: OnBoarding
         object PageThree: OnBoarding
         object PageFour: OnBoarding
+
+        object GradientFirst: OnBoarding
+        object GradientSecond: OnBoarding
+        object GradientThree: OnBoarding
+        object GradientFour: OnBoarding
     }
 }

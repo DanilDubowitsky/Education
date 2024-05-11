@@ -19,7 +19,8 @@ class OnBoardingAdapter(var list: List<OnBoardingItemUi>, val getDrawable: (Int)
         holder.itemViewBinding.run {
             tvTitle.text = list[position].title
             tvDescription.text = list[position].description
-            mainContainer.setBackgroundColor(list[position].color)
+          //  mainContainer.setBackgroundColor(list[position].color)
+            mainContainer.background = getDrawable(list[position].color)
             img.setImageDrawable(getDrawable(list[position].image))
         }
     }
