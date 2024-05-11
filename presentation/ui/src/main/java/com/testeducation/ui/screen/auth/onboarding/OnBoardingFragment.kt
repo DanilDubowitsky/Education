@@ -41,7 +41,14 @@ class OnBoardingFragment: ViewModelHostFragment<OnBoardingViewModel, FragmentOnb
                 this.adapter = this@OnBoardingFragment.adapter
                 isUserInputEnabled = false
             }
+            tvSkip.setClickListener {
+                viewModel.exit()
+            }
             btnNext.setClickListener {
+                if (viewPager.currentItem + 1 == colorBackground.size) {
+                    viewModel.exit()
+                    return@setClickListener
+                }
                 val nextItemVP = viewPager.currentItem + 1
                 container.setBackgroundColor(requireContext().getColor(colorBackground[nextItemVP]))
                 requireActivity().window.statusBarColor = requireContext().getColor(colorBackground[nextItemVP])

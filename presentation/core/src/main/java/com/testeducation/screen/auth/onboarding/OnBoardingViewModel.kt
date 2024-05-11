@@ -13,4 +13,8 @@ class OnBoardingViewModel(
     errorHandler: IExceptionHandler
 ) : BaseViewModel<OnBoardingModelState, OnBoardingState, OnBoardingSideEffect>(reducer, errorHandler) {
     override val initialModelState: OnBoardingModelState = OnBoardingModelState()
+
+    fun exit() {
+        router.exit()
+    }
 }

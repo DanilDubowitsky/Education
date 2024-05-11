@@ -2,6 +2,8 @@ package com.testeducation.screen.auth.login
 
 import com.testeducation.core.BaseViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.auth.IsFirstStartApp
+import com.testeducation.domain.cases.auth.SetFirstStartApp
 import com.testeducation.domain.cases.auth.SignIn
 import com.testeducation.helper.error.IExceptionHandler
 import com.testeducation.helper.resource.IResourceHelper
@@ -19,11 +21,20 @@ class LoginViewModel(
     private val router: NavigationRouter,
     private val signIn: SignIn,
     private val resourceHelper: IResourceHelper,
+    isFirstStartApp: IsFirstStartApp,
+    setFirstStartApp: SetFirstStartApp,
     reducer: IReducer<LoginModelState, LoginState>,
     errorHandler: IExceptionHandler
 ) : BaseViewModel<LoginModelState, LoginState, LoginSideEffect>(reducer, errorHandler) {
 
     override val initialModelState: LoginModelState = LoginModelState()
+
+    init {
+        if (isFirstStartApp()) {
+            setFirstStartApp()
+            router.navigateTo(NavigationScreen.Auth.OnBoarding)
+        }
+    }
 
     fun login() = intent {
         val modelState = getModelState()
