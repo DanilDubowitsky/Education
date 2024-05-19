@@ -2,6 +2,8 @@ package com.testeducation.education.di.modules.screen.auth
 
 import androidx.lifecycle.ViewModel
 import com.testeducation.core.IReducer
+import com.testeducation.domain.cases.auth.IsFirstStartApp
+import com.testeducation.domain.cases.auth.SetFirstStartApp
 import com.testeducation.domain.cases.auth.SignIn
 import com.testeducation.education.di.viewmodel.ViewModelKey
 import com.testeducation.helper.error.IExceptionHandler
@@ -34,13 +36,17 @@ interface LoginModule {
             signIn: SignIn,
             reducer: IReducer<LoginModelState, LoginState>,
             resourceHelper: IResourceHelper,
-            errorHandler: IExceptionHandler
+            errorHandler: IExceptionHandler,
+            isFirstStartApp: IsFirstStartApp,
+            setFirstStartApp: SetFirstStartApp
         ): LoginViewModel = LoginViewModel(
-            router,
-            signIn,
-            resourceHelper,
-            reducer,
-            errorHandler
+            router = router,
+            signIn = signIn,
+            resourceHelper = resourceHelper,
+            isFirstStartApp = isFirstStartApp,
+            setFirstStartApp = setFirstStartApp,
+            reducer = reducer,
+            errorHandler = errorHandler
         )
     }
 }

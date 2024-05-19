@@ -13,6 +13,7 @@ import com.testeducation.helper.resource.SortStringResource
 import com.testeducation.helper.resource.StringResource
 import com.testeducation.logic.model.test.CardTestStyle
 import com.testeducation.ui.R
+import com.testeducation.ui.helper.extractor.extract
 import com.testeducation.ui.helper.extractor.extractResourceId
 import com.testeducation.ui.helper.extractor.getStringId
 import com.testeducation.ui.helper.extractor.getText
@@ -33,6 +34,7 @@ class ResourceHelper(
         is StringResource.BugReport -> string(resource.getText())
         is StringResource.Profile -> string(resource.extractResourceId())
         is StringResource.Test -> resource.getStringId(context)
+        is StringResource.OnBoarding -> resource.extract(context)
     }
 
     override fun extractColorResource(resource: ColorResource): Int = when (resource) {
@@ -40,6 +42,7 @@ class ResourceHelper(
         is ColorResource.MainLight -> extractMainColorResource(resource)
         is ColorResource.Secondary -> extractSecondaryColorResource(resource)
         is AnswerColorResource -> color(resource.extractResourceId())
+        is ColorResource.OnBoarding -> resource.extract(context)
     }
 
     override fun extractDrawableResource(resource: DrawableResource): Int = when (resource) {
@@ -48,6 +51,7 @@ class ResourceHelper(
         DrawableResource.WriteAnswerIconQuestion -> R.drawable.ic_answer_write
         DrawableResource.OrderAnswerIconQuestion -> R.drawable.ic_answer_order
         is DrawableResource.Avatar -> extractAvatarDrawableResource(resource)
+        is DrawableResource.OnBoarding -> resource.extract()
     }
 
     private fun extractAvatarDrawableResource(avatar: DrawableResource.Avatar) = when(avatar) {

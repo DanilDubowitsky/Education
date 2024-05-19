@@ -10,4 +10,6 @@ interface IUserConfig {
     fun getLastRefreshTokenUpdateTime(): Long
     fun setAvatarVisibleScreen(visible: Boolean)
     fun getAvatarVisibleScreen(): Boolean
+    fun isFirstStartApp(): Boolean
+    fun setFirstStartApp(value: Boolean = false)
 }

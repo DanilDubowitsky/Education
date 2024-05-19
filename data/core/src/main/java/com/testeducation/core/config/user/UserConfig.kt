@@ -43,12 +43,21 @@ class UserConfig(
 
     override fun getAvatarVisibleScreen(): Boolean = configSource.getBoolean(USER_AVATAR_VISIBLE_KEY, false)
 
+    override fun isFirstStartApp(): Boolean {
+        return configSource.getBoolean(FIRST_START_APP, true)
+    }
+
+    override fun setFirstStartApp(value: Boolean) {
+        configSource.setBoolean(FIRST_START_APP, value)
+    }
+
     companion object {
         const val CONFIG_NAME = "EDUCATION_CONFIG_NAME"
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val REFRESH_TOKEN_KEY = "REFRESH_TOKEN_KEY"
         private const val REFRESH_TOKEN_UPDATE_TIME = "REFRESH_TOKEN_UPDATE_TIME"
         private const val USER_AVATAR_VISIBLE_KEY = "USER_AVATAR_KEY"
+        private const val FIRST_START_APP = "first_start_app"
         private const val DEFAULT_TOKEN_UPDATE_TIME = 0L
     }
 

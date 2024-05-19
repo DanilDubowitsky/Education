@@ -51,6 +51,7 @@
     <string name="common_share">Поделиться</string>
     <string name="common_delete">Удалить</string>
     <string name="common_saving_process">Сохранение</string>
+    <string name="common_next_short">Далее</string>
 
     <string name="tests_filters_label">Фильтры</string>
 
@@ -260,5 +261,14 @@
     <string name="test_results_pass_time">Всего затрачено времени:</string>
     <string name="test_results_true_answers">Верные ответы:</string>
     <string name="test_results_false_answers">Ошибки: </string>
+
+    <!--OnBoarding-->
+    <string name="onboarding_title_first">Создавайте тесты</string>
+    <string name="onboarding_description_first">Создавайте свои тесты с различными типами вопросов, устанавливайте время прохождения на каждый вопрос.</string>
+    <string name="onboarding_title_second">Проходите тесты</string>
+    <string name="onboarding_description_second">Проверьте свои знания в различных областях, проходя тесты от других пользователей. Получайте мгновенные результаты и отслеживайте свой прогресс.</string>
+    <string name="onboarding_title_three">Сохраняйте и делитесь</string>
+    <string name="onboarding_description_three">Сохраняйте тесты в свою библиотеку и отправляйте их другим пользователям для прохождения и обсуждения.</string>
+    <string name="onboarding_title_four">Вас ждет увлекательное путешествие в мир тестов!</string>
 
 </resources>

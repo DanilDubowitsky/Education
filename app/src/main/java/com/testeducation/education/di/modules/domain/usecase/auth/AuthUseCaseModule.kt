@@ -3,10 +3,12 @@ package com.testeducation.education.di.modules.domain.usecase.auth
 import com.testeducation.domain.cases.auth.ConfirmEmail
 import com.testeducation.domain.cases.auth.GetResetPasswordToken
 import com.testeducation.domain.cases.auth.GetTokenExpiration
+import com.testeducation.domain.cases.auth.IsFirstStartApp
 import com.testeducation.domain.cases.auth.LogOut
 import com.testeducation.domain.cases.auth.ResetPassword
 import com.testeducation.domain.cases.auth.SendCodeAgain
 import com.testeducation.domain.cases.auth.SendResetPasswordCode
+import com.testeducation.domain.cases.auth.SetFirstStartApp
 import com.testeducation.domain.cases.auth.SignIn
 import com.testeducation.domain.cases.auth.SignUp
 import com.testeducation.domain.config.user.IUserConfig
@@ -38,6 +40,18 @@ object AuthUseCaseModule {
         service: IAuthService,
         config: IUserConfig
     ): SignIn = SignIn(service, config)
+
+    @Provides
+    @Reusable
+    fun provideIsFirstStartApp(config: IUserConfig): IsFirstStartApp {
+        return IsFirstStartApp(config)
+    }
+
+    @Provides
+    @Reusable
+    fun provideSetFirstStartApp(config: IUserConfig): SetFirstStartApp {
+        return SetFirstStartApp(config)
+    }
 
     @Provides
     @Reusable

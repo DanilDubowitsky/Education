@@ -31,6 +31,8 @@ sealed interface NavigationScreen : Serializable {
             val code: String
         ) : Auth
 
+        object OnBoarding: Auth
+
     }
 
     sealed interface Common : NavigationScreen {

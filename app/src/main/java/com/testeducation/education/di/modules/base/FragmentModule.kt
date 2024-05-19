@@ -3,6 +3,7 @@ package com.testeducation.education.di.modules.base
 import com.testeducation.education.di.modules.screen.auth.CodeConfirmationModule
 import com.testeducation.education.di.modules.screen.auth.LoginModule
 import com.testeducation.education.di.modules.screen.auth.NewPasswordModule
+import com.testeducation.education.di.modules.screen.auth.OnBoardingModule
 import com.testeducation.education.di.modules.screen.auth.PasswordResetEmailModule
 import com.testeducation.education.di.modules.screen.auth.RegistrationModule
 import com.testeducation.education.di.modules.screen.home.HomeModule
@@ -27,6 +28,7 @@ import com.testeducation.education.di.modules.screen.tests.statistic.TestPassSta
 import com.testeducation.education.di.modules.screen.webview.WebViewModule
 import com.testeducation.ui.screen.auth.confirmation.CodeConfirmationFragment
 import com.testeducation.ui.screen.auth.login.LoginFragment
+import com.testeducation.ui.screen.auth.onboarding.OnBoardingFragment
 import com.testeducation.ui.screen.auth.registration.RegistrationFragment
 import com.testeducation.ui.screen.auth.reset.email.PasswordResetEmailFragment
 import com.testeducation.ui.screen.auth.reset.password.NewPasswordFragment
@@ -130,5 +132,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [AboutAppModule::class])
     fun aboutAppFragment(): AboutAppFragment
+
+    @ContributesAndroidInjector(modules = [OnBoardingModule::class])
+    fun onBoardingFragment(): OnBoardingFragment
 
 }

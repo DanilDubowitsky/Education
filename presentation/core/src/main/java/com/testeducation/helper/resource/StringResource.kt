@@ -105,4 +105,14 @@ sealed interface StringResource {
         object TestDeleteTitle: Test
         object TestDeleteDescription: Test
     }
+
+    sealed interface OnBoarding: StringResource {
+        object TitleFirst: OnBoarding
+        object DescriptionFirst: OnBoarding
+        object TitleSecond: OnBoarding
+        object DescriptionSecond: OnBoarding
+        object TitleThree: OnBoarding
+        object DescriptionThree: OnBoarding
+        object TitleFour: OnBoarding
+    }
 }
