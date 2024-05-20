@@ -184,10 +184,11 @@ sealed interface NavigationScreen : Serializable {
         data class TestPublish(val isPublishTest: Boolean): Tests {
             object OnTestPublish : ResultKey<OnTestPublish.Result> {
                 data class Result(
-                    val statusPublish: StatusPublish
+                    val statusPublish: StatusPublish,
+                    val time: Long? = null,
                 ) {
                     enum class StatusPublish {
-                        PUBLISH, DRAFT;
+                        PUBLISH, DRAFT, SCHEDULED;
 
                         fun isPublish() = this == PUBLISH
                     }

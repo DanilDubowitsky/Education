@@ -24,7 +24,7 @@ interface ITestRepository {
         offset: Int,
         getType: TestGetType,
         testStatus: Test.Status,
-        userId: String?
+        userId: String?,
     ): Page<TestShort>
 
     suspend fun getTest(id: String): Test
@@ -35,7 +35,7 @@ interface ITestRepository {
 
     suspend fun updateTestStyle(id: String, color: String, background: String)
 
-    suspend fun changeStatusTest(id: String, status: Test.Status)
+    suspend fun changeStatusTest(id: String, time: Long?, status: Test.Status)
 
     suspend fun getTestCode(id: String): String
 

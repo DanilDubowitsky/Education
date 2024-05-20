@@ -156,6 +156,8 @@
     <string name="test_question_delete_description">Восстановить удаленный вопрос будет невозможно</string>
     <string name="test_delete_title">Удаление теста</string>
     <string name="test_delete_description">Вы уверены, что хотетите удалить тест? Восстановить удалённый тест будет невозможно</string>
+    <string name="test_pending_title">Отложенная публикация</string>
+    <string name="test_pending_description">Настройте дату и время публикации</string>
 
     <!--Validate-->
     <string name="test_edit_error_title">Ошибка при создании теста</string>

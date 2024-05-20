@@ -105,7 +105,10 @@ interface TestRetrofitClient {
     suspend fun updateTestStyle(@Path("id") id: String, @Body remoteTestStyle: TestStyleRequest) : RemoteResponse<Unit>
 
     @POST("/api/app/content/tests/{testId}/publish")
-    suspend fun publish(@Path("testId") id: String) : RemoteResponse<Unit>
+    suspend fun publish(
+        @Path("testId") id: String,
+        @Query("timestamp") timestamp: Long?,
+    ): RemoteResponse<Unit>
 
     @POST("/api/app/content/tests/{testId}/unpublish")
     suspend fun draft(@Path("testId") id: String) : RemoteResponse<Unit>

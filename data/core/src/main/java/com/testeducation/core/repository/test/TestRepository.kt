@@ -62,8 +62,8 @@ class TestRepository(
             id = id, color = color, background = background
         )
 
-    override suspend fun changeStatusTest(id: String, status: Test.Status) {
-        testRemoteSource.changeTest(id, status)
+    override suspend fun changeStatusTest(id: String, time: Long?, status: Test.Status) {
+        testRemoteSource.changeTest(id, time, status)
     }
 
     override suspend fun getTestCode(id: String): String = testRemoteSource.getTestCode(id)

@@ -198,8 +198,8 @@ class TestEditorViewModel(
     fun saveTestProcess() = intent {
         val modelState = getModelState()
         router.setResultListener(NavigationScreen.Tests.TestPublish.OnTestPublish) { status ->
-            if (status.statusPublish.isPublish()) {
-                publish()
+            if (status.statusPublish.isPublish() || status.statusPublish == NavigationScreen.Tests.TestPublish.OnTestPublish.Result.StatusPublish.SCHEDULED) {
+                publish(status.time)
             } else draft()
         }
         modelState.test?.let { testItem ->
@@ -209,7 +209,7 @@ class TestEditorViewModel(
         }
     }
 
-    fun publish() {
+    fun publish(time: Long?) {
         intent {
             val modelState = getModelState()
             if (modelState.test?.status != Test.Status.PUBLISHED) {
@@ -220,7 +220,8 @@ class TestEditorViewModel(
                 }
                 changeStatusTest.invoke(
                     testId,
-                    Test.Status.PUBLISHED
+                    time,
+                    if (time == null) Test.Status.PUBLISHED else Test.Status.SCHEDULED
                 )
             }
             navigateFinish()
@@ -236,6 +237,7 @@ class TestEditorViewModel(
             }
             changeStatusTest.invoke(
                 testId,
+                null,
                 Test.Status.DRAFT
             )
             navigateFinish()

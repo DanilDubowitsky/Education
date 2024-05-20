@@ -8,7 +8,8 @@ class TestPublishReducer() :
     IReducer<TestPublishModelState, TestPublishState> {
     override fun reduce(modelState: TestPublishModelState): TestPublishState {
         return TestPublishState(
-            statusPublish = modelState.status.convertToUi()
+            statusPublish = modelState.status.convertToUi(),
+            calendar = modelState.calendar
         )
     }
 }
