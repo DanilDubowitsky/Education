@@ -10,4 +10,10 @@ sealed interface TestPassingSideEffect {
     ) : TestPassingSideEffect
 
     object EndTimer : TestPassingSideEffect
+
+    sealed interface Loading : TestPassingSideEffect {
+        data object ShowLoader : Loading
+
+        data object HideLoader : Loading
+    }
 }

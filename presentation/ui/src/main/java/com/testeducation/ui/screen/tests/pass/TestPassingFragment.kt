@@ -28,6 +28,7 @@ import com.testeducation.ui.helper.TimeHandler
 import com.testeducation.ui.listener.QuestionItemTouchHelperCallback
 import com.testeducation.ui.listener.drag.DragStartListener
 import com.testeducation.ui.listener.drag.IDragStartListener
+import com.testeducation.ui.screen.common.LoaderDialog
 import com.testeducation.ui.utils.animateTranslationXAndAlpha
 import com.testeducation.ui.utils.disableChangeAnimation
 import com.testeducation.ui.utils.hideKeyboard
@@ -51,6 +52,9 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
     private val testTimer = TimeHandler()
     private var currentQuestionId: String? = null
     private var backgroundTint: ColorStateList? = null
+
+    //TODO: butusov.k move to router
+    private var dialogLoader: LoaderDialog? = null
 
     private val answersAdapter by lazy {
         ListDelegationAdapter(
@@ -118,7 +122,25 @@ class TestPassingFragment : ViewModelHostFragment<TestPassingViewModel, Fragment
             questionTimer.stop()
             testTimer.stop()
         }
+        is TestPassingSideEffect.Loading -> handleLoaderEffect(sideEffect)
     }
+
+    private fun handleLoaderEffect(effect: TestPassingSideEffect.Loading) = when (effect) {
+        is TestPassingSideEffect.Loading.ShowLoader -> {
+            dialogLoader?.dismiss()
+            dialogLoader = LoaderDialog.Builder(requireContext())
+                .setCancelable(false)
+                .setTitleText(getString(R.string.test_pass_sending_result))
+                .show()
+        }
+
+        is TestPassingSideEffect.Loading.HideLoader -> {
+            dialogLoader?.dismiss()
+            dialogLoader = null
+        }
+
+    }
+
 
     private fun setupViews() = binding {
         answersRecycler.disableChangeAnimation()
