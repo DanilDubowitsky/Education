@@ -15,6 +15,8 @@ class LoaderDialog(
 
     private val binding = DialogLoaderBinding.inflate(layoutInflater)
 
+    var isCancellable: Boolean = true
+
     companion object {
         const val TAG = "FullScreenLoaderDialog"
     }
@@ -31,7 +33,7 @@ class LoaderDialog(
     private fun setOnBackClickListener(block: () -> Unit) {
 
         this.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && isCancellable) {
                 this.setCancelable(true)
                 this.dismiss()
                 block()
@@ -54,6 +56,7 @@ class LoaderDialog(
         }
 
         fun setCancelable(cancelable: Boolean): Builder {
+            dialog.isCancellable = cancelable
             dialog.setCancelable(cancelable)
             return this
         }

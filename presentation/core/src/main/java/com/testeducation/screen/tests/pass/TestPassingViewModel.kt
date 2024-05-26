@@ -21,8 +21,6 @@ import com.testeducation.logic.screen.tests.pass.TestPassingState
 import com.testeducation.navigation.core.NavigationRouter
 import com.testeducation.navigation.screen.NavigationScreen
 import com.testeducation.utils.firstByCondition
-import kotlinx.coroutines.NonCancellable
-import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -155,6 +153,22 @@ class TestPassingViewModel(
             result == TestPassResultType.SUCCESSFUL
         )
 
+        val isSendToStatistic =
+            test.status != Test.Status.DRAFT && test.creator.id != modelState.currentUser?.id
+
+        postSideEffect(TestPassingSideEffect.Loading.ShowLoader)
+
+        passTest(
+            testId,
+            answers,
+            spentTime,
+            isCheating,
+            result,
+            sendToStatistic = isSendToStatistic
+        )
+
+        postSideEffect(TestPassingSideEffect.Loading.HideLoader)
+
         if (isCheating || testRemainingTime < 0L) {
             router.navigateTo(
                 NavigationScreen.Tests.FailedResult(isCheating),
@@ -163,14 +177,13 @@ class TestPassingViewModel(
         } else {
             router.navigateTo(resultScreen, addToBackStack = false)
         }
-        val isSendToStatistic =
-            test.status != Test.Status.DRAFT && test.creator.id != modelState.currentUser?.id
+
         router.setResultListener(NavigationScreen.Tests.Result.OpenResults) {
             router.exit()
             router.navigateTo(
                 NavigationScreen.Tests.Statistic(
                     testId,
-                    !isSendToStatistic,
+                    true,
                     modelState.test.title,
                     modelState.test.style.color
                 )
@@ -178,17 +191,6 @@ class TestPassingViewModel(
         }
         router.setResultListener(NavigationScreen.Tests.Result.OpenMainPage) {
             router.exit()
-        }
-
-        withContext(NonCancellable) {
-            passTest(
-                testId,
-                answers,
-                spentTime,
-                isCheating,
-                result,
-                sendToStatistic = isSendToStatistic
-            )
         }
     }
 
@@ -365,16 +367,12 @@ class TestPassingViewModel(
         }
 
         val currentQuestion = modelState.questions[questionIndex]
+        val selectedQuestionState = extractQuestionState(currentQuestion)
         updateModelState {
             copy(
+                selectedQuestionState = selectedQuestionState,
                 currentQuestionIndex = questionIndex,
                 currentQuestion = currentQuestion
-            )
-        }
-        val selectedQuestionState = extractQuestionState()
-        updateModelState {
-            copy(
-                selectedQuestionState = selectedQuestionState
             )
         }
 
@@ -447,7 +445,7 @@ class TestPassingViewModel(
                 currentUser = currentUser
             )
         }
-        val selectedQuestionState = extractQuestionState()
+        val selectedQuestionState = extractQuestionState(currentQuestion)
         updateModelState {
             copy(selectedQuestionState = selectedQuestionState)
         }
@@ -460,13 +458,13 @@ class TestPassingViewModel(
         postSideEffect(questionEffect)
     }
 
-    private suspend fun extractQuestionState(): TestPassingModelState.SelectedQuestionState {
-        val modelState = getModelState()
-        val currentQuestion = modelState.currentQuestion!!
+    private suspend fun extractQuestionState(
+        currentQuestion: PassingQuestion
+    ): TestPassingModelState.SelectedQuestionState {
         return when (val question = currentQuestion.question) {
             is Question.Match -> TestPassingModelState.SelectedQuestionState.Match(
                 question = question,
-                matchData = modelState.currentQuestion.matchData
+                matchData = currentQuestion.matchData
             )
 
             is Question.Choice -> TestPassingModelState.SelectedQuestionState.Choice(
