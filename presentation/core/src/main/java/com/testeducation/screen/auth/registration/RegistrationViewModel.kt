@@ -28,6 +28,10 @@ class RegistrationViewModel(
 
     override val initialModelState: RegistrationModelState = RegistrationModelState()
 
+    fun navigateToSecurityInfo() {
+        router.navigateTo(NavigationScreen.Common.WebView("https://testoria.azurewebsites.net/home/privacy"))
+    }
+
     fun register() = intent {
         val modelState = getModelState()
         val isValid = validate(
