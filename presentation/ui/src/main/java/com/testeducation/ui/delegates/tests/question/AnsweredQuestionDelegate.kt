@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.google.android.flexbox.FlexboxLayout
-import com.testeducation.logic.model.question.AnswerStateUI
 import com.testeducation.logic.model.question.AnsweredQuestionUI
 import com.testeducation.logic.model.test.AnswerUI
 import com.testeducation.ui.R
@@ -116,11 +115,13 @@ fun matchAnsweredQuestionDelegate(
             val inflater = LayoutInflater.from(root.context)
             matchDataLayout.removeAllViews()
             trueMatchDataLayout.removeAllViews()
-            item.matchValues.forEachIndexed { index, value ->
-                val view = ViewAnswerAnsweredQuestionBinding.inflate(inflater)
-                view.matchDataText.root.text = value
-                view.answerDataText.root.text = item.matchAnswers[index].title
-                matchDataLayout.addView(view.root)
+            if (item.matchValues.isNotEmpty() && item.matchAnswers.isNotEmpty()) {
+                item.matchValues.forEachIndexed { index, value ->
+                    val view = ViewAnswerAnsweredQuestionBinding.inflate(inflater)
+                    view.matchDataText.root.text = value
+                    view.answerDataText.root.text = item.matchAnswers.getOrNull(index)?.title ?: ""
+                    matchDataLayout.addView(view.root)
+                }
             }
 
             if (!item.isCorrect) {

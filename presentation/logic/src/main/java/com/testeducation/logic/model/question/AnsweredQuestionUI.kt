@@ -41,7 +41,7 @@ sealed interface AnsweredQuestionUI {
         override val isCorrect: Boolean,
         override val numberQuestion: Int,
         val matchValues: List<String>,
-        val matchAnswers: List<AnswerUI.MatchAnswer>,
+        val matchAnswers: List<AnswerUI.MatchAnswer?>,
         val correctAnswers: List<AnswerUI.MatchAnswer>,
         val isExpanded: Boolean = false,
         val isTrueExpanded: Boolean = false
